@@ -1,0 +1,37 @@
+<?php
+
+require_once '../vendor/PHPExcel/Classes/PHPExcel/IOFactory.php';
+require_once './calculateExcel.php';
+/*Dodanie odpowiedzi dla CORS. Z zewnetrznych serwerow moze przychodzic najpierw OPTIONS */
+if ($_SERVER['REQUEST_METHOD']=='OPTIONS') {
+header('Access-Control-Allow-Origin : *');
+header('Access-Control-Allow-Methods : POST, GET, OPTIONS, PUT, DELETE');
+header('Access-Control-Allow-Headers : X-Requested-With, content-type');
+}else{
+/*
+|--------------------------------------------------------------------------
+| Create The Application
+|--------------------------------------------------------------------------
+|
+| First we need to get an application instance. This creates an instance
+| of the application / container and bootstraps the application so it
+| is ready to receive HTTP / Console requests from the environment.
+|
+*/
+
+$app = require __DIR__.'/../bootstrap/app.php';
+
+/*
+|--------------------------------------------------------------------------
+| Run The Application
+|--------------------------------------------------------------------------
+|
+| Once we have the application, we can handle the incoming request
+| through the kernel, and send the associated response back to
+| the client's browser allowing them to enjoy the creative
+| and wonderful application we have prepared for them.
+|
+*/
+
+$app->run();
+}
