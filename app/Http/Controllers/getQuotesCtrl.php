@@ -27,9 +27,9 @@ var $partner;
   
   public function request(Request $request,  $parter_id, $request_id)
   {
-     
+      
     parent::request($request,  $parter_id, $request_id);
-       
+    
     
     if(empty($this->data['data']['promo_code']))
         $this->data['data']['promo_code']='';

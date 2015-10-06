@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 use Log;
 use Cache;
 use Validator;
-use App\Http\Controllers\Controller;
+use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use App\Http\Partner;
 use Symfony\Component\HttpFoundation\Response as Response;
 
-class RequestCtrl extends Controller
+class RequestCtrl extends BaseController
 {
     var $data, $response=null;
     public function request(Request $request,  $parter_id, $request_id)
