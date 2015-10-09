@@ -28,11 +28,26 @@ use App\apiModels\travel\v1\prototypes\POLICYDATA;
 class POLICYDATA_impl extends POLICYDATA
 {
     /**
+     * Valdators for model
+     * @var array
+     */
+    private $validators = [
+        'start_date' => 'after:now',
+        'end_date'   => 'after:start_date',
+    ];
+
+    /**
      * Constructor
      * @param mixed[] $data Associated array of property value initalizing the model
      */
     public function __construct(array $data = null)
     {
+        $validator = Validator::make($data $this->validators);
+
+        if ($validator->fails()) {
+            dd('nie poprawny model');
+        }
+
         parent::__construct($data);
     }
     
