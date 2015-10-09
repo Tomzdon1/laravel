@@ -9,6 +9,15 @@ use Illuminate\Http\Request;
 use App\Http\Partner;
 use Symfony\Component\HttpFoundation\Response as Response;
 
+define('MONGO_SRV','192.168.7.60');
+    define('MONGO_PORT','27017');
+    define('MONGO_CP_DB','Ceper');
+    
+    define('CP_PARTNERS_COL','partners');
+    define('CP_TRAVEL_OFFERS_COL','travel_offers');
+    define('OFFERS_STD_PARTNER','STD');
+    define('EXCEL_DIR','./excels');
+
 class RequestCtrl extends BaseController
 {
     var $data, $response=null;
