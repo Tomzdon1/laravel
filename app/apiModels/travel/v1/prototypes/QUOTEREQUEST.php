@@ -31,7 +31,7 @@
  * Do not edit the class manually.
  */
 
-namespace App\apiModels\travel\v1\prototypes;
+namespace App\apiModels\travel\v1\prototypes ;
 
 use \ArrayAccess;
 /**
@@ -44,7 +44,7 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class QUOTEREQUEST implements ArrayAccess
+class QUOTEREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 

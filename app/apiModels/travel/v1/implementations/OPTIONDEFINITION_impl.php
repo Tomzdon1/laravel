@@ -27,6 +27,13 @@ use App\apiModels\travel\v1\prototypes\OPTIONDEFINITION;
  */
 class OPTIONDEFINITION_impl extends OPTIONDEFINITION
 {
+    /**
+     * Valdators for model
+     * @var array
+     */
+    public static $validators = [
+        //
+    ];
     
     /**
      * Constructor

@@ -4,7 +4,11 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class ExampleMiddleware
+use FR3D\SwaggerAssertions\SchemaManager;
+use JsonSchema\Validator;
+use FR3D\SwaggerAssertions\PhpUnit\ResponseBodyConstraint;
+
+class RequestValidate
 {
     /**
      * Handle an incoming request.
@@ -15,6 +19,7 @@ class ExampleMiddleware
      */
     public function handle($request, Closure $next)
     {
+
         return $next($request);
     }
 }

@@ -26,6 +26,15 @@ use \App\apiModels\travel\v1\prototypes\AMOUNT;
  */
 class AMOUNT_impl extends AMOUNT
 {
+	/**
+     * Valdators for model
+     * @var array
+     */
+    public static $validators = [
+        'value_base_currency' => 'currency_code',
+        'value_currency' => 'currency_code',
+    ];
+    
     /**
      * Constructor
      * @param mixed[] $data Associated array of property value initalizing the model

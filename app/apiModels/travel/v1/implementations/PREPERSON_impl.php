@@ -27,7 +27,13 @@ use App\apiModels\travel\v1\prototypes\PREPERSON;
  */
 class PREPERSON_impl extends PREPERSON
 {
-    
+    /**
+     * Valdators for model
+     * @var array
+     */
+    public static $validators = [
+        'birth_date' => 'before:today',
+    ];
 
     /**
      * Constructor

@@ -192,7 +192,7 @@ class ObjectSerializer
             }
             $deserialized = $values;
         } elseif ($class === '\DateTime') {
-            $deserialized = new \DateTime($data);
+            $deserialized = new \Carbon\Carbon($data);
         } elseif (in_array($class, array('void', 'bool', 'string', 'double', 'byte', 'mixed', 'integer', 'float', 'int', 'DateTime', 'number', 'boolean', 'object'))) {
             settype($data, $class);
             $deserialized = $data;
@@ -248,6 +248,10 @@ echo '$data: '.print_r($data,1).' '.$instance::$attributeMap[$property]."|<br>\n
                 }
             }
             $deserialized = $instance;
+        }
+
+        if (is_subclass_of($deserialized, 'App\apiModels\ApiModel')) {
+            $deserialized->validate();
         }
      
         return $deserialized;

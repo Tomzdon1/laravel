@@ -85,6 +85,12 @@ return [
     |
     */
 
+    'country_code' => 'The :attribute must be country code compatible with ISO 3166-1 alpha-2.',
+    'destination_code' => 'The :attribute must be country code compatible with ISO 3166-1 alpha-2 or EU for European Union or WR for World.',
+    'currency_code' => 'The :attribute must be country code compatible with ISO 3166-1 alpha-2.',
+    'pesel' => 'The :attribute must be valid PESEL number.',
+    'after_equal' => 'The :attribute must be a date after or equal :date.',
+
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',

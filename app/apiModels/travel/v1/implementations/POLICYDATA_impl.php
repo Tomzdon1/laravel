@@ -31,9 +31,11 @@ class POLICYDATA_impl extends POLICYDATA
      * Valdators for model
      * @var array
      */
-    private $validators = [
-        'start_date' => 'after:now',
+    public static $validators = [
+        'start_date' => 'after_equal:today',
         'end_date'   => 'after:start_date',
+        'destination'=> 'destination_code',
+        'email' => 'email',
     ];
 
     /**
@@ -42,12 +44,6 @@ class POLICYDATA_impl extends POLICYDATA
      */
     public function __construct(array $data = null)
     {
-        $validator = Validator::make($data $this->validators);
-
-        if ($validator->fails()) {
-            dd('nie poprawny model');
-        }
-
         parent::__construct($data);
     }
     

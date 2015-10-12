@@ -31,7 +31,7 @@
  * Do not edit the class manually.
  */
 
-namespace App\apiModels\travel\v1\prototypes;
+namespace App\apiModels\travel\v1\prototypes ;
 
 use \ArrayAccess;
 /**
@@ -44,7 +44,7 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class QUOTE implements ArrayAccess
+class QUOTE extends \App\apiModels\ApiModel implements ArrayAccess
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
@@ -123,7 +123,7 @@ class QUOTE implements ArrayAccess
     
     /**
       * $description Opis wariantu
-      * @var bool
+      * @var string
       */
     protected $description;
     
@@ -228,7 +228,7 @@ class QUOTE implements ArrayAccess
     
     /**
      * Gets description
-     * @return bool
+     * @return string
      */
     public function getDescription()
     {
@@ -237,7 +237,7 @@ class QUOTE implements ArrayAccess
   
     /**
      * Sets description
-     * @param bool $description Opis wariantu
+     * @param string $description Opis wariantu
      * @return $this
      */
     public function setDescription($description)

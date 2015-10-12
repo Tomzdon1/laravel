@@ -31,7 +31,7 @@
  * Do not edit the class manually.
  */
 
-namespace App\apiModels\travel\v1\prototypes;
+namespace App\apiModels\travel\v1\prototypes ;
 
 use \ArrayAccess;
 /**
@@ -44,7 +44,7 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class POLICYDATA implements ArrayAccess
+class POLICYDATA extends \App\apiModels\ApiModel implements ArrayAccess
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
@@ -55,7 +55,6 @@ class POLICYDATA implements ArrayAccess
         'start_date' => '\DateTime',
         'end_date' => '\DateTime',
         'abroad' => 'bool',
-        'family' => 'bool',
         'destination' => 'string',
         'option_values' => 'App\apiModels\travel\v1\prototypes\OPTIONVALUE[]'
     );
@@ -69,7 +68,6 @@ class POLICYDATA implements ArrayAccess
         'start_date' => 'start_date',
         'end_date' => 'end_date',
         'abroad' => 'abroad',
-        'family' => 'family',
         'destination' => 'destination',
         'option_values' => 'option_values'
     );
@@ -83,7 +81,6 @@ class POLICYDATA implements ArrayAccess
         'start_date' => 'setStartDate',
         'end_date' => 'setEndDate',
         'abroad' => 'setAbroad',
-        'family' => 'setFamily',
         'destination' => 'setDestination',
         'option_values' => 'setOptionValues'
     );
@@ -97,7 +94,6 @@ class POLICYDATA implements ArrayAccess
         'start_date' => 'getStartDate',
         'end_date' => 'getEndDate',
         'abroad' => 'getAbroad',
-        'family' => 'getFamily',
         'destination' => 'getDestination',
         'option_values' => 'getOptionValues'
     );
@@ -128,12 +124,6 @@ class POLICYDATA implements ArrayAccess
     protected $abroad;
     
     /**
-      * $family Czy wybrano wariant rodzinny
-      * @var bool
-      */
-    protected $family;
-    
-    /**
       * $destination Cel podróży (kod kraju określony w ISO 3166-1 alpha-2 lub EU - Unia Europejska lub WR - świat)
       * @var string
       */
@@ -157,7 +147,6 @@ class POLICYDATA implements ArrayAccess
             $this->start_date = $data["start_date"];
             $this->end_date = $data["end_date"];
             $this->abroad = $data["abroad"];
-            $this->family = $data["family"];
             $this->destination = $data["destination"];
             $this->option_values = $data["option_values"];
         }
@@ -244,27 +233,6 @@ class POLICYDATA implements ArrayAccess
     {
         
         $this->abroad = $abroad;
-        return $this;
-    }
-    
-    /**
-     * Gets family
-     * @return bool
-     */
-    public function getFamily()
-    {
-        return $this->family;
-    }
-  
-    /**
-     * Sets family
-     * @param bool $family Czy wybrano wariant rodzinny
-     * @return $this
-     */
-    public function setFamily($family)
-    {
-        
-        $this->family = $family;
         return $this;
     }
     
