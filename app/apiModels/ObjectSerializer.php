@@ -251,7 +251,9 @@ echo '$data: '.print_r($data,1).' '.$instance::$attributeMap[$property]."|<br>\n
         }
 
         if (is_subclass_of($deserialized, 'App\apiModels\ApiModel')) {
-            $deserialized->validate();
+            $errorClass = substr($class, 0, strrpos($class, '\\')).'\ERROR';
+            $errorClass = str_replace('prototypes', 'implementations', $errorClass).'_impl';
+            $deserialized->validate($errorClass);
         }
      
         return $deserialized;

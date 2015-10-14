@@ -1,16 +1,17 @@
 {
-    "name": "laravel/lumen",
-    "description": "The Laravel Lumen Framework.",
-    "keywords": ["framework", "laravel", "lumen"],
+    "name": "tueuropa/cpapi",
+    "description": "API Centrum produktowe.",
+    "keywords": ["api", "cp", "centrum produktowe"],
     "license": "MIT",
     "type": "project",
     "require": {
         "php": ">=5.5.9",
         "laravel/lumen-framework": "5.1.*",
         "vlucas/phpdotenv": "~1.0",
+        "justinrainbow/json-schema": "<=1.4.3",
         "fr3d/swagger-assertions": "^0.3.0",
         "phpoffice/phpexcel": "^1.8",
-        "monarobase/country-list": "dev-master",
+        "monarobase/country-list": "~1.2.3",
         "alcohol/iso4217": "^3.0"
     },
     "require-dev": {

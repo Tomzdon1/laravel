@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0f5092f7086bb729bb25b766cb09c257",
-    "content-hash": "ce482b6c4d5cd223ffa1d80d1db01a3f",
+    "hash": "c8abbdea0afd4da8c0174f37504be5aa",
+    "content-hash": "d3b35757db5e164d0215875524579995",
     "packages": [
         {
             "name": "alcohol/iso4217",
@@ -1396,16 +1396,16 @@
         },
         {
             "name": "justinrainbow/json-schema",
-            "version": "1.4.4",
+            "version": "1.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/justinrainbow/json-schema.git",
-                "reference": "8dc9b9d85ab639ca60ab4608b34c1279d6ae7bce"
+                "reference": "44adc6f25592c6990409607c95537f577861f9b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/8dc9b9d85ab639ca60ab4608b34c1279d6ae7bce",
-                "reference": "8dc9b9d85ab639ca60ab4608b34c1279d6ae7bce",
+                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/44adc6f25592c6990409607c95537f577861f9b1",
+                "reference": "44adc6f25592c6990409607c95537f577861f9b1",
                 "shasum": ""
             },
             "require": {
@@ -1458,7 +1458,7 @@
                 "json",
                 "schema"
             ],
-            "time": "2015-07-14 16:29:50"
+            "time": "2015-07-13 05:06:53"
         },
         {
             "name": "laravel/lumen-framework",
@@ -1547,7 +1547,7 @@
         },
         {
             "name": "monarobase/country-list",
-            "version": "dev-master",
+            "version": "1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Monarobase/country-list.git",
@@ -3983,9 +3983,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "monarobase/country-list": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

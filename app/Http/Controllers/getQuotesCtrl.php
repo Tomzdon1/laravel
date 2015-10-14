@@ -27,9 +27,16 @@ use Symfony\Component\HttpFoundation\Response as Response;
 class getQuotesCtrl extends RequestCtrl{
 var $partner,$excelPath;
   
-  public function request(Request $request,  $parter_id, $request_id)
+  public function request(Request $request, $parter_id = null, $request_id = null)
   {
-      
+      if (!$parter_id) {
+        $parter_id = $request->input('customer_id');
+      }
+
+      if (!$request_id) {
+        $request_id = $request->input('request_id');
+      }
+
 //    if ($request->has('data')) {
 //          // celowe przekształcanie na tablicę, ze względu na wydajność i możliwość walidowania przez framework
 //          $data = json_decode($request->input('data'), true);

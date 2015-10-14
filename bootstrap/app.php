@@ -64,12 +64,11 @@ $app->middleware([
     // Illuminate\View\Middleware\ShareErrorsFromSession::class,
     // Laravel\Lumen\Http\Middleware\VerifyCsrfToken::class,
     App\Http\Middleware\WrapResponse::class,
-    App\Http\Middleware\RequestValidate::class,
 ]);
 
-// $app->routeMiddleware([
-
-// ]);
+$app->routeMiddleware([
+    'request_validate' => 'App\Http\Middleware\RequestValidate',
+]);
 
 /*
 |--------------------------------------------------------------------------
@@ -84,8 +83,8 @@ $app->middleware([
 
 $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
- $app->register(App\Providers\EsbServiceProvider::class);
- $app->register(Monarobase\CountryList\CountryListServiceProvider::class);
+$app->register(App\Providers\EsbServiceProvider::class);
+$app->register(Monarobase\CountryList\CountryListServiceProvider::class);
 
  
 /*

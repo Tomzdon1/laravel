@@ -11,12 +11,12 @@
 |
 */
 
-$app->post('cp/public/api/travel/v1/getquotest/{partnerId}/{requestId}','getQuotesCtrl@request');
-$app->post('cp/public/api/travel/v1/{methode}/{partnerId}/{requestId}','testCtrl@request');
-//do usunieca, tylko testowo
-$app->get('cp/public/api/500', function(){
-	abort(500);
+$app->group([
+    'prefix' => 'travel/v1', 
+    'middleware' => 'request_validate:'.env('API_DEFINITION_TRAVEL_V1').','.env('ERROR_MODEL_IMPL_TRAVEL_V1'), 
+    // Namespace kontrolerów powinien być zgodny z namespacem modeli -> prościej.
+    // Wówczas tworzenie obiektu błędu (w kontrolerze np. walidacja) nie będzie wymagało znajomości ścieżki.
+    'namespace' => 'App\Http\Controllers'
+    ], function ($app) {
+        $app->post('get_quotes','getQuotesCtrl@request');
 });
-// dotąd
-$app->post('{path:.*}', 'whoamiCtrl@showPost');
-$app->get('{path:.*}', 'whoamiCtrl@show');

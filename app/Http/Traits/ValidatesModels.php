@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http;
+namespace App\Http\Traits;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\Validator;
 use Illuminate\Http\Exception\HttpResponseException;
+use Symfony\Component\HttpFoundation\Response as Response;
 
 trait ValidatesModels
 {
@@ -16,7 +17,7 @@ trait ValidatesModels
      * @param  array  $customAttributes
      * @return void
      */
-    public function validate(array $rules = [], array $messages = [], array $customAttributes = []) {
+    public function validate($errorClass = null, array $rules = [], array $messages = [], array $customAttributes = []) {
         $data = [];
 
         if (!count($rules)) {
@@ -30,7 +31,21 @@ trait ValidatesModels
         $validator = $this->getValidationFactory()->make($data, $rules, $messages, $customAttributes);
 
         if ($validator->fails()) {
-            throw new HttpResponseException(new JsonResponse($validator->errors()->getMessages(), 422));
+            $errors = [];
+
+            if ($errorClass) {
+                foreach ($validator->errors()->getMessages() as $property => $errorsMessage) {
+                    $data = [];
+                    $data['property'] = $property;
+                    $data['errors'] = $errorsMessage;
+                    $errors[] = new $errorClass($data);
+                }
+            }
+            else {
+                $errors = $validator->errors()->getMessages();
+            }
+
+            throw new HttpResponseException(new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY));
         }
     }
 

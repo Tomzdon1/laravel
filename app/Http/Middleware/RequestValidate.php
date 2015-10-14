@@ -4,9 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-use FR3D\SwaggerAssertions\SchemaManager;
+use App\apiModels\RequestSchemaManager;
 use JsonSchema\Validator;
-use FR3D\SwaggerAssertions\PhpUnit\ResponseBodyConstraint;
+use Symfony\Component\HttpFoundation\Response as Response;
 
 class RequestValidate
 {
@@ -17,9 +17,45 @@ class RequestValidate
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $apiDefinitionPath, $errorClass)
     {
+        $responseBody = json_decode($request->input('data'));
 
+        $path = $request->getPathInfo();
+        // Parametry GET nie są walidowane
+        // $params = $request->input();
+        $httpMethod = $request->getMethod();
+        $httpCode = Response::HTTP_OK;
+
+        // Use file:// for local files
+        $uri = 'file://' . $apiDefinitionPath;
+        $schemaManager = new RequestSchemaManager($uri);
+
+        $responseSchema = $schemaManager->getResponseSchema($path, $httpMethod, $httpCode);
+        
+        $validator = new Validator();
+        $validator->check($responseBody, $responseSchema);                
+        
+        if (!$validator->isValid()) {
+            $errors = [];
+            
+            foreach ($validator->getErrors() as $error) {
+                if (array_key_exists($error['property'], $errors)) {
+                    $e =& $errors[$error['property']];
+                }
+                else {
+                    $e = new $errorClass();
+                    $e->setProperty($error['property']);
+                    $e->setErrors([]);
+                    $errors[] =& $e;
+                }
+
+                $e->setErrors(array_merge($e->getErrors(), [$error['message']]));
+            }
+
+            return response(array_values($errors), Response::HTTP_BAD_REQUEST);
+        }
+        
         return $next($request);
     }
 }

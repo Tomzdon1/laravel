@@ -2,7 +2,7 @@
 
 namespace App\apiModels;
 
-use App\Http\ValidatesModels;
+use App\Http\Traits\ValidatesModels;
 
 abstract class ApiModel {
 	use ValidatesModels;
