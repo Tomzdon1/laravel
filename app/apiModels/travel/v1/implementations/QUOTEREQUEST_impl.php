@@ -5,13 +5,10 @@ use App\apiModels\travel\v1\prototypes\QUOTEREQUEST;
 
 /**
  * QUOTEREQUEST Class Doc Comment
- *
  * @category    Class
  * @description 
- * @package     Swagger\Client
- * @author      http://github.com/swagger-api/swagger-codegen
- * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
- * @link        https://github.com/swagger-api/swagger-codegen
+ * @package     travel\v1
+ * @author      Krzysztof Dałek <krzysztof.dalek@tueuropa.pl>   
  */
 class QUOTEREQUEST_impl extends QUOTEREQUEST
 {
