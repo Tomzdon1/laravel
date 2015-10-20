@@ -14,8 +14,8 @@ class Partner{
   public function __construct($customerId,$type) {
     $this->offerType = $type;
     
-    $this->mongoClient = new \MongoClient("mongodb://".MONGO_SRV.":".MONGO_PORT);
-    $this->mongoDB = $this->mongoClient->selectDB(MONGO_CP_DB);
+    $this->mongoClient = new \MongoClient("mongodb://" . env('MONGO_SRV') . ":" . env('MONGO_PORT'));
+    $this->mongoDB = $this->mongoClient->selectDB(env('MONGO_CP_DB'));
     
     
     if($this->partnerAuthAndConfig($customerId)){

@@ -9,21 +9,23 @@ use Illuminate\Http\Request;
 use App\Http\Partner;
 use Symfony\Component\HttpFoundation\Response as Response;
 
-define('MONGO_SRV','192.168.7.60');
-    define('MONGO_PORT','27017');
-    define('MONGO_CP_DB','Ceper');
+
     
     define('CP_PARTNERS_COL','partners');
     define('CP_TRAVEL_OFFERS_COL','travel_offers');
+    define('CP_QUOTES_REF','quotes');
     define('OFFERS_STD_PARTNER','STD');
     define('EXCEL_DIR','./excels');
 
 class RequestCtrl extends BaseController
 {
     var $data, $response=null;
+    var $quote_doc = Array();
+    var $response_doc = Array();
     public function request(Request $request,  $parter_id, $request_id)
     {
         $data = null;
+        $this->path = $request->decodedPath();
 
         if ($request->has('data')) {
           // celowe przekształcanie na tablicę, ze względu na wydajność i możliwość walidowania przez framework
@@ -31,7 +33,6 @@ class RequestCtrl extends BaseController
         }
 
         if ($data === null) {
-          //skorzystać z kodów w Response jezeli bedziemy zwracac kody http bezposrednio (a nie np. w jsonie zawsze z http 200 ok)
           abort(Response::HTTP_BAD_REQUEST);
         }
         
@@ -42,9 +43,57 @@ class RequestCtrl extends BaseController
         if(!$this->partner->isAuth()) {
             abort(Response::HTTP_FORBIDDEN);
         }
-    
         $this->partnerCode = $this->partner->getCode();
         $this->data = $data;
+        
+        $this->quoteLog();
+        
+    }
+    /**
+     * Metoda zapisuje do bazy odpowiedz przekazana klientowi.
+     * Dopisuje przy tym response_doc do istniejącego quote_doc
+     */
+    public function __destruct() {
+        $collection = $this->mongoDB->selectCollection(CP_QUOTES_REF);
+        
+        $this->quote_doc[$this->path][date('YmdHis')]['response'] = $this->response_doc;
+        unset($this->quote_doc['quote_ref']);
+        $collection->update(Array('_id'=>$this->quote_doc['_id']),$this->quote_doc);
+    }
+    
+    /**
+     * Jeśli przekazano w zapytaniu quote_ref i istnieje w bazie zapis o takim _id,
+     * metoda pobiera z bazy istniejący dokument. W przeciwnym wypadku usiłuje go stworzyć.
+     * Jeśli przekazano błędny quote_ref lub w bazie istnieje więcej niż jeden rekord o danym ID (praktycznie nie możliwe)
+     * Zwracany jest komunikat błędu.
+     * 
+     */
+    protected function quoteLog(){
+        $this->quote_doc = Array();
+        $collection = $this->mongoDB->selectCollection(CP_QUOTES_REF);
+        if(!empty($this->data['quote_ref'])){
+            $dbRef = substr($this->data['quote_ref'], 0,24);
+            $cursor = $collection->find(Array('_id'=>new \MongoId($dbRef) ) );
+            $cnt = $cursor->count();
+            if($cnt!=1){
+                if($cnt==0){ abort(Response::HTTP_NOT_ACCEPTABLE);}
+                elseif($cnt>1){ abort(Response::HTTP_INTERNAL_SERVER_ERROR);}
+            }
+            else{
+                $res = iterator_to_array($cursor);
+                $this->quote_doc = $res[0];
+            }
+        }else{
+            
+            $this->quote_doc['partnerCode'] = $this->partnerCode;
+            $this->quote_doc['path'] = $this->path;
+            $this->quote_doc[$this->path][date('YmdHis')]['esb_id'] = $this->request_id;
+            $this->quote_doc[$this->path][date('YmdHis')]['request'] = $this->data;
+            $resp = $collection->insert($this->quote_doc,array('w'));
+            
+            
+        }
+        $this->quote_doc['quote_ref'] = $this->quote_doc['_id']->__toString();
         
     }
 }
