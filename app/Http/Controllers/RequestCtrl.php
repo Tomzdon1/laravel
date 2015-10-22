@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response as Response;
     define('CP_PARTNERS_COL','partners');
     define('CP_TRAVEL_OFFERS_COL','travel_offers');
     define('CP_QUOTES_REF','quotes');
+    define('CP_POLICIES','policies');
     define('OFFERS_STD_PARTNER','STD');
     define('EXCEL_DIR','./excels');
 
