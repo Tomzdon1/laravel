@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\apiModels\travel\v1\Controllers;
 use Log;
 use Cache;
 use Validator;
