@@ -1,0 +1,1042 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Travel API",
+        "description": "Interfejs do sprzedaży produktów turystycznych oferowanych przez Towarzystwo Ubezpieczeń Europa S. A.",
+        "version": "1.3.7",
+        "termsOfService": "Warunki usługi wymagają uzupełnienia",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.tueuropa.pl",
+            "email": "apisupport@tueuropa.pl"
+        }
+    },
+    "host": "api.tueuropa.pl",
+    "schemes": [
+        "https"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/travel/v1/get_quotes": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Pobranie ofert",
+                "description": "Funkcja zwraca dostępne oferty. Oferty posiadają orientacyjną składkę, która może w docelowej polisie mieć inną wartość, ze względu na stosowanie różnych zniżek/zwyżek ustalanych na etapie wystawiania właściwej polisy. Zwracana składka może być wykorzystywana np. w porównywarkach lub we wstępnej kalkulacji składki dla klienta.",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "Zestaw danych do pobrania ofert",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/QUOTE_REQUEST"
+                        }
+                    },
+                    {
+                        "name": "customer_id",
+                        "in": "query",
+                        "description": "Identyfikator klienta otrzymany od TU Europa (parametr uzupełniany automatycznie przy połączeniu przez ESB).",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "request_id",
+                        "in": "query",
+                        "description": "Identyfikator żądania (parametr uzupełniany automatycznie przy połączeniu przez ESB).",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tablica ofert",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/QUOTE"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/travel/v1/calculate_policy": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Kalkulacja polisy",
+                "description": "Funkcja przeprowadza kalkulację polisy. Zwrócona składka polisy będzie mieć taką samą wartość jaką miałaby składka polisy utworzona dla podanych danych.",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "Zestaw danych do kalkulacji polisy",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CALCULATE_REQUEST"
+                        }
+                    },
+                    {
+                        "name": "customer_id",
+                        "in": "query",
+                        "description": "Identyfikator klienta otrzymany od TU Europa (parametr uzupełniany automatycznie przy połączeniu przez ESB).",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "request_id",
+                        "in": "query",
+                        "description": "Identyfikator żądania (parametr uzupełniany automatycznie przy połączeniu przez ESB).",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Kalkulacja polisy",
+                        "schema": {
+                            "$ref": "#/definitions/CALCULATE"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/travel/v1/issue_policy": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Zgłoszenie polisy",
+                "description": "Funkcja tworzy polisę w systemie ubezpieczyciela.",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "Kalkulacja, na podstawie której zostanie utworzona polisa.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CALCULATE"
+                        }
+                    },
+                    {
+                        "name": "customer_id",
+                        "in": "query",
+                        "description": "Identyfikator klienta otrzymany od TU Europa (parametr uzupełniany automatycznie przy połączeniu przez ESB).",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "request_id",
+                        "in": "query",
+                        "description": "Identyfikator żądania (parametr uzupełniany automatycznie przy połączeniu przez ESB).",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Polisa",
+                        "schema": {
+                            "$ref": "#/definitions/POLICY"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/travel/v1/search_policies": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Wyszukiwanie polis",
+                "description": "Funkcja wyszukuje polisy na podstawie podanych danch. W przypadku niepodania żadnych danych funkcja zwróci pustą tablicę.",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "Parametry wyszukiwania polis",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/POLICIES_SEARCH"
+                        }
+                    },
+                    {
+                        "name": "customer_id",
+                        "in": "query",
+                        "description": "Identyfikator klienta otrzymany od TU Europa (parametr uzupełniany automatycznie przy połączeniu przez ESB).",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "request_id",
+                        "in": "query",
+                        "description": "Identyfikator żądania (parametr uzupełniany automatycznie przy połączeniu przez ESB).",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tablica polis",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/POLICY"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/travel/v1/import_policies": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Import gotowych polis do systemu",
+                "description": "Funkcja zapisuje polisy w systemie TU.",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "Parametry zapisywanej polisy",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/IMPORT_REQUEST"
+                            }
+                        }
+                    },
+                    {
+                        "name": "customer_id",
+                        "in": "query",
+                        "description": "Identyfikator klienta otrzymany od TU Europa (parametr uzupełniany automatycznie przy połączeniu przez ESB).",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "request_id",
+                        "in": "query",
+                        "description": "Identyfikator żądania (parametr uzupełniany automatycznie przy połączeniu przez ESB).",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Potwierdzenie importu"
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "ADDRESS": {
+            "type": "object",
+            "description": "Dane adresowe",
+            "properties": {
+                "country": {
+                    "type": "string",
+                    "pattern": "^[A-Z]{2}$",
+                    "description": "Kraj (kod kraju zgodny z ISO 3166-1 alpha-2)"
+                },
+                "post_code": {
+                    "type": "string",
+                    "description": "Kod pocztowy"
+                },
+                "city": {
+                    "type": "string",
+                    "description": "Miejscowość"
+                },
+                "street": {
+                    "type": "string",
+                    "description": "Ulica"
+                },
+                "house_no": {
+                    "type": "string",
+                    "description": "Numer domu"
+                },
+                "flat_no": {
+                    "type": "string",
+                    "description": "Numer mieszkania"
+                }
+            },
+            "required": [
+                "country",
+                "post_code",
+                "city",
+                "street",
+                "house_no"
+            ],
+            "example": {
+                "country": "PL",
+                "post_code": "53-413",
+                "city": "Wrocław",
+                "street": "Gwiaździsta",
+                "house_no": 62,
+                "flat_no": 6
+            }
+        },
+        "AGREEMENT": {
+            "type": "object",
+            "description": "Zgoda (np. marketingowa)",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "description": "Treść zgody"
+                },
+                "value": {
+                    "type": "boolean",
+                    "description": "Wartość zgody"
+                },
+                "code": {
+                    "type": "string",
+                    "description": "Kod zgody"
+                }
+            },
+            "required": [
+                "description",
+                "value",
+                "code"
+            ],
+            "example": {
+                "description": "Oświadczam, iż przed zawarciem umowy ubezpieczeniowej zapoznałem się z Ogólnymi Warunkami Ubezpieczenia, na podstawie których zostałem objęty ochroną ubezpieczeniową przez TU Europa S.A.",
+                "value": true,
+                "code": "zgodam"
+            }
+        },
+        "AMOUNT": {
+            "type": "object",
+            "description": "Składka",
+            "properties": {
+                "value_base": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Kwota składki w walucie podstawowej"
+                },
+                "value_base_currency": {
+                    "type": "string",
+                    "pattern": "^[A-Z]{3}$",
+                    "description": "Waluta podstawowa (kod waluty zgodny z ISO 4217)"
+                },
+                "value": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Kwota składki"
+                },
+                "value_currency": {
+                    "type": "string",
+                    "pattern": "^[A-Z]{3}$",
+                    "description": "Waluta (kod waluty zgodny z ISO 4217)"
+                },
+                "currency_rate": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Kurs waluty"
+                },
+                "date_rate": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Data kursu"
+                }
+            },
+            "required": [
+                "value_base",
+                "value_base_currency",
+                "value",
+                "value_currency",
+                "currency_rate",
+                "date_rate"
+            ],
+            "example": {
+                "value_base": 100.23,
+                "value_base_currency": "PLN",
+                "value": 29,
+                "value_currency": "EUR",
+                "currency_rate": 3.4567,
+                "date_rate": "2014-01-01T00:00:00.000Z"
+            }
+        },
+        "CALCULATE": {
+            "type": "object",
+            "description": "Kalkulacja",
+            "properties": {
+                "request": {
+                    "$ref": "#/definitions/CALCULATE_REQUEST",
+                    "description": "Zapytanie, na podstawie którego obliczono amount i wartość promo_code_valid"
+                },
+                "amount": {
+                    "$ref": "#/definitions/AMOUNT",
+                    "description": "Obiekt z informacją o składce"
+                },
+                "promo_code_valid": {
+                    "type": "boolean",
+                    "description": "Czy kod promocyjny jest ważny i został uwzględniony"
+                }
+            },
+            "required": [
+                "request",
+                "amount"
+            ],
+            "example": {
+                "request": {},
+                "amount": {},
+                "promo_code_valid": true
+            }
+        },
+        "CALCULATE_REQUEST": {
+            "type": "object",
+            "description": "Zestaw danych do kalkulacji polisy",
+            "properties": {
+                "quote_ref": {
+                    "type": "string",
+                    "description": "Identyfikator oferty"
+                },
+                "data": {
+                    "$ref": "#/definitions/POLICY_DATA",
+                    "description": "Dane polisy"
+                },
+                "policy_holder": {
+                    "$ref": "#/definitions/POLICY_HOLDER",
+                    "description": "Dane ubezpieczającego"
+                },
+                "insured": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/INSURED"
+                    },
+                    "description": "Dane ubezpieczonych"
+                }
+            },
+            "required": [
+                "quote_ref",
+                "data",
+                "policy_holder",
+                "insured"
+            ],
+            "example": {
+                "quote_ref": "55ac435aabb4760c03fc3568",
+                "data": {},
+                "policy_holder": {},
+                "insured": [
+                    {},
+                    {}
+                ]
+            }
+        },
+        "IMPORT_REQUEST": {
+            "type": "object",
+            "description": "Zestaw danych do zapisania gotowej polisy",
+            "properties": {
+                "product_ref": {
+                    "type": "string",
+                    "description": "Identyfikator produktu"
+                },
+                "sign_date": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "data": {
+                    "$ref": "#/definitions/POLICY_DATA",
+                    "description": "Dane polisy"
+                },
+                "policy_holder": {
+                    "$ref": "#/definitions/POLICY_HOLDER",
+                    "description": "Dane ubezpieczającego"
+                },
+                "insured": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/INSURED"
+                    },
+                    "description": "Dane ubezpieczonych"
+                }
+            },
+            "required": [
+                "product_ref",
+                "data",
+                "policy_holder",
+                "insured"
+            ],
+            "example": {
+                "quote_ref": "55ac435aabb4760c03fc3568",
+                "data": {},
+                "policy_holder": {},
+                "insured": [
+                    {},
+                    {}
+                ]
+            }
+        },
+        "DETAIL": {
+            "type": "object",
+            "description": "Detal oferty",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Nazwa detalu"
+                },
+                "value": {
+                    "type": "string",
+                    "description": "Wartość detalu"
+                }
+            },
+            "required": [
+                "name",
+                "value"
+            ],
+            "example": {
+                "name": "Koszty leczenia",
+                "value": "100 000 PLN"
+            }
+        },
+        "INSURED": {
+            "type": "object",
+            "description": "Ubezpieczony",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/PERSON_DATA",
+                    "description": "Dane osobowe"
+                },
+                "address": {
+                    "$ref": "#/definitions/ADDRESS",
+                    "description": "Dane adresowe"
+                },
+                "option_values": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/OPTION_VALUE"
+                    },
+                    "description": "Tablica wartości dodatkowych atrybutów"
+                }
+            },
+            "required": [
+                "data",
+                "option_values"
+            ],
+            "example": {
+                "data": {},
+                "address": {},
+                "option_values": [
+                    {
+                        "code": "student",
+                        "selected": true
+                    },
+                    {
+                        "code": "pensioner",
+                        "selected": false
+                    }
+                ]
+            }
+        },
+        "OPTION_DEFINITION": {
+            "type": "object",
+            "description": "Definicja atrybutu",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Nazwa atrybutu"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Opis atrybutu"
+                },
+                "code": {
+                    "type": "string",
+                    "description": "Kod atrybutu"
+                },
+                "value_type": {
+                    "type": "string",
+                    "default": "string",
+                    "enum": [
+                        "string",
+                        "number",
+                        "date",
+                        "boolean"
+                    ],
+                    "description": "Oczekiwany typ danych wartości atrybutu"
+                },
+                "changeable": {
+                    "type": "boolean",
+                    "description": "Czy jest możliwa zmiana wartości tego atrybutu"
+                },
+                "sub_options": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/OPTION_DEFINITION"
+                    },
+                    "description": "Tablica definicji atrybutów"
+                }
+            },
+            "required": [
+                "name",
+                "description",
+                "code",
+                "value_type",
+                "changeable"
+            ],
+            "example": {
+                "name": "Komfortowa Kieszeń",
+                "description": "Komfortowa Kieszeń - ubezpieczenie telefonu komórkowego, dokumentów, portfela od kradzieży z włamaniem i rabunku podczas podróży.",
+                "code": "TWKK",
+                "value_type": "number",
+                "changeable": true,
+                "sub_options": [
+                    {},
+                    {}
+                ]
+            }
+        },
+        "OPTION_VALUE": {
+            "type": "object",
+            "description": "Wartość atrybutu",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "description": "Kod atrybutu"
+                },
+                "value": {
+                    "type": "string",
+                    "description": "Wartość atrybutu"
+                },
+                "sub_options": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/OPTION_VALUE"
+                    },
+                    "description": "Tablica wartości dodatkowych atrybutów"
+                }
+            },
+            "required": [
+                "code",
+                "value"
+            ],
+            "example": {
+                "code": "TWKK",
+                "value": 5000,
+                "sub_options": [
+                    {
+                        "code": "DHDHDH",
+                        "selected": true
+                    },
+                    {
+                        "code": "DHDAAS",
+                        "selected": false
+                    }
+                ]
+            }
+        },
+        "PERSON_DATA": {
+            "type": "object",
+            "description": "Dane osobowe",
+            "properties": {
+                "first_name": {
+                    "type": "string",
+                    "description": "Imię"
+                },
+                "last_name": {
+                    "type": "string",
+                    "description": "Nazwisko"
+                },
+                "birth_date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Data urodzenia"
+                },
+                "pesel": {
+                    "type": "string",
+                    "description": "Numer PESEL",
+                    "pattern": "^[0-9]{11}$"
+                },
+                "nationality": {
+                    "type": "string",
+                    "pattern": "^[A-Z]{2}$",
+                    "description": "Obywatelstwo (kod kraju zgodny z ISO 3166-1 alpha-2)"
+                },
+                "document_no": {
+                    "type": "string",
+                    "description": "Numer dokumentu tożsamości"
+                }
+            },
+            "required": [
+                "first_name",
+                "last_name",
+                "birth_date",
+                "nationality"
+            ],
+            "example": {
+                "first_name": "Jan",
+                "last_name": "Kowalski",
+                "birth_date": "1950-11-25T00:00:00.000Z",
+                "pesel": 50112502677,
+                "nationality": "PL",
+                "document_no": "AJG122578"
+            }
+        },
+        "POLICIES_SEARCH": {
+            "type": "object",
+            "description": "Parametry wyszukiwania polis",
+            "properties": {
+                "date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Dzień utworzenia polisy"
+                },
+                "policy_ref": {
+                    "type": "string",
+                    "description": "Identyfikator polisy"
+                }
+            },
+            "example": {
+                "date": "2015-11-25T00:00:00.000Z",
+                "policy_ref": "TW_IND000012345"
+            }
+        },
+        "POLICY": {
+            "type": "object",
+            "description": "Polisa",
+            "properties": {
+                "calculate": {
+                    "$ref": "#/definitions/CALCULATE",
+                    "description": "Kalkulacja na podstawie której utworzono polisę"
+                },
+                "policy_ref": {
+                    "type": "string",
+                    "description": "Identyfikator polisy"
+                },
+                "policy_date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Data utworzenia polisy"
+                }
+            },
+            "required": [
+                "calculate",
+                "policy_ref",
+                "policy_date"
+            ],
+            "example": {
+                "calculate": {},
+                "policy_ref": "TW_IND000012345",
+                "policy_date": "2015-11-25T00:00:00.000Z"
+            }
+        },
+        "POLICY_DATA": {
+            "type": "object",
+            "description": "Dane polisy",
+            "properties": {
+                "promo_code": {
+                    "type": "string",
+                    "description": "Kod promocyjny"
+                },
+                "start_date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Data rozpoczęcia ochrony"
+                },
+                "end_date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Data zakończenia ochrony"
+                },
+                "abroad": {
+                    "type": "boolean",
+                    "description": "Czy ubezpieczony przebywa za granicą Polski w momencie przystąpienia do ubezpieczenia (jeżeli tak jego ubezpieczenie może rozpocząć się (start_date) najwcześniej po upływie 2 dni od daty zawarcia ubezpieczenia)"
+                },
+                "destination": {
+                    "type": "string",
+                    "pattern": "^[A-Z]{2}$",
+                    "description": "Cel podróży (kod kraju określony w ISO 3166-1 alpha-2 lub EU - Unia Europejska lub WR - świat)"
+                },
+                "option_values": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/OPTION_VALUE"
+                    },
+                    "description": "Tablica wartości dodatkowych atrybutów"
+                }
+            },
+            "required": [
+                "start_date",
+                "end_date",
+                "abroad"
+            ],
+            "example": {
+                "promo_code": "KOD2002",
+                "start_date": "2001-02-02T00:00:00.000Z",
+                "end_date": "2001-02-10T00:00:00.000Z",
+                "abroad": true,
+                "destination": "EU",
+                "option_values": [
+                    {
+                        "code": "DHDHDH",
+                        "selected": true
+                    },
+                    {
+                        "code": "DHDAAS",
+                        "selected": false
+                    }
+                ]
+            }
+        },
+        "POLICY_HOLDER": {
+            "type": "object",
+            "description": "Ubezpieczający",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/PERSON_DATA",
+                    "description": "Dane osobowe"
+                },
+                "address": {
+                    "$ref": "#/definitions/ADDRESS",
+                    "description": "Dane adresowe"
+                },
+                "email": {
+                    "type": "string",
+                    "description": "Adres e-mail"
+                },
+                "telephone": {
+                    "type": "string",
+                    "description": "Numer telefonu",
+                    "pattern": "^\\+((48[0-9]{9})|((?!48)[0-9]{6,15}))$"
+                },
+                "agreements": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/AGREEMENT"
+                    },
+                    "description": "Informacja o wyrażonych/odrzuconych zgodach"
+                }
+            },
+            "required": [
+                "data",
+                "address",
+                "email",
+                "telephone",
+                "agreements"
+            ],
+            "example": {
+                "data": {},
+                "address": {},
+                "email": "j.kowalski@poczta.pl",
+                "telephone": 48123456789,
+                "agreements": {}
+            }
+        },
+        "PREPERSON": {
+            "type": "object",
+            "description": "Podstawowe dane osobowe",
+            "properties": {
+                "birth_date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Data urodzenia"
+                },
+                "option_values": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/OPTION_VALUE"
+                    },
+                    "description": "Tablica wartości dodatkowych atrybutów"
+                }
+            },
+            "required": [
+                "birth_date"
+            ],
+            "example": {
+                "birth_date": "1950-11-25T00:00:00.000Z",
+                "option_values": [
+                    {
+                        "code": "student",
+                        "selected": true
+                    },
+                    {
+                        "code": "pensioner",
+                        "selected": false
+                    }
+                ]
+            }
+        },
+        "QUOTE": {
+            "type": "object",
+            "description": "Oferta",
+            "properties": {
+                "quote_ref": {
+                    "type": "string",
+                    "description": "Identyfikator oferty"
+                },
+                "amount": {
+                    "$ref": "#/definitions/AMOUNT",
+                    "description": "Składka"
+                },
+                "promo_code_valid": {
+                    "type": "string",
+                    "description": "Czy kod promocyjny jest prawidłowy"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Opis wariantu"
+                },
+                "details": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/DETAIL"
+                    },
+                    "description": "Tablica detali oferty"
+                },
+                "option_definitions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/OPTION_DEFINITION"
+                    },
+                    "description": "Definicje atrybutów, które można użyć do kalkulacji (nie wolno zmieniać wartości atrybutów, dla których pole changable == false)"
+                },
+                "option_values": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/OPTION_VALUE"
+                    },
+                    "description": "Wartości, które zostały użyte do kalkulacji"
+                }
+            },
+            "required": [
+                "quote_ref",
+                "amount",
+                "description",
+                "details"
+            ],
+            "example": {
+                "quote_ref": "54fc43dfabb4760c04dc3569",
+                "amount": {},
+                "promo_code_valid": true,
+                "description": "Travel World Standard",
+                "details": {},
+                "option_definitions": {},
+                "option_values": {}
+            }
+        },
+        "QUOTE_REQUEST": {
+            "type": "object",
+            "description": "Zestaw danych do pobrania ofert",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/POLICY_DATA",
+                    "description": "Dane do kalkulacji oferty"
+                },
+                "prepersons": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/PREPERSON"
+                    },
+                    "description": "Wstępne informacje o ubezpieczonych"
+                }
+            },
+            "required": [
+                "data",
+                "prepersons"
+            ],
+            "example": {
+                "data": {},
+                "prepersons": [
+                    {},
+                    {}
+                ]
+            }
+        },
+        "ERROR": {
+            "type": "object",
+            "description": "Błąd",
+            "properties": {
+                "property": {
+                    "type": "string",
+                    "description": "Nazwa atrybutu, którego dotyczą błędy"
+                },
+                "errors": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Opis błędu"
+                    },
+                    "description": "Tablica opisów błędów"
+                }
+            },
+            "required": [
+                "property",
+                "errors"
+            ],
+            "example": {
+                "property": "end_date",
+                "errors": [
+                    "Data zakończenie nie może być wcześniejsza niż data rozpoczęcia",
+                    "Data zakończenia nie może być pusta"
+                ]
+            }
+        }
+    }
+}
