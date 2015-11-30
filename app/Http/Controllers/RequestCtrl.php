@@ -16,15 +16,15 @@ use Symfony\Component\HttpFoundation\Response as Response;
     define('CP_QUOTES_REF','quotes');
     define('CP_POLICIES','policies');
     define('OFFERS_STD_PARTNER','STD');
-    define('EXCEL_DIR','./excels');
-
+    define('EXCEL_DIR','./excels');       
+    
 class RequestCtrl extends BaseController
 {
     var $data, $response=null;
     var $quote_doc = Array();
     var $response_doc = Array();
     public function request(Request $request,  $parter_id, $request_id, $force_create_new_quote_log = false)
-    {
+    {       
         $data = null;
         $this->path = $request->decodedPath();
 

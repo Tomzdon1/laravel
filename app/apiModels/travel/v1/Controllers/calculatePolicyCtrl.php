@@ -32,7 +32,7 @@ var $partner,$excelPath;
         $this->objSer = new \App\apiModels\ObjectSerializer();
         $this->calculate_request = $this->objSer->deserialize($this->data, '\App\apiModels\travel\v1\prototypes\CALCULATEREQUEST');
 
-        $this->response = $this->response_doc = $this->calculatePolicy($this->data);
+        $this->response = $this->response_doc = $this->x($this->data);
 
         return $this->response; //response()->json($this->response);
     }

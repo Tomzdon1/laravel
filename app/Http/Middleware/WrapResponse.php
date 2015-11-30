@@ -16,13 +16,13 @@ class WrapResponse
      */
     public function handle($request, Closure $next)
     {
-        $response = $next($request);
-
-        $content = json_decode($response->getContent());
-        $wrapped = json_encode(['status' => $response->getStatusCode(), 'data' => $content]);
-        $response->setContent($wrapped);
-        $response->setStatusCode(Response::HTTP_OK);
-
+        \Log::debug('WrapResponse');
+        $response = $next($request);                
+//        $content = json_decode($response->getContent());
+//        $wrapped = json_encode(['status' => $response->getStatusCode(), 'data' => $content]);
+//        $response->setContent($wrapped);
+//        $response->setStatusCode(Response::HTTP_OK);
+//        \Log::debug('WrapResponse End');
         return $response;
     }
 }

@@ -19,6 +19,7 @@ class RequestValidate
      */
     public function handle($request, Closure $next, $apiDefinitionPath, $errorClass)
     {
+        \Log::debug('RequestValidate');
         $responseBody = json_decode($request->input('data'));
 
         $path = $request->getPathInfo();
