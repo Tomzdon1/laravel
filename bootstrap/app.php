@@ -63,11 +63,11 @@ $app->middleware([
     // Illuminate\Session\Middleware\StartSession::class,
     // Illuminate\View\Middleware\ShareErrorsFromSession::class,
     // Laravel\Lumen\Http\Middleware\VerifyCsrfToken::class,
-    App\Http\Middleware\WrapResponse::class,
+    App\Http\Middleware\WrapResponse::class,    
 ]);
 
 $app->routeMiddleware([
-    'request_validate' => 'App\Http\Middleware\RequestValidate',
+    'request_validate' => 'App\Http\Middleware\RequestValidate',   
 ]);
 
 /*
@@ -84,6 +84,7 @@ $app->routeMiddleware([
 $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(App\Providers\EsbServiceProvider::class);
+$app->register(App\Providers\PrintOutServiceProvider::class);
 $app->register(Monarobase\CountryList\CountryListServiceProvider::class);
 
  
