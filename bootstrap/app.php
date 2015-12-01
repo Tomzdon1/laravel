@@ -103,4 +103,8 @@ $app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
     require __DIR__.'/../app/Http/routes.php';
 });
 
+$app->group(['prefix'=>'tools','namespace' => 'App\apiModels\Tools'], function ($app) {
+    $app->get('echo','echoCtrl@request');
+});
+
 return $app;
