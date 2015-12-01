@@ -16,13 +16,17 @@ class WrapResponse
      */
     public function handle($request, Closure $next)
     {
-        \Log::debug('WrapResponse');
+        /* @var $response Response */        
         $response = $next($request);                
-//        $content = json_decode($response->getContent());
-//        $wrapped = json_encode(['status' => $response->getStatusCode(), 'data' => $content]);
-//        $response->setContent($wrapped);
-//        $response->setStatusCode(Response::HTTP_OK);
-//        \Log::debug('WrapResponse End');
+        
+        /* Wrapper should only work for json */
+        if ($response->headers->contains('Content-Type','application/json')) {
+            
+            $content = json_decode($response->getContent());
+            $wrapped = json_encode(['status' => $response->getStatusCode(), 'data' => $content]);
+            $response->setContent($wrapped);
+            $response->setStatusCode(Response::HTTP_OK);
+        }
         return $response;
     }
 }
