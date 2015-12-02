@@ -96,7 +96,7 @@ var $productRefArray = Array();
             if ($dbOffer['configuration']['quotation']['type'] == 'formula')
                 $offer->calculateAmount($dbOffer['configuration']);
             elseif ($dbOffer['configuration']['quotation']['type'] == 'excel'){
-                $excelPath = EXCEL_DIR . '/' . $dbOffer['configuration']['quotation']['file'];
+                $excelPath = env('EXCEL_DIRECTORY') . '/' . $dbOffer['configuration']['quotation']['file'];
                 $excelFile = $this->loadExcelFile($excelPath);
                 $offer->calculateExcelAmount($dbOffer['configuration'],$excelFile,$this->quote_request);
             }

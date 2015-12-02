@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response as Response;
     define('CP_QUOTES_REF','quotes');
     define('CP_POLICIES','policies');
     define('OFFERS_STD_PARTNER','STD');
-    define('EXCEL_DIR','./excels');       
+    // define('EXCEL_DIR','./excels');
     
 class RequestCtrl extends BaseController
 {

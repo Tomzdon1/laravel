@@ -18,4 +18,6 @@ $app->group([
     ], function ($app) {
         $app->post('get_quotes','getQuotesCtrl@request');
         $app->post('calculate_policy','calculatePolicyCtrl@request');        
+        $app->post('import_policies','importPoliciesCtrl@request');
+
 });
