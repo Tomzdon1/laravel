@@ -937,8 +937,16 @@
                 "policy_ref": {
                     "type": "string",
                     "description": "Identyfikator polisy"
+                },
+                "quote_ref": {
+                    "type": "string",
+                    "description": "Identyfikator oferty"
                 }
             },
+            "required": [
+                "policy_ref",
+                "quote_ref"
+            ],
             "example": {
                 "policy_ref": "TW_IND000012345"
             }
