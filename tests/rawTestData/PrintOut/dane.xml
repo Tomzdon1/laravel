@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Requests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Requests.xsd">
+<Request>
+<listOfData>
+<Data>
+        <DataFields  filename="201310010914540">
+                <Field name="LP" type="string" value="1" /> 
+                <Field name="CERTYFIKAT" type="string" value="BIXIM10011070700000001" /> 
+                <Field name="UBEZPIECZONY" type="string" value="MAŁGORZATA CZEPIEC" /> 
+                <Field name="DATA_URODZENIA" type="string" value="13.09.1971" /> 
+                <Field name="SKLADKA" type="string" value="" /> 
+                <Field name="OPLATA" type="string" value="" /> 
+                <Field name="SKLADKA_INW" type="string" value="" /> 
+                <Field name="SUMA_ZYCIE" type="string" value="       6 400,00" /> 
+                <Field name="SUMA_DOZYCIE" type="string" value="" /> 
+                <Field name="WALUTA" type="string" value="PLN" /> 
+                <Field name="WARIANT" type="string" value="I" /> 
+                <Field name="TARYFA_Y" type="string" value="" /> 
+                <Field name="LMTRU" type="string" value="18" /> 
+                <Field name="LMTRU_1" type="string" value="17" /> 
+                <Field name="DATA_OD" type="string" value="08.07.2011" /> 
+                <Field name="DATA_DO" type="string" value="08.01.2013" /> 
+                <Field name="DATA_ZAPLATY" type="string" value="20.07.2011" /> 
+                <Field name="DATA_DO_CL" type="string" value="" /> 
+                <Field name="NR1" type="string" value="" /> 
+                <Field name="UPRAWNIONY1" type="string" value="" /> 
+                <Field name="PESEL_UPR1" type="string" value="" /> 
+                <Field name="NR2" type="string" value="" /> 
+                <Field name="UPRAWNIONY2" type="string" value="" /> 
+                <Field name="PESEL_UPR2" type="string" value="" /> 
+                <Field name="NR3" type="string" value="" /> 
+                <Field name="UPRAWNIONY3" type="string" value="" /> 
+                <Field name="PESEL_UPR3" type="string" value="" /> 
+                <Field name="NR4" type="string" value="" /> 
+                <Field name="UPRAWNIONY4" type="string" value="" /> 
+                <Field name="PESEL_UPR4" type="string" value="" /> 
+                <Field name="SKLADKA_INW_DBMIX" type="string" value="" /> 
+                <Field name="SKLADKA_LOK_DBMIX" type="string" value="" /> 
+                <Field name="SUMA_ZYCIE_INW_DBMIX" type="string" value="" /> 
+                <Field name="SUMA_ZYCIE_LOK_DBMIX" type="string" value="" /> 
+                <Field name="SUMA_DOZYCIE_LOK_DBMIX" type="string" value="" /> 
+                <Field name="SKLADKA1" type="string" value="" /> 
+                <Field name="SKLADKA_REG" type="string" value="" /> 
+                <Field name="SPM_RACH" type="string" value="76105000995968012018500001" /> 
+                <Field name="SPM_RACH_DOD" type="string" value="" /> 
+                <Field name="UFK_CZEST_OPL_SKLADKI" type="string" value="" /> 
+                <Field name="LICZBA_JEDNOSTEK" type="string" value="           0,00000" /> 
+                <Field name="JEDNOSTKA_NAZWA" type="string" value="INICJATYWA MIKRO SP. Z O. O." /> 
+                <Field name="EMAIL" type="string" value="" /> 
+                <Field name="PLEC" type="string" value="K" /> 
+                <Field name="PARTYCYPACJA" type="string" value="" /> 
+                <Field name="NAZWA_WARUNKU" type="string" value="" /> 
+                <Field name="OSWIADCZENIE" type="string" value="" /> 
+                <Field name="DATA_UBEZP" type="string" value="2011-07-07" /> 
+                <Field name="SKLADKA_CALA" type="string" value="          79,14" /> 
+                <Field name="SUMA_NW" type="string" value="" /> 
+                <Field name="UBNY_PESEL" type="string" value="71091303903" /> 
+                <Field name="UBNY_K_ULICA" type="string" value="BECKA" /> 
+                <Field name="UBNY_K_NR" type="string" value="41" /> 
+                <Field name="UBNY_K_NR_LOK" type="string" value="1" /> 
+                <Field name="UBNY_KOD" type="string" value="30-236" /> 
+                <Field name="UBNY_K_MIEJSCOWOSC" type="string" value="KRAKÓW" /> 
+                <Field name="UBNY_K_KRAJ" type="string" value="POLSKA" /> 
+		<Field name="BARCODE"  type="barcode" additional="CODE 39" value="GD CERT BIXIM10011070700000001"/>
+                </DataFields>  
+         </Data>
+</listOfData>
+</Request>
+</Requests>

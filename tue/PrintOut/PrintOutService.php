@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Connectors;
-
-
+namespace PrintOut;
 
 /**
  * Description of PrintOut_connector
@@ -11,18 +9,18 @@ namespace App\Connectors;
  * @author roznowski
  *  
  */
-class PrintOut_connector {
-        
+class PrintOutService {
+
+    
    
     /** @var \SoapClient SOAP Connection to Printut */
    private $soapconn;
     
     
-   public function __construct() {
-       \Log::debug("WSDL=".env('PRINTOUT_WSDL'));
+   public function __construct($wsdl_url) {       
         $this->soapconn = 
             new \SoapClient (
-                    env('PRINTOUT_WSDL')
+                    $wsdl_url
                     );               
     }
     
@@ -31,11 +29,12 @@ class PrintOut_connector {
      * 
      * @param type $template_name 
      * @param type $content_xml
-     * @return type $String pdfContent
+     * @return type PrintSingleFileResult pdfContent
      */
-    public function PrintSingleFile( $template_name,
-                                     $content_xml
-                                    )     
+    public function PrintPdf( $template_name,
+                            $content_xml,
+                            $type = FileType::PDF
+                             )     
     {
         try {
             $result = $this->soapconn->StartSingleFileProcess(
@@ -46,15 +45,13 @@ class PrintOut_connector {
                         )
             );
             
-            if (isset($result->file))
-            {
-                return $result->file;                    
-            }
-            else {
-                throw new Exception();
-            }
-            
-            
+            return 
+                new PrintSingleFileResult($result->isError ? null : $result->file   ,
+                                          $result->isError,
+                                          $result->errorMsg,
+                                          $type
+                                         );
+                        
         } catch (SoapFault $fault) {
             throw $fault ;          
         }                

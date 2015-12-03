@@ -2,7 +2,8 @@
 
 namespace App\Connectors;
 
-
+use PrintOut\PrintOutService;
+use PrintOut\PrintSingleFileResult;
 
 /**
  * Description of PrintOut_connector
@@ -11,53 +12,26 @@ namespace App\Connectors;
  * @author roznowski
  *  
  */
-class PrintOut_connector {
+class PrintOut_connector  {
         
    
-    /** @var \SoapClient SOAP Connection to Printut */
-   private $soapconn;
-    
-    
+   private $printoutservice;
+   
    public function __construct() {
        \Log::debug("WSDL=".env('PRINTOUT_WSDL'));
-        $this->soapconn = 
-            new \SoapClient (
-                    env('PRINTOUT_WSDL')
-                    );               
-    }
-    
-    
+       $this->printoutservice = new PrintOutService(env('PRINTOUT_WSDL'));
+       
+              
+   }
+   
     /**
      * 
      * @param type $template_name 
      * @param type $content_xml
-     * @return type $String pdfContent
-     */
-    public function PrintSingleFile( $template_name,
-                                     $content_xml
-                                    )     
-    {
-        try {
-            $result = $this->soapconn->StartSingleFileProcess(
-                        array(
-                            'templateid'=>$template_name,
-                            'xml'=>$content_xml,
-                            'format'=>'xml',                                    
-                        )
-            );
-            
-            if (isset($result->file))
-            {
-                return $result->file;                    
-            }
-            else {
-                throw new Exception();
-            }
-            
-            
-        } catch (SoapFault $fault) {
-            throw $fault ;          
-        }                
-                
+     * @return PrintSingleFileResult pdfContent
+     */      
+    public function PrintSingleFile($template_name,$content_xml){
+        return $this->printoutservice->PrintPdf($template_name, $content_xml);
     }
+   
 }

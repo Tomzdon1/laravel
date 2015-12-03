@@ -4,8 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Connectors;
+use Tue\Printing\PrinterFactory;
 
-class PrintOutServiceProvider extends ServiceProvider
+class PrintingServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
@@ -14,9 +15,9 @@ class PrintOutServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('PrintOut', function(){
+        $this->app->singleton('Printer', function(){
 
-            return new \App\Connectors\PrintOut_connector();
+            return PrinterFactory::getPdfPrinter(env("PRINTOUT_WSDL"));
 
         });
 
