@@ -84,7 +84,7 @@ $app->routeMiddleware([
 $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(App\Providers\EsbServiceProvider::class);
-$app->register(App\Providers\PrintingServiceProvider::class);
+$app->register(App\Providers\PdfPrintingServiceProvider::class);
 $app->register(Monarobase\CountryList\CountryListServiceProvider::class);
 
  

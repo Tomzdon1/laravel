@@ -6,16 +6,16 @@ use Illuminate\Support\ServiceProvider;
 use App\Connectors;
 use Tue\Printing\PrinterFactory;
 
-class PrintingServiceProvider extends ServiceProvider
+class PdfPrintingServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
      *
-     * @return void
+     * @return Tue\Printing\Printer
      */
     public function register()
     {
-        $this->app->singleton('Printer', function(){
+        $this->app->singleton('PdfPrinter', function(){
 
             return PrinterFactory::getPdfPrinter(env("PRINTOUT_WSDL"));
 

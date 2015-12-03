@@ -17,16 +17,17 @@ class echoCtrl extends  BaseController{
   {
       \Log::debug('File='.__FILE__);        
       \Log::debug('Dir='.__DIR__);
-      $content_xml = file_get_contents("C:\\Projekty\\PHP\\PrintOut\\Dane\\dane.xml");
+      \Log::debug(var_export(app()->path(),true));
+      $content_xml = file_get_contents(app()->path().'/../tests/rawTestData/PrintOut/dane.xml');      
       $template_name = "TESTCOM";
             
-      /* @var $printout PrintOutService */   
-      $printout = app()->make('PrintOut');
+      /* @var $printing Tue\Printing\Printer */   
+      $printing = app()->make('PdfPrinter');
       
      
-      $pdf =  app()->make('PrintOut')->PrintSingleFile( $template_name,$content_xml);
+      $pdf =  $printing->getDocument($template_name,$content_xml);
        
-      return (new Response($pdf->getFile()))->header('Content-Type',$pdf->getContentType());
+      return (new Response($pdf->File()))->header('Content-Type',$pdf->ContentType());
       //return new JsonResponse(["data"=>"data"]);
       //return \DateTime::createFromFormat('U.u', microtime(true))->format("YmdHisu");
     }

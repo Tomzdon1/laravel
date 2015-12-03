@@ -7,16 +7,16 @@ use App\Connectors\Exception;
  * Test usługi PrintOut.
  * @author roznowski
  */
-class PrintingServiceProviderTest extends TestCase {
+class PdfPrintingServiceProviderTest extends TestCase {
     
     
     public function testWorkingService(){
         
-        $this->app->register(App\Providers\PrintingServiceProvider::class);
+        $this->app->register(App\Providers\PdfPrintingServiceProvider::class);
         $file = file_get_contents(__DIR__."/rawTestData/PrintOut/dane.xml");
         
         /* @var $printer Tue\Printing\Printer */
-        $printer = $this->app->make('Printer'); 
+        $printer = $this->app->make('PdfPrinter'); 
         
         
         $doc = $printer->getDocument('TESTCOM', $file);
