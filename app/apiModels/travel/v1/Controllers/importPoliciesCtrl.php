@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response as Response;
 class importPoliciesCtrl extends RequestCtrl{
 var $partner;
   
-  public function request(Request $request,  $parter_id = null, $request_id = null)
+  public function request(Request $request,  $parter_id = null, $request_id = null,$create_new_quote_log = null)
   {
       $this->mongoClient = new \MongoClient("mongodb://" . env('MONGO_SRV') . ":" . env('MONGO_PORT'));
         $this->mongoDB = $this->mongoClient->selectDB(env('MONGO_CP_DB'));
