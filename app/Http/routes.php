@@ -17,7 +17,11 @@ $app->group([
     'namespace' => 'App\apiModels\travel\v1\Controllers'
     ], function ($app) {
         $app->post('get_quotes','getQuotesCtrl@request');
-        $app->post('calculate_policy','calculatePolicyCtrl@request');        
+        $app->post('calculate_policy','calculatePolicyCtrl@request');
+        $app->post('issue_policy','issuePolicyCtrl@request');
         $app->post('import_policies','importPoliciesCtrl@request');
+
+//        $app->post('{path:.*}', 'whoamiCtrl@showPost');
+    
 
 });
