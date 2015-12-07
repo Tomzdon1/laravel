@@ -11,6 +11,7 @@ class Partner{
   private $isAuthorized = false;
   private $partnerData =Array();
   private $name, $code, $dbId, $offerType;
+  private $customerId;
   public function __construct($customerId,$type) {
     $this->offerType = $type;
     
@@ -35,6 +36,11 @@ class Partner{
   public function getCode(){
     return $this->code;
   }
+  function getPartnerData() {
+    return $this->partnerData;
+  }
+
+
   
   public function partnerAuthAndConfig($customerId){
     $collection = $this->mongoDB->selectCollection(CP_PARTNERS_COL);
