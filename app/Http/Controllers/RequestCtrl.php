@@ -25,7 +25,17 @@ class RequestCtrl extends BaseController
     var $response_doc = Array();
     protected $quote_ref;
     public function request(Request $request,  $parter_id, $request_id, $force_create_new_quote_log = false)
-    {       
+    {
+        $this->mongoClient = new \MongoClient("mongodb://" . env('MONGO_SRV') . ":" . env('MONGO_PORT'));
+        $this->mongoDB = $this->mongoClient->selectDB(env('MONGO_CP_DB'));
+        if (!$parter_id) {
+            $parter_id = $request->input('customer_id');
+        }
+
+        if (!$request_id) {
+            $request_id = $request->input('request_id');
+        }
+        
         $data = null;
         $this->path = $request->decodedPath();
 
