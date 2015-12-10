@@ -54,5 +54,10 @@ class Partner{
       return true;
     
   }
+
+  public function getStdPartnerData() {
+    $collection = $this->mongoDB->selectCollection(CP_PARTNERS_COL);
+    return $collection->findOne(['code' => 'STD']);
+  }
   
 }
