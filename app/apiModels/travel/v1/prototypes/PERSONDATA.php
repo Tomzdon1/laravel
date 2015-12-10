@@ -44,7 +44,7 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class PERSONDATA extends \App\apiModels\ApiModel implements ArrayAccess
+class PERSONDATA   extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
@@ -56,7 +56,7 @@ class PERSONDATA extends \App\apiModels\ApiModel implements ArrayAccess
         'birth_date' => '\DateTime',
         'pesel' => 'string',
         'nationality' => 'string',
-        'address' => 'App\apiModels\travel\v1\prototypes\ADDRESS'
+        'document_no' => 'string'
     );
   
     /** 
@@ -69,7 +69,7 @@ class PERSONDATA extends \App\apiModels\ApiModel implements ArrayAccess
         'birth_date' => 'birth_date',
         'pesel' => 'pesel',
         'nationality' => 'nationality',
-        'address' => 'address'
+        'document_no' => 'document_no'
     );
   
     /**
@@ -82,7 +82,7 @@ class PERSONDATA extends \App\apiModels\ApiModel implements ArrayAccess
         'birth_date' => 'setBirthDate',
         'pesel' => 'setPesel',
         'nationality' => 'setNationality',
-        'address' => 'setAddress'
+        'document_no' => 'setDocumentNo'
     );
   
     /**
@@ -95,7 +95,7 @@ class PERSONDATA extends \App\apiModels\ApiModel implements ArrayAccess
         'birth_date' => 'getBirthDate',
         'pesel' => 'getPesel',
         'nationality' => 'getNationality',
-        'address' => 'getAddress'
+        'document_no' => 'getDocumentNo'
     );
   
     
@@ -130,10 +130,10 @@ class PERSONDATA extends \App\apiModels\ApiModel implements ArrayAccess
     protected $nationality;
     
     /**
-      * $address Dane adresowe
-      * @var App\apiModels\travel\v1\prototypes\ADDRESS
+      * $document_no Numer dokumentu tożsamości
+      * @var string
       */
-    protected $address;
+    protected $document_no;
     
 
     /**
@@ -148,7 +148,7 @@ class PERSONDATA extends \App\apiModels\ApiModel implements ArrayAccess
             $this->birth_date = $data["birth_date"];
             $this->pesel = $data["pesel"];
             $this->nationality = $data["nationality"];
-            $this->address = $data["address"];
+            $this->document_no = $data["document_no"];
         }
     }
     
@@ -258,23 +258,23 @@ class PERSONDATA extends \App\apiModels\ApiModel implements ArrayAccess
     }
     
     /**
-     * Gets address
-     * @return App\apiModels\travel\v1\prototypes\ADDRESS
+     * Gets document_no
+     * @return string
      */
-    public function getAddress()
+    public function getDocumentNo()
     {
-        return $this->address;
+        return $this->document_no;
     }
   
     /**
-     * Sets address
-     * @param App\apiModels\travel\v1\prototypes\ADDRESS $address Dane adresowe
+     * Sets document_no
+     * @param string $document_no Numer dokumentu tożsamości
      * @return $this
      */
-    public function setAddress($address)
+    public function setDocumentNo($document_no)
     {
         
-        $this->address = $address;
+        $this->document_no = $document_no;
         return $this;
     }
     

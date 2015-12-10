@@ -44,7 +44,7 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class POLICYDATA extends \App\apiModels\ApiModel implements ArrayAccess
+class POLICYDATA   extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
@@ -52,6 +52,7 @@ class POLICYDATA extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $swaggerTypes = array(
         'promo_code' => 'string',
+        'policy_number' => 'string',
         'start_date' => '\DateTime',
         'end_date' => '\DateTime',
         'abroad' => 'bool',
@@ -65,6 +66,7 @@ class POLICYDATA extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $attributeMap = array(
         'promo_code' => 'promo_code',
+        'policy_number' => 'policy_number',
         'start_date' => 'start_date',
         'end_date' => 'end_date',
         'abroad' => 'abroad',
@@ -78,6 +80,7 @@ class POLICYDATA extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $setters = array(
         'promo_code' => 'setPromoCode',
+        'policy_number' => 'setPolicyNumber',
         'start_date' => 'setStartDate',
         'end_date' => 'setEndDate',
         'abroad' => 'setAbroad',
@@ -91,6 +94,7 @@ class POLICYDATA extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $getters = array(
         'promo_code' => 'getPromoCode',
+        'policy_number' => 'getPolicyNumber',
         'start_date' => 'getStartDate',
         'end_date' => 'getEndDate',
         'abroad' => 'getAbroad',
@@ -106,6 +110,12 @@ class POLICYDATA extends \App\apiModels\ApiModel implements ArrayAccess
     protected $promo_code;
     
     /**
+      * $policy_number Numer polisy
+      * @var string
+      */
+    protected $policy_number;
+    
+    /**
       * $start_date Data rozpoczęcia ochrony
       * @var \DateTime
       */
@@ -118,7 +128,7 @@ class POLICYDATA extends \App\apiModels\ApiModel implements ArrayAccess
     protected $end_date;
     
     /**
-      * $abroad Czy ubezpieczony przebywa za granicą Polskiw momencie przystąpienia do ubezpieczenia (jeżeli tak jego ubezpieczenie może rozpocząć się (start_date) najwcześniej po upływie 2 dni od daty zawarcia ubezpieczenia)
+      * $abroad Czy ubezpieczony przebywa za granicą Polski w momencie przystąpienia do ubezpieczenia (jeżeli tak jego ubezpieczenie może rozpocząć się (start_date) najwcześniej po upływie 2 dni od daty zawarcia ubezpieczenia)
       * @var bool
       */
     protected $abroad;
@@ -144,6 +154,7 @@ class POLICYDATA extends \App\apiModels\ApiModel implements ArrayAccess
     {
         if ($data != null) {
             $this->promo_code = $data["promo_code"];
+            $this->policy_number = $data["policy_number"];
             $this->start_date = $data["start_date"];
             $this->end_date = $data["end_date"];
             $this->abroad = $data["abroad"];
@@ -170,6 +181,27 @@ class POLICYDATA extends \App\apiModels\ApiModel implements ArrayAccess
     {
         
         $this->promo_code = $promo_code;
+        return $this;
+    }
+    
+    /**
+     * Gets policy_number
+     * @return string
+     */
+    public function getPolicyNumber()
+    {
+        return $this->policy_number;
+    }
+  
+    /**
+     * Sets policy_number
+     * @param string $policy_number Numer polisy
+     * @return $this
+     */
+    public function setPolicyNumber($policy_number)
+    {
+        
+        $this->policy_number = $policy_number;
         return $this;
     }
     
@@ -226,7 +258,7 @@ class POLICYDATA extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets abroad
-     * @param bool $abroad Czy ubezpieczony przebywa za granicą Polskiw momencie przystąpienia do ubezpieczenia (jeżeli tak jego ubezpieczenie może rozpocząć się (start_date) najwcześniej po upływie 2 dni od daty zawarcia ubezpieczenia)
+     * @param bool $abroad Czy ubezpieczony przebywa za granicą Polski w momencie przystąpienia do ubezpieczenia (jeżeli tak jego ubezpieczenie może rozpocząć się (start_date) najwcześniej po upływie 2 dni od daty zawarcia ubezpieczenia)
      * @return $this
      */
     public function setAbroad($abroad)

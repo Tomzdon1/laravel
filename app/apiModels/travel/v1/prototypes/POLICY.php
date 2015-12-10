@@ -44,7 +44,7 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class POLICY extends \App\apiModels\ApiModel implements ArrayAccess
+class POLICY   extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
@@ -53,6 +53,7 @@ class POLICY extends \App\apiModels\ApiModel implements ArrayAccess
     static $swaggerTypes = array(
         'calculate' => 'App\apiModels\travel\v1\prototypes\CALCULATE',
         'policy_ref' => 'string',
+        'policy_number' => 'string',
         'policy_date' => '\DateTime'
     );
   
@@ -63,6 +64,7 @@ class POLICY extends \App\apiModels\ApiModel implements ArrayAccess
     static $attributeMap = array(
         'calculate' => 'calculate',
         'policy_ref' => 'policy_ref',
+        'policy_number' => 'policy_number',
         'policy_date' => 'policy_date'
     );
   
@@ -73,6 +75,7 @@ class POLICY extends \App\apiModels\ApiModel implements ArrayAccess
     static $setters = array(
         'calculate' => 'setCalculate',
         'policy_ref' => 'setPolicyRef',
+        'policy_number' => 'setPolicyNumber',
         'policy_date' => 'setPolicyDate'
     );
   
@@ -83,6 +86,7 @@ class POLICY extends \App\apiModels\ApiModel implements ArrayAccess
     static $getters = array(
         'calculate' => 'getCalculate',
         'policy_ref' => 'getPolicyRef',
+        'policy_number' => 'getPolicyNumber',
         'policy_date' => 'getPolicyDate'
     );
   
@@ -100,6 +104,12 @@ class POLICY extends \App\apiModels\ApiModel implements ArrayAccess
     protected $policy_ref;
     
     /**
+      * $policy_number Numer polisy
+      * @var string
+      */
+    protected $policy_number;
+    
+    /**
       * $policy_date Data utworzenia polisy
       * @var \DateTime
       */
@@ -115,6 +125,7 @@ class POLICY extends \App\apiModels\ApiModel implements ArrayAccess
         if ($data != null) {
             $this->calculate = $data["calculate"];
             $this->policy_ref = $data["policy_ref"];
+            $this->policy_number = $data["policy_number"];
             $this->policy_date = $data["policy_date"];
         }
     }
@@ -158,6 +169,27 @@ class POLICY extends \App\apiModels\ApiModel implements ArrayAccess
     {
         
         $this->policy_ref = $policy_ref;
+        return $this;
+    }
+    
+    /**
+     * Gets policy_number
+     * @return string
+     */
+    public function getPolicyNumber()
+    {
+        return $this->policy_number;
+    }
+  
+    /**
+     * Sets policy_number
+     * @param string $policy_number Numer polisy
+     * @return $this
+     */
+    public function setPolicyNumber($policy_number)
+    {
+        
+        $this->policy_number = $policy_number;
         return $this;
     }
     

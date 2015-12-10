@@ -44,7 +44,7 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class INSURED extends \App\apiModels\ApiModel implements ArrayAccess
+class INSURED   extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
@@ -52,6 +52,7 @@ class INSURED extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $swaggerTypes = array(
         'data' => 'App\apiModels\travel\v1\prototypes\PERSONDATA',
+        'address' => 'App\apiModels\travel\v1\prototypes\ADDRESS',
         'option_values' => 'App\apiModels\travel\v1\prototypes\OPTIONVALUE[]'
     );
   
@@ -61,6 +62,7 @@ class INSURED extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $attributeMap = array(
         'data' => 'data',
+        'address' => 'address',
         'option_values' => 'option_values'
     );
   
@@ -70,6 +72,7 @@ class INSURED extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $setters = array(
         'data' => 'setData',
+        'address' => 'setAddress',
         'option_values' => 'setOptionValues'
     );
   
@@ -79,6 +82,7 @@ class INSURED extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $getters = array(
         'data' => 'getData',
+        'address' => 'getAddress',
         'option_values' => 'getOptionValues'
     );
   
@@ -88,6 +92,12 @@ class INSURED extends \App\apiModels\ApiModel implements ArrayAccess
       * @var App\apiModels\travel\v1\prototypes\PERSONDATA
       */
     protected $data;
+    
+    /**
+      * $address Dane adresowe
+      * @var App\apiModels\travel\v1\prototypes\ADDRESS
+      */
+    protected $address;
     
     /**
       * $option_values Tablica wartości dodatkowych atrybutów
@@ -104,6 +114,7 @@ class INSURED extends \App\apiModels\ApiModel implements ArrayAccess
     {
         if ($data != null) {
             $this->data = $data["data"];
+            $this->address = $data["address"];
             $this->option_values = $data["option_values"];
         }
     }
@@ -126,6 +137,27 @@ class INSURED extends \App\apiModels\ApiModel implements ArrayAccess
     {
         
         $this->data = $data;
+        return $this;
+    }
+    
+    /**
+     * Gets address
+     * @return App\apiModels\travel\v1\prototypes\ADDRESS
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+  
+    /**
+     * Sets address
+     * @param App\apiModels\travel\v1\prototypes\ADDRESS $address Dane adresowe
+     * @return $this
+     */
+    public function setAddress($address)
+    {
+        
+        $this->address = $address;
         return $this;
     }
     
