@@ -15,10 +15,10 @@ class PolicyModel
         $this->mongoDB = $mongoDB;
     }
     
-    public function setPolicy($product_ref,$policyData,$sourceQuote,$partner) {
+    public function setPolicy($product_ref,$policyData,$partner) {
         $this->productRef = $product_ref;
-        $this->policyData = $policyData['data']['request'];
-        $this->amount = $policyData['data']['amount'];
+        $this->policyData = $policyData['request'];
+        $this->amount = $policyData['amount'];
         $this->product = $this->getProduct($this->productRef);
         $this->partner = $partner;
         $this->partnerData = $this->partner->getPartnerData();
@@ -39,7 +39,8 @@ class PolicyModel
         $policy['start_date']   = $this->policyData['data']['start_date'];
         $policy['end_date']     = $this->policyData['data']['end_date'];
         $policy['abroad']       = $this->policyData['data']['abroad'];
-        $policy['destination']  = $this->policyData['data']['destination'];
+        if($this->policyData['data']['destination'])
+            $policy['destination']  = $this->policyData['data']['destination'];
         $policy['policy_holder']= $this->policyData['policy_holder'];
         $policy['insured']      = $this->policyData['insured'];
         
@@ -65,19 +66,22 @@ class PolicyModel
                                                 );
         }
         $policy['product']['options'] = [];
-        foreach($this->policyData['data']['option_values'] as $option){
-            if($option['value']==true){
-                foreach($this->product['options'] as $prodOpt){
-                    if($prodOpt['code']==$option['code']){
-                        $policy['product']['options'][] = Array(
-                                                            'code'      =>$option['code'],
-                                                            'tuecode'   =>$prodOpt['tucode']
-                        );
+        if(!empty($this->policyData['data']['option_values'])){
+            foreach($this->policyData['data']['option_values'] as $option){
+                if($option['value']==true){
+                    foreach($this->product['options'] as $prodOpt){
+                        if($prodOpt['code']==$option['code']){
+                            $policy['product']['options'][] = Array(
+                                                                'code'      =>$option['code'],
+                                                                'tuecode'   =>$prodOpt['tucode']
+                            );
+                        }
                     }
                 }
+
             }
-                
         }
+        $policy['DateTime'] = \DateTime::createFromFormat('U.u', microtime(true))->format("YmdHisu");
         return $policy;
     }
 }

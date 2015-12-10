@@ -27,7 +27,7 @@ var $partner,$excelPath;
             $request_id = $request->input('request_id');
         }
 
-        parent::request($request, $parter_id, $request_id);
+        parent::request($request, $parter_id, $request_id,$create_new_quote_log);
         
         
         if($this->quoteLogGetValue('policyId')){
@@ -55,7 +55,7 @@ var $partner,$excelPath;
     $sourceQuote = [];
     
 
-    
+    Log::info('totuuu'.print_r($this->quote_doc,1)); 
     foreach($this->quote_doc[$path] as $query) {
       foreach($query['response'] as $quote) {
         if ($this->quote_ref == $quote['quote_ref']) {
@@ -72,22 +72,21 @@ var $partner,$excelPath;
     $calculate_path = str_replace('get_quotes','calculate_policy',$path);
     $policy_calculation = null;
     foreach($this->quote_doc[$calculate_path] as $time=>$record){ 
-         //Log::info(json_encode($record['response']));
-        if(json_encode($inputData['data']) == json_encode($record['response'])){
+         
+        if(json_encode($inputData) == json_encode($record['response'])){
             $policy_calculation = $this->quote_doc[$calculate_path][$time];
-            //Log::info($time);
         }
     }
     //Log::info('totuuu'.print_r($data,1));
     
     $product_ref = $sourceQuote['product_ref'];
     $policyM = new \App\apiModels\travel\PolicyModel($this->mongoDB);
-    $policyPrint = $policyM->setPolicy($product_ref, $data, $sourceQuote, $this->partner);
+    $policyPrint = $policyM->setPolicy($product_ref, $data, $this->partner);
     
     $policyCollection = $this->mongoDB->selectCollection(CP_POLICIES);
     $policyCollection->insert($policyPrint,array('w'));
     $policyId = (string)$policyPrint["_id"];
-    Log::info('totuuu'.print_r($policyPrint,1));
+    
     
     //$policyId = '0011';
     $policyDate = date('Y-m-d h:i:s');

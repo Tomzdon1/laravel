@@ -81,8 +81,10 @@ class RequestCtrl extends BaseController
         $this->quoteRequestDate = $this->getTime();
         if(!empty($this->data['quote_ref']))
             $this->quote_ref=$this->data['quote_ref'];
-        elseif(!empty($this->data['data']['request']['quote_ref']))
-            $this->quote_ref=$this->data['data']['request']['quote_ref'];
+        elseif(!empty($this->data['request']['quote_ref']))
+            $this->quote_ref=$this->data['request']['quote_ref'];
+        
+        Log::info(print_r($this->quote_ref,1));
         
         if(!empty($this->quote_ref) && !$force_create_new_quote_log){
              
