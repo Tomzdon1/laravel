@@ -32,6 +32,9 @@ var $partner;
   
   private function savePolicy($data)
   {
+    $status = 'OK';
+    $messages = Array();
+    $policyId = '';
     
     $product_ref =   $data['product_ref'];
     $policyData = [];
@@ -47,30 +50,28 @@ var $partner;
      
     $policyM = new \App\apiModels\travel\PolicyModel($this->mongoDB);
     $policyPrint = $policyM->setPolicy($product_ref, $policyData,  $this->partner);
-    
+// Mozliwe, że model polisy powinien byc spojny dla roznych typow
+// Trzeba zdecydowac, czy walidacje maja się odbywac w kontrolerze, czy raczej w modelu
+// mysle, ze powinny byc w policy model, w takim wypadku status i message's powinny przychodzic z modelu
+// $status = $policyM->getStatus();
+// $messages = $policyM->getMessages();
+// w przeciwnym powinny byc w nim ustawiane
+// $policyM->setStatus($status);
+// $policyM->getMessages($messages);    
     
     $policyCollection = $this->mongoDB->selectCollection(CP_POLICIES);
     $policyCollection->insert($policyPrint,array('w'));
     $policyId = (string)$policyPrint["_id"];
     
-    Log::info('totuuu'.print_r($policyPrint,1));
     
-    //$policyId = '0011';
     $policyDate = date('Y-m-d h:i:s');
     
     $this->quoteLogAdd('policyId',$policyId);
     $this->quoteLogAdd('policyDate',$policyDate);
-    /*
-      
-      $this->policy_doc = $data;
-      $this->policy_doc['partnerCode'] = $this->partnerCode;
-      $this->policy_doc['quoteRef'] = $this->quote_doc['quote_ref'];
-      $collection = $this->mongoDB->selectCollection(CP_POLICIES);
-      
-      $resp = $collection->insert($this->policy_doc,array('w'));
-     * 
-     */
     
+    
+    //Po wygenerowaniu modelu zawierającego IMPORT_STATUS należy refaktoryzować na model
+    return Array('status'=>$status,'policy_ref'=>$policyId,'messages'=>$messages);
   }
     
 }
