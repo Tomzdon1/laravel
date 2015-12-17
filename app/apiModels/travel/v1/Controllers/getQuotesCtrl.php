@@ -18,16 +18,6 @@ var $partner,$excelPath;
 var $productRefArray = Array();  
   public function request(Request $request, $parter_id = null, $request_id = null, $create_new_quote_log = null)
   {
-        $this->mongoClient = new \MongoClient("mongodb://" . env('MONGO_SRV') . ":" . env('MONGO_PORT'));
-        $this->mongoDB = $this->mongoClient->selectDB(env('MONGO_CP_DB'));
-        if (!$parter_id) {
-            $parter_id = $request->input('customer_id');
-        }
-
-        if (!$request_id) {
-            $request_id = $request->input('request_id');
-        }
-
         parent::request($request, $parter_id, $request_id, true);
 
         $this->objSer = new \App\apiModels\ObjectSerializer();

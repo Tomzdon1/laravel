@@ -1,6 +1,6 @@
 <?php
 /**
- * IMPORTREQUEST
+ * PRINTPOLICYREQUEST
  *
  * PHP version 5
  *
@@ -35,27 +35,24 @@ namespace App\apiModels\travel\v1\prototypes ;
 
 use \ArrayAccess;
 /**
- * IMPORTREQUEST Class Doc Comment
+ * PRINTPOLICYREQUEST Class Doc Comment
  *
  * @category    Class
- * @description Zestaw danych do zapisania gotowej polisy
+ * @description Parametry żądania wydruku potwierdzenia zawarcia polisy
  * @package     App\apiModels\travel\v1
  * @author      http://github.com/swagger-api/swagger-codegen
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class IMPORTREQUEST   extends \App\apiModels\ApiModel implements ArrayAccess 
+class PRINTPOLICYREQUEST   extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
       * @var string[]
       */
     static $swaggerTypes = array(
-        'product_ref' => 'string',
-        'sign_date' => '\DateTime',
-        'data' => 'App\apiModels\travel\v1\prototypes\POLICYDATA',
-        'policy_holder' => 'App\apiModels\travel\v1\prototypes\POLICYHOLDER',
-        'insured' => 'App\apiModels\travel\v1\prototypes\INSURED[]'
+        'policy_ref' => 'string',
+        'quote_ref' => 'string'
     );
   
     /** 
@@ -63,11 +60,8 @@ class IMPORTREQUEST   extends \App\apiModels\ApiModel implements ArrayAccess
       * @var string[] 
       */
     static $attributeMap = array(
-        'product_ref' => 'product_ref',
-        'sign_date' => 'sign_date',
-        'data' => 'data',
-        'policy_holder' => 'policy_holder',
-        'insured' => 'insured'
+        'policy_ref' => 'policy_ref',
+        'quote_ref' => 'quote_ref'
     );
   
     /**
@@ -75,11 +69,8 @@ class IMPORTREQUEST   extends \App\apiModels\ApiModel implements ArrayAccess
       * @var string[]
       */
     static $setters = array(
-        'product_ref' => 'setProductRef',
-        'sign_date' => 'setSignDate',
-        'data' => 'setData',
-        'policy_holder' => 'setPolicyHolder',
-        'insured' => 'setInsured'
+        'policy_ref' => 'setPolicyRef',
+        'quote_ref' => 'setQuoteRef'
     );
   
     /**
@@ -87,43 +78,22 @@ class IMPORTREQUEST   extends \App\apiModels\ApiModel implements ArrayAccess
       * @var string[]
       */
     static $getters = array(
-        'product_ref' => 'getProductRef',
-        'sign_date' => 'getSignDate',
-        'data' => 'getData',
-        'policy_holder' => 'getPolicyHolder',
-        'insured' => 'getInsured'
+        'policy_ref' => 'getPolicyRef',
+        'quote_ref' => 'getQuoteRef'
     );
   
     
     /**
-      * $product_ref Identyfikator produktu
+      * $policy_ref Identyfikator polisy
       * @var string
       */
-    protected $product_ref;
+    protected $policy_ref;
     
     /**
-      * $sign_date Data zawarcia polisy
-      * @var \DateTime
+      * $quote_ref Identyfikator oferty
+      * @var string
       */
-    protected $sign_date;
-    
-    /**
-      * $data Dane polisy
-      * @var App\apiModels\travel\v1\prototypes\POLICYDATA
-      */
-    protected $data;
-    
-    /**
-      * $policy_holder Dane ubezpieczającego
-      * @var App\apiModels\travel\v1\prototypes\POLICYHOLDER
-      */
-    protected $policy_holder;
-    
-    /**
-      * $insured Dane ubezpieczonych
-      * @var App\apiModels\travel\v1\prototypes\INSURED[]
-      */
-    protected $insured;
+    protected $quote_ref;
     
 
     /**
@@ -133,116 +103,50 @@ class IMPORTREQUEST   extends \App\apiModels\ApiModel implements ArrayAccess
     public function __construct(array $data = null)
     {
         if ($data != null) {
-            $this->product_ref = $data["product_ref"];
-            $this->sign_date = $data["sign_date"];
-            $this->data = $data["data"];
-            $this->policy_holder = $data["policy_holder"];
-            $this->insured = $data["insured"];
+            $this->policy_ref = $data["policy_ref"];
+            $this->quote_ref = $data["quote_ref"];
         }
     }
     
     /**
-     * Gets product_ref
+     * Gets policy_ref
      * @return string
      */
-    public function getProductRef()
+    public function getPolicyRef()
     {
-        return $this->product_ref;
+        return $this->policy_ref;
     }
   
     /**
-     * Sets product_ref
-     * @param string $product_ref Identyfikator produktu
+     * Sets policy_ref
+     * @param string $policy_ref Identyfikator polisy
      * @return $this
      */
-    public function setProductRef($product_ref)
+    public function setPolicyRef($policy_ref)
     {
         
-        $this->product_ref = $product_ref;
+        $this->policy_ref = $policy_ref;
         return $this;
     }
     
     /**
-     * Gets sign_date
-     * @return \DateTime
+     * Gets quote_ref
+     * @return string
      */
-    public function getSignDate()
+    public function getQuoteRef()
     {
-        return $this->sign_date;
+        return $this->quote_ref;
     }
   
     /**
-     * Sets sign_date
-     * @param \DateTime $sign_date Data zawarcia polisy
+     * Sets quote_ref
+     * @param string $quote_ref Identyfikator oferty
      * @return $this
      */
-    public function setSignDate($sign_date)
+    public function setQuoteRef($quote_ref)
     {
         
-        $this->sign_date = $sign_date;
-        return $this;
-    }
-    
-    /**
-     * Gets data
-     * @return App\apiModels\travel\v1\prototypes\POLICYDATA
-     */
-    public function getData()
-    {
-        return $this->data;
-    }
-  
-    /**
-     * Sets data
-     * @param App\apiModels\travel\v1\prototypes\POLICYDATA $data Dane polisy
-     * @return $this
-     */
-    public function setData($data)
-    {
-        
-        $this->data = $data;
-        return $this;
-    }
-    
-    /**
-     * Gets policy_holder
-     * @return App\apiModels\travel\v1\prototypes\POLICYHOLDER
-     */
-    public function getPolicyHolder()
-    {
-        return $this->policy_holder;
-    }
-  
-    /**
-     * Sets policy_holder
-     * @param App\apiModels\travel\v1\prototypes\POLICYHOLDER $policy_holder Dane ubezpieczającego
-     * @return $this
-     */
-    public function setPolicyHolder($policy_holder)
-    {
-        
-        $this->policy_holder = $policy_holder;
-        return $this;
-    }
-    
-    /**
-     * Gets insured
-     * @return App\apiModels\travel\v1\prototypes\INSURED[]
-     */
-    public function getInsured()
-    {
-        return $this->insured;
-    }
-  
-    /**
-     * Sets insured
-     * @param App\apiModels\travel\v1\prototypes\INSURED[] $insured Dane ubezpieczonych
-     * @return $this
-     */
-    public function setInsured($insured)
-    {
-        
-        $this->insured = $insured;
+        $this->quote_ref = $quote_ref;
         return $this;
     }
     

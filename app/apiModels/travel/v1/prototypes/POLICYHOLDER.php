@@ -44,7 +44,7 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class POLICYHOLDER extends \App\apiModels\ApiModel implements ArrayAccess
+class POLICYHOLDER   extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
@@ -52,6 +52,7 @@ class POLICYHOLDER extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $swaggerTypes = array(
         'data' => 'App\apiModels\travel\v1\prototypes\PERSONDATA',
+        'address' => 'App\apiModels\travel\v1\prototypes\ADDRESS',
         'email' => 'string',
         'telephone' => 'string',
         'agreements' => 'App\apiModels\travel\v1\prototypes\AGREEMENT[]'
@@ -63,6 +64,7 @@ class POLICYHOLDER extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $attributeMap = array(
         'data' => 'data',
+        'address' => 'address',
         'email' => 'email',
         'telephone' => 'telephone',
         'agreements' => 'agreements'
@@ -74,6 +76,7 @@ class POLICYHOLDER extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $setters = array(
         'data' => 'setData',
+        'address' => 'setAddress',
         'email' => 'setEmail',
         'telephone' => 'setTelephone',
         'agreements' => 'setAgreements'
@@ -85,6 +88,7 @@ class POLICYHOLDER extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $getters = array(
         'data' => 'getData',
+        'address' => 'getAddress',
         'email' => 'getEmail',
         'telephone' => 'getTelephone',
         'agreements' => 'getAgreements'
@@ -96,6 +100,12 @@ class POLICYHOLDER extends \App\apiModels\ApiModel implements ArrayAccess
       * @var App\apiModels\travel\v1\prototypes\PERSONDATA
       */
     protected $data;
+    
+    /**
+      * $address Dane adresowe
+      * @var App\apiModels\travel\v1\prototypes\ADDRESS
+      */
+    protected $address;
     
     /**
       * $email Adres e-mail
@@ -124,6 +134,7 @@ class POLICYHOLDER extends \App\apiModels\ApiModel implements ArrayAccess
     {
         if ($data != null) {
             $this->data = $data["data"];
+            $this->address = $data["address"];
             $this->email = $data["email"];
             $this->telephone = $data["telephone"];
             $this->agreements = $data["agreements"];
@@ -148,6 +159,27 @@ class POLICYHOLDER extends \App\apiModels\ApiModel implements ArrayAccess
     {
         
         $this->data = $data;
+        return $this;
+    }
+    
+    /**
+     * Gets address
+     * @return App\apiModels\travel\v1\prototypes\ADDRESS
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+  
+    /**
+     * Sets address
+     * @param App\apiModels\travel\v1\prototypes\ADDRESS $address Dane adresowe
+     * @return $this
+     */
+    public function setAddress($address)
+    {
+        
+        $this->address = $address;
         return $this;
     }
     

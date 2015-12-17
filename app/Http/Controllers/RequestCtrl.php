@@ -23,8 +23,19 @@ class RequestCtrl extends BaseController
     var $data, $response=null;
     var $quote_doc = Array();
     var $response_doc = Array();
+    protected $quote_ref;
     public function request(Request $request,  $parter_id, $request_id, $force_create_new_quote_log = false)
-    {       
+    {
+        $this->mongoClient = new \MongoClient("mongodb://" . env('MONGO_SRV') . ":" . env('MONGO_PORT'));
+        $this->mongoDB = $this->mongoClient->selectDB(env('MONGO_CP_DB'));
+        if (!$parter_id) {
+            $parter_id = $request->input('customer_id');
+        }
+
+        if (!$request_id) {
+            $request_id = $request->input('request_id');
+        }
+        
         $data = null;
         $this->path = $request->decodedPath();
 
@@ -56,7 +67,7 @@ class RequestCtrl extends BaseController
      */
     public function __destruct() {
         $collection = $this->mongoDB->selectCollection(CP_QUOTES_REF);
-        
+         
         $this->quote_doc[$this->path][$this->quoteRequestDate]['response_time'] = $this->getTime();
         $this->quote_doc[$this->path][$this->quoteRequestDate]['response'] = $this->response_doc;
         unset($this->quote_doc['quote_ref']);
@@ -78,9 +89,16 @@ class RequestCtrl extends BaseController
 
 
         $this->quoteRequestDate = $this->getTime();
+        if(!empty($this->data['quote_ref']))
+            $this->quote_ref=$this->data['quote_ref'];
+        elseif(!empty($this->data['request']['quote_ref']))
+            $this->quote_ref=$this->data['request']['quote_ref'];
         
-        if(!empty($this->data['quote_ref']) && !$force_create_new_quote_log){
-            $dbRef = substr($this->data['quote_ref'], 0,24);
+        Log::info(print_r($this->quote_ref,1));
+        
+        if(!empty($this->quote_ref) && !$force_create_new_quote_log){
+             
+            $dbRef = substr($this->quote_ref, 0,24);
             $cursor = $collection->find(Array('_id'=>new \MongoId($dbRef) ) );
             $cnt = $cursor->count();
             if($cnt!=1){
@@ -91,6 +109,7 @@ class RequestCtrl extends BaseController
                 $res = iterator_to_array($cursor);
                 reset($res);
                 $this->quote_doc = current($res);
+                $this->quote_doc[$this->path][$this->quoteRequestDate]['request'] = $this->data;
             }
         }else{
             $this->quote_doc['partnerCode'] = $this->partnerCode;
@@ -101,6 +120,28 @@ class RequestCtrl extends BaseController
         }
         $this->quote_doc['quote_ref'] = $this->quote_doc['_id']->__toString();
         
+    }
+    /**
+     * 
+     * Wstawia do rekordu w quotes parę klucz wartość. Jeśli klucz istnieje, a nie ustawiono parametru zwróci false. W wypadku powodzenia zwróci true.
+     * @param string $key nazwa parametru do wstawienia
+     * @param mixed $value wartosc parametru do wstawienia
+     * @param boolean $doReplace Czy w jeśli parametr istnieje ma go zamienic - domyslnie false
+     * @return boolean true w wypadku powodzenia
+     */
+    protected function quoteLogAdd($key,$value,$doReplace=false){
+        if(empty($this->quote_doc[$key])||($doReplace)){
+            $this->quote_doc[$key] = $value;
+            return true;
+        }
+        return false;
+    }
+    
+    protected function quoteLogGetValue($key){
+        if(!empty($this->quote_doc[$key]))
+            return $this->quote_doc[$key];
+        else 
+            return false;    
     }
 
     /**

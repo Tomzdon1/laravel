@@ -18,34 +18,60 @@ var $partner;
   
   public function request(Request $request,  $parter_id = null, $request_id = null,$create_new_quote_log = null)
   {
-      $this->mongoClient = new \MongoClient("mongodb://" . env('MONGO_SRV') . ":" . env('MONGO_PORT'));
-        $this->mongoDB = $this->mongoClient->selectDB(env('MONGO_CP_DB'));
-        if (!$parter_id) {
-            $parter_id = $request->input('customer_id');
-        }
+    parent::request($request, $parter_id, $request_id);
 
-        if (!$request_id) {
-            $request_id = $request->input('request_id');
-        }
-
-        parent::request($request, $parter_id, $request_id);
     //foreach($this->data as $dt){
     $this->objSer = new \App\apiModels\ObjectSerializer();
         $this->quote_request = $this->objSer->deserialize($this->data, '\App\apiModels\travel\v1\prototypes\IMPORTREQUEST');
     //}
-    $this->response = $this->savePolicy($this->data);
+    foreach($this->data as $policy)    
+        $this->response[] = $this->savePolicy($policy);
     
     return $this->response;
   }
   
   private function savePolicy($data)
   {
-      $this->policy_doc = $data;
-      $this->policy_doc['partnerCode'] = $this->partnerCode;
-      $this->policy_doc['quoteRef'] = $this->quote_doc['quote_ref'];
-      $collection = $this->mongoDB->selectCollection(CP_POLICIES);
-      
-      $resp = $collection->insert($this->policy_doc,array('w'));
+    $status = 'OK';
+    $messages = Array();
+    $policyId = '';
+    
+    $product_ref =   $data['product_ref'];
+    $policyData = [];
+    $policyData['request'] = Array(
+      'data'=>$data['data'],
+      'policy_holder'=>$data['policy_holder'],
+      'insured'=>$data['insured']
+    );
+    
+    $policyData['request']['data']['destination']=(!empty($data['data']['destination']))?$data['data']['destination']:'';
+    $policyData['amount'] = $data['amount'];
+    $policyData['request']['quote_ref'] = $this->quote_doc['quote_ref'];
+     
+    $policyM = new \App\apiModels\travel\PolicyModel($this->mongoDB);
+    $policyPrint = $policyM->setPolicy($product_ref, $policyData,  $this->partner);
+// Mozliwe, że model polisy powinien byc spojny dla roznych typow
+// Trzeba zdecydowac, czy walidacje maja się odbywac w kontrolerze, czy raczej w modelu
+// mysle, ze powinny byc w policy model, w takim wypadku status i message's powinny przychodzic z modelu
+// $status = $policyM->getStatus();
+// $messages = $policyM->getMessages();
+// w przeciwnym powinny byc w nim ustawiane
+// $policyM->setStatus($status);
+// $policyM->getMessages($messages);    
+    
+    $policyCollection = $this->mongoDB->selectCollection(CP_POLICIES);
+    $policyCollection->insert($policyPrint,array('w'));
+    $policyId = (string)$policyPrint["_id"];
+    
+    
+    $policyDate = date('Y-m-d h:i:s');
+    
+    $this->quoteLogAdd('policyId',$policyId);
+    $this->quoteLogAdd('policyDate',$policyDate);
+    
+    
+    //Po wygenerowaniu modelu zawierającego IMPORT_STATUS należy refaktoryzować na model
+    return Array('status'=>$status,'policy_ref'=>$policyId,'messages'=>$messages);
   }
     
 }
