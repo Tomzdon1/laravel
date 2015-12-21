@@ -66,51 +66,30 @@ var $productRefArray = Array();
         $responseData = Array();
         $responseData['quote_ref'] = (string)$this->quote_doc['_id'].$i++;//
         $this->productRefArray[]=$dbOffer['_id'];
-        $responseData['amount'] = Array( );
-//          'value_base'=> 100, 
-//          'value_base_currency'=>'',//$dbOffer['configuration']['quotation']['resultCurrency'],
-//          'value'=> 450,
-//          'value_currency'=>'PLN',
-//          'currency_rate'=>4.5,
-//          'date_rate'=>'2015-10-08'
-//          );
+        $responseData['amount'] = [];
         $responseData['description']=$dbOffer['name'];
         $responseData['details'] = $dbOffer['elements'] ;
         
-        $responseData['option_definitions'] = $dbOffer['options'];//[['name'=>'Nazwa','description'=>'opis','code'=>'kod','value_type'=>'string','changeable'=>'true']  ];
+        $responseData['option_definitions'] = $dbOffer['options'];
         $responseData['option_values'] = [['code'=>'kod','value'=>'wartosc'] ];
 
         $offer = $this->objSer->deserialize($responseData, '\App\apiModels\travel\v1\prototypes\QUOTE');
         $offer->setOptionValues($this->quote_request->getData()->getOptionValues());
         $offer->setVarCode($dbOffer['code']);
-            if ($dbOffer['configuration']['quotation']['type'] == 'formula')
-                $offer->calculateAmount($dbOffer['configuration']);
-            elseif ($dbOffer['configuration']['quotation']['type'] == 'excel'){
-                $excelPath = env('EXCEL_DIRECTORY') . '/' . $dbOffer['configuration']['quotation']['file'];
-                $excelFile = $this->loadExcelFile($excelPath);
-                $offer->calculateExcelAmount($dbOffer['configuration'],$excelFile,$this->quote_request);
-            }
-
         
+        if ($dbOffer['configuration']['quotation']['type'] == 'formula')
+          $offer->calculateAmount($dbOffer['configuration']);
+        elseif ($dbOffer['configuration']['quotation']['type'] == 'excel'){
+          $excelPath = env('EXCEL_DIRECTORY') . '/' . $dbOffer['configuration']['quotation']['file'];
+          $excelFile = $this->loadExcelFile($excelPath);
+          $offer->calculateExcelAmount($dbOffer['configuration'],$excelFile,$this->quote_request);
+        }
 
         $listToResponse[] = $this->objSer->sanitizeForSerialization($offer);//->toArray();
      }
      
- //Log:info('\App\apiModels\travel\v1\prototypes\QUOTE'.print_r($listToResponse,1));
- 
-    
-    //uasort($listToResponse,Array($offers,'sortByAmount'));
-    
     return $listToResponse;
-    
   }
-  
-//  public static function sortByAmount($a, $b){
-//    if ($a['Amount'] == $b['Amount']) {
-//        return 0;
-//    }
-//    return ($a['Amount'] < $b['Amount']) ? -1 : 1;
-//  }
   
   private function loadExcelFile($excelPath)
   {

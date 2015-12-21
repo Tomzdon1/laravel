@@ -44,15 +44,14 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class ERROR   extends \App\apiModels\ApiModel implements ArrayAccess 
+class ERROR extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
       * @var string[]
       */
     static $swaggerTypes = array(
-        'property' => 'string',
-        'errors' => 'string[]'
+        'description' => 'string'
     );
   
     /** 
@@ -60,8 +59,7 @@ class ERROR   extends \App\apiModels\ApiModel implements ArrayAccess
       * @var string[] 
       */
     static $attributeMap = array(
-        'property' => 'property',
-        'errors' => 'errors'
+        'description' => 'description'
     );
   
     /**
@@ -69,8 +67,7 @@ class ERROR   extends \App\apiModels\ApiModel implements ArrayAccess
       * @var string[]
       */
     static $setters = array(
-        'property' => 'setProperty',
-        'errors' => 'setErrors'
+        'description' => 'setDescription'
     );
   
     /**
@@ -78,22 +75,15 @@ class ERROR   extends \App\apiModels\ApiModel implements ArrayAccess
       * @var string[]
       */
     static $getters = array(
-        'property' => 'getProperty',
-        'errors' => 'getErrors'
+        'description' => 'getDescription'
     );
   
     
     /**
-      * $property Nazwa atrybutu, którego dotyczą błędy
+      * $description Opis błędu
       * @var string
       */
-    protected $property;
-    
-    /**
-      * $errors Tablica opisów błędów
-      * @var string[]
-      */
-    protected $errors;
+    protected $description;
     
 
     /**
@@ -103,50 +93,28 @@ class ERROR   extends \App\apiModels\ApiModel implements ArrayAccess
     public function __construct(array $data = null)
     {
         if ($data != null) {
-            $this->property = $data["property"];
-            $this->errors = $data["errors"];
+            $this->description = $data["description"];
         }
     }
     
     /**
-     * Gets property
+     * Gets description
      * @return string
      */
-    public function getProperty()
+    public function getDescription()
     {
-        return $this->property;
+        return $this->description;
     }
   
     /**
-     * Sets property
-     * @param string $property Nazwa atrybutu, którego dotyczą błędy
+     * Sets description
+     * @param string $description Opis błędu
      * @return $this
      */
-    public function setProperty($property)
+    public function setDescription($description)
     {
         
-        $this->property = $property;
-        return $this;
-    }
-    
-    /**
-     * Gets errors
-     * @return string[]
-     */
-    public function getErrors()
-    {
-        return $this->errors;
-    }
-  
-    /**
-     * Sets errors
-     * @param string[] $errors Tablica opisów błędów
-     * @return $this
-     */
-    public function setErrors($errors)
-    {
-        
-        $this->errors = $errors;
+        $this->description = $description;
         return $this;
     }
     

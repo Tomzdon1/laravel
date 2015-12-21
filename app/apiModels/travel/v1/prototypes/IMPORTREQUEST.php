@@ -44,7 +44,7 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class IMPORTREQUEST   extends \App\apiModels\ApiModel implements ArrayAccess 
+class IMPORTREQUEST extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
@@ -52,10 +52,14 @@ class IMPORTREQUEST   extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $swaggerTypes = array(
         'product_ref' => 'string',
-        'sign_date' => '\DateTime',
         'data' => 'App\apiModels\travel\v1\prototypes\POLICYDATA',
+        'policy_date' => '\DateTime',
+        'policy_number' => 'string',
         'policy_holder' => 'App\apiModels\travel\v1\prototypes\POLICYHOLDER',
-        'insured' => 'App\apiModels\travel\v1\prototypes\INSURED[]'
+        'insured' => 'App\apiModels\travel\v1\prototypes\INSURED[]',
+        'amount' => 'App\apiModels\travel\v1\prototypes\AMOUNT',
+        'tariff_amount' => 'App\apiModels\travel\v1\prototypes\AMOUNT',
+        'promo_code' => 'string'
     );
   
     /** 
@@ -64,10 +68,14 @@ class IMPORTREQUEST   extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $attributeMap = array(
         'product_ref' => 'product_ref',
-        'sign_date' => 'sign_date',
         'data' => 'data',
+        'policy_date' => 'policy_date',
+        'policy_number' => 'policy_number',
         'policy_holder' => 'policy_holder',
-        'insured' => 'insured'
+        'insured' => 'insured',
+        'amount' => 'amount',
+        'tariff_amount' => 'tariff_amount',
+        'promo_code' => 'promo_code'
     );
   
     /**
@@ -76,10 +84,14 @@ class IMPORTREQUEST   extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $setters = array(
         'product_ref' => 'setProductRef',
-        'sign_date' => 'setSignDate',
         'data' => 'setData',
+        'policy_date' => 'setPolicyDate',
+        'policy_number' => 'setPolicyNumber',
         'policy_holder' => 'setPolicyHolder',
-        'insured' => 'setInsured'
+        'insured' => 'setInsured',
+        'amount' => 'setAmount',
+        'tariff_amount' => 'setTariffAmount',
+        'promo_code' => 'setPromoCode'
     );
   
     /**
@@ -88,10 +100,14 @@ class IMPORTREQUEST   extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $getters = array(
         'product_ref' => 'getProductRef',
-        'sign_date' => 'getSignDate',
         'data' => 'getData',
+        'policy_date' => 'getPolicyDate',
+        'policy_number' => 'getPolicyNumber',
         'policy_holder' => 'getPolicyHolder',
-        'insured' => 'getInsured'
+        'insured' => 'getInsured',
+        'amount' => 'getAmount',
+        'tariff_amount' => 'getTariffAmount',
+        'promo_code' => 'getPromoCode'
     );
   
     
@@ -102,16 +118,22 @@ class IMPORTREQUEST   extends \App\apiModels\ApiModel implements ArrayAccess
     protected $product_ref;
     
     /**
-      * $sign_date Data zawarcia polisy
-      * @var \DateTime
-      */
-    protected $sign_date;
-    
-    /**
       * $data Dane polisy
       * @var App\apiModels\travel\v1\prototypes\POLICYDATA
       */
     protected $data;
+    
+    /**
+      * $policy_date Data zawarcia polisy
+      * @var \DateTime
+      */
+    protected $policy_date;
+    
+    /**
+      * $policy_number Numer polisy
+      * @var string
+      */
+    protected $policy_number;
     
     /**
       * $policy_holder Dane ubezpieczającego
@@ -125,6 +147,24 @@ class IMPORTREQUEST   extends \App\apiModels\ApiModel implements ArrayAccess
       */
     protected $insured;
     
+    /**
+      * $amount Obiekt z informacją o składce pobranej
+      * @var App\apiModels\travel\v1\prototypes\AMOUNT
+      */
+    protected $amount;
+    
+    /**
+      * $tariff_amount Obiekt z informacją o składce wynikającej z taryfy
+      * @var App\apiModels\travel\v1\prototypes\AMOUNT
+      */
+    protected $tariff_amount;
+    
+    /**
+      * $promo_code Kod promocyjny
+      * @var string
+      */
+    protected $promo_code;
+    
 
     /**
      * Constructor
@@ -134,10 +174,14 @@ class IMPORTREQUEST   extends \App\apiModels\ApiModel implements ArrayAccess
     {
         if ($data != null) {
             $this->product_ref = $data["product_ref"];
-            $this->sign_date = $data["sign_date"];
             $this->data = $data["data"];
+            $this->policy_date = $data["policy_date"];
+            $this->policy_number = $data["policy_number"];
             $this->policy_holder = $data["policy_holder"];
             $this->insured = $data["insured"];
+            $this->amount = $data["amount"];
+            $this->tariff_amount = $data["tariff_amount"];
+            $this->promo_code = $data["promo_code"];
         }
     }
     
@@ -163,27 +207,6 @@ class IMPORTREQUEST   extends \App\apiModels\ApiModel implements ArrayAccess
     }
     
     /**
-     * Gets sign_date
-     * @return \DateTime
-     */
-    public function getSignDate()
-    {
-        return $this->sign_date;
-    }
-  
-    /**
-     * Sets sign_date
-     * @param \DateTime $sign_date Data zawarcia polisy
-     * @return $this
-     */
-    public function setSignDate($sign_date)
-    {
-        
-        $this->sign_date = $sign_date;
-        return $this;
-    }
-    
-    /**
      * Gets data
      * @return App\apiModels\travel\v1\prototypes\POLICYDATA
      */
@@ -201,6 +224,48 @@ class IMPORTREQUEST   extends \App\apiModels\ApiModel implements ArrayAccess
     {
         
         $this->data = $data;
+        return $this;
+    }
+    
+    /**
+     * Gets policy_date
+     * @return \DateTime
+     */
+    public function getPolicyDate()
+    {
+        return $this->policy_date;
+    }
+  
+    /**
+     * Sets policy_date
+     * @param \DateTime $policy_date Data zawarcia polisy
+     * @return $this
+     */
+    public function setPolicyDate($policy_date)
+    {
+        
+        $this->policy_date = $policy_date;
+        return $this;
+    }
+    
+    /**
+     * Gets policy_number
+     * @return string
+     */
+    public function getPolicyNumber()
+    {
+        return $this->policy_number;
+    }
+  
+    /**
+     * Sets policy_number
+     * @param string $policy_number Numer polisy
+     * @return $this
+     */
+    public function setPolicyNumber($policy_number)
+    {
+        
+        $this->policy_number = $policy_number;
         return $this;
     }
     
@@ -243,6 +308,69 @@ class IMPORTREQUEST   extends \App\apiModels\ApiModel implements ArrayAccess
     {
         
         $this->insured = $insured;
+        return $this;
+    }
+    
+    /**
+     * Gets amount
+     * @return App\apiModels\travel\v1\prototypes\AMOUNT
+     */
+    public function getAmount()
+    {
+        return $this->amount;
+    }
+  
+    /**
+     * Sets amount
+     * @param App\apiModels\travel\v1\prototypes\AMOUNT $amount Obiekt z informacją o składce pobranej
+     * @return $this
+     */
+    public function setAmount($amount)
+    {
+        
+        $this->amount = $amount;
+        return $this;
+    }
+    
+    /**
+     * Gets tariff_amount
+     * @return App\apiModels\travel\v1\prototypes\AMOUNT
+     */
+    public function getTariffAmount()
+    {
+        return $this->tariff_amount;
+    }
+  
+    /**
+     * Sets tariff_amount
+     * @param App\apiModels\travel\v1\prototypes\AMOUNT $tariff_amount Obiekt z informacją o składce wynikającej z taryfy
+     * @return $this
+     */
+    public function setTariffAmount($tariff_amount)
+    {
+        
+        $this->tariff_amount = $tariff_amount;
+        return $this;
+    }
+    
+    /**
+     * Gets promo_code
+     * @return string
+     */
+    public function getPromoCode()
+    {
+        return $this->promo_code;
+    }
+  
+    /**
+     * Sets promo_code
+     * @param string $promo_code Kod promocyjny
+     * @return $this
+     */
+    public function setPromoCode($promo_code)
+    {
+        
+        $this->promo_code = $promo_code;
         return $this;
     }
     

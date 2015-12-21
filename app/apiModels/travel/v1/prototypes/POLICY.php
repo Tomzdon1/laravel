@@ -44,7 +44,7 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class POLICY   extends \App\apiModels\ApiModel implements ArrayAccess 
+class POLICY extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
@@ -110,7 +110,7 @@ class POLICY   extends \App\apiModels\ApiModel implements ArrayAccess
     protected $policy_number;
     
     /**
-      * $policy_date Data utworzenia polisy
+      * $policy_date Data zawarcia polisy
       * @var \DateTime
       */
     protected $policy_date;
@@ -204,7 +204,7 @@ class POLICY   extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets policy_date
-     * @param \DateTime $policy_date Data utworzenia polisy
+     * @param \DateTime $policy_date Data zawarcia polisy
      * @return $this
      */
     public function setPolicyDate($policy_date)

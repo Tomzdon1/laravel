@@ -1,6 +1,6 @@
 <?php
 /**
- * CALCULATE
+ * VALIDATIONERROR
  *
  * PHP version 5
  *
@@ -35,25 +35,24 @@ namespace App\apiModels\travel\v1\prototypes ;
 
 use \ArrayAccess;
 /**
- * CALCULATE Class Doc Comment
+ * VALIDATIONERROR Class Doc Comment
  *
  * @category    Class
- * @description Kalkulacja
+ * @description Błąd walidacji
  * @package     App\apiModels\travel\v1
  * @author      http://github.com/swagger-api/swagger-codegen
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class CALCULATE extends \App\apiModels\ApiModel implements ArrayAccess 
+class VALIDATIONERROR extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
       * @var string[]
       */
     static $swaggerTypes = array(
-        'request' => 'App\apiModels\travel\v1\prototypes\CALCULATEREQUEST',
-        'amount' => 'App\apiModels\travel\v1\prototypes\AMOUNT',
-        'promo_code_valid' => 'bool'
+        'property' => 'string',
+        'errors' => 'string[]'
     );
   
     /** 
@@ -61,9 +60,8 @@ class CALCULATE extends \App\apiModels\ApiModel implements ArrayAccess
       * @var string[] 
       */
     static $attributeMap = array(
-        'request' => 'request',
-        'amount' => 'amount',
-        'promo_code_valid' => 'promo_code_valid'
+        'property' => 'property',
+        'errors' => 'errors'
     );
   
     /**
@@ -71,9 +69,8 @@ class CALCULATE extends \App\apiModels\ApiModel implements ArrayAccess
       * @var string[]
       */
     static $setters = array(
-        'request' => 'setRequest',
-        'amount' => 'setAmount',
-        'promo_code_valid' => 'setPromoCodeValid'
+        'property' => 'setProperty',
+        'errors' => 'setErrors'
     );
   
     /**
@@ -81,29 +78,22 @@ class CALCULATE extends \App\apiModels\ApiModel implements ArrayAccess
       * @var string[]
       */
     static $getters = array(
-        'request' => 'getRequest',
-        'amount' => 'getAmount',
-        'promo_code_valid' => 'getPromoCodeValid'
+        'property' => 'getProperty',
+        'errors' => 'getErrors'
     );
   
     
     /**
-      * $request Zapytanie, na podstawie którego obliczono amount i wartość promo_code_valid
-      * @var App\apiModels\travel\v1\prototypes\CALCULATEREQUEST
+      * $property Nazwa atrybutu, którego dotyczą błędy
+      * @var string
       */
-    protected $request;
+    protected $property;
     
     /**
-      * $amount Obiekt z informacją o składce
-      * @var App\apiModels\travel\v1\prototypes\AMOUNT
+      * $errors Tablica opisów błędów
+      * @var string[]
       */
-    protected $amount;
-    
-    /**
-      * $promo_code_valid Czy kod promocyjny jest ważny i został uwzględniony
-      * @var bool
-      */
-    protected $promo_code_valid;
+    protected $errors;
     
 
     /**
@@ -113,72 +103,50 @@ class CALCULATE extends \App\apiModels\ApiModel implements ArrayAccess
     public function __construct(array $data = null)
     {
         if ($data != null) {
-            $this->request = $data["request"];
-            $this->amount = $data["amount"];
-            $this->promo_code_valid = $data["promo_code_valid"];
+            $this->property = $data["property"];
+            $this->errors = $data["errors"];
         }
     }
     
     /**
-     * Gets request
-     * @return App\apiModels\travel\v1\prototypes\CALCULATEREQUEST
+     * Gets property
+     * @return string
      */
-    public function getRequest()
+    public function getProperty()
     {
-        return $this->request;
+        return $this->property;
     }
   
     /**
-     * Sets request
-     * @param App\apiModels\travel\v1\prototypes\CALCULATEREQUEST $request Zapytanie, na podstawie którego obliczono amount i wartość promo_code_valid
+     * Sets property
+     * @param string $property Nazwa atrybutu, którego dotyczą błędy
      * @return $this
      */
-    public function setRequest($request)
+    public function setProperty($property)
     {
         
-        $this->request = $request;
+        $this->property = $property;
         return $this;
     }
     
     /**
-     * Gets amount
-     * @return App\apiModels\travel\v1\prototypes\AMOUNT
+     * Gets errors
+     * @return string[]
      */
-    public function getAmount()
+    public function getErrors()
     {
-        return $this->amount;
+        return $this->errors;
     }
   
     /**
-     * Sets amount
-     * @param App\apiModels\travel\v1\prototypes\AMOUNT $amount Obiekt z informacją o składce
+     * Sets errors
+     * @param string[] $errors Tablica opisów błędów
      * @return $this
      */
-    public function setAmount($amount)
+    public function setErrors($errors)
     {
         
-        $this->amount = $amount;
-        return $this;
-    }
-    
-    /**
-     * Gets promo_code_valid
-     * @return bool
-     */
-    public function getPromoCodeValid()
-    {
-        return $this->promo_code_valid;
-    }
-  
-    /**
-     * Sets promo_code_valid
-     * @param bool $promo_code_valid Czy kod promocyjny jest ważny i został uwzględniony
-     * @return $this
-     */
-    public function setPromoCodeValid($promo_code_valid)
-    {
-        
-        $this->promo_code_valid = $promo_code_valid;
+        $this->errors = $errors;
         return $this;
     }
     

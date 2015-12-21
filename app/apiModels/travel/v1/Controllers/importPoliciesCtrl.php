@@ -16,16 +16,17 @@ use Symfony\Component\HttpFoundation\Response as Response;
 class importPoliciesCtrl extends RequestCtrl{
 var $partner;
   
-  public function request(Request $request,  $parter_id = null, $request_id = null,$create_new_quote_log = null)
+  public function request(Request $request, $parter_id = null, $request_id = null, $create_new_quote_log = null)
   {
     parent::request($request, $parter_id, $request_id);
 
-    //foreach($this->data as $dt){
     $this->objSer = new \App\apiModels\ObjectSerializer();
-        $this->quote_request = $this->objSer->deserialize($this->data, '\App\apiModels\travel\v1\prototypes\IMPORTREQUEST');
-    //}
-    foreach($this->data as $policy)    
-        $this->response[] = $this->savePolicy($policy);
+    $this->importRequests = [];
+  
+    foreach ($this->data as $policy) { 
+      $this->importRequests[] = $this->objSer->deserialize($policy, '\App\apiModels\travel\v1\prototypes\IMPORTREQUEST');
+      $this->response[] = $this->savePolicy($policy);
+    }
     
     return $this->response;
   }

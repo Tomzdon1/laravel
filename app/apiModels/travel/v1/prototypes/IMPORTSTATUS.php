@@ -1,6 +1,6 @@
 <?php
 /**
- * CALCULATE
+ * IMPORTSTATUS
  *
  * PHP version 5
  *
@@ -35,25 +35,26 @@ namespace App\apiModels\travel\v1\prototypes ;
 
 use \ArrayAccess;
 /**
- * CALCULATE Class Doc Comment
+ * IMPORTSTATUS Class Doc Comment
  *
  * @category    Class
- * @description Kalkulacja
+ * @description Opis statusu importu polisy
  * @package     App\apiModels\travel\v1
  * @author      http://github.com/swagger-api/swagger-codegen
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class CALCULATE extends \App\apiModels\ApiModel implements ArrayAccess 
+class IMPORTSTATUS extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
       * @var string[]
       */
     static $swaggerTypes = array(
-        'request' => 'App\apiModels\travel\v1\prototypes\CALCULATEREQUEST',
-        'amount' => 'App\apiModels\travel\v1\prototypes\AMOUNT',
-        'promo_code_valid' => 'bool'
+        'status' => 'string',
+        'policy_ref' => 'string',
+        'quote_ref' => 'string',
+        'messages' => 'object[]'
     );
   
     /** 
@@ -61,9 +62,10 @@ class CALCULATE extends \App\apiModels\ApiModel implements ArrayAccess
       * @var string[] 
       */
     static $attributeMap = array(
-        'request' => 'request',
-        'amount' => 'amount',
-        'promo_code_valid' => 'promo_code_valid'
+        'status' => 'status',
+        'policy_ref' => 'policy_ref',
+        'quote_ref' => 'quote_ref',
+        'messages' => 'messages'
     );
   
     /**
@@ -71,9 +73,10 @@ class CALCULATE extends \App\apiModels\ApiModel implements ArrayAccess
       * @var string[]
       */
     static $setters = array(
-        'request' => 'setRequest',
-        'amount' => 'setAmount',
-        'promo_code_valid' => 'setPromoCodeValid'
+        'status' => 'setStatus',
+        'policy_ref' => 'setPolicyRef',
+        'quote_ref' => 'setQuoteRef',
+        'messages' => 'setMessages'
     );
   
     /**
@@ -81,29 +84,36 @@ class CALCULATE extends \App\apiModels\ApiModel implements ArrayAccess
       * @var string[]
       */
     static $getters = array(
-        'request' => 'getRequest',
-        'amount' => 'getAmount',
-        'promo_code_valid' => 'getPromoCodeValid'
+        'status' => 'getStatus',
+        'policy_ref' => 'getPolicyRef',
+        'quote_ref' => 'getQuoteRef',
+        'messages' => 'getMessages'
     );
   
     
     /**
-      * $request Zapytanie, na podstawie którego obliczono amount i wartość promo_code_valid
-      * @var App\apiModels\travel\v1\prototypes\CALCULATEREQUEST
+      * $status Status importu polisy
+      * @var string
       */
-    protected $request;
+    protected $status;
     
     /**
-      * $amount Obiekt z informacją o składce
-      * @var App\apiModels\travel\v1\prototypes\AMOUNT
+      * $policy_ref Identyfikator polisy
+      * @var string
       */
-    protected $amount;
+    protected $policy_ref;
     
     /**
-      * $promo_code_valid Czy kod promocyjny jest ważny i został uwzględniony
-      * @var bool
+      * $quote_ref Identyfikator oferty
+      * @var string
       */
-    protected $promo_code_valid;
+    protected $quote_ref;
+    
+    /**
+      * $messages 
+      * @var object[]
+      */
+    protected $messages;
     
 
     /**
@@ -113,72 +123,97 @@ class CALCULATE extends \App\apiModels\ApiModel implements ArrayAccess
     public function __construct(array $data = null)
     {
         if ($data != null) {
-            $this->request = $data["request"];
-            $this->amount = $data["amount"];
-            $this->promo_code_valid = $data["promo_code_valid"];
+            $this->status = $data["status"];
+            $this->policy_ref = $data["policy_ref"];
+            $this->quote_ref = $data["quote_ref"];
+            $this->messages = $data["messages"];
         }
     }
     
     /**
-     * Gets request
-     * @return App\apiModels\travel\v1\prototypes\CALCULATEREQUEST
+     * Gets status
+     * @return string
      */
-    public function getRequest()
+    public function getStatus()
     {
-        return $this->request;
+        return $this->status;
     }
   
     /**
-     * Sets request
-     * @param App\apiModels\travel\v1\prototypes\CALCULATEREQUEST $request Zapytanie, na podstawie którego obliczono amount i wartość promo_code_valid
+     * Sets status
+     * @param string $status Status importu polisy
      * @return $this
      */
-    public function setRequest($request)
+    public function setStatus($status)
     {
-        
-        $this->request = $request;
+        $allowed_values = array("OK", "WARN", "ERR");
+        if (!in_array($status, $allowed_values)) {
+            throw new \InvalidArgumentException("Invalid value for 'status', must be one of 'OK', 'WARN', 'ERR'");
+        }
+        $this->status = $status;
         return $this;
     }
     
     /**
-     * Gets amount
-     * @return App\apiModels\travel\v1\prototypes\AMOUNT
+     * Gets policy_ref
+     * @return string
      */
-    public function getAmount()
+    public function getPolicyRef()
     {
-        return $this->amount;
+        return $this->policy_ref;
     }
   
     /**
-     * Sets amount
-     * @param App\apiModels\travel\v1\prototypes\AMOUNT $amount Obiekt z informacją o składce
+     * Sets policy_ref
+     * @param string $policy_ref Identyfikator polisy
      * @return $this
      */
-    public function setAmount($amount)
+    public function setPolicyRef($policy_ref)
     {
         
-        $this->amount = $amount;
+        $this->policy_ref = $policy_ref;
         return $this;
     }
     
     /**
-     * Gets promo_code_valid
-     * @return bool
+     * Gets quote_ref
+     * @return string
      */
-    public function getPromoCodeValid()
+    public function getQuoteRef()
     {
-        return $this->promo_code_valid;
+        return $this->quote_ref;
     }
   
     /**
-     * Sets promo_code_valid
-     * @param bool $promo_code_valid Czy kod promocyjny jest ważny i został uwzględniony
+     * Sets quote_ref
+     * @param string $quote_ref Identyfikator oferty
      * @return $this
      */
-    public function setPromoCodeValid($promo_code_valid)
+    public function setQuoteRef($quote_ref)
     {
         
-        $this->promo_code_valid = $promo_code_valid;
+        $this->quote_ref = $quote_ref;
+        return $this;
+    }
+    
+    /**
+     * Gets messages
+     * @return object[]
+     */
+    public function getMessages()
+    {
+        return $this->messages;
+    }
+  
+    /**
+     * Sets messages
+     * @param object[] $messages 
+     * @return $this
+     */
+    public function setMessages($messages)
+    {
+        
+        $this->messages = $messages;
         return $this;
     }
     

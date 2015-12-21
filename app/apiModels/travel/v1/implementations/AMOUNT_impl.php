@@ -30,8 +30,9 @@ class AMOUNT_impl extends AMOUNT
      * @var array
      */
     public static $validators = [
-        'value_base_currency' => 'currency_code',
-        'value_currency' => 'currency_code',
+        'value_base_currency'   => 'currency_code',
+        'value_currency'        => 'currency_code',
+        'value'                 => 'value_conversion:value_base,currency_rate,2',
     ];
     
     /**

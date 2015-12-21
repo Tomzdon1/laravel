@@ -173,8 +173,10 @@ class ObjectSerializer
     public function deserialize($data, $class, $httpHeader=null)
     {
         if (null === $data) {
+            \Log::Debug("Deserializuję jako null");
             $deserialized = null;
         } elseif (substr($class, 0, 4) === 'map[') { // for associative array e.g. map[string,int]
+            \Log::Debug("Deserializuję jako tablicę asocjacyjną");
             $inner = substr($class, 4, -1);
             $deserialized = array();
             if (strrpos($inner, ",") !== false) {
@@ -185,6 +187,7 @@ class ObjectSerializer
                 }
             }
         } elseif (strcasecmp(substr($class, -2), '[]') == 0) {
+            \Log::Debug("Deserializuję jako tablicę");
             $subClass = substr($class, 0, -2);
             $values = array();
             foreach ($data as $key => $value) {
@@ -192,11 +195,14 @@ class ObjectSerializer
             }
             $deserialized = $values;
         } elseif ($class === '\DateTime') {
+            \Log::Debug("Deserializuję jako DateTime");
             $deserialized = new \Carbon\Carbon($data);
         } elseif (in_array($class, array('void', 'bool', 'string', 'double', 'byte', 'mixed', 'integer', 'float', 'int', 'DateTime', 'number', 'boolean', 'object'))) {
+            \Log::Debug("Deserializuję jako typ podstawowy: $class");
             settype($data, $class);
             $deserialized = $data;
         } elseif ($class === '\SplFileObject') {
+            \Log::Debug("Deserializuję jako plik");
             // determine file name
             if (preg_match('/Content-Disposition: inline; filename=[\'"]?([^\'"\s]+)[\'"]?$/i', $httpHeader, $match)) {
                 $filename = Configuration::getDefaultConfiguration()->getTempFolderPath().$match[1];
@@ -208,6 +214,7 @@ class ObjectSerializer
             error_log("[INFO] Written $byte_written byte to $filename. Please move the file to a proper folder or delete the temp file after processing.\n", 3, Configuration::getDefaultConfiguration()->getDebugFile());
       
         } else {
+            \Log::Debug("Deserializuję jako obiekt klasy: $class");
             $data = (object)$data;
             if(!isset($data->val)){
                 if(isset($data->scalar)){
@@ -251,8 +258,7 @@ echo '$data: '.print_r($data,1).' '.$instance::$attributeMap[$property]."|<br>\n
         }
 
         if (is_subclass_of($deserialized, 'App\apiModels\ApiModel')) {
-            $errorClass = substr($class, 0, strrpos($class, '\\')).'\ERROR';
-            $errorClass = str_replace('prototypes', 'implementations', $errorClass).'_impl';
+            $errorClass = env('ERROR_MODEL_IMPL_TRAVEL_V1');
             $deserialized->validate($errorClass);
         }
      

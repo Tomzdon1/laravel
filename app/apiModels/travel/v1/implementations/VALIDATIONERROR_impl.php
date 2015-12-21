@@ -1,6 +1,6 @@
 <?php
 /**
- * ERROR
+ * VALIDATIONERROR
  *
  * PHP version 5
  *
@@ -14,9 +14,9 @@
 
 namespace App\apiModels\travel\v1\implementations;
 
-use App\apiModels\travel\v1\prototypes\ERROR;
+use App\apiModels\travel\v1\prototypes\VALIDATIONERROR;
 /**
- * ERROR Class Doc Comment
+ * VALIDATIONERROR Class Doc Comment
  *
  * @category    Class
  * @description Błąd
@@ -25,7 +25,7 @@ use App\apiModels\travel\v1\prototypes\ERROR;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class ERROR_impl extends ERROR
+class VALIDATIONERROR_impl extends VALIDATIONERROR
 {
     /**
       * $property Nazwa atrybutu, którego dotyczą błędy
