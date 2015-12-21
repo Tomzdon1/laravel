@@ -33,7 +33,6 @@ class PERSONDATA_impl extends PERSONDATA
         'birth_date' => 'before:today',
         'pesel' => 'pesel',
         'nationality' => 'countryCode',
-        
     ];
 
     /**

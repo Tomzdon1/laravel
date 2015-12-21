@@ -53,7 +53,7 @@ class RequestCtrl extends BaseController
         /*utworzenie obiektu partnera. Jeśli nie znaleziony, to komunikat błędu*/
         $this->partner = new  \App\Http\Partner($parter_id,'travel');
         if(!$this->partner->isAuth()) {
-            abort(Response::HTTP_FORBIDDEN);
+            abort(Response::HTTP_UNAUTHORIZED);
         }
         $this->partnerCode = $this->partner->getCode();
         $this->data = $data;

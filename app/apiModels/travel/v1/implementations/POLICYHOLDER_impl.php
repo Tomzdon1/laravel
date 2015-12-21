@@ -17,7 +17,7 @@ class POLICYHOLDER_impl extends POLICYHOLDER
      * @var array
      */
     public static $validators = [
-        //
+        'data.pesel' => 'required',
     ];
     
     /**
