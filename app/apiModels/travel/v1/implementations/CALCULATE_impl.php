@@ -58,9 +58,11 @@ class CALCULATE_impl extends CALCULATE
 
 //        print_r($this->option_values);
         $options = Array();
-        foreach ($this->option_values as $option) {
-            if ($option->getValue() == true)
-                $options[$option->getCode()] = true;
+        if (is_array($this->option_values) || $this->option_values instanceof Traversable) {
+            foreach ($this->option_values as $option) {
+                if ($option->getValue() == true)
+                    $options[$option->getCode()] = true;
+            }
         }
 
         $isFamily = false;
