@@ -38,7 +38,7 @@ class PolicyModel
         $policy['quote_ref']    = $this->policyData['quote_ref'];
         $policy['start_date']   = $this->policyData['data']['start_date'];
         $policy['end_date']     = $this->policyData['data']['end_date'];
-        $policy['abroad']       = $this->policyData['data']['abroad'];
+        $policy['abroad']       = isset($this->policyData['data']['abroad']) ? $this->policyData['data']['abroad'] : null;
         if($this->policyData['data']['destination'])
             $policy['destination']  = $this->policyData['data']['destination'];
         $policy['policy_holder']= $this->policyData['policy_holder'];
