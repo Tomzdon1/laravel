@@ -27,10 +27,11 @@ var $partner;
       $this->importRequests[] = $this->objSer->deserialize($policy, '\App\apiModels\travel\v1\prototypes\IMPORTREQUEST');
       $this->response[] = $this->savePolicy($policy);
     }
-    
+
     return $this->response;
   }
   
+  // Ta funkcja powinna być w klasie IMPORTREQUEST
   private function savePolicy($data)
   {
     $status = 'OK';
