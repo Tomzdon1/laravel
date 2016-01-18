@@ -45,7 +45,7 @@ var $partner,$excelPath;
     $sourceQuote = [];
     
 
-    Log::info('totuuu'.print_r($this->quote_doc,1)); 
+    //Log::info('totuuu'.print_r($this->quote_doc,1)); 
     foreach($this->quote_doc[$path] as $query) {
       foreach($query['response'] as $quote) {
         if ($this->quote_ref == $quote['quote_ref']) {
@@ -65,10 +65,26 @@ var $partner,$excelPath;
          
         if(json_encode($inputData) == json_encode($record['response'])){
             $policy_calculation = $this->quote_doc[$calculate_path][$time];
+//            Log::info('isss');
         }
     }
-    //Log::info('totuuu'.print_r($data,1));
+//    Log::info('json_encode($inputData)'.print_r(json_encode($inputData),1));
+//    Log::info('json_encode($record[\'response\'])'.print_r(json_encode($record['response']),1));
+//    Log::info('$policy_calculation: '.print_r($policy_calculation['response']['amount']['date_rate'],1));
     
+    $rate_date  = new \DateTime($policy_calculation['response']['amount']['date_rate']);
+    $now_date   = new \DateTime();
+//    Log::info(print_r($now_date,1));
+//    Log::info(print_r($rate_date,1));
+    $interval = $now_date->diff($rate_date);
+    if($interval->days >= 7){
+        Log::info('rate_date: '.print_r($rate_date,1));
+        Log::info('now_date: '.print_r($now_date,1));
+        Log::info('difference" '.print_r($now_date->diff($rate_date),1));
+        abort(Response::HTTP_GONE);
+    }
+        
+
     $product_ref = $sourceQuote['product_ref'];
     $policyM = new \App\apiModels\travel\PolicyModel($this->mongoDB);
     $policyPrint = $policyM->setPolicy($product_ref, $data, $this->partner);
