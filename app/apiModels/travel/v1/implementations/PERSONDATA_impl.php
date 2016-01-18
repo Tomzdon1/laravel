@@ -34,6 +34,15 @@ class PERSONDATA_impl extends PERSONDATA
         'pesel' => 'pesel',
         'nationality' => 'countryCode',
     ];
+    
+    static $swaggerTypes = array(
+        'first_name' => 'string',
+        'last_name' => 'string',
+        'birth_date' => '\DateTime',
+        'pesel' => 'string',
+        'nationality' => 'string',
+        'document_no' => 'string'
+    );
 
     /**
      * Constructor
@@ -42,5 +51,10 @@ class PERSONDATA_impl extends PERSONDATA
     public function __construct(array $data = null)
     {
         parent::__construct($data);
+    }
+    
+    public function getBirthDate()
+    {
+        return $this->birth_date->format('Y-m-d');
     }
 }
