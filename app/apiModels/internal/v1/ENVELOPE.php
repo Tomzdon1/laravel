@@ -48,24 +48,21 @@ class ENVELOPE
         } catch (Exception $e) {
             return false;
         }
-        if (empty($env['type']) || empty($env['sendDT']) || empty($env['body']))
-        {
+        if (empty($env['type']) || empty($env['sendDT']) || empty($env['body'])) {
             return false;
         }
         
         $this->type     = $env['type'];
         $this->body     = $env['body'];
         $this->sendDT   = $env['sendDT'];
-        if (!empty($env['company']))
-        {
+        if (!empty($env['company'])) {
             $this->company  = $env['company'];
         }
-        if (!empty($env['src_id']))
-        {
+        if (!empty($env['src_id'])) {
             $this->src_id   = $env['src_id'];
         }
-        if (!empty($env['dst_id']))
-        {
+        
+        if (!empty($env['dst_id'])) {
             $this->dst_id   = $env['dst_id'];
         }
         return true;
@@ -92,12 +89,12 @@ class ENVELOPE
         return $this->company;
     }
 
-    public function getSrc_id()
+    public function getSrcId()
     {
         return $this->src_id;
     }
 
-    public function getDst_id()
+    public function getDstId()
     {
         return $this->dst_id;
     }
@@ -122,12 +119,12 @@ class ENVELOPE
         $this->company = $company;
     }
 
-    public function setSrc_id($src_id)
+    public function setSrcId($src_id)
     {
         $this->src_id = $src_id;
     }
 
-    public function setDst_id($dst_id)
+    public function setDstId($dst_id)
     {
         $this->dst_id = $dst_id;
     }
