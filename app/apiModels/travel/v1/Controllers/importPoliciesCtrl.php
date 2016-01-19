@@ -61,17 +61,20 @@ var $partner;
 // $policyM->setStatus($status);
 // $policyM->getMessages($messages);    
     
-    $policyCollection = $this->mongoDB->selectCollection(CP_POLICIES);
-    $policyCollection->insert($policyPrint,array('w'));
-    $policyId = (string)$policyPrint["_id"];
+    // $policyCollection = $this->mongoDB->selectCollection(CP_POLICIES);
+    // $policyCollection->insert($policyPrint,array('w'));
+    // $policyId = (string)$policyPrint["_id"];
     
+    if (!$policyM->save()) {
+      abort(Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
     
+    $policyId = (string)$policyM->policyId;
     $policyDate = date('Y-m-d h:i:s');
     
     $this->quoteLogAdd('policyId',$policyId);
     $this->quoteLogAdd('policyDate',$policyDate);
-    
-    
+
     //Po wygenerowaniu modelu zawierającego IMPORT_STATUS należy refaktoryzować na model
     return Array('status'=>$status,'policy_ref'=>$policyId,'messages'=>$messages);
   }

@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use App\apiModels\travel\PolicyData;
 use App\apiModels\travel\v1\prototypes\CALCULATE_impl;
 
+use App\Events\IssuedPolicyEvent;
+
 use Symfony\Component\HttpFoundation\Response as Response;
 
 
@@ -89,12 +91,15 @@ var $partner,$excelPath;
     $policyM = new \App\apiModels\travel\PolicyModel($this->mongoDB);
     $policyPrint = $policyM->setPolicy($product_ref, $data, $this->partner);
     
-    $policyCollection = $this->mongoDB->selectCollection(CP_POLICIES);
-    $policyCollection->insert($policyPrint,array('w'));
-    $policyId = (string)$policyPrint["_id"];
+    // $policyCollection = $this->mongoDB->selectCollection(CP_POLICIES);
+    // $policyCollection->insert($policyPrint,array('w'));
+    // $policyId = (string)$policyPrint["_id"];
     
+    if (!$policyM->save()) {
+      abort(Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
     
-    //$policyId = '0011';
+    $policyId = (string)$policyM->policyId;
     $policyDate = date('Y-m-d h:i:s');
     
     $this->quoteLogAdd('policyId',$policyId);
@@ -109,6 +114,7 @@ var $partner,$excelPath;
     
     $policy = $this->objSer->deserialize($responseData, '\App\apiModels\travel\v1\prototypes\POLICY');
     $policy->setCalculate($data);
+
     return $this->objSer->sanitizeForSerialization($policy);
 
 //    $collection = $this->mongoDB->selectCollection(CP_TRAVEL_OFFERS_COL);

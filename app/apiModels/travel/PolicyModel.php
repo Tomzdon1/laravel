@@ -2,6 +2,8 @@
 
 namespace App\apiModels\travel;
 
+use App\Events\IssuedPolicyEvent;
+
 class PolicyModel
 {
     var $productRef;
@@ -10,9 +12,15 @@ class PolicyModel
     var $amount;
     var $partner;
     var $product;
+
+    public $policyId = null;
     
     public function __construct($mongoDB){
         $this->mongoDB = $mongoDB;
+    }
+
+    public function __toString() {
+        return json_encode($this->policyData);
     }
     
     public function setPolicy($product_ref,$policyData,$partner) {
@@ -35,6 +43,11 @@ class PolicyModel
     private function getPolicy(){
         
         $policy = Array();
+
+        if ($this->policyId) {
+            $policy['_id'] = $policyId;
+        }
+
         $policy['quote_ref']    = $this->policyData['quote_ref'];
         $policy['start_date']   = $this->policyData['data']['start_date'];
         $policy['end_date']     = $this->policyData['data']['end_date'];
@@ -83,5 +96,21 @@ class PolicyModel
         }
         $policy['DateTime'] = \DateTime::createFromFormat('U.u', microtime(true))->format("YmdHisu");
         return $policy;
+    }
+
+    public function save() {
+        $policy = $this->getPolicy();
+
+        $policyCollection = $this->mongoDB->selectCollection(CP_POLICIES);
+        if ($policyCollection->insert($policy)) {
+            $this->policyId = $policy["_id"];
+
+            event(new IssuedPolicyEvent($this));
+
+
+            return true;
+        }
+
+        return false;
     }
 }
