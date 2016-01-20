@@ -50,7 +50,7 @@ class issuePolicyCtrl extends RequestCtrl
         $sourceQuote = [];
 
 
-        //Log::info('totuuu'.print_r($this->quote_doc,1)); 
+        //Log::info('totuuu'.print_r($this->quote_doc,1));
         foreach ($this->quote_doc[$path] as $query) {
             foreach ($query['response'] as $quote) {
                 if ($this->quote_ref == $quote['quote_ref']) {

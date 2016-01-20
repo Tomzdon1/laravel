@@ -52,8 +52,9 @@ class QUOTE_impl extends QUOTE
         $options = array();
         if (is_array($this->option_values) || $this->option_values instanceof Traversable) {
             foreach ($this->option_values as $option) {
-                if ($option->getValue() == true)
+                if ($option->getValue() == true) {
                     $options[$option->getCode()] = true;
+                }
             }
         }
 
