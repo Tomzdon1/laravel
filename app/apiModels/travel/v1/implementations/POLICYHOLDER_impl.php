@@ -1,6 +1,7 @@
 <?php
 
 namespace App\apiModels\travel\v1\implementations;
+
 use App\apiModels\travel\v1\prototypes\POLICYHOLDER;
 
 /**
@@ -12,14 +13,15 @@ use App\apiModels\travel\v1\prototypes\POLICYHOLDER;
  */
 class POLICYHOLDER_impl extends POLICYHOLDER
 {
-	/**
+
+    /**
      * Valdators for model
      * @var array
      */
     public static $validators = [
         'data.pesel' => 'required',
     ];
-    
+
     /**
      * Constructor
      * @param mixed[] $data Associated array of property value initalizing the model
@@ -28,6 +30,4 @@ class POLICYHOLDER_impl extends POLICYHOLDER
     {
         parent::__construct($data);
     }
-    
-    
 }

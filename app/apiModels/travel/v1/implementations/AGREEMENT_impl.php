@@ -1,18 +1,19 @@
 <?php
 
 namespace App\apiModels\travel\v1\implementations;
+
 use App\apiModels\travel\v1\prototypes\AGREEMENT;
 
 /**
  * CALCULATE_REQUEST Class Doc Comment
  * @category    Class
- * @description 
+ * @description
  * @package     travel\v1
- * @author      Tomasz Duda <tomasz.duda@tueuropa.pl>   
+ * @author      Tomasz Duda <tomasz.duda@tueuropa.pl>
  */
 class AGREEMENT_impl extends AGREEMENT
 {
-	/**
+    /**
      * Valdators for model
      * @var array
      */
@@ -28,6 +29,4 @@ class AGREEMENT_impl extends AGREEMENT
     {
         parent::__construct($data);
     }
-    
-    
 }

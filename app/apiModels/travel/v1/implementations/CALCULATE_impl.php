@@ -6,7 +6,7 @@
  * PHP version 5
  *
  * @category    Class
- * @description 
+ * @description
  * @package     travel\v1
  * @author      Tomasz Duda <tomasz.duda@tueuropa.pl>
  */
@@ -15,16 +15,6 @@ namespace App\apiModels\travel\v1\implementations;
 
 use App\apiModels\travel\v1\prototypes\CALCULATE;
 
-/**
- * CALCULATE Class Doc Comment
- *
- * @category    Class
- * @description 
- * @package     Swagger\Client
- * @author      http://github.com/swagger-api/swagger-codegen
- * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
- * @link        https://github.com/swagger-api/swagger-codegen
- */
 class CALCULATE_impl extends CALCULATE
 {
     /**
@@ -57,16 +47,17 @@ class CALCULATE_impl extends CALCULATE
         $this->amount->setValueCurrency('PLN');
 
 //        print_r($this->option_values);
-        $options = Array();
+        $options = array();
         if (is_array($this->option_values) || $this->option_values instanceof Traversable) {
             foreach ($this->option_values as $option) {
-                if ($option->getValue() == true)
+                if ($option->getValue() == true) {
                     $options[$option->getCode()] = true;
+                }
             }
         }
 
         $isFamily = false;
-        $birthDates = Array();
+        $birthDates = array();
         foreach ($request->getInsured() as $insured) {
             $birthDates[] = $insured->getData()->getBirthDate();
         }
@@ -96,14 +87,14 @@ class CALCULATE_impl extends CALCULATE
         }
         $this->amount->setValueBase($amountValue);
         
-        if($config['quotation']['resultCurrency'] != 'PLN'){
-            $recalculation = $this->recalculate2pln($amountValue,$config['quotation']['resultCurrency']);
+        if ($config['quotation']['resultCurrency'] != 'PLN') {
+            $recalculation = $this->recalculate2pln($amountValue, $config['quotation']['resultCurrency']);
             $AmountPLN = $recalculation['amount'];
             $this->amount->setCurrencyRate($recalculation['rate']);
             $this->amount->setDateRate($recalculation['date']);
-        }
-        else
+        } else {
             $AmountPLN = $amountValue;
+        }
         $this->amount->setValue($AmountPLN);
 
 //        print_r($this->amount); //->setValueBaseCurrency('GBN');
@@ -113,8 +104,8 @@ class CALCULATE_impl extends CALCULATE
     {
         $date = new \DateTime;
         $rate = 4.229;
-        if ($amountCurrency == 'EUR')
+        if ($amountCurrency == 'EUR') {
             return ['amount'=>round(($amount * $rate), 2), 'rate'=>$rate, 'date'=> $date ];
+        }
     }
-
 }
