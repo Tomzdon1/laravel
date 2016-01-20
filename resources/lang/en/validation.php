@@ -90,6 +90,7 @@ return [
     'currency_code' => 'The :attribute must be country code compatible with ISO 3166-1 alpha-2.',
     'pesel' => 'The :attribute must be valid PESEL number.',
     'after_equal' => 'The :attribute must be a date after or equal :date.',
+    'value_conversion' => 'The value of currency conversion is invalid.',
 
     'custom' => [
         'attribute-name' => [

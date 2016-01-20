@@ -28,6 +28,8 @@ trait ValidatesModels
             $data[$key] = &$this->{$key};
         }
 
+        $data = static::dotObject($data);
+
         $validator = $this->getValidationFactory()->make($data, $rules, $messages, $customAttributes);
 
         if ($validator->fails()) {
@@ -47,6 +49,29 @@ trait ValidatesModels
 
             throw new HttpResponseException(new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY));
         }
+    }
+
+    /**
+     * Flatten a multi-dimensional associative array of objects with dots.
+     *
+     * @param  array   $array
+     * @param  string  $prepend
+     * @return array
+     */
+    public static function dotObject($array, $prepend = '')
+    {
+        $results = [];
+
+        foreach ($array as $key => $value) {
+            if (is_object($value)) {
+                $value = get_object_vars($value);
+                $results = array_merge($results, static::dotObject($value, $prepend.$key.'.'));
+            } else {
+                $results[$prepend.$key] = $value;
+            }
+        }
+
+        return $results;
     }
 
     /**

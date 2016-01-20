@@ -1,45 +1,31 @@
 <?php
 /**
- * ERROR
+ * IMPORTREQUEST_impl
  *
  * PHP version 5
  *
- * @category Class
- * @package  App\apiModels\travel\v1
- * @author   http://github.com/swagger-api/swagger-codegen
- * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
- * @link     https://github.com/swagger-api/swagger-codegen
+ * @category    Class
+ * @description 
+ * @package     travel\v1
+ * @author      Krzysztof Dałek <krzysztof.dalek@tueuropa.pl>
  */
-
 
 namespace App\apiModels\travel\v1\implementations;
 
-use App\apiModels\travel\v1\prototypes\ERROR;
+use App\apiModels\travel\v1\prototypes\IMPORTREQUEST;
 /**
- * ERROR Class Doc Comment
+ * IMPORTREQUEST Class Doc Comment
  *
  * @category    Class
- * @description Błąd
+ * @description Zestaw danych do zapisania gotowej polisy
  * @package     App\apiModels\travel\v1
  * @author      http://github.com/swagger-api/swagger-codegen
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class ERROR_impl extends ERROR
+class IMPORTREQUEST_impl   extends IMPORTREQUEST 
 {
-    /**
-      * $property Nazwa atrybutu, którego dotyczą błędy
-      * @var string
-      */
-    public $property;
-    
-    /**
-      * $errors Tablica opisów błędów
-      * @var string[]
-      */
-    public $errors = [];
-
-	/**
+/**
      * Valdators for model
      * @var array
      */

@@ -19,7 +19,8 @@ class RequestValidate
      */
     public function handle($request, Closure $next, $apiDefinitionPath, $errorClass)
     {
-        \Log::debug('RequestValidate');
+        \Log::debug('RequestValidate starting');
+
         $responseBody = json_decode($request->input('data'));
 
         $path = $request->getPathInfo();
@@ -38,6 +39,8 @@ class RequestValidate
         $validator->check($responseBody, $responseSchema);                
         
         if (!$validator->isValid()) {
+            \Log::debug('RequestValidate validation error');
+
             $errors = [];
             
             foreach ($validator->getErrors() as $error) {
@@ -57,6 +60,8 @@ class RequestValidate
             return response(array_values($errors), Response::HTTP_BAD_REQUEST);
         }
         
+        \Log::debug('RequestValidate success');
+
         return $next($request);
     }
 }

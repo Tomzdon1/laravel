@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREPERSON
  *
@@ -11,20 +12,13 @@
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 
-
 namespace App\apiModels\travel\v1\implementations;
+
 use App\apiModels\travel\v1\prototypes\PREPERSON;
 
-/**
- * PREPERSON Class Doc Comment
- *
- * @category    Class
- * @description 
- * @package     travel\v1
- * @author      Krzysztof Dałek <krzysztof.dalek@tueuropa.pl>
- */
 class PREPERSON_impl extends PREPERSON
 {
+
     /**
      * Valdators for model
      * @var array
@@ -41,9 +35,10 @@ class PREPERSON_impl extends PREPERSON
     {
         parent::__construct($data);
     }
+
     public function setBirthDate($birth_date)
     {
         parent::setBirthDate($birth_date);
-        $this->birth_date->setTimezone(new \DateTimeZone('Europe/Warsaw')); 
+        $this->birth_date->setTimezone(new \DateTimeZone('Europe/Warsaw'));
     }
 }

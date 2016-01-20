@@ -55,6 +55,21 @@ class AppServiceProvider extends ServiceProvider
 
 			return $intSum % 10 === 0;
         });
+
+        /**
+        *   Validate currency conversion.
+        *
+        *   $parameters[0] value_base
+        *   $parameters[1] currency_rate
+        *   $parameters[2] precision
+        */
+        \Validator::extend('value_conversion', function($attribute, $value, $parameters, $validator) {
+            $value_base = array_get($validator->getData(), $parameters[0], null);
+            $currency_rate = array_get($validator->getData(), $parameters[1], null);
+            $precision = $parameters[2];
+
+            return $value == round($value_base * $currency_rate, $precision);
+        });
     }
 
     /**

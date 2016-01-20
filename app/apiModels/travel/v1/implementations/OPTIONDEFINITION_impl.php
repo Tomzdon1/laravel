@@ -42,6 +42,4 @@ class OPTIONDEFINITION_impl extends OPTIONDEFINITION
     {
         parent::__construct($data);
     }
-    
-    
 }
