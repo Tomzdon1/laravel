@@ -15,8 +15,15 @@ namespace App\apiModels\travel;
  */
 class PolicyData
 {
-    var $promo_code, $start_date, $end_date, $abroad, $family, $destination, $option_values;
-    public function __construct($start_date, $end_date, $abroad, $family, $destination, $option_values,$promo_code='')
+    public $promo_code;
+    public $start_date;
+    public $end_date;
+    public $abroad;
+    public $family;
+    public $destination;
+    public $option_values;
+    
+    public function __construct($start_date, $end_date, $abroad, $family, $destination, $option_values, $promo_code = '')
     {
         $this->promo_code    =$promo_code;
         $this->start_date    =$start_date;
@@ -31,17 +38,18 @@ class PolicyData
     {
         $method_name = 'validate_'.$param_name;
         if (method_exists($this, $method_name)) {
-            $response = call_user_func_array(Array($this, $method_name));
-        }else{
+            $response = call_user_func_array(array($this, $method_name));
+        } else {
             $response = false;
         }
         return $response;
     }
     
-    private function validate_promo_code(){
-        if(!empty($this->promo_code))
+    private function validate_promo_code()
+    {
+        if (!empty($this->promo_code)) {
             return true;
+        }
         return false;
     }
-
 }

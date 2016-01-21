@@ -1,6 +1,7 @@
 <?php
 
 namespace App\apiModels\travel\v1\implementations;
+
 use App\apiModels\travel\v1\prototypes\QUOTEREQUEST;
 
 /**
@@ -12,14 +13,15 @@ use App\apiModels\travel\v1\prototypes\QUOTEREQUEST;
  */
 class QUOTEREQUEST_impl extends QUOTEREQUEST
 {
-	/**
+
+    /**
      * Valdators for model
      * @var array
      */
     public static $validators = [
         //
     ];
-    
+
     /**
      * Constructor
      * @param mixed[] $data Associated array of property value initalizing the model
@@ -28,6 +30,4 @@ class QUOTEREQUEST_impl extends QUOTEREQUEST
     {
         parent::__construct($data);
     }
-    
-    
 }

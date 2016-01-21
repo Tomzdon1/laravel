@@ -6,24 +6,27 @@ use App\Events\IssuedPolicyEvent;
 
 class PolicyModel
 {
-    var $productRef;
-    var $policyData;
-    var $mongoDB;
-    var $amount;
-    var $partner;
-    var $product;
+    public $productRef;
+    public $policyData;
+    public $mongoDB;
+    public $amount;
+    public $partner;
+    public $product;
 
     public $policyId = null;
     
-    public function __construct($mongoDB){
+    public function __construct($mongoDB)
+    {
         $this->mongoDB = $mongoDB;
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return json_encode($this->policyData);
     }
     
-    public function setPolicy($product_ref,$policyData,$partner) {
+    public function setPolicy($product_ref, $policyData, $partner)
+    {
         $this->productRef = $product_ref;
         $this->policyData = $policyData['request'];
         $this->amount = $policyData['amount'];
@@ -33,16 +36,18 @@ class PolicyModel
         return $this->getPolicy();
     }
     
-    public function getProduct($productRef){
+    public function getProduct($productRef)
+    {
         $collection = $this->mongoDB->selectCollection(CP_TRAVEL_OFFERS_COL);
         $m1 = new \MongoId($productRef);
-        $product = $collection->findOne(Array('_id'=>$m1));
+        $product = $collection->findOne(array('_id'=>$m1));
         return $product;
     }
     
-    private function getPolicy(){
+    private function getPolicy()
+    {
         
-        $policy = Array();
+        $policy = array();
 
         if ($this->policyId) {
             $policy['_id'] = $policyId;
@@ -52,8 +57,9 @@ class PolicyModel
         $policy['start_date']   = $this->policyData['data']['start_date'];
         $policy['end_date']     = $this->policyData['data']['end_date'];
         $policy['abroad']       = isset($this->policyData['data']['abroad']) ? $this->policyData['data']['abroad'] : null;
-        if($this->policyData['data']['destination'])
+        if ($this->policyData['data']['destination']) {
             $policy['destination']  = $this->policyData['data']['destination'];
+        }
         $policy['policy_holder']= $this->policyData['policy_holder'];
         $policy['insured']      = $this->policyData['insured'];
         
@@ -70,8 +76,8 @@ class PolicyModel
         $policy['product']['code']      = $this->product['code'];
         
         $policy['product']['elements'] = [];
-        foreach($this->product['elements'] as $elem){
-            $policy['product']['elements'][] = Array(
+        foreach ($this->product['elements'] as $elem) {
+            $policy['product']['elements'][] = array(
                                                 'kube'=>$elem['kube'],
                                                 'su'=>$elem['value'],
                                                 'currency'=>$elem['currency'],
@@ -79,12 +85,12 @@ class PolicyModel
                                                 );
         }
         $policy['product']['options'] = [];
-        if(!empty($this->policyData['data']['option_values'])){
-            foreach($this->policyData['data']['option_values'] as $option){
-                if($option['value']==true){
-                    foreach($this->product['options'] as $prodOpt){
-                        if($prodOpt['code']==$option['code']){
-                            $policy['product']['options'][] = Array(
+        if (!empty($this->policyData['data']['option_values'])) {
+            foreach ($this->policyData['data']['option_values'] as $option) {
+                if ($option['value']==true) {
+                    foreach ($this->product['options'] as $prodOpt) {
+                        if ($prodOpt['code']==$option['code']) {
+                            $policy['product']['options'][] = array(
                                                                 'code'      =>$option['code'],
                                                                 'tuecode'   =>$prodOpt['tucode']
                             );
@@ -98,7 +104,8 @@ class PolicyModel
         return $policy;
     }
 
-    public function save() {
+    public function save()
+    {
         $policy = $this->getPolicy();
 
         $policyCollection = $this->mongoDB->selectCollection(CP_POLICIES);
