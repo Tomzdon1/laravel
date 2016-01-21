@@ -24,6 +24,9 @@ class RequestValidate
         $responseBody = json_decode($request->input('data'));
 
         $path = $request->getPathInfo();
+
+        \Log::debug("RequestValidate for path $path");
+        
         // Parametry GET nie są walidowane
         // $params = $request->input();
         $httpMethod = $request->getMethod();
