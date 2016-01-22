@@ -34,7 +34,7 @@ class testCtrl extends Controller{
 
     if ($request->has('data')) {
       // celowe przekształcanie na tablicę, ze względu na wydajność i możliwość walidowania przez framework
-      $data = json_decode($request->input('data'), true);
+      $data = json_decode($request->getContent(), true);
     }
 
     if ($data === null) {

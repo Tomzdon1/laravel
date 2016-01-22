@@ -21,7 +21,7 @@ class RequestValidate
     {
         \Log::debug('RequestValidate starting');
 
-        $responseBody = json_decode($request->input('data'));
+        $responseBody = json_decode($request->getContent());
 
         $path = $request->getPathInfo();
 
