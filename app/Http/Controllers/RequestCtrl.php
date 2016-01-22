@@ -20,10 +20,13 @@ use Symfony\Component\HttpFoundation\Response as Response;
     
 class RequestCtrl extends BaseController
 {
-    var $data, $response=null;
-    var $quote_doc = Array();
-    var $response_doc = Array();
+    private $data = null;
+    private $response=null;
+    private $quote_doc = Array();
+    private $response_doc = Array();
+    private $quoteRequestDate = null;
     protected $quote_ref;
+
     public function request(Request $request,  $parter_id, $request_id, $force_create_new_quote_log = false)
     {
         $this->mongoClient = new \MongoClient("mongodb://" . env('MONGO_SRV') . ":" . env('MONGO_PORT'));
@@ -39,10 +42,8 @@ class RequestCtrl extends BaseController
         $data = null;
         $this->path = $request->decodedPath();
 
-        if ($request->has('data')) {
-          // celowe przekształcanie na tablicę, ze względu na wydajność i możliwość walidowania przez framework
-          $data = json_decode($request->getContent(), true);
-        }
+        // celowe przekształcanie na tablicę, ze względu na wydajność i możliwość walidowania przez framework
+        $data = json_decode($request->getContent(), true);
 
         if ($data === null) {
           abort(Response::HTTP_BAD_REQUEST);
@@ -66,12 +67,18 @@ class RequestCtrl extends BaseController
      * Dopisuje przy tym response_doc do istniejącego quote_doc
      */
     public function __destruct() {
-        $collection = $this->mongoDB->selectCollection(CP_QUOTES_REF);
-         
-        $this->quote_doc[$this->path][$this->quoteRequestDate]['response_time'] = $this->getTime();
-        $this->quote_doc[$this->path][$this->quoteRequestDate]['response'] = $this->response_doc;
-        unset($this->quote_doc['quote_ref']);
-        $collection->update(Array('_id'=>$this->quote_doc['_id']),$this->quote_doc);
+
+        // Nie używajmy destruktora w celu logowania i innych ważnych działań
+        // Sprawdzanie czy partner jest zautoryzowany tylko w celu ominięcia błędu
+        // Gdy środowisko jest produkcyjne destruktor uruchamia się razem z Garbage Collector np. gdy partner nie jest autoryzowany
+        // a destruktor próbuje coś logować
+        if($this->partner->isAuth()) {
+            $collection = $this->mongoDB->selectCollection(CP_QUOTES_REF);
+            $this->quote_doc[$this->path][$this->quoteRequestDate]['response_time'] = $this->getTime();
+            $this->quote_doc[$this->path][$this->quoteRequestDate]['response'] = $this->response_doc;
+            unset($this->quote_doc['quote_ref']);
+            $collection->update(['_id'=>$this->quote_doc['_id']],$this->quote_doc);
+        }
     }
     
     /**
