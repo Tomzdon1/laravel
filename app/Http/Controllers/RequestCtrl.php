@@ -20,11 +20,11 @@ use Symfony\Component\HttpFoundation\Response as Response;
     
 class RequestCtrl extends BaseController
 {
-    private $data = null;
-    private $response=null;
-    private $quote_doc = Array();
-    private $response_doc = Array();
-    private $quoteRequestDate = null;
+    protected $data = null;
+    protected $response=null;
+    protected $quote_doc = Array();
+    protected $response_doc = Array();
+    protected $quoteRequestDate = null;
     protected $quote_ref;
 
     public function request(Request $request,  $parter_id, $request_id, $force_create_new_quote_log = false)
