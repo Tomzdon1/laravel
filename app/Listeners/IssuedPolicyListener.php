@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\IssuedPolicyEvent;
+use App\apiModels\internal\v1\ENVELOPE;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -27,7 +28,16 @@ class IssuedPolicyListener
     {
         \Log::debug('Start IssuedPolicyListener');
 
-        \Queue::pushRaw($event->policy);
+        $event->policy->product['company'] = 'M';
+
+        $envelope = new ENVELOPE();
+        $envelope->setBody($event->policy);
+        $envelope->setType('policy');
+        $envelope->setCompany($event->policy->product['company']);
+        $envelope->setSrcId($event->policy->policyId->{'$id'});
+        $envelope->setSendDT();
+
+        \Queue::pushRaw($envelope->encode());
 
         \Log::debug('End IssuedPolicyListener');
     }

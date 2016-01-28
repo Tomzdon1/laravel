@@ -25,7 +25,7 @@ class ENVELOPE
     
     public function __construct()
     {
-        $this->sendDT = new \Date();
+        $this->sendDT = new \DateTime();
     }
     
     public function encode()
@@ -104,9 +104,9 @@ class ENVELOPE
         $this->body = $body;
     }
 
-    public function setSendDT($sendDT)
+    public function setSendDT()
     {
-        $this->sendDT = new \Date();
+        $this->sendDT = new \DateTime();
     }
 
     public function setType($type)
