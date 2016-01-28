@@ -32,6 +32,6 @@ class AMOUNT_impl extends AMOUNT
      */
     public function __construct(array $data = null)
     {
-         parent::__construct($data);
+        parent::__construct($data);
     }
 }

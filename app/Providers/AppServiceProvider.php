@@ -70,6 +70,21 @@ class AppServiceProvider extends ServiceProvider
 
             return $value == round($value_base * $currency_rate, $precision);
         });
+
+        /**
+        *   Validate promotional amount.
+        *
+        *   $parameters[0] promo_code
+        *   $parameters[1] tariff_amount (value_base)
+        *   $parameters[2] precision
+        */
+        \Validator::extend('promotional_amount', function($attribute, $value, $parameters, $validator) {
+            $promo_code = array_get($validator->getData(), $parameters[0], null);
+            $tariff_value_base = array_get($validator->getData(), $parameters[1], null);
+            $precision = $parameters[2];
+
+            return $value == round($tariff_value_base * (1 - $promo_code/100), $precision);
+        });
     }
 
     /**

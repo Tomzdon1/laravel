@@ -91,6 +91,7 @@ return [
     'pesel' => 'The :attribute must be valid PESEL number.',
     'after_equal' => 'The :attribute must be a date after or equal :date.',
     'value_conversion' => 'The value of currency conversion is invalid.',
+    'promotional_amount' => 'The value of :attribute is invalid.',
 
     'custom' => [
         'attribute-name' => [
