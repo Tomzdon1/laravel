@@ -74,7 +74,10 @@ class PolicyModel
         $policy['partner']['customerId']    = $this->partnerData['customerId'];
         $policy['partner']['travel_api']    = $this->partnerData['apis']['travel']['version'];
         $policy['product']['code']      = $this->product['code'];
-        $policy['product']['wube']      = $this->product['wube'];
+        
+        if(!empty($this->product['wube'])){
+            $policy['product']['wube']      = $this->product['wube'];
+        }
         
         $policy['product']['elements'] = [];
         foreach ($this->product['elements'] as $elem) {
