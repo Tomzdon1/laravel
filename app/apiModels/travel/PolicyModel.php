@@ -4,7 +4,7 @@ namespace App\apiModels\travel;
 
 use App\Events\IssuedPolicyEvent;
 
-class PolicyModel
+class PolicyModel implements \JsonSerializable
 {
     public $productRef;
     public $policyData;
@@ -20,9 +20,9 @@ class PolicyModel
         $this->mongoDB = $mongoDB;
     }
 
-    public function __toString()
+    public function jsonSerialize()
     {
-        return json_encode($this->policyData);
+        return $this->getPolicy();
     }
     
     public function setPolicy($product_ref, $policyData, $partner)
@@ -50,7 +50,7 @@ class PolicyModel
         $policy = array();
 
         if ($this->policyId) {
-            $policy['_id'] = $policyId;
+            $policy['_id'] = $this->policyId;
         }
 
         $policy['quote_ref']    = $this->policyData['quote_ref'];
