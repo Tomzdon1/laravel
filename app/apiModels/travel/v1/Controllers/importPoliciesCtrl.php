@@ -44,7 +44,8 @@ class importPoliciesCtrl extends RequestCtrl
         $policyData['request'] = array(
             'data' => $data['data'],
             'policy_holder' => $data['policy_holder'],
-            'insured' => $data['insured']
+            'insured' => $data['insured'],
+            'policy_number' => $data['policy_number']
         );
 
         $policyData['request']['data']['destination'] = (!empty($data['data']['destination'])) ? $data['data']['destination'] : '';
