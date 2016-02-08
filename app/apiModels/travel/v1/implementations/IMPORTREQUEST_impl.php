@@ -23,7 +23,7 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
      * @var array
      */
     public static $validators = [
-        'amount.value_base'    => 'promotional_amount:promo_code,tariff_amount.value_base,2',
+        // 'amount.value_base'    => 'promotional_amount:promo_code,tariff_amount.value_base,2',
     ];
 
     /**
