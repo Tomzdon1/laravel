@@ -26,7 +26,7 @@ class IssuedPolicyListener
      */
     public function handle(IssuedPolicyEvent $event)
     {
-        \Log::debug('Start IssuedPolicyListener');
+        app('log')->debug('Start IssuedPolicyListener');
 
         $event->policy->product['company'] = 'M';
 
@@ -37,8 +37,8 @@ class IssuedPolicyListener
         $envelope->setSrcId($event->policy->policyId->{'$id'});
         $envelope->setSendDT();
 
-        \Queue::pushRaw($envelope->encode());
+        app('queue')->pushRaw($envelope->encode());
 
-        \Log::debug('End IssuedPolicyListener');
+        app('log')->debug('End IssuedPolicyListener');
     }
 }

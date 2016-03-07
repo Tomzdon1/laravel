@@ -39,7 +39,7 @@ class printPolicyCtrl extends RequestCtrl
             $pdf = $printing->getDocumentFromArray($template_name, $policy);
 
             if ($pdf->IsError()) {
-                \Log::error($pdf->ErrorMsg());
+                app('log')->error($pdf->ErrorMsg());
                 abort(Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 

@@ -40,7 +40,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        if (in_array(\App::environment(), ['local', 'staging'])) {
+        if (env('APP_DEBUG', false)) {
             return parent::render($request, $e);
         }
 

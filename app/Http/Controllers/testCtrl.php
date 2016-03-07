@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use Log;
-use Cache;
-use Validator;
+// use Cache;
+// use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response as Response;
@@ -40,7 +39,6 @@ class testCtrl extends Controller{
     if ($data === null) {
       abort(Response::HTTP_BAD_REQUEST);
     }
-    // error_log('partnerID:'.$parter_id) ;
 
     $this->partnerCode = $parter_id;
     $this->request_id = $request_id;
@@ -51,7 +49,6 @@ class testCtrl extends Controller{
     }
     
     $this->partnerCode = $this->partner->getCode();
-    // error_log('partner Code:'.$this->partnerCode) ;
     if(method_exists($this, $method_name)){
       $response = call_user_func_array(Array($this, $method_name), Array($data));
     }
@@ -336,7 +333,6 @@ class travelQuote extends quote{
     if ($this->excelPath !== $excelPath || $this->excelFile === null) {
       $this->excelPath = $excelPath;
       $this->excelFile = new \calculateTravelExcel($excelPath);
-      // Log::info('odczytalem plik');
     }
     return $this->excelFile;
   }

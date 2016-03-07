@@ -1,9 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-use Log;
-use Cache;
-use Validator;
 use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use App\Http\Partner;
@@ -30,7 +27,7 @@ class RequestCtrl extends BaseController
 
     public function request(Request $request,  $parter_id, $request_id, $force_create_new_quote_log = false)
     {
-        \Log::debug('Request ' . $request);
+        app('log')->debug('Request ' . $request);
 
         $this->mongoClient = new \MongoClient("mongodb://" . env('MONGO_SRV') . ":" . env('MONGO_PORT'));
         $this->mongoDB = $this->mongoClient->selectDB(env('MONGO_CP_DB'));
@@ -104,7 +101,7 @@ class RequestCtrl extends BaseController
         elseif(!empty($this->data['request']['quote_ref']))
             $this->quote_ref=$this->data['request']['quote_ref'];
         
-        Log::info(print_r($this->quote_ref,1));
+        app('log')->info(print_r($this->quote_ref,1));
         
         if(!empty($this->quote_ref) && !$force_create_new_quote_log){
              
