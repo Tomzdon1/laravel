@@ -24,7 +24,7 @@ class PREPERSON_impl extends PREPERSON
      * @var array
      */
     public static $validators = [
-        'birth_date' => 'before:today',
+        'birth_date.date' => 'before:today',
     ];
 
     /**

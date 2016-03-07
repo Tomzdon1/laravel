@@ -23,10 +23,9 @@ class POLICYDATA_impl extends POLICYDATA
      * @var array
      */
     public static $validators = [
-        'start_date' => 'after_equal:today',
-        'end_date' => 'after:start_date',
+        'start_date.date' => 'after_equal:today',
+        'end_date.date' => 'after:start_date.date',
         'destination' => 'destination_code',
-        'email' => 'email',
     ];
 
     /**
