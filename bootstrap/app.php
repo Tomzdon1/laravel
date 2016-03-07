@@ -20,10 +20,7 @@ $app = new Laravel\Lumen\Application(
     realpath(__DIR__.'/../')
 );
 
-// @todo - refactoring jezeli Log, Cache i inne fasady nie są używane można zakomentować - sprawdzic wydajnosc, mozna uzywac Log, Cache też bez fasad
 $app->withFacades();
-
-// $app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
@@ -63,7 +60,7 @@ $app->middleware([
     // Illuminate\Session\Middleware\StartSession::class,
     // Illuminate\View\Middleware\ShareErrorsFromSession::class,
     // Laravel\Lumen\Http\Middleware\VerifyCsrfToken::class,
-    App\Http\Middleware\WrapResponse::class,    
+    App\Http\Middleware\WrapResponse::class,
 ]);
 
 $app->routeMiddleware([
@@ -85,9 +82,11 @@ $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
 $app->register(App\Providers\EsbServiceProvider::class);
 $app->register(App\Providers\PdfPrintingServiceProvider::class);
+$app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
 $app->register(Monarobase\CountryList\CountryListServiceProvider::class);
 $app->register(FintechFab\LaravelQueueRabbitMQ\LaravelQueueRabbitMQServiceProvider::class);
 
+$app->withEloquent();
  
 /*
 |--------------------------------------------------------------------------
