@@ -10,7 +10,7 @@ use App\Http\Controllers\RequestCtrl;
 use Illuminate\Http\Request;
 use App\apiModels\travel\PolicyData;
 use App\apiModels\travel\v1\prototypes\CALCULATEREQUEST_impl;
-
+use Tue\Calculating\calculateTravelExcel;
 use Symfony\Component\HttpFoundation\Response as Response;
 
 class calculatePolicyCtrl extends RequestCtrl
@@ -103,7 +103,7 @@ class calculatePolicyCtrl extends RequestCtrl
     {
         if ($this->excelPath || $this->excelPath !== $excelPath || $this->excelFile === null) {
             $this->excelPath = $excelPath;
-            $this->excelFile = new \calculateTravelExcel($excelPath);
+            $this->excelFile = new calculateTravelExcel($excelPath);
             // Log::info('odczytalem plik');
         }
         return $this->excelFile;

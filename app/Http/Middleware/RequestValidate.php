@@ -20,6 +20,7 @@ class RequestValidate
     public function handle($request, Closure $next, $apiDefinitionPath, $errorClass)
     {
         \Log::debug('RequestValidate starting');
+        \Log::debug('RequestValidate Request content: ' . var_export($request->getContent(), true));
 
         $responseBody = json_decode($request->getContent());
 
@@ -59,6 +60,8 @@ class RequestValidate
 
                 $e->setErrors(array_merge($e->getErrors(), [$error['message']]));
             }
+
+            \Log::debug('RequestValidate Errors: ' . var_export($errors, true));
 
             return response(array_values($errors), Response::HTTP_BAD_REQUEST);
         }

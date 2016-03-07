@@ -30,6 +30,8 @@ class RequestCtrl extends BaseController
 
     public function request(Request $request,  $parter_id, $request_id, $force_create_new_quote_log = false)
     {
+        \Log::debug('Request ' . $request);
+
         $this->mongoClient = new \MongoClient("mongodb://" . env('MONGO_SRV') . ":" . env('MONGO_PORT'));
         $this->mongoDB = $this->mongoClient->selectDB(env('MONGO_CP_DB'));
         if (!$parter_id) {
@@ -73,7 +75,7 @@ class RequestCtrl extends BaseController
         // Sprawdzanie czy partner jest zautoryzowany tylko w celu ominięcia błędu
         // Gdy środowisko jest produkcyjne destruktor uruchamia się razem z Garbage Collector np. gdy partner nie jest autoryzowany
         // a destruktor próbuje coś logować
-        if($this->partner->isAuth()) {
+        if(is_object($this->partner) && $this->partner->isAuth()) {
             $collection = $this->mongoDB->selectCollection(CP_QUOTES_REF);
             $this->quote_doc[$this->path][$this->quoteRequestDate]['response_time'] = $this->getTime();
             $this->quote_doc[$this->path][$this->quoteRequestDate]['response'] = $this->response_doc;

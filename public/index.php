@@ -1,6 +1,5 @@
 <?php
 
-require_once './calculateExcel.php';
 /*Dodanie odpowiedzi dla CORS. Z zewnetrznych serwerow moze przychodzic najpierw OPTIONS */
 if ($_SERVER['REQUEST_METHOD']=='OPTIONS') {
 header('Access-Control-Allow-Origin : *');

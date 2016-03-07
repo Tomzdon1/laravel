@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\apiModels\travel\PolicyData;
 use App\apiModels\travel\v1\prototypes\QUOTEREQUEST_impl;
 use Symfony\Component\HttpFoundation\Response as Response;
+use Tue\Calculating\calculateTravelExcel;
 
 class getQuotesCtrl extends RequestCtrl
 {
@@ -98,7 +99,7 @@ class getQuotesCtrl extends RequestCtrl
     {
         if ($this->excelPath || $this->excelPath !== $excelPath || $this->excelFile === null) {
             $this->excelPath = $excelPath;
-            $this->excelFile = new \calculateTravelExcel($excelPath);
+            $this->excelFile = new calculateTravelExcel($excelPath);
             // Log::info('odczytalem plik');
         }
         return $this->excelFile;

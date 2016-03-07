@@ -54,7 +54,9 @@ class PolicyModel implements \JsonSerializable
         }
 
         $policy['quote_ref']    = $this->policyData['quote_ref'];
-        $policy['policy_number']    = $this->policyData['policy_number'];
+        if (isset($this->policyData['policy_number'])) {
+            $policy['policy_number']    = $this->policyData['policy_number'];
+        }
         $policy['start_date']   = $this->policyData['data']['start_date'];
         $policy['end_date']     = $this->policyData['data']['end_date'];
         $policy['abroad']       = isset($this->policyData['data']['abroad']) ? $this->policyData['data']['abroad'] : null;
@@ -86,7 +88,9 @@ class PolicyModel implements \JsonSerializable
                                                 'kube'=>$elem['kube'],
                                                 'su'=>$elem['value'],
                                                 'currency'=>$elem['currency'],
-                                                'division'=>$elem['division']
+                                                'division'=>$elem['division'],
+                                                'name'=>$elem['name'],
+                                                'name_en'=>$elem['name_en']
                                                 );
         }
         $policy['product']['options'] = [];

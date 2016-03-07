@@ -1,5 +1,7 @@
 <?php
 
+namespace Tue\Calculating;
+
 abstract class calculateExcel{
 	
 	private $objPHPExcel; //obiekt PHPexcel
@@ -16,7 +18,7 @@ abstract class calculateExcel{
 	}
 	
 	private function createPHPExcelObject(){
-		$objReader = new PHPExcel_Reader_Excel2007();
+		$objReader = new \PHPExcel_Reader_Excel2007();
 		$objReader->setReadDataOnly(true);
 		try {
 			$this->objPHPExcel = $objReader->load($this->excelFilePath);
@@ -86,16 +88,4 @@ abstract class calculateExcel{
 		
 	abstract protected function setCalculatedRange(); // wymaga definicji w podklasie
 
-}
-
-class calculateTravelExcel extends calculateExcel{
-	
-	protected function validateParams(){
-
-	}
-	
-	protected function setCalculatedRange(){
-		$this->calculatedRange = ['WARIANT','SKLADKA']; // zwracane kolumny
-	}
-	
 }
