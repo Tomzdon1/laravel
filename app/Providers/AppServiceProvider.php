@@ -13,24 +13,24 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-    	\Validator::extend('afterEqual', function($attribute, $value, $parameters) {
+    	app('validator')->extend('afterEqual', function($attribute, $value, $parameters) {
             $date = $parameters[0];
             return strtotime($value) >= strtotime($date);
         });
 
-        \Validator::replacer('afterEqual', function($message, $attribute, $rule, $parameters) {
+        app('validator')->replacer('afterEqual', function($message, $attribute, $rule, $parameters) {
 	        return str_replace(':date', $parameters[0], $message);
 	    });
 
-        \Validator::extend('countryCode', function($attribute, $value, $parameters) {
+        app('validator')->extend('countryCode', function($attribute, $value, $parameters) {
         	return (new \Monarobase\CountryList\CountryList())->has($value);
         });
 
-        \Validator::extend('destinationCode', function($attribute, $value, $parameters) {
+        app('validator')->extend('destinationCode', function($attribute, $value, $parameters) {
         	return (new \Monarobase\CountryList\CountryList())->has($value) || in_array($value, ['EU', 'WR']);
         });
 
-		\Validator::extend('currencyCode', function($attribute, $value, $parameters) {
+		app('validator')->extend('currencyCode', function($attribute, $value, $parameters) {
         	try {
         		(new \Alcohol\ISO4217())->getByAlpha3($value);
         		return true;
@@ -40,7 +40,7 @@ class AppServiceProvider extends ServiceProvider
         	}
         });
 
-        \Validator::extend('pesel', function($attribute, $value, $parameters) {
+        app('validator')->extend('pesel', function($attribute, $value, $parameters) {
         	if (!preg_match('/^[0-9]{11}$/', $value)) {
 				return false;
 			}
@@ -63,7 +63,7 @@ class AppServiceProvider extends ServiceProvider
         *   $parameters[1] currency_rate
         *   $parameters[2] precision
         */
-        \Validator::extend('value_conversion', function($attribute, $value, $parameters, $validator) {
+        app('validator')->extend('value_conversion', function($attribute, $value, $parameters, $validator) {
             $value_base = array_get($validator->getData(), $parameters[0], null);
             $currency_rate = array_get($validator->getData(), $parameters[1], null);
             $precision = $parameters[2];
@@ -78,7 +78,7 @@ class AppServiceProvider extends ServiceProvider
         *   $parameters[1] tariff_amount (value_base)
         *   $parameters[2] precision
         */
-        \Validator::extend('promotional_amount', function($attribute, $value, $parameters, $validator) {
+        app('validator')->extend('promotional_amount', function($attribute, $value, $parameters, $validator) {
             $promo_code = array_get($validator->getData(), $parameters[0], null);
             $tariff_value_base = array_get($validator->getData(), $parameters[1], null);
             $precision = $parameters[2];
