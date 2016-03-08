@@ -22,8 +22,8 @@ class PdfPrintingServiceProviderTest extends TestCase {
         $doc = $printer->getDocument('TESTCOM', $file);
         
         
-        \Log::debug('pdf->isError='.$doc->IsError());
-        \Log::debug('pdf->isError='.$doc->IsError());
+        app('log')->debug('pdf->isError='.$doc->IsError());
+        app('log')->debug('pdf->isError='.$doc->IsError());
         
         $this->assertEquals($doc->ContentType(),Tue\Printing\FileType::PDF,"Wygenerowany plik nie jest PDF");        
         $this->assertFalse($doc->IsError(),"Błąd podczas generowania PDF".$doc->ErrorMsg());
