@@ -2,7 +2,9 @@
 
 namespace App\apiModels\travel\v1\Controllers;
 
-//use App\Http\Controllers\Controller;
+use Log;
+use Cache;
+use Validator;
 use App\Http\Controllers\RequestCtrl;
 use Illuminate\Http\Request;
 use App\apiModels\travel\PolicyData;
@@ -46,6 +48,8 @@ class issuePolicyCtrl extends RequestCtrl
         $path = $this->quote_doc['path'];
         $sourceQuote = [];
 
+
+        //Log::info('totuuu'.print_r($this->quote_doc,1));
         foreach ($this->quote_doc[$path] as $query) {
             foreach ($query['response'] as $quote) {
                 if ($this->quote_ref == $quote['quote_ref']) {
@@ -54,6 +58,10 @@ class issuePolicyCtrl extends RequestCtrl
                 }
             }
         }
+        //Log::info(print_r($sourceQuote,1));
+//    Log::info(print_r($inputData,1));
+        //Log::info(json_encode($inputData['data']));
+
 
         $calculate_path = str_replace('get_quotes', 'calculate_policy', $path);
         $policy_calculation = null;
@@ -61,16 +69,22 @@ class issuePolicyCtrl extends RequestCtrl
 
             if (json_encode($inputData) == json_encode($record['response'])) {
                 $policy_calculation = $this->quote_doc[$calculate_path][$time];
+//            Log::info('isss');
             }
         }
+//    Log::info('json_encode($inputData)'.print_r(json_encode($inputData),1));
+//    Log::info('json_encode($record[\'response\'])'.print_r(json_encode($record['response']),1));
+//    Log::info('$policy_calculation: '.print_r($policy_calculation['response']['amount']['date_rate'],1));
 
         $rate_date = new \DateTime($policy_calculation['response']['amount']['date_rate']);
         $now_date = new \DateTime();
+//    Log::info(print_r($now_date,1));
+//    Log::info(print_r($rate_date,1));
         $interval = $now_date->diff($rate_date);
         if ($interval->days >= 7) {
-            app('log')->info('rate_date: ' . print_r($rate_date, 1));
-            app('log')->info('now_date: ' . print_r($now_date, 1));
-            app('log')->info('difference" ' . print_r($now_date->diff($rate_date), 1));
+            Log::info('rate_date: ' . print_r($rate_date, 1));
+            Log::info('now_date: ' . print_r($now_date, 1));
+            Log::info('difference" ' . print_r($now_date->diff($rate_date), 1));
             abort(Response::HTTP_GONE);
         }
 
@@ -105,51 +119,6 @@ class issuePolicyCtrl extends RequestCtrl
 
         return $this->objSer->sanitizeForSerialization($policy);
 
-//    $collection = $this->mongoDB->selectCollection(CP_TRAVEL_OFFERS_COL);
-//    $cursor = $collection->find(array('partner'=>$partnerCode ) );
-//    $cnt = $cursor->count();
-//    if($cnt == 0){
-//      $cursor = $collection->find(array('partner'=>OFFERS_STD_PARTNER ) );
-//    }
-//     $list = iterator_to_array($cursor);
-//     $i = 0;
-//     foreach ($list as $dbOffer){
-//        if ($quote['product_ref'] == $dbOffer['_id']) {
-//          $responseData = array();
-//          $responseData['quote_ref'] = (string)$this->quote_doc['_id'].$i++;//
-//          $this->productRefarray[]=$dbOffer['_id'];
-//          $responseData['amount'] = array( );
-//
-//          $responseData['description']=$dbOffer['name'];
-//          $responseData['details'] = $dbOffer['elements'] ;
-//          
-//          $responseData['option_definitions'] = $dbOffer['options'];//[['name'=>'Nazwa','description'=>'opis','code'=>'kod','value_type'=>'string','changeable'=>'true']  ];
-//          $responseData['option_values'] = [['code'=>'kod','value'=>'wartosc'] ];
-//
-//          $responseData['promo_code_valid'] = true;
-//          $responseData['request'] = $data;
-//
-//          $offer = $this->objSer->deserialize($responseData, '\App\apiModels\travel\v1\prototypes\CALCULATE');
-//          $offer->option_values = $this->calculate_request->getData()->getOptionValues();
-//          $offer->setVarCode($dbOffer['code']);
-//
-//          if ($dbOffer['configuration']['quotation']['type'] == 'formula')
-//              $offer->calculateAmount($dbOffer['configuration']);
-//          elseif ($dbOffer['configuration']['quotation']['type'] == 'excel'){
-//              $excelPath = EXCEL_DIR . '/' . $dbOffer['configuration']['quotation']['file'];
-//              $excelFile = $this->loadExcelFile($excelPath);
-//              $offer->calculateExcelAmount($dbOffer['configuration'],$excelFile,$this->calculate_request);
-//          }
-//
-//          return $this->objSer->sanitizeForSerialization($offer);//->toarray();
-//          // return [
-//            // 'request' => $data,
-//            // 'promo_code_valid' => false
-//          // ];
-//        }
-//     }
-
-        return false;
     }
 
     // Funkcja do przeniesienia
@@ -158,6 +127,7 @@ class issuePolicyCtrl extends RequestCtrl
         if ($this->excelPath || $this->excelPath !== $excelPath || $this->excelFile === null) {
             $this->excelPath = $excelPath;
             $this->excelFile = new \calculateTravelExcel($excelPath);
+            // Log::info('odczytalem plik');
         }
         return $this->excelFile;
     }

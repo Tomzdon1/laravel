@@ -5,7 +5,6 @@ namespace App\apiModels\travel\v1\Controllers;
 use Log;
 use Cache;
 use Validator;
-//use App\Http\Controllers\Controller;
 use App\Http\Controllers\RequestCtrl;
 use Illuminate\Http\Request;
 use App\apiModels\travel\PolicyData;
@@ -15,17 +14,20 @@ use Symfony\Component\HttpFoundation\Response as Response;
 
 class calculatePolicyCtrl extends RequestCtrl
 {
+
     public $partner;
     public $excelPath;
+
     public function request(Request $request, $parter_id = null, $request_id = null, $create_new_quote_log = null)
     {
         parent::request($request, $parter_id, $request_id);
 
         $this->objSer = new \App\apiModels\ObjectSerializer();
-        $this->calculate_request = $this->objSer->deserialize($this->data, '\App\apiModels\travel\v1\prototypes\CALCULATEREQUEST');
+        $this->calculate_request = $this->objSer->
+            deserialize($this->data, '\App\apiModels\travel\v1\prototypes\CALCULATEREQUEST');
 
         $this->response = $this->response_doc = $this->calculatePolicy($this->data);
-
+        $this->endLogSave();
         return $this->response; //response()->json($this->response);
     }
 
@@ -36,6 +38,7 @@ class calculatePolicyCtrl extends RequestCtrl
      */
     private function calculatePolicy($inputData)
     {
+
         $partnerCode = $this->partner->getCode();
         $data = $inputData;
 
@@ -51,31 +54,33 @@ class calculatePolicyCtrl extends RequestCtrl
             }
         }
 
-        $collection = $this->mongoDB->selectCollection(CP_TRAVEL_OFFERS_COL);
-        $cursor = $collection->find(array('partner' => $partnerCode));
-        $cnt = $cursor->count();
+
+        $list = app('db')->collection(CP_TRAVEL_OFFERS_COL)->where('partner', $partnerCode)->get();
+
+        $cnt = count($list);
         if ($cnt == 0) {
-            $cursor = $collection->find(array('partner' => OFFERS_STD_PARTNER));
+            $list = app('db')->collection(CP_TRAVEL_OFFERS_COL)->where('partner', OFFERS_STD_PARTNER)->get();
         }
-        $list = iterator_to_array($cursor);
         $i = 0;
+
         foreach ($list as $dbOffer) {
-            if ($quote['product_ref'] == $dbOffer['_id']) {
+            if ($sourceQuote['product_ref'] == $dbOffer['_id']) {
                 $responseData = array();
-                $responseData['quote_ref'] = (string) $this->quote_doc['_id'] . $i++; //
+                $responseData['quote_ref'] = (string) $this->quote_doc['_id'] . $i++;
                 $this->productRefarray[] = $dbOffer['_id'];
                 $responseData['amount'] = array();
 
                 $responseData['description'] = $dbOffer['name'];
                 $responseData['details'] = $dbOffer['elements'];
 
-                $responseData['option_definitions'] = $dbOffer['options']; //[['name'=>'Nazwa','description'=>'opis','code'=>'kod','value_type'=>'string','changeable'=>'true']  ];
+                $responseData['option_definitions'] = $dbOffer['options'];
                 $responseData['option_values'] = [['code' => 'kod', 'value' => 'wartosc']];
 
                 $responseData['promo_code_valid'] = true;
                 $responseData['request'] = $data;
 
-                $offer = $this->objSer->deserialize($responseData, '\App\apiModels\travel\v1\prototypes\CALCULATE');
+                $offer = $this->objSer->
+                    deserialize($responseData, '\App\apiModels\travel\v1\prototypes\CALCULATE');
                 $offer->option_values = $this->calculate_request->getData()->getOptionValues();
                 $offer->setVarCode($dbOffer['code']);
 
@@ -88,10 +93,6 @@ class calculatePolicyCtrl extends RequestCtrl
                 }
 
                 return $this->objSer->sanitizeForSerialization($offer); //->toarray();
-                // return [
-                // 'request' => $data,
-                // 'promo_code_valid' => false
-                // ];
             }
         }
 
@@ -103,6 +104,7 @@ class calculatePolicyCtrl extends RequestCtrl
     {
         if ($this->excelPath || $this->excelPath !== $excelPath || $this->excelFile === null) {
             $this->excelPath = $excelPath;
+            
             $this->excelFile = new calculateTravelExcel($excelPath);
             // Log::info('odczytalem plik');
         }

@@ -4,7 +4,6 @@ namespace App\apiModels\travel\v1\Controllers;
 
 use Log;
 use Cache;
-//use App\Http\Controllers\Controller;
 use App\Http\Controllers\RequestCtrl;
 use Illuminate\Http\Request;
 use App\apiModels\travel\PolicyData;
@@ -39,7 +38,7 @@ class importPoliciesCtrl extends RequestCtrl
 
             $this->response[] = $this->savePolicy($policy, $status, $errors);
         }
-
+        $this->endLogSave();
         return $this->response;
     }
 
@@ -58,14 +57,21 @@ class importPoliciesCtrl extends RequestCtrl
             'policy_number' => $data['policy_number']
         );
 
-        $policyData['request']['data']['destination'] = (!empty($data['data']['destination'])) ? $data['data']['destination'] : '';
+        $policyData['request']['data']['destination'] =
+            (!empty($data['data']['destination'])) ? $data['data']['destination'] : '';
         $policyData['amount'] = $data['amount'];
+        
         $policyData['tariff_amount'] = $data['tariff_amount'];
         $policyData['netto_amount'] = $data['netto_amount'];
         $policyData['worker_agent_id'] = $data['worker_agent_id'];
         $policyData['request']['quote_ref'] = $this->quote_doc['quote_ref'];
+        if (!empty($this->quote_doc['quote_ref'])) {
+            $policyData['request']['quote_ref'] = $this->quote_doc['quote_ref'];
+        } else {
+            $policyData['request']['quote_ref'] = '';
+        }
 
-        $policyM = new \App\apiModels\travel\PolicyModel($this->mongoDB);
+        $policyM = new \App\apiModels\travel\PolicyModel();
         $policyPrint = $policyM->setPolicy($product_ref, $policyData, $this->partner, $status);
 // Mozliwe, że model polisy powinien byc spojny dla roznych typow
 // Trzeba zdecydowac, czy walidacje maja się odbywac w kontrolerze, czy raczej w modelu
