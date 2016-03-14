@@ -72,7 +72,7 @@ class importPoliciesCtrl extends RequestCtrl
             $policyData['request']['quote_ref'] = '';
         }
 
-        $policyM = new \App\apiModels\travel\PolicyModel($this->mongoDB);
+        $policyM = new \App\apiModels\travel\PolicyModel();
         $policyPrint = $policyM->setPolicy($product_ref, $policyData, $this->partner, $status);
 // Mozliwe, że model polisy powinien byc spojny dla roznych typow
 // Trzeba zdecydowac, czy walidacje maja się odbywac w kontrolerze, czy raczej w modelu

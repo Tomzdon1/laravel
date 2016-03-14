@@ -40,7 +40,7 @@ class IssuedPolicyListener
         $envelope->setApi($api);
         $envelope->setStatus($event->policy->status);
         $envelope->setCompany($event->policy->product['company']);
-        $envelope->setSrcId($event->policy->policyId->{'$id'});
+        $envelope->setSrcId($event->policy->policyId);
         $envelope->setSendDT(new \DateTime());
         $envelope->setBody($event->policy);
 

@@ -15,17 +15,19 @@ class printPolicyCtrl extends RequestCtrl
     {
         parent::request($request, $parter_id, $request_id);
 
-        $queryArray = [];
-        $queryArray['_id'] = new \MongoId($this->data['policy_ref']);
-        $queryArray['quote_ref'] = $this->data['quote_ref'];
-
-        // Brak parametru policy_number w definicji API
-        // if (isset($this->data['policy_number'])) {
-        //     $queryArray['policy_number'] = $this->data['policy_number'];
-        // }
-
-        $collection = $this->mongoDB->selectCollection(CP_POLICIES);
-        $policy = $collection->findOne($queryArray);
+//        $queryArray = [];
+//        $queryArray['_id'] = new \MongoId($this->data['policy_ref']);
+//        $queryArray['quote_ref'] = $this->data['quote_ref'];
+//
+//        // Brak parametru policy_number w definicji API
+//        // if (isset($this->data['policy_number'])) {
+//        //     $queryArray['policy_number'] = $this->data['policy_number'];
+//        // }
+//
+//        $collection = $this->mongoDB->selectCollection(CP_POLICIES);
+//        $policy = $collection->findOne($queryArray);
+        
+        $policy = app('db')->collection(CP_POLICIES)->find($this->data['policy_ref'])->where('quote_ref',$this->data['quote_ref']);
 
         if ($policy) {
             try {

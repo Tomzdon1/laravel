@@ -27,7 +27,7 @@ class calculatePolicyCtrl extends RequestCtrl
             deserialize($this->data, '\App\apiModels\travel\v1\prototypes\CALCULATEREQUEST');
 
         $this->response = $this->response_doc = $this->calculatePolicy($this->data);
-        $this->endLogSave();
+        $this->EndLogSave();
         return $this->response; //response()->json($this->response);
     }
 
@@ -54,8 +54,8 @@ class calculatePolicyCtrl extends RequestCtrl
             }
         }
 
-
-        $list = app('db')->collection(CP_TRAVEL_OFFERS_COL)->where('partner', $partnerCode)->get();
+        
+        $list= app('db')->collection(CP_TRAVEL_OFFERS_COL)->where('partner', $partnerCode)->get();
 
         $cnt = count($list);
         if ($cnt == 0) {

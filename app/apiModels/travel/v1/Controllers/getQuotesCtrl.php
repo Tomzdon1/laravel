@@ -35,6 +35,7 @@ class getQuotesCtrl extends RequestCtrl
             $this->response_doc[] = $quote;
         }
 
+        $this->EndLogSave();
         return $this->response; //response()->json($this->response);
     }
 
@@ -49,24 +50,42 @@ class getQuotesCtrl extends RequestCtrl
         $data = $inputData;
         //$offers = new offerList($pc,$data);
 
+        //$this->mongoManager
+        
+//        $users = app('db')->collection(CP_TRAVEL_OFFERS_COL)->where('partner', $partnerCode)->get();
+//        \Log::info('MONGOJ'.print_r($users,1));
+//         $users = app('db')->collection(CP_TRAVEL_OFFERS_COL)->where('partner', OFFERS_STD_PARTNER)->get();
+//        \Log::info('MONGOJ'.print_r($users,1));
+        
+//        $filter = Array('partner' => $partnerCode);
+//        $query = new \MongoDB\Driver\Query($filter);
+//        $cursor = $this->mongoManager->executeQuery(env('MONGO_CP_DB') . '.' . CP_TRAVEL_OFFERS_COL, $query);
+        
+//        $collection = $this->mongoDB->selectCollection(CP_TRAVEL_OFFERS_COL);
+//        $cursor = $collection->find(array('partner' => $partnerCode));
+        
+//        \Log::info(print_r($cursor,1));
+//        $data = $cursor->toArray();
+        $data = app('db')->collection(CP_TRAVEL_OFFERS_COL)->where('partner', $partnerCode)->get();
 
-
-
-
-        $collection = $this->mongoDB->selectCollection(CP_TRAVEL_OFFERS_COL);
-        $cursor = $collection->find(array('partner' => $partnerCode));
-        $cnt = $cursor->count();
+        $cnt = count($data);
+        
         if ($cnt == 0) {
-            $cursor = $collection->find(array('partner' => OFFERS_STD_PARTNER));
+//            $cursor = $collection->find(array('partner' => OFFERS_STD_PARTNER));
+//            $filter = Array('partner' => OFFERS_STD_PARTNER);
+//            $query = new \MongoDB\Driver\Query($filter);
+//            $cursor = $this->mongoManager->executeQuery(env('MONGO_CP_DB') . '.' . CP_TRAVEL_OFFERS_COL, $query);
+            $data= app('db')->collection(CP_TRAVEL_OFFERS_COL)->where('partner', OFFERS_STD_PARTNER)->get();
         }
 //    foreach ($cursor as $doc) {
 //      $this->offers[] = $doc;
 //    }
-        $list = iterator_to_array($cursor);
+//        $list = $cursor->toArray();//iterator_to_array($cursor);
 //echo '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'."<br>\n";
         $listToResponse = array();
         $i = 0;
-        foreach ($list as $dbOffer) {
+//        foreach ($list as $dbOffer) {
+        foreach ($data as $dbOffer) {            
             $responseData = array();
             $responseData['quote_ref'] = (string) $this->quote_doc['_id'] . $i++; //
             $this->productRefarray[] = $dbOffer['_id'];
