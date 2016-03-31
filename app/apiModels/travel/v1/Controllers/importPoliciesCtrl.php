@@ -29,7 +29,7 @@ class importPoliciesCtrl extends RequestCtrl
                 $this->importRequests[] = $this->objSer->deserialize($policy, '\App\apiModels\travel\v1\prototypes\IMPORTREQUEST');
                 $status = 'OK';
             }
-            catch (\Exception $e) {
+            catch (HttpResponseException $e) {
                 foreach ($e->getResponse()->getData() as $error) {
                     $errors[] = ['code' => $error->property, 'text' => implode(', ', $error->errors)];
                 }
@@ -61,6 +61,8 @@ class importPoliciesCtrl extends RequestCtrl
         $policyData['request']['data']['destination'] = (!empty($data['data']['destination'])) ? $data['data']['destination'] : '';
         $policyData['amount'] = $data['amount'];
         $policyData['tariff_amount'] = $data['tariff_amount'];
+        $policyData['netto_amount'] = $data['netto_amount'];
+        $policyData['worker_agent_id'] = $data['worker_agent_id'];
         $policyData['request']['quote_ref'] = $this->quote_doc['quote_ref'];
 
         $policyM = new \App\apiModels\travel\PolicyModel($this->mongoDB);

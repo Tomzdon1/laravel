@@ -3,8 +3,8 @@
     "info": {
         "title": "Travel API",
         "description": "Interfejs do sprzedaży produktów turystycznych oferowanych przez Towarzystwo Ubezpieczeń Europa S. A.\n\nWszelkie komunikaty opisywane w tym dokumencie są przesyłane przy użyciu funkcji INVOKE opisanej w dokumencie Specyfikacja_ESB.pdf.",
-        "version": "1.3.15",
-        "termsOfService": "Warunki usługi wymagają uzupełnienia",
+        "version": "1.3.16-draft4",
+        "termsOfService": "",
         "contact": {
             "name": "API Support",
             "url": "http://www.tueuropa.pl",
@@ -232,7 +232,7 @@
                         }
                     },
                     {
-                        "name": "customer_ id",
+                        "name": "customer_id",
                         "in": "query",
                         "description": "Identyfikator klienta otrzymany od TU Europa (parametr uzupełniany automatycznie przy połączeniu przez ESB).",
                         "required": true,
@@ -713,23 +713,28 @@
                 },
                 "post_code": {
                     "type": "string",
-                    "description": "Kod pocztowy"
+                    "description": "Kod pocztowy",
+                    "minLength": 1
                 },
                 "city": {
                     "type": "string",
-                    "description": "Miejscowość"
+                    "description": "Miejscowość",
+                    "minLength": 1
                 },
                 "street": {
                     "type": "string",
-                    "description": "Ulica"
+                    "description": "Ulica",
+                    "minLength": 1
                 },
                 "house_no": {
                     "type": "string",
-                    "description": "Numer domu"
+                    "description": "Numer domu",
+                    "minLength": 1
                 },
                 "flat_no": {
                     "type": "string",
-                    "description": "Numer mieszkania"
+                    "description": "Numer mieszkania",
+                    "minLength": 1
                 }
             },
             "required": [
@@ -754,7 +759,8 @@
             "properties": {
                 "description": {
                     "type": "string",
-                    "description": "Treść zgody"
+                    "description": "Treść zgody",
+                    "minLength": 1
                 },
                 "value": {
                     "type": "boolean",
@@ -762,7 +768,8 @@
                 },
                 "code": {
                     "type": "string",
-                    "description": "Kod zgody"
+                    "description": "Kod zgody",
+                    "minLength": 1
                 }
             },
             "required": [
@@ -867,7 +874,8 @@
             "properties": {
                 "quote_ref": {
                     "type": "string",
-                    "description": "Identyfikator oferty"
+                    "description": "Identyfikator oferty",
+                    "minLength": 1
                 },
                 "data": {
                     "$ref": "#/definitions/POLICY_DATA",
@@ -882,6 +890,7 @@
                     "items": {
                         "$ref": "#/definitions/INSURED"
                     },
+                    "minItems": 1,
                     "description": "Dane ubezpieczonych"
                 }
             },
@@ -898,13 +907,61 @@
                 "insured": []
             }
         },
+        "DETAIL": {
+            "type": "object",
+            "description": "Detal oferty",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Nazwa detalu",
+                    "minLength": 1
+                },
+                "value": {
+                    "type": "string",
+                    "description": "Wartość detalu",
+                    "minLength": 1
+                }
+            },
+            "required": [
+                "name",
+                "value"
+            ],
+            "example": {
+                "name": "Koszty leczenia",
+                "value": "100 000 PLN"
+            }
+        },
+        "ERROR": {
+            "type": "object",
+            "description": "Błąd",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "description": "Opis błędu",
+                    "minLength": 1
+                }
+            },
+            "example": {
+                "property": "end_date",
+                "errors": [
+                    "Data zakończenie nie może być wcześniejsza niż data rozpoczęcia",
+                    "Data zakończenia nie może być pusta"
+                ]
+            }
+        },
         "IMPORT_REQUEST": {
             "type": "object",
             "description": "Zestaw danych do zapisania gotowej polisy",
             "properties": {
                 "product_ref": {
                     "type": "string",
-                    "description": "Identyfikator produktu"
+                    "description": "Identyfikator produktu",
+                    "minLength": 1
+                },
+                "worker_agent_id": {
+                    "type": "string",
+                    "description": "Numer pracownika w rejestrze agentów (OWCA)",
+                    "minLength": 1
                 },
                 "data": {
                     "$ref": "#/definitions/POLICY_DATA",
@@ -922,7 +979,8 @@
                 },
                 "policy_number": {
                     "type": "string",
-                    "description": "Numer polisy"
+                    "description": "Numer polisy",
+                    "minLength": 1
                 },
                 "policy_holder": {
                     "$ref": "#/definitions/POLICY_HOLDER",
@@ -933,6 +991,7 @@
                     "items": {
                         "$ref": "#/definitions/INSURED"
                     },
+                    "minItems": 1,
                     "description": "Dane ubezpieczonych"
                 },
                 "amount": {
@@ -943,20 +1002,27 @@
                     "$ref": "#/definitions/AMOUNT",
                     "description": "Obiekt z informacją o składce wynikającej z taryfy"
                 },
+                "netto_amount": {
+                    "$ref": "#/definitions/AMOUNT",
+                    "description": "Obiekt z informacją o składce netto"
+                },
                 "promo_code": {
                     "type": "string",
-                    "description": "Kod promocyjny"
+                    "description": "Kod promocyjny",
+                    "minLength": 1
                 }
             },
             "required": [
                 "product_ref",
+                "worker_agent_id",
                 "data",
                 "policy_date",
                 "policy_number",
                 "policy_holder",
                 "insured",
                 "amount",
-                "tariff_amount"
+                "tariff_amount",
+                "netto_amount"
             ],
             "example": {
                 "product_ref": "55ac435aabb4760c03fc3568",
@@ -970,26 +1036,56 @@
                 "promo_code": {}
             }
         },
-        "DETAIL": {
+        "IMPORT_STATUS": {
             "type": "object",
-            "description": "Detal oferty",
+            "description": "Opis statusu importu polisy",
             "properties": {
-                "name": {
+                "status": {
                     "type": "string",
-                    "description": "Nazwa detalu"
+                    "enum": [
+                        "OK",
+                        "WARN",
+                        "ERR"
+                    ],
+                    "description": "Status importu polisy"
                 },
-                "value": {
+                "policy_ref": {
                     "type": "string",
-                    "description": "Wartość detalu"
+                    "description": "Identyfikator polisy",
+                    "minLength": 1
+                },
+                "quote_ref": {
+                    "type": "string",
+                    "description": "Identyfikator oferty",
+                    "minLength": 1
+                },
+                "messages": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "code": {
+                                "type": "string",
+                                "description": "Kod błędu",
+                                "minLength": 1
+                            },
+                            "text": {
+                                "type": "string",
+                                "description": "Opis błędu",
+                                "minLength": 1
+                            }
+                        }
+                    }
                 }
             },
             "required": [
-                "name",
-                "value"
+                "status"
             ],
             "example": {
-                "name": "Koszty leczenia",
-                "value": "100 000 PLN"
+                "status": "OK",
+                "policy_ref": "54fc43dfabb4760c04dc3569",
+                "quote_ref": "54fc43dfabb4760c04dc3345",
+                "messages": []
             }
         },
         "INSURED": {
@@ -1027,15 +1123,18 @@
             "properties": {
                 "name": {
                     "type": "string",
-                    "description": "Nazwa atrybutu"
+                    "description": "Nazwa atrybutu",
+                    "minLength": 1
                 },
                 "description": {
                     "type": "string",
-                    "description": "Opis atrybutu"
+                    "description": "Opis atrybutu",
+                    "minLength": 1
                 },
                 "code": {
                     "type": "string",
-                    "description": "Kod atrybutu"
+                    "description": "Kod atrybutu",
+                    "minLength": 1
                 },
                 "value_type": {
                     "type": "string",
@@ -1082,7 +1181,8 @@
             "properties": {
                 "code": {
                     "type": "string",
-                    "description": "Kod atrybutu"
+                    "description": "Kod atrybutu",
+                    "minLength": 1
                 },
                 "value": {
                     "type": "string",
@@ -1112,11 +1212,13 @@
             "properties": {
                 "first_name": {
                     "type": "string",
-                    "description": "Imię"
+                    "description": "Imię",
+                    "minLength": 1
                 },
                 "last_name": {
                     "type": "string",
-                    "description": "Nazwisko"
+                    "description": "Nazwisko",
+                    "minLength": 1
                 },
                 "birth_date": {
                     "type": "string",
@@ -1135,7 +1237,8 @@
                 },
                 "document_no": {
                     "type": "string",
-                    "description": "Numer dokumentu tożsamości"
+                    "description": "Numer dokumentu tożsamości",
+                    "minLength": 1
                 }
             },
             "required": [
@@ -1161,7 +1264,8 @@
                 },
                 "policy_ref": {
                     "type": "string",
-                    "description": "Identyfikator polisy"
+                    "description": "Identyfikator polisy",
+                    "minLength": 1
                 }
             },
             "example": {
@@ -1179,11 +1283,13 @@
                 },
                 "policy_ref": {
                     "type": "string",
-                    "description": "Identyfikator polisy"
+                    "description": "Identyfikator polisy",
+                    "minLength": 1
                 },
                 "policy_number": {
                     "type": "string",
-                    "description": "Numer polisy"
+                    "description": "Numer polisy",
+                    "minLength": 1
                 },
                 "policy_date": {
                     "type": "string",
@@ -1209,7 +1315,8 @@
             "properties": {
                 "promo_code": {
                     "type": "string",
-                    "description": "Kod promocyjny"
+                    "description": "Kod promocyjny",
+                    "minLength": 1
                 },
                 "start_date": {
                     "type": "string",
@@ -1265,6 +1372,7 @@
                 },
                 "email": {
                     "type": "string",
+                    "format": "email",
                     "description": "Adres e-mail"
                 },
                 "telephone": {
@@ -1323,11 +1431,13 @@
             "properties": {
                 "policy_ref": {
                     "type": "string",
-                    "description": "Identyfikator polisy"
+                    "description": "Identyfikator polisy",
+                    "minLength": 1
                 },
                 "quote_ref": {
                     "type": "string",
-                    "description": "Identyfikator oferty"
+                    "description": "Identyfikator oferty",
+                    "minLength": 1
                 }
             },
             "required": [
@@ -1344,19 +1454,21 @@
             "properties": {
                 "quote_ref": {
                     "type": "string",
-                    "description": "Identyfikator oferty"
+                    "description": "Identyfikator oferty",
+                    "minLength": 1
                 },
                 "amount": {
                     "$ref": "#/definitions/AMOUNT",
                     "description": "Składka"
                 },
                 "promo_code_valid": {
-                    "type": "string",
+                    "type": "boolean",
                     "description": "Czy kod promocyjny jest prawidłowy"
                 },
                 "description": {
                     "type": "string",
-                    "description": "Opis wariantu"
+                    "description": "Opis wariantu",
+                    "minLength": 1
                 },
                 "details": {
                     "type": "array",
@@ -1409,6 +1521,7 @@
                     "items": {
                         "$ref": "#/definitions/PREPERSON"
                     },
+                    "minItems": 1,
                     "description": "Wstępne informacje o ubezpieczonych"
                 }
             },
@@ -1419,23 +1532,6 @@
             "example": {
                 "data": {},
                 "prepersons": []
-            }
-        },
-        "ERROR": {
-            "type": "object",
-            "description": "Błąd",
-            "properties": {
-                "description": {
-                    "type": "string",
-                    "description": "Opis błędu"
-                }
-            },
-            "example": {
-                "property": "end_date",
-                "errors": [
-                    "Data zakończenie nie może być wcześniejsza niż data rozpoczęcia",
-                    "Data zakończenia nie może być pusta"
-                ]
             }
         },
         "VALIDATION_ERROR": {
@@ -1450,8 +1546,10 @@
                     "type": "array",
                     "items": {
                         "type": "string",
-                        "description": "Opis błędu"
+                        "description": "Opis błędu",
+                        "minLength": 1
                     },
+                    "minItems": 1,
                     "description": "Tablica opisów błędów"
                 }
             },
@@ -1465,54 +1563,6 @@
                     "Data zakończenie nie może być wcześniejsza niż data rozpoczęcia",
                     "Data zakończenia nie może być pusta"
                 ]
-            }
-        },
-        "IMPORT_STATUS": {
-            "type": "object",
-            "description": "Opis statusu importu polisy",
-            "properties": {
-                "status": {
-                    "type": "string",
-                    "enum": [
-                        "OK",
-                        "WARN",
-                        "ERR"
-                    ],
-                    "description": "Status importu polisy"
-                },
-                "policy_ref": {
-                    "type": "string",
-                    "description": "Identyfikator polisy"
-                },
-                "quote_ref": {
-                    "type": "string",
-                    "description": "Identyfikator oferty"
-                },
-                "messages": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "code": {
-                                "type": "string",
-                                "description": "Kod błędu"
-                            },
-                            "text": {
-                                "type": "string",
-                                "description": "Opis błędu"
-                            }
-                        }
-                    }
-                }
-            },
-            "required": [
-                "status"
-            ],
-            "example": {
-                "status": "OK",
-                "policy_ref": "54fc43dfabb4760c04dc3569",
-                "quote_ref": "54fc43dfabb4760c04dc3345",
-                "messages": []
             }
         }
     }

@@ -9,7 +9,7 @@ class calculateTravelExcel extends calculateExcel {
 	}
 	
 	protected function setCalculatedRange(){
-		$this->calculatedRange = ['WARIANT','SKLADKA']; // zwracane kolumny
+		$this->calculatedRange = ['WARIANT','SKLADKA','NETTO']; // zwracane kolumny
 	}
 	
 }

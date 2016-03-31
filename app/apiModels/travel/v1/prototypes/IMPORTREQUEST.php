@@ -52,13 +52,16 @@ class IMPORTREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $swaggerTypes = array(
         'product_ref' => 'string',
+        'worker_agent_id' => 'string',
         'data' => 'App\apiModels\travel\v1\prototypes\POLICYDATA',
+        'payment_date' => '\DateTime',
         'policy_date' => '\DateTime',
         'policy_number' => 'string',
         'policy_holder' => 'App\apiModels\travel\v1\prototypes\POLICYHOLDER',
         'insured' => 'App\apiModels\travel\v1\prototypes\INSURED[]',
         'amount' => 'App\apiModels\travel\v1\prototypes\AMOUNT',
         'tariff_amount' => 'App\apiModels\travel\v1\prototypes\AMOUNT',
+        'netto_amount' => 'App\apiModels\travel\v1\prototypes\AMOUNT',
         'promo_code' => 'string'
     );
   
@@ -68,13 +71,16 @@ class IMPORTREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $attributeMap = array(
         'product_ref' => 'product_ref',
+        'worker_agent_id' => 'worker_agent_id',
         'data' => 'data',
+        'payment_date' => 'payment_date',
         'policy_date' => 'policy_date',
         'policy_number' => 'policy_number',
         'policy_holder' => 'policy_holder',
         'insured' => 'insured',
         'amount' => 'amount',
         'tariff_amount' => 'tariff_amount',
+        'netto_amount' => 'netto_amount',
         'promo_code' => 'promo_code'
     );
   
@@ -84,13 +90,16 @@ class IMPORTREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $setters = array(
         'product_ref' => 'setProductRef',
+        'worker_agent_id' => 'setWorkerAgentId',
         'data' => 'setData',
+        'payment_date' => 'setPaymentDate',
         'policy_date' => 'setPolicyDate',
         'policy_number' => 'setPolicyNumber',
         'policy_holder' => 'setPolicyHolder',
         'insured' => 'setInsured',
         'amount' => 'setAmount',
         'tariff_amount' => 'setTariffAmount',
+        'netto_amount' => 'setNettoAmount',
         'promo_code' => 'setPromoCode'
     );
   
@@ -100,13 +109,16 @@ class IMPORTREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $getters = array(
         'product_ref' => 'getProductRef',
+        'worker_agent_id' => 'getWorkerAgentId',
         'data' => 'getData',
+        'payment_date' => 'getPaymentDate',
         'policy_date' => 'getPolicyDate',
         'policy_number' => 'getPolicyNumber',
         'policy_holder' => 'getPolicyHolder',
         'insured' => 'getInsured',
         'amount' => 'getAmount',
         'tariff_amount' => 'getTariffAmount',
+        'netto_amount' => 'getNettoAmount',
         'promo_code' => 'getPromoCode'
     );
   
@@ -118,10 +130,22 @@ class IMPORTREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
     protected $product_ref;
     
     /**
+      * $worker_agent_id Numer pracownika w rejestrze agentów (OWCA)
+      * @var string
+      */
+    protected $worker_agent_id;
+    
+    /**
       * $data Dane polisy
       * @var App\apiModels\travel\v1\prototypes\POLICYDATA
       */
     protected $data;
+    
+    /**
+      * $payment_date Data zapłaty
+      * @var \DateTime
+      */
+    protected $payment_date;
     
     /**
       * $policy_date Data zawarcia polisy
@@ -160,6 +184,12 @@ class IMPORTREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
     protected $tariff_amount;
     
     /**
+      * $netto_amount Obiekt z informacją o składce netto
+      * @var App\apiModels\travel\v1\prototypes\AMOUNT
+      */
+    protected $netto_amount;
+    
+    /**
       * $promo_code Kod promocyjny
       * @var string
       */
@@ -174,13 +204,16 @@ class IMPORTREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
     {
         if ($data != null) {
             $this->product_ref = $data["product_ref"];
+            $this->worker_agent_id = $data["worker_agent_id"];
             $this->data = $data["data"];
+            $this->payment_date = $data["payment_date"];
             $this->policy_date = $data["policy_date"];
             $this->policy_number = $data["policy_number"];
             $this->policy_holder = $data["policy_holder"];
             $this->insured = $data["insured"];
             $this->amount = $data["amount"];
             $this->tariff_amount = $data["tariff_amount"];
+            $this->netto_amount = $data["netto_amount"];
             $this->promo_code = $data["promo_code"];
         }
     }
@@ -207,6 +240,27 @@ class IMPORTREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
     }
     
     /**
+     * Gets worker_agent_id
+     * @return string
+     */
+    public function getWorkerAgentId()
+    {
+        return $this->worker_agent_id;
+    }
+  
+    /**
+     * Sets worker_agent_id
+     * @param string $worker_agent_id Numer pracownika w rejestrze agentów (OWCA)
+     * @return $this
+     */
+    public function setWorkerAgentId($worker_agent_id)
+    {
+        
+        $this->worker_agent_id = $worker_agent_id;
+        return $this;
+    }
+    
+    /**
      * Gets data
      * @return App\apiModels\travel\v1\prototypes\POLICYDATA
      */
@@ -224,6 +278,27 @@ class IMPORTREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
     {
         
         $this->data = $data;
+        return $this;
+    }
+    
+    /**
+     * Gets payment_date
+     * @return \DateTime
+     */
+    public function getPaymentDate()
+    {
+        return $this->payment_date;
+    }
+  
+    /**
+     * Sets payment_date
+     * @param \DateTime $payment_date Data zapłaty
+     * @return $this
+     */
+    public function setPaymentDate($payment_date)
+    {
+        
+        $this->payment_date = $payment_date;
         return $this;
     }
     
@@ -350,6 +425,27 @@ class IMPORTREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
     {
         
         $this->tariff_amount = $tariff_amount;
+        return $this;
+    }
+    
+    /**
+     * Gets netto_amount
+     * @return App\apiModels\travel\v1\prototypes\AMOUNT
+     */
+    public function getNettoAmount()
+    {
+        return $this->netto_amount;
+    }
+  
+    /**
+     * Sets netto_amount
+     * @param App\apiModels\travel\v1\prototypes\AMOUNT $netto_amount Obiekt z informacją o składce netto
+     * @return $this
+     */
+    public function setNettoAmount($netto_amount)
+    {
+        
+        $this->netto_amount = $netto_amount;
         return $this;
     }
     

@@ -49,7 +49,7 @@ class pdfPrinter implements Printer {
             $result = $this->printout->StartSingleFileProcess([
                 'templateid'=>$template_name,
                 'xml'=>$data,
-                'format'=>'xml',                                    
+                'format'=>'xml'
             ]);
             
             return 
@@ -59,7 +59,7 @@ class pdfPrinter implements Printer {
                                 FileType::PDF);
                         
         } catch (SoapFault $fault) {
-            throw $fault;          
+            throw $fault;
         }         
     }
 
@@ -97,7 +97,7 @@ class pdfPrinter implements Printer {
     private function arrayToPrintOutXML($array) {
         $xml = new \DOMDocument();
         $xml->loadXML('<?xml version="1.0" encoding="UTF-8"?><Requests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Requests.xsd"><Request><listOfData><Data/></listOfData></Request></Requests>');
-        $dataFields = $xml->importNode($this->arrayToDataFields($array), true);
+        $dataFields = $xml->importNode($this->arrayToXMLDataFields($array), true);
         $xml->getElementsByTagName('Data')->item(0)->appendChild($dataFields);
 
         return $xml->saveXML();
@@ -107,17 +107,19 @@ class pdfPrinter implements Printer {
      * Funkcja tworzy rekurencyjnie atrybut XML DataFields z dostarczonej tablicy
      * 
      * @param Array $array
+     * @param string $path
+     * @param boolean $parentArrayAssoc
      * @return DOMElement $xml XML dla PrintOut
      */
-    private function arrayToDataFields($array, $key = null, $parentArrayAssoc = false) {
+    private function arrayToXMLDataFields($array, $path = null, $parentArrayAssoc = false) {
         $xml = new \DOMDocument();
         $arrayAssoc = $this->is_assoc($array);
 
         // Jeżeli array to nie obiekt (tablica obiektów) lub jego rodzic jest obiektem, to utwórz Container (kontener dla obiektów)
         if (!$arrayAssoc || $parentArrayAssoc) {
             $root = $xml->createElement('Container');
-            $root->setAttribute('name', strtoupper($key));
-            $root->setAttribute('subtemplate', strtoupper($key));
+            $root->setAttribute('name', strtoupper($path));
+            $root->setAttribute('subtemplate', strtoupper($path));
             $root->setAttribute('type', 'template');
             $xml->appendChild($root);
         }
@@ -134,7 +136,7 @@ class pdfPrinter implements Printer {
 
         foreach ($array as $key => $element) {
             if (is_array($element)) {
-                $childDataFields = $xml->importNode($this->arrayToDataFields($element, $key, $arrayAssoc), true);
+                $childDataFields = $xml->importNode($this->arrayToXMLDataFields($element, ($path ? ($arrayAssoc ? $path.'_'.$key : $path) : $key), $arrayAssoc), true);
                 $root->appendChild($childDataFields);
             }
             else {
@@ -143,7 +145,7 @@ class pdfPrinter implements Printer {
                 // $child->setAttribute('type', gettype($element));
                 $child->setAttribute('type', 'string');
                 $child->setAttribute('name', strtoupper($key));
-                $child->setAttribute('value', $element);
+                $child->setAttribute('value', $this->formatDate($element, $key));
                 $root->appendChild($child);
             }
         }
@@ -158,7 +160,21 @@ class pdfPrinter implements Printer {
      * @return boolean
      */
     private function is_assoc(array $array) {
-      return (bool)count(array_filter(array_keys($array), 'is_string'));
+        return (bool)count(array_filter(array_keys($array), 'is_string'));
+    }
+
+    /**
+     * Funkcja formatuje argument jako datę, jeżeli pole jest datą
+     * 
+     * @param Array $array
+     * @return boolean
+     */
+    private function formatDate($value, $name) {
+        if (($d = \DateTime::createFromFormat(\DateTime::ATOM, $value)) || ($d = \DateTime::createFromFormat('Y-m-d', $value))) {
+            return $name == 'DateTime' ? $d->format('d-m-Y') : $d->format('d-m-Y');
+        }
+
+        return $value;
     }
 
 }

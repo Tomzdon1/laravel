@@ -32,6 +32,8 @@ class PolicyModel implements \JsonSerializable
         $this->policyData = $policyData['request'];
         $this->amount = $policyData['amount'];
         $this->tariff_amount = $policyData['tariff_amount'];
+        $this->netto_amount = $policyData['netto_amount'];
+        $this->worker_agent_id = $policyData['worker_agent_id'];
         $this->product = $this->getProduct($this->productRef);
         $this->partner = $partner;
         $this->status = $status;
@@ -77,12 +79,14 @@ class PolicyModel implements \JsonSerializable
         $policy['amount']['date_rate']    = $this->amount['date_rate'];
 
         $policy['tariff_amount']   = $this->tariff_amount;
+        $policy['netto_amount']   = $this->netto_amount;
+        $policy['worker_agent_id']   = $this->worker_agent_id;
         
         $policy['partner']['code']          = $this->partnerData['code'];
         $policy['partner']['customerId']    = $this->partnerData['customerId'];
         $policy['partner']['travel_api']    = $this->partnerData['apis']['travel']['version'];
         $policy['product']['code']      = $this->product['code'];
-        
+
         if(!empty($this->product['wube'])){
             $policy['product']['wube']      = $this->product['wube'];
         }

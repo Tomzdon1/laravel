@@ -53,6 +53,7 @@ class CALCULATE extends \App\apiModels\ApiModel implements ArrayAccess
     static $swaggerTypes = array(
         'request' => 'App\apiModels\travel\v1\prototypes\CALCULATEREQUEST',
         'amount' => 'App\apiModels\travel\v1\prototypes\AMOUNT',
+        'payment_date' => '\DateTime',
         'promo_code_valid' => 'bool'
     );
   
@@ -63,6 +64,7 @@ class CALCULATE extends \App\apiModels\ApiModel implements ArrayAccess
     static $attributeMap = array(
         'request' => 'request',
         'amount' => 'amount',
+        'payment_date' => 'payment_date',
         'promo_code_valid' => 'promo_code_valid'
     );
   
@@ -73,6 +75,7 @@ class CALCULATE extends \App\apiModels\ApiModel implements ArrayAccess
     static $setters = array(
         'request' => 'setRequest',
         'amount' => 'setAmount',
+        'payment_date' => 'setPaymentDate',
         'promo_code_valid' => 'setPromoCodeValid'
     );
   
@@ -83,6 +86,7 @@ class CALCULATE extends \App\apiModels\ApiModel implements ArrayAccess
     static $getters = array(
         'request' => 'getRequest',
         'amount' => 'getAmount',
+        'payment_date' => 'getPaymentDate',
         'promo_code_valid' => 'getPromoCodeValid'
     );
   
@@ -100,6 +104,12 @@ class CALCULATE extends \App\apiModels\ApiModel implements ArrayAccess
     protected $amount;
     
     /**
+      * $payment_date Data zapłaty
+      * @var \DateTime
+      */
+    protected $payment_date;
+    
+    /**
       * $promo_code_valid Czy kod promocyjny jest ważny i został uwzględniony
       * @var bool
       */
@@ -115,6 +125,7 @@ class CALCULATE extends \App\apiModels\ApiModel implements ArrayAccess
         if ($data != null) {
             $this->request = $data["request"];
             $this->amount = $data["amount"];
+            $this->payment_date = $data["payment_date"];
             $this->promo_code_valid = $data["promo_code_valid"];
         }
     }
@@ -158,6 +169,27 @@ class CALCULATE extends \App\apiModels\ApiModel implements ArrayAccess
     {
         
         $this->amount = $amount;
+        return $this;
+    }
+    
+    /**
+     * Gets payment_date
+     * @return \DateTime
+     */
+    public function getPaymentDate()
+    {
+        return $this->payment_date;
+    }
+  
+    /**
+     * Sets payment_date
+     * @param \DateTime $payment_date Data zapłaty
+     * @return $this
+     */
+    public function setPaymentDate($payment_date)
+    {
+        
+        $this->payment_date = $payment_date;
         return $this;
     }
     

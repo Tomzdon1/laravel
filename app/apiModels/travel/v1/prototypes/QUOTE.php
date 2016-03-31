@@ -53,7 +53,7 @@ class QUOTE extends \App\apiModels\ApiModel implements ArrayAccess
     static $swaggerTypes = array(
         'quote_ref' => 'string',
         'amount' => 'App\apiModels\travel\v1\prototypes\AMOUNT',
-        'promo_code_valid' => 'string',
+        'promo_code_valid' => 'bool',
         'description' => 'string',
         'details' => 'App\apiModels\travel\v1\prototypes\DETAIL[]',
         'option_definitions' => 'App\apiModels\travel\v1\prototypes\OPTIONDEFINITION[]',
@@ -117,7 +117,7 @@ class QUOTE extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
       * $promo_code_valid Czy kod promocyjny jest prawidłowy
-      * @var string
+      * @var bool
       */
     protected $promo_code_valid;
     
@@ -207,7 +207,7 @@ class QUOTE extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets promo_code_valid
-     * @return string
+     * @return bool
      */
     public function getPromoCodeValid()
     {
@@ -216,7 +216,7 @@ class QUOTE extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets promo_code_valid
-     * @param string $promo_code_valid Czy kod promocyjny jest prawidłowy
+     * @param bool $promo_code_valid Czy kod promocyjny jest prawidłowy
      * @return $this
      */
     public function setPromoCodeValid($promo_code_valid)
