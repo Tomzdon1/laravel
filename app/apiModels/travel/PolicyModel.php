@@ -87,10 +87,26 @@ class PolicyModel implements \JsonSerializable
         $policy['partner']['travel_api']    = $this->partnerData['apis']['travel']['version'];
         $policy['product']['code']      = $this->product['code'];
 
-        if(!empty($this->product['wube'])){
-            $policy['product']['wube']      = $this->product['wube'];
+        if(!empty($this->product['configuration']['wube'])){
+            $policy['product']['wube'] = $this->product['configuration']['wube'];
         }
-        
+
+        if(!empty($this->product['configuration']['formCode'])){
+            $policy['product']['formCode'] = $this->product['configuration']['formCode'];
+        }
+
+        if(!empty($this->product['configuration']['formType'])){
+            $policy['product']['formType'] = $this->product['configuration']['formType'];
+        }
+
+        if(!empty($this->product['configuration']['formCode'])){
+            $policy['product']['formCode'] = $this->product['configuration']['formCode'];
+        }
+
+        if(!empty($this->product['configuration']['attendants'])){
+            $policy['product']['attendants'] = $this->product['configuration']['attendants'];
+        }
+
         $policy['product']['elements'] = [];
         foreach ($this->product['elements'] as $elem) {
             $policy['product']['elements'][] = array(
