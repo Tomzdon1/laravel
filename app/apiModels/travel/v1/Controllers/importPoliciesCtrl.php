@@ -4,7 +4,6 @@ namespace App\apiModels\travel\v1\Controllers;
 
 use Log;
 use Cache;
-use Validator;
 //use App\Http\Controllers\Controller;
 use App\Http\Controllers\RequestCtrl;
 use Illuminate\Http\Request;
@@ -23,19 +22,30 @@ class importPoliciesCtrl extends RequestCtrl
 
         $this->objSer = new \App\apiModels\ObjectSerializer();
         $this->importRequests = [];
+        $errors = [];
 
         foreach ($this->data as $policy) {
-            $this->importRequests[] = $this->objSer->deserialize($policy, '\App\apiModels\travel\v1\prototypes\IMPORTREQUEST');
-            $this->response[] = $this->savePolicy($policy);
+            try {
+                $this->importRequests[] = $this->objSer->deserialize($policy, '\App\apiModels\travel\v1\prototypes\IMPORTREQUEST');
+                $status = 'OK';
+            }
+            catch (\Exception $e) {
+                foreach ($e->getResponse()->getData() as $error) {
+                    $errors[] = ['code' => $error->property, 'text' => implode(', ', $error->errors)];
+                }
+                $this->importRequests[] = $this->objSer->deserialize($policy, '\App\apiModels\travel\v1\prototypes\IMPORTREQUEST', null, false);
+                $status = 'WARN';
+            }
+
+            $this->response[] = $this->savePolicy($policy, $status, $errors);
         }
 
         return $this->response;
     }
 
     // Ta funkcja powinna być w klasie IMPORTREQUEST
-    private function savePolicy($data)
+    private function savePolicy($data, $status, $errors)
     {
-        $status = 'OK';
         $messages = array();
         $policyId = '';
 
@@ -50,10 +60,11 @@ class importPoliciesCtrl extends RequestCtrl
 
         $policyData['request']['data']['destination'] = (!empty($data['data']['destination'])) ? $data['data']['destination'] : '';
         $policyData['amount'] = $data['amount'];
+        $policyData['tariff_amount'] = $data['tariff_amount'];
         $policyData['request']['quote_ref'] = $this->quote_doc['quote_ref'];
 
         $policyM = new \App\apiModels\travel\PolicyModel($this->mongoDB);
-        $policyPrint = $policyM->setPolicy($product_ref, $policyData, $this->partner);
+        $policyPrint = $policyM->setPolicy($product_ref, $policyData, $this->partner, $status);
 // Mozliwe, że model polisy powinien byc spojny dla roznych typow
 // Trzeba zdecydowac, czy walidacje maja się odbywac w kontrolerze, czy raczej w modelu
 // mysle, ze powinny byc w policy model, w takim wypadku status i message's powinny przychodzic z modelu
@@ -77,6 +88,6 @@ class importPoliciesCtrl extends RequestCtrl
         $this->quoteLogAdd('policyDate', $policyDate);
 
         //Po wygenerowaniu modelu zawierającego IMPORT_STATUS należy refaktoryzować na model
-        return array('status' => $status, 'policy_ref' => $policyId, 'messages' => $messages);
+        return ['status' => $status, 'policy_ref' => $policyId, 'messages' => $errors];
     }
 }

@@ -170,7 +170,7 @@ class ObjectSerializer
      *
      * @return object an instance of $class
      */
-    public function deserialize($data, $class, $httpHeader=null)
+    public function deserialize($data, $class, $httpHeader=null, $validate = true)
     {
         if (null === $data) {
             app('log')->Debug("Deserializuję jako null");
@@ -257,7 +257,7 @@ echo '$data: '.print_r($data,1).' '.$instance::$attributeMap[$property]."|<br>\n
             $deserialized = $instance;
         }
 
-        if (is_subclass_of($deserialized, 'App\apiModels\ApiModel')) {
+        if ($validate && is_subclass_of($deserialized, 'App\apiModels\ApiModel')) {
             $errorClass = env('ERROR_MODEL_IMPL_TRAVEL_V1');
             $deserialized->validate($errorClass);
         }

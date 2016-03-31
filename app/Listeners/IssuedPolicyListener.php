@@ -28,6 +28,7 @@ class IssuedPolicyListener
     {
         app('log')->debug('Start IssuedPolicyListener');
 
+        // Do usunięcia stąd (np. przechowywać w bazie)
         $event->policy->product['company'] = 'M';
 
         $api = new internal\API();
@@ -37,7 +38,7 @@ class IssuedPolicyListener
         $envelope = new internal\ENVELOPE();
         $envelope->setType('policy');
         $envelope->setApi($api);
-        $envelope->setStatus($event->policy->getStatus());
+        $envelope->setStatus($event->policy->status);
         $envelope->setCompany($event->policy->product['company']);
         $envelope->setSrcId($event->policy->policyId->{'$id'});
         $envelope->setSendDT(new \DateTime());

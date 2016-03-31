@@ -23,7 +23,7 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
      * @var array
      */
     public static $validators = [
-        // 'amount.value_base'    => 'promotional_amount:promo_code,tariff_amount.value_base,2',
+        'tariff_amount.value_base'    => 'amount_value',
     ];
 
     /**
@@ -33,5 +33,80 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
     public function __construct(array $data = null)
     {
         parent::__construct($data);
+    }
+
+    public function setVarCode($code)
+    {
+        $this->varCode = $code;
+    }
+
+    public function calculateExcelAmount($config, $excelFile)
+    {
+//        print_r($config);
+
+        $this->tariff_amount->setValueBaseCurrency($config['quotation']['resultCurrency']);
+        $this->tariff_amount->setValueCurrency('PLN');
+
+//        print_r($this->option_values);
+        $options = array();
+        if (is_array($this->getData()->getOptionValues()) || $this->getData()->getOptionValues() instanceof Traversable) {
+            foreach ($this->getData()->getOptionValues() as $option) {
+                if ($option->getValue() == true) {
+                    $options[$option->getCode()] = true;
+                }
+            }
+        }
+
+        $isFamily = false;
+        $birthDates = array();
+        foreach ($this->getInsured() as $insured) {
+            $birthDates[] = $insured->getData()->getBirthDate();
+        }
+        $params = [
+          'DATA_OD' => $this->getData()->getStartDate(),
+          'DATA_DO' => $this->getData()->getEndDate(),
+          'DATA_URODZENIA' => $birthDates,
+          //przekazywac true/false w bibliotece Excela mapować na T/N
+          'CZY_RODZINA' => $isFamily ? 'T' : 'N',
+          'ZWYZKA_ASZ' => (isset($options['TWAWS']) && $options['TWAWS']) ? 'T' : 'N',
+          'ZWYZKA_ASM' => (isset($options['TWASM']) && $options['TWASM']) ? 'T' : 'N',
+          'ZWYZKA_ZCP' => (isset($options['TWCHP']) && $options['TWCHP']) ? 'T' : 'N',
+            // tak to moze ewentualnie wygladac przy obecnym zapisie
+            // 'ZWYZKA_ASZ'  => (bool) $options['TWAWS'],
+            // 'ZWYZKA_ASM'  => (bool) $options['TWASM'],
+            // 'ZWYZKA_ZCP'  => (bool) $options['TWCHP'],
+        ];
+
+        $data = $excelFile->getCalculatedValues($params);
+        $amountValue = 0;
+        foreach ($data as $wariant) {
+            if ($wariant['WARIANT'] == $this->varCode) {
+                // $this->cached[$wariant['WARIANT']] = $wariant['SKLADKA'];
+                // $result = $wariant['SKLADKA'];
+                $amountValue = $wariant['SKLADKA'];
+            }
+        }
+        $this->tariff_amount->setValueBase($amountValue);
+        
+        if ($config['quotation']['resultCurrency'] != 'PLN') {
+            $recalculation = $this->recalculate2pln($amountValue, $config['quotation']['resultCurrency']);
+            $AmountPLN = $recalculation['amount'];
+            $this->tariff_amount->setCurrencyRate($recalculation['rate']);
+            $this->tariff_amount->setDateRate($recalculation['date']);
+        } else {
+            $AmountPLN = $amountValue;
+        }
+        $this->tariff_amount->setValue($AmountPLN);
+
+//        print_r($this->tariff_amount); //->setValueBaseCurrency('GBN');
+    }
+
+    private function recalculate2pln($amount, $amountCurrency)
+    {
+        $date = new \DateTime;
+        $rate = 4.229;
+        if ($amountCurrency == 'EUR') {
+            return ['amount'=>round(($amount * $rate), 2), 'rate'=>$rate, 'date'=> $date ];
+        }
     }
 }

@@ -85,6 +85,47 @@ class AppServiceProvider extends ServiceProvider
 
             return $value == round($tariff_value_base * (1 - $promo_code/100), $precision);
         });
+
+        /**
+        *   Validate amount.
+        */
+        app('validator')->extend('amount_value', function($attribute, $value, $parameters, $validator) {
+            foreach (json_decode(app('request')->getContent(), true) as $policy) {
+                $mongoClient = new \MongoClient("mongodb://" . env('MONGO_SRV') . ":" . env('MONGO_PORT'));
+                $mongoDB = $mongoClient->selectDB(env('MONGO_CP_DB'));
+                $collection = $mongoDB->selectCollection(CP_TRAVEL_OFFERS_COL);
+                $cursor = $collection->find(array('_id' => new \MongoId($validator->getData()['product_ref'])));
+
+                if ($cursor->count()) {
+                    $list = iterator_to_array($cursor);
+                    $dbOffer = array_shift($list);
+
+                    $serializer = new \App\apiModels\ObjectSerializer();
+                    $importPolicy = $serializer->deserialize($policy, '\App\apiModels\travel\v1\prototypes\IMPORTREQUEST', null, false);
+                    $importPolicy->setVarCode($dbOffer['code']);
+
+                    if ($dbOffer['configuration']['quotation']['type'] == 'formula') {
+                        $importPolicy->calculateAmount($dbOffer['configuration']);
+                    } elseif ($dbOffer['configuration']['quotation']['type'] == 'excel') {
+                        $excelPath = env('EXCEL_DIRECTORY') . '/' . $dbOffer['configuration']['quotation']['file'];
+
+                        if ($excelPath) {
+                            $excelFile = new \Tue\Calculating\calculateTravelExcel($excelPath);
+                        }
+
+                        if ($excelFile) {
+                            $valueBaseImport = $importPolicy->getTariffAmount()->getValueBase();
+                            $importPolicy->calculateExcelAmount($dbOffer['configuration'], $excelFile);
+                            if ($valueBaseImport != $importPolicy->getTariffAmount()->getValueBase()) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return true;
+        });
     }
 
     /**

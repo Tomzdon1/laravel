@@ -10,11 +10,12 @@ class PolicyModel implements \JsonSerializable
     public $policyData;
     public $mongoDB;
     public $amount;
+    public $tariff_amount;
     public $partner;
     public $product;
-
+    public $status;
     public $policyId = null;
-    
+
     public function __construct($mongoDB)
     {
         $this->mongoDB = $mongoDB;
@@ -25,13 +26,15 @@ class PolicyModel implements \JsonSerializable
         return $this->getPolicy();
     }
     
-    public function setPolicy($product_ref, $policyData, $partner)
+    public function setPolicy($product_ref, $policyData, $partner, $status)
     {
         $this->productRef = $product_ref;
         $this->policyData = $policyData['request'];
         $this->amount = $policyData['amount'];
+        $this->tariff_amount = $policyData['tariff_amount'];
         $this->product = $this->getProduct($this->productRef);
         $this->partner = $partner;
+        $this->status = $status;
         $this->partnerData = $this->partner->getPartnerData();
         return $this->getPolicy();
     }
@@ -72,6 +75,8 @@ class PolicyModel implements \JsonSerializable
         $policy['amount']['value_currency']= $this->amount['value_currency'];
         $policy['amount']['currency_rate']= $this->amount['currency_rate'];
         $policy['amount']['date_rate']    = $this->amount['date_rate'];
+
+        $policy['tariff_amount']   = $this->tariff_amount;
         
         $policy['partner']['code']          = $this->partnerData['code'];
         $policy['partner']['customerId']    = $this->partnerData['customerId'];
@@ -110,6 +115,7 @@ class PolicyModel implements \JsonSerializable
             }
         }
         $policy['DateTime'] = \DateTime::createFromFormat('U.u', microtime(true))->format("YmdHisu");
+
         return $policy;
     }
 
