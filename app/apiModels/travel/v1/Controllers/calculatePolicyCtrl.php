@@ -28,6 +28,7 @@ class calculatePolicyCtrl extends RequestCtrl
 
         $this->response = $this->response_doc = $this->calculatePolicy($this->data);
         $this->EndLogSave();
+//        app('log')->info(print_r($this->response,1));
         return $this->response; //response()->json($this->response);
     }
 
@@ -79,10 +80,14 @@ class calculatePolicyCtrl extends RequestCtrl
                 $responseData['promo_code_valid'] = true;
                 $responseData['request'] = $data;
 
+//                
+                
                 $offer = $this->objSer->
                     deserialize($responseData, '\App\apiModels\travel\v1\prototypes\CALCULATE');
                 $offer->option_values = $this->calculate_request->getData()->getOptionValues();
                 $offer->setVarCode($dbOffer['code']);
+                
+               
 
                 if ($dbOffer['configuration']['quotation']['type'] == 'formula') {
                     $offer->calculateAmount($dbOffer['configuration']);
@@ -91,12 +96,12 @@ class calculatePolicyCtrl extends RequestCtrl
                     $excelFile = $this->loadExcelFile($excelPath);
                     $offer->calculateExcelAmount($dbOffer['configuration'], $excelFile, $this->calculate_request);
                 }
-
+//app('log')->info(print_r($offer,1)); 
                 return $this->objSer->sanitizeForSerialization($offer); //->toarray();
             }
         }
 
-        return false;
+       // return false;
     }
 
     // Funkcja do przeniesienia

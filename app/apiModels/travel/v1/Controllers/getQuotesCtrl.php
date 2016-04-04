@@ -24,7 +24,8 @@ class getQuotesCtrl extends RequestCtrl
         parent::request($request, $parter_id, $request_id, true);
 
         $this->objSer = new \App\apiModels\ObjectSerializer();
-        $this->quote_request = $this->objSer->deserialize($this->data, '\App\apiModels\travel\v1\prototypes\QUOTEREQUEST');
+        $this->quote_request = $this->objSer->
+            deserialize($this->data, '\App\apiModels\travel\v1\prototypes\QUOTEREQUEST');
 
         $this->response = $this->getquotes($this->data);
         /**
@@ -85,7 +86,7 @@ class getQuotesCtrl extends RequestCtrl
         $listToResponse = array();
         $i = 0;
 //        foreach ($list as $dbOffer) {
-        foreach ($data as $dbOffer) {            
+        foreach ($data as $dbOffer) {
             $responseData = array();
             $responseData['quote_ref'] = (string) $this->quote_doc['_id'] . $i++; //
             $this->productRefarray[] = $dbOffer['_id'];

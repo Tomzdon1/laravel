@@ -82,9 +82,9 @@ class issuePolicyCtrl extends RequestCtrl
 //    Log::info(print_r($rate_date,1));
         $interval = $now_date->diff($rate_date);
         if ($interval->days >= 7) {
-            Log::info('rate_date: ' . print_r($rate_date, 1));
-            Log::info('now_date: ' . print_r($now_date, 1));
-            Log::info('difference" ' . print_r($now_date->diff($rate_date), 1));
+            app('log')->info('rate_date: ' . print_r($rate_date, 1));
+            app('log')->info('now_date: ' . print_r($now_date, 1));
+            app('log')->info('difference" ' . print_r($now_date->diff($rate_date), 1));
             abort(Response::HTTP_GONE);
         }
 
