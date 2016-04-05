@@ -143,13 +143,8 @@ class PolicyModel implements \JsonSerializable
     {
         $policy = $this->getPolicy();
 
-        $policyCollection = $this->mongoDB->selectCollection(CP_POLICIES);
-        if ($policyCollection->insert($policy)) {
-            $this->policyId = $policy["_id"];
-
+        if ($this->policyId = app('db')->collection(CP_POLICIES)->insertGetId($policy)) {
             event(new IssuedPolicyEvent($this));
-
-
             return true;
         }
 
