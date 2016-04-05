@@ -10,6 +10,4 @@ $app->group([
         $app->post('issue_policy','issuePolicyCtrl@request');
         $app->post('import_policies','importPoliciesCtrl@request');
         $app->post('print_policy','printPolicyCtrl@request');
-        
-        $app->post('test','whoamiCtrl@request');
 });
