@@ -24,6 +24,7 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
      */
     public static $validators = [
         'tariff_amount.value_base'    => 'amount_value',
+        'netto_amount.value_base'     => 'amount_value',
     ];
 
     /**
@@ -79,14 +80,18 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
 
         $data = $excelFile->getCalculatedValues($params);
         $amountValue = 0;
+        $nettoAmountValue = 0;
+
         foreach ($data as $wariant) {
             if ($wariant['WARIANT'] == $this->varCode) {
                 // $this->cached[$wariant['WARIANT']] = $wariant['SKLADKA'];
                 // $result = $wariant['SKLADKA'];
                 $amountValue = $wariant['SKLADKA'];
+                $nettoAmountValue = $wariant['NETTO'];
             }
         }
         $this->tariff_amount->setValueBase($amountValue);
+        $this->netto_amount->setValueBase($nettoAmountValue);
         
         if ($config['quotation']['resultCurrency'] != 'PLN') {
             $recalculation = $this->recalculate2pln($amountValue, $config['quotation']['resultCurrency']);

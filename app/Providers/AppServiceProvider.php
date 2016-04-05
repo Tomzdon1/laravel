@@ -88,18 +88,18 @@ class AppServiceProvider extends ServiceProvider
 
         /**
         *   Validate amount.
+        * 
+        *   $parameters[0] amount type (e.g. netto_amount)
         */
         app('validator')->extend('amount_value', function($attribute, $value, $parameters, $validator) {
+            $amountType =  strstr($attribute, '.', true);
+            $amountTypeGetter = camel_case('get' . $amountType);
+
             foreach (json_decode(app('request')->getContent(), true) as $policy) {
-                $mongoClient = new \MongoClient("mongodb://" . env('MONGO_SRV') . ":" . env('MONGO_PORT'));
-                $mongoDB = $mongoClient->selectDB(env('MONGO_CP_DB'));
-                $collection = $mongoDB->selectCollection(CP_TRAVEL_OFFERS_COL);
-                $cursor = $collection->find(array('_id' => new \MongoId($validator->getData()['product_ref'])));
-
-                if ($cursor->count()) {
-                    $list = iterator_to_array($cursor);
-                    $dbOffer = array_shift($list);
-
+                // $cursor = app('db')->selectCollection(CP_TRAVEL_OFFERS_COL)->find(['_id' => $validator->getData()['product_ref']]);
+                $dbOffer = app('db')->collection(CP_TRAVEL_OFFERS_COL)->find($validator->getData()['product_ref']);
+                
+                if ($dbOffer) {
                     $serializer = new \App\apiModels\ObjectSerializer();
                     $importPolicy = $serializer->deserialize($policy, '\App\apiModels\travel\v1\prototypes\IMPORTREQUEST', null, false);
                     $importPolicy->setVarCode($dbOffer['code']);
@@ -114,9 +114,9 @@ class AppServiceProvider extends ServiceProvider
                         }
 
                         if ($excelFile) {
-                            $valueBaseImport = $importPolicy->getTariffAmount()->getValueBase();
+                            $valueBaseImport = $importPolicy->{$amountTypeGetter}()->getValueBase();
                             $importPolicy->calculateExcelAmount($dbOffer['configuration'], $excelFile);
-                            if ($valueBaseImport != $importPolicy->getTariffAmount()->getValueBase()) {
+                            if ($valueBaseImport != $importPolicy->{$amountTypeGetter}()->getValueBase()) {
                                 return false;
                             }
                         }
