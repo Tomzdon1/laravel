@@ -113,9 +113,9 @@ class PolicyModel implements \JsonSerializable
         foreach ($this->product['elements'] as $elem) {
             $policy['product']['elements'][] = array(
                                                 'kube'=>$elem['kube'],
-                                                'su'=>$elem['value'],
+                                                'su'=> floatval($elem['value']),
                                                 'currency'=>$elem['currency'],
-                                                'division'=>$elem['division']
+                                                'division'=>floatval($elem['division'])
                                                 );
         }
         $policy['product']['options'] = [];
