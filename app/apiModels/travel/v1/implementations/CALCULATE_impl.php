@@ -67,15 +67,20 @@ class CALCULATE_impl extends CALCULATE
           'DATA_URODZENIA' => $birthDates,
           //przekazywac true/false w bibliotece Excela mapować na T/N
           'CZY_RODZINA' => $isFamily ? 'T' : 'N',
-          'ZWYZKA_ASZ' => (isset($options['TWAWS']) && $options['TWAWS']) ? 'T' : 'N',
-          'ZWYZKA_ASM' => (isset($options['TWASM']) && $options['TWASM']) ? 'T' : 'N',
-          'ZWYZKA_ZCP' => (isset($options['TWCHP']) && $options['TWCHP']) ? 'T' : 'N',
+//          'ZWYZKA_ASZ' => (isset($options['TWAWS']) && $options['TWAWS']) ? 'T' : 'N',
+//          'ZWYZKA_ASM' => (isset($options['TWASM']) && $options['TWASM']) ? 'T' : 'N',
+//          'ZWYZKA_ZCP' => (isset($options['TWCHP']) && $options['TWCHP']) ? 'T' : 'N',
             // tak to moze ewentualnie wygladac przy obecnym zapisie
             // 'ZWYZKA_ASZ'  => (bool) $options['TWAWS'],
             // 'ZWYZKA_ASM'  => (bool) $options['TWASM'],
             // 'ZWYZKA_ZCP'  => (bool) $options['TWCHP'],
         ];
-
+        if (!empty($config['options'])) {
+            foreach ($config['options'] as $opt) {
+                $optName = strtoupper($opt['tucode']);
+                $params[$optName] = (isset($options[$optName]) && $options[$optName]) ? 'T' : 'N';
+            }
+        }
         $data = $excelFile->getCalculatedValues($params);
         $amountValue = 0;
         foreach ($data as $wariant) {
