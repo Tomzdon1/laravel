@@ -23,9 +23,16 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
      * @var array
      */
     public static $validators = [
+        'product_ref'                 => 'product_ref',
+    ];
+
+    /**
+     * Valdators for model (generates warning)
+     * @var array
+     */
+    public static $warningValidators = [
         'tariff_amount.value_base'    => 'amount_value',
         'netto_amount.value_base'     => 'amount_value',
-        'product_ref'                 => 'product_ref',
     ];
 
     /**

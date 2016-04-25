@@ -8,9 +8,9 @@ use Cache;
 use App\Http\Controllers\RequestCtrl;
 use Illuminate\Http\Request;
 use App\apiModels\travel\PolicyData;
-use App\apiModels\travel\v1\prototypes\IMPORTREQUEST_impl;
+use App\apiModels\travel\v1\implementations\IMPORTREQUEST_impl;
 use Symfony\Component\HttpFoundation\Response as Response;
-use Illuminate\Http\Exception\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 
 class importPoliciesCtrl extends RequestCtrl
 {
@@ -26,14 +26,14 @@ class importPoliciesCtrl extends RequestCtrl
         $errors = [];
 
         foreach ($this->data as $policy) {
+            $this->importRequests[] = $this->objSer->deserialize($policy, '\App\apiModels\travel\v1\prototypes\IMPORTREQUEST');
+            $status = 'OK';
 
-            try {
-                $this->importRequests[] = $this->objSer->deserialize($policy, '\App\apiModels\travel\v1\prototypes\IMPORTREQUEST');
-                $status = 'OK';
-            }
-            catch (HttpResponseException $e) {
-                foreach ($e->getResponse()->getData() as $error) {
-                    $errors[] = ['code' => $error->property, 'text' => implode(', ', $error->errors)];
+            $validator = app('validator')->make($policy, IMPORTREQUEST_impl::$warningValidators);
+
+            if ($validator->fails()) {
+                foreach ($validator->errors()->toArray() as $property => $error) {
+                    $errors[] = ['code' => $property, 'text' => implode(', ', $error)];
                 }
                 $this->importRequests[] = $this->objSer->deserialize($policy, '\App\apiModels\travel\v1\prototypes\IMPORTREQUEST', null, false);
                 $status = 'WARN';
