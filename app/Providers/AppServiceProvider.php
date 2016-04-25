@@ -117,6 +117,7 @@ class AppServiceProvider extends ServiceProvider
                             $valueBaseImport = $importPolicy->{$amountTypeGetter}()->getValueBase();
                             $importPolicy->calculateExcelAmount($dbOffer['configuration'], $excelFile);
                             if ($valueBaseImport != $importPolicy->{$amountTypeGetter}()->getValueBase()) {
+                                app('log')->debug("Validator amount_value fails! Received: $valueBaseImport, should be: " . $importPolicy->{$amountTypeGetter}()->getValueBase());
                                 return false;
                             }
                         }
