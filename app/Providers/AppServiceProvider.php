@@ -133,7 +133,7 @@ class AppServiceProvider extends ServiceProvider
         *
         */
         app('validator')->extend('product_ref', function($attribute, $value, $parameters, $validator) {
-            return empty(app('db')->collection(CP_TRAVEL_OFFERS_COL)->find($value));
+            return !empty(app('db')->collection(CP_TRAVEL_OFFERS_COL)->find($value));
         });
     }
 
