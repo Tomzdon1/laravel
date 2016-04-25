@@ -25,6 +25,7 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
     public static $validators = [
         'tariff_amount.value_base'    => 'amount_value',
         'netto_amount.value_base'     => 'amount_value',
+        'product_ref'                 => 'product_ref',
     ];
 
     /**

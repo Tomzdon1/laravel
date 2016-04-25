@@ -48,7 +48,6 @@ class importPoliciesCtrl extends RequestCtrl
     // Ta funkcja powinna być w klasie IMPORTREQUEST
     private function savePolicy($data, $status, $errors)
     {
-        $status = 'OK';
         $messages = array();
         $policyId = '';
 

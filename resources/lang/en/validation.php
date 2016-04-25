@@ -93,6 +93,7 @@ return [
     'value_conversion' => 'The value of currency conversion is invalid.',
     'promotional_amount' => 'The value of :attribute is invalid.',
     'amount_value' => 'The value of :attribute is different from the calculation.',
+    'product_ref' => 'The value of :attribute is invalid.',
 
     'custom' => [
         'attribute-name' => [
