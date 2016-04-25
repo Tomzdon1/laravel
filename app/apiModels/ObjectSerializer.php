@@ -170,7 +170,7 @@ class ObjectSerializer
      *
      * @return object an instance of $class
      */
-    public function deserialize($data, $class, $httpHeader=null, $validate = true)
+    public function deserialize($data, $class, $httpHeader = null, $validate = true)
     {
         if (null === $data) {
             app('log')->Debug("Deserializuję jako null");
@@ -183,7 +183,7 @@ class ObjectSerializer
                 $subClass_array = explode(',', $inner, 2);
                 $subClass = $subClass_array[1];
                 foreach ($data as $key => $value) {
-                    $deserialized[$key] = $this->deserialize($value, $subClass);
+                    $deserialized[$key] = $this->deserialize($value, $subClass, $httpHeader, $validate);
                 }
             }
         } elseif (strcasecmp(substr($class, -2), '[]') == 0) {
@@ -191,7 +191,7 @@ class ObjectSerializer
             $subClass = substr($class, 0, -2);
             $values = array();
             foreach ($data as $key => $value) {
-                $values[] = $this->deserialize($value, $subClass);
+                $values[] = $this->deserialize($value, $subClass, $httpHeader, $validate);
             }
             $deserialized = $values;
         } elseif ($class === '\DateTime') {
@@ -250,7 +250,7 @@ echo '$data: '.print_r($data,1).' '.$instance::$attributeMap[$property]."|<br>\n
 //echo $type.' : '.print_r($propertyValue,1).$propertySetter."<br><br>\n";
 
                 if (isset($propertyValue)) {
-                    $instance->$propertySetter($this->deserialize($propertyValue, $type));
+                    $instance->$propertySetter($this->deserialize($propertyValue, $type, $httpHeader, $validate));
                     
                 }
             }
