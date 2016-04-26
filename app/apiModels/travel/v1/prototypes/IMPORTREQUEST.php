@@ -52,7 +52,6 @@ class IMPORTREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $swaggerTypes = array(
         'product_ref' => 'string',
-        'worker_agent_id' => 'string',
         'data' => 'App\apiModels\travel\v1\prototypes\POLICYDATA',
         'payment_date' => '\DateTime',
         'policy_date' => '\DateTime',
@@ -62,7 +61,8 @@ class IMPORTREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
         'amount' => 'App\apiModels\travel\v1\prototypes\AMOUNT',
         'tariff_amount' => 'App\apiModels\travel\v1\prototypes\AMOUNT',
         'netto_amount' => 'App\apiModels\travel\v1\prototypes\AMOUNT',
-        'promo_code' => 'string'
+        'promo_code' => 'string',
+        'solicitors' => 'App\apiModels\travel\v1\prototypes\SOLICITOR[]'
     );
   
     /** 
@@ -71,7 +71,6 @@ class IMPORTREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $attributeMap = array(
         'product_ref' => 'product_ref',
-        'worker_agent_id' => 'worker_agent_id',
         'data' => 'data',
         'payment_date' => 'payment_date',
         'policy_date' => 'policy_date',
@@ -81,7 +80,8 @@ class IMPORTREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
         'amount' => 'amount',
         'tariff_amount' => 'tariff_amount',
         'netto_amount' => 'netto_amount',
-        'promo_code' => 'promo_code'
+        'promo_code' => 'promo_code',
+        'solicitors' => 'solicitors'
     );
   
     /**
@@ -90,7 +90,6 @@ class IMPORTREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $setters = array(
         'product_ref' => 'setProductRef',
-        'worker_agent_id' => 'setWorkerAgentId',
         'data' => 'setData',
         'payment_date' => 'setPaymentDate',
         'policy_date' => 'setPolicyDate',
@@ -100,7 +99,8 @@ class IMPORTREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
         'amount' => 'setAmount',
         'tariff_amount' => 'setTariffAmount',
         'netto_amount' => 'setNettoAmount',
-        'promo_code' => 'setPromoCode'
+        'promo_code' => 'setPromoCode',
+        'solicitors' => 'setSolicitors'
     );
   
     /**
@@ -109,7 +109,6 @@ class IMPORTREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $getters = array(
         'product_ref' => 'getProductRef',
-        'worker_agent_id' => 'getWorkerAgentId',
         'data' => 'getData',
         'payment_date' => 'getPaymentDate',
         'policy_date' => 'getPolicyDate',
@@ -119,7 +118,8 @@ class IMPORTREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
         'amount' => 'getAmount',
         'tariff_amount' => 'getTariffAmount',
         'netto_amount' => 'getNettoAmount',
-        'promo_code' => 'getPromoCode'
+        'promo_code' => 'getPromoCode',
+        'solicitors' => 'getSolicitors'
     );
   
     
@@ -128,12 +128,6 @@ class IMPORTREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
       * @var string
       */
     protected $product_ref;
-    
-    /**
-      * $worker_agent_id Numer pracownika w rejestrze agentów (OWCA)
-      * @var string
-      */
-    protected $worker_agent_id;
     
     /**
       * $data Dane polisy
@@ -195,6 +189,12 @@ class IMPORTREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
       */
     protected $promo_code;
     
+    /**
+      * $solicitors Informacje o OWCA biorących udział w sprzedaży polisy; Wartości tego pola są weryfikowane a dokładnie uprawnienia agenta/owca do sprzedaży danego typu polisy
+      * @var App\apiModels\travel\v1\prototypes\SOLICITOR[]
+      */
+    protected $solicitors;
+    
 
     /**
      * Constructor
@@ -204,7 +204,6 @@ class IMPORTREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
     {
         if ($data != null) {
             $this->product_ref = $data["product_ref"];
-            $this->worker_agent_id = $data["worker_agent_id"];
             $this->data = $data["data"];
             $this->payment_date = $data["payment_date"];
             $this->policy_date = $data["policy_date"];
@@ -215,6 +214,7 @@ class IMPORTREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
             $this->tariff_amount = $data["tariff_amount"];
             $this->netto_amount = $data["netto_amount"];
             $this->promo_code = $data["promo_code"];
+            $this->solicitors = $data["solicitors"];
         }
     }
     
@@ -236,27 +236,6 @@ class IMPORTREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
     {
         
         $this->product_ref = $product_ref;
-        return $this;
-    }
-    
-    /**
-     * Gets worker_agent_id
-     * @return string
-     */
-    public function getWorkerAgentId()
-    {
-        return $this->worker_agent_id;
-    }
-  
-    /**
-     * Sets worker_agent_id
-     * @param string $worker_agent_id Numer pracownika w rejestrze agentów (OWCA)
-     * @return $this
-     */
-    public function setWorkerAgentId($worker_agent_id)
-    {
-        
-        $this->worker_agent_id = $worker_agent_id;
         return $this;
     }
     
@@ -467,6 +446,27 @@ class IMPORTREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
     {
         
         $this->promo_code = $promo_code;
+        return $this;
+    }
+    
+    /**
+     * Gets solicitors
+     * @return App\apiModels\travel\v1\prototypes\SOLICITOR[]
+     */
+    public function getSolicitors()
+    {
+        return $this->solicitors;
+    }
+  
+    /**
+     * Sets solicitors
+     * @param App\apiModels\travel\v1\prototypes\SOLICITOR[] $solicitors Informacje o OWCA biorących udział w sprzedaży polisy; Wartości tego pola są weryfikowane a dokładnie uprawnienia agenta/owca do sprzedaży danego typu polisy
+     * @return $this
+     */
+    public function setSolicitors($solicitors)
+    {
+        
+        $this->solicitors = $solicitors;
         return $this;
     }
     

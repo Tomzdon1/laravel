@@ -3,7 +3,7 @@
     "info": {
         "title": "Travel API",
         "description": "Interfejs do sprzedaży produktów turystycznych oferowanych przez Towarzystwo Ubezpieczeń Europa S. A.\n\nWszelkie komunikaty opisywane w tym dokumencie są przesyłane przy użyciu funkcji INVOKE opisanej w dokumencie Specyfikacja_ESB.pdf.",
-        "version": "1.3.16-draft4",
+        "version": "1.3.17",
         "termsOfService": "",
         "contact": {
             "name": "API Support",
@@ -958,11 +958,6 @@
                     "description": "Identyfikator produktu",
                     "minLength": 1
                 },
-                "worker_agent_id": {
-                    "type": "string",
-                    "description": "Numer pracownika w rejestrze agentów (OWCA)",
-                    "minLength": 1
-                },
                 "data": {
                     "$ref": "#/definitions/POLICY_DATA",
                     "description": "Dane polisy"
@@ -1010,11 +1005,18 @@
                     "type": "string",
                     "description": "Kod promocyjny",
                     "minLength": 1
+                },
+                "solicitors" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/definitions/SOLICITOR"
+                  },
+                  "minItems": 1,
+                  "description" : "Informacje o OWCA biorących udział w sprzedaży polisy; Wartości tego pola są weryfikowane a dokładnie uprawnienia agenta/owca do sprzedaży danego typu polisy"
                 }
             },
             "required": [
                 "product_ref",
-                "worker_agent_id",
                 "data",
                 "policy_date",
                 "policy_number",
@@ -1022,7 +1024,8 @@
                 "insured",
                 "amount",
                 "tariff_amount",
-                "netto_amount"
+                "netto_amount",
+                "solicitors"
             ],
             "example": {
                 "product_ref": "55ac435aabb4760c03fc3568",
@@ -1033,7 +1036,9 @@
                 "insured": [],
                 "amount": {},
                 "tariff_amount": {},
-                "promo_code": {}
+                "netto_amount": {},
+                "promo_code": {},
+                "solicitors": []
             }
         },
         "IMPORT_STATUS": {
@@ -1205,6 +1210,34 @@
                 "value": "5000",
                 "sub_options": []
             }
+        },
+        "PERMISSION" : {
+          "type" : "string",
+          "enum" : [
+            "ADM", "DDZ", "ZAW"
+          ],
+          "description" : "Rodzaj uprawnienia, która wykorzustuje agent podczas kontaktu z klientem (ADM - administracja, DDZ -  doprowadzenie, ZAW - zawarcie"
+        },
+        "SOLICITOR" : {
+          "type" : "object",
+          "description" : "OWCA",
+          "properties" : {
+            "solicitor_id" : {
+            "type" : "string",
+              "description" : "Identyfikator OWCY w rejestrze KNF (tzw numer RA)"
+            },
+            "agent_id" : {
+              "type" : "string",
+              "description" : "Identyfikator Agenta w systemi KNF (tzw numer RA agenta)"
+            },
+            "permissions" : {
+              "type" : "array",
+              "items": {
+                        "$ref": "#/definitions/PERMISSION"
+                    },
+              "description" : "Wykorzystane uprawnienia"
+            }
+          }
         },
         "PERSON_DATA": {
             "type": "object",
