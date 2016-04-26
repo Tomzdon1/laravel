@@ -11,6 +11,8 @@ class PolicyModel implements \JsonSerializable
     public $mongoDB;
     public $amount;
     public $tariff_amount;
+    public $netto_amount;
+    public $solicitors;
     public $partner;
     public $product;
     public $status;
@@ -35,6 +37,7 @@ class PolicyModel implements \JsonSerializable
         $this->amount = $policyData['amount'];
         $this->tariff_amount = $policyData['tariff_amount'];
         $this->netto_amount = $policyData['netto_amount'];
+        $this->solicitors = $policyData['solicitors'];
         $this->product = $this->getProduct($this->productRef);
         $this->partner = $partner;
         $this->status = $status;
@@ -81,6 +84,7 @@ class PolicyModel implements \JsonSerializable
 
         $policy['tariff_amount']   = $this->tariff_amount;
         $policy['netto_amount']   = $this->netto_amount;
+        $policy['solicitors']   = $this->solicitors;
         
         $policy['partner']['code']          = $this->partnerData['code'];
         $policy['partner']['customerId']    = $this->partnerData['customerId'];

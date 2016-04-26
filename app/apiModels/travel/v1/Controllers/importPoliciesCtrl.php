@@ -65,6 +65,7 @@ class importPoliciesCtrl extends RequestCtrl
         
         $policyData['tariff_amount'] = $data['tariff_amount'];
         $policyData['netto_amount'] = $data['netto_amount'];
+        $policyData['solicitors'] = $data['solicitors'];
 
         if (!empty($this->quote_doc['quote_ref'])) {
             $policyData['request']['quote_ref'] = $this->quote_doc['quote_ref'];
