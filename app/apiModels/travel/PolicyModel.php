@@ -91,24 +91,28 @@ class PolicyModel implements \JsonSerializable
         $policy['partner']['travel_api']    = $this->partnerData['apis']['travel']['version'];
         $policy['product']['code']      = $this->product['code'];
 
-        if(!empty($this->product['configuration']['wube'])){
+        if(array_key_exists('wube', $this->product['configuration'])){
             $policy['product']['wube'] = $this->product['configuration']['wube'];
         }
         
-        if(!empty($this->product['configuration']['formCode'])){
+        if(array_key_exists('formCode', $this->product['configuration'])){
             $policy['product']['formCode'] = $this->product['configuration']['formCode'];
         }
 
-        if(!empty($this->product['configuration']['formType'])){
+        if(array_key_exists('formType', $this->product['configuration'])){
             $policy['product']['formType'] = $this->product['configuration']['formType'];
         }
 
-        if(!empty($this->product['configuration']['formCode'])){
+        if(array_key_exists('formCode', $this->product['configuration'])){
             $policy['product']['formCode'] = $this->product['configuration']['formCode'];
         }
 
-        if(!empty($this->product['configuration']['attendants'])){
+        if(array_key_exists('attendants', $this->product['configuration'])){
             $policy['product']['attendants'] = $this->product['configuration']['attendants'];
+        }
+
+        if(array_key_exists('isCession', $this->product['configuration'])){
+            $policy['product']['isCession'] = $this->product['configuration']['isCession'];
         }
 
         $policy['product']['elements'] = [];
@@ -121,7 +125,7 @@ class PolicyModel implements \JsonSerializable
                                                 );
         }
         $policy['product']['options'] = [];
-        if (!empty($this->policyData['data']['option_values'])) {
+        if (array_key_exists('option_values', $this->product['configuration'])) {
             foreach ($this->policyData['data']['option_values'] as $option) {
                 if ($option['value']==true) {
                     foreach ($this->product['options'] as $prodOpt) {
