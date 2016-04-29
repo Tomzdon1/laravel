@@ -44,7 +44,7 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class ENVELOPE extends \App\apiModels\ApiModel implements ArrayAccess 
+class Envelope extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
@@ -52,8 +52,9 @@ class ENVELOPE extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $swaggerTypes = array(
         'type' => 'string',
-        'api' => 'App\apiModels\travel\v1\prototypes\Api',
+        'api' => 'object',
         'status' => 'string',
+        'errors' => 'string[]',
         'company' => 'string[]',
         'src_id' => 'string',
         'dst_id' => 'string',
@@ -69,6 +70,7 @@ class ENVELOPE extends \App\apiModels\ApiModel implements ArrayAccess
         'type' => 'type',
         'api' => 'api',
         'status' => 'status',
+        'errors' => 'errors',
         'company' => 'company',
         'src_id' => 'src_id',
         'dst_id' => 'dst_id',
@@ -84,6 +86,7 @@ class ENVELOPE extends \App\apiModels\ApiModel implements ArrayAccess
         'type' => 'setType',
         'api' => 'setApi',
         'status' => 'setStatus',
+        'errors' => 'setErrors',
         'company' => 'setCompany',
         'src_id' => 'setSrcId',
         'dst_id' => 'setDstId',
@@ -99,6 +102,7 @@ class ENVELOPE extends \App\apiModels\ApiModel implements ArrayAccess
         'type' => 'getType',
         'api' => 'getApi',
         'status' => 'getStatus',
+        'errors' => 'getErrors',
         'company' => 'getCompany',
         'src_id' => 'getSrcId',
         'dst_id' => 'getDstId',
@@ -114,8 +118,8 @@ class ENVELOPE extends \App\apiModels\ApiModel implements ArrayAccess
     protected $type;
     
     /**
-      * $api 
-      * @var App\apiModels\travel\v1\prototypes\Api
+      * $api Informacje dotyczące użytej wersji API
+      * @var object
       */
     protected $api;
     
@@ -124,6 +128,12 @@ class ENVELOPE extends \App\apiModels\ApiModel implements ArrayAccess
       * @var string
       */
     protected $status;
+    
+    /**
+      * $errors Błędy przesyłanego obiektu
+      * @var string[]
+      */
+    protected $errors;
     
     /**
       * $company Określenie spółki, której dotyczy wiadomość
@@ -166,6 +176,7 @@ class ENVELOPE extends \App\apiModels\ApiModel implements ArrayAccess
             $this->type = $data["type"];
             $this->api = $data["api"];
             $this->status = $data["status"];
+            $this->errors = $data["errors"];
             $this->company = $data["company"];
             $this->src_id = $data["src_id"];
             $this->dst_id = $data["dst_id"];
@@ -197,7 +208,7 @@ class ENVELOPE extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets api
-     * @return App\apiModels\travel\v1\prototypes\Api
+     * @return object
      */
     public function getApi()
     {
@@ -206,7 +217,7 @@ class ENVELOPE extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets api
-     * @param App\apiModels\travel\v1\prototypes\Api $api 
+     * @param object $api Informacje dotyczące użytej wersji API
      * @return $this
      */
     public function setApi($api)
@@ -234,6 +245,27 @@ class ENVELOPE extends \App\apiModels\ApiModel implements ArrayAccess
     {
         
         $this->status = $status;
+        return $this;
+    }
+    
+    /**
+     * Gets errors
+     * @return string[]
+     */
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+  
+    /**
+     * Sets errors
+     * @param string[] $errors Błędy przesyłanego obiektu
+     * @return $this
+     */
+    public function setErrors($errors)
+    {
+        
+        $this->errors = $errors;
         return $this;
     }
     

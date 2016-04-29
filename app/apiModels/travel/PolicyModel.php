@@ -29,7 +29,7 @@ class PolicyModel implements \JsonSerializable
         return $this->getPolicy();
     }
     
-    public function setPolicy($product_ref, $policyData, $partner, $status)
+    public function setPolicy($product_ref, $policyData, $partner, $status, $errors)
     {
         
         $this->productRef = $product_ref;
@@ -41,6 +41,7 @@ class PolicyModel implements \JsonSerializable
         $this->product = $this->getProduct($this->productRef);
         $this->partner = $partner;
         $this->status = $status;
+        $this->errors = $errors;
         $this->partnerData = $this->partner->getPartnerData();
         return $this->getPolicy();
     }

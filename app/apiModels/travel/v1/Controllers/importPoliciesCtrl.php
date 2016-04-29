@@ -74,7 +74,7 @@ class importPoliciesCtrl extends RequestCtrl
         }
 
         $policyM = new \App\apiModels\travel\PolicyModel();
-        $policyPrint = $policyM->setPolicy($product_ref, $policyData, $this->partner, $status);
+        $policyPrint = $policyM->setPolicy($product_ref, $policyData, $this->partner, $status, $errors);
 // Mozliwe, że model polisy powinien byc spojny dla roznych typow
 // Trzeba zdecydowac, czy walidacje maja się odbywac w kontrolerze, czy raczej w modelu
 // mysle, ze powinny byc w policy model, w takim wypadku status i message's powinny przychodzic z modelu
