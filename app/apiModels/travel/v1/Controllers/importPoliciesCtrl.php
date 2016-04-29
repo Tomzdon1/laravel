@@ -23,9 +23,10 @@ class importPoliciesCtrl extends RequestCtrl
 
         $this->objSer = new \App\apiModels\ObjectSerializer();
         $this->importRequests = [];
-        $errors = [];
 
         foreach ($this->data as $policy) {
+            $errors = [];
+
             $this->importRequests[] = $this->objSer->deserialize($policy, '\App\apiModels\travel\v1\prototypes\IMPORTREQUEST');
             $status = 'OK';
 
