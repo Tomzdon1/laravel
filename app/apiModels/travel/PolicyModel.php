@@ -95,6 +95,10 @@ class PolicyModel implements \JsonSerializable
         if(array_key_exists('wube', $this->product['configuration'])){
             $policy['product']['wube'] = $this->product['configuration']['wube'];
         }
+
+        if(array_key_exists('folderType', $this->product['configuration'])){
+            $policy['product']['folderType'] = $this->product['configuration']['folderType'];
+        }
         
         if(array_key_exists('formCode', $this->product['configuration'])){
             $policy['product']['formCode'] = $this->product['configuration']['formCode'];
