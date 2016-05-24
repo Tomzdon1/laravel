@@ -68,23 +68,44 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
 
         $isFamily = false;
         $birthDates = array();
+        $insuredsOptions = [];
+
         foreach ($this->getInsured() as $insured) {
             $birthDates[] = $insured->getData()->getBirthDate();
+
+            if (is_array($insured->getOptionValues()) || $insured->getOptionValues() instanceof Traversable) {
+                foreach ($insured->getOptionValues() as $option) {
+                    if (!array_key_exists($option->getCode(), $insuredsOptions)) {
+                        $insuredsOptions[$option->getCode()] = [];
+                    }
+
+                    if ($option->getValue() == true || $option->getValue() == 'T') {
+                        $value = 'T';
+                    } else {
+                        $value = 'N';
+                    }
+
+                    $insuredsOptions[$option->getCode()][] = $value;
+                }
+            }
         }
+
         $params = [
           'DATA_OD' => $this->getData()->getStartDate(),
           'DATA_DO' => $this->getData()->getEndDate(),
           'DATA_URODZENIA' => $birthDates,
           //przekazywac true/false w bibliotece Excela mapować na T/N
-          'CZY_RODZINA' => $isFamily ? 'T' : 'N',
-          'ZWYZKA_ASZ' => (isset($options['TWAWS']) && $options['TWAWS']) ? 'T' : 'N',
-          'ZWYZKA_ASM' => (isset($options['TWASM']) && $options['TWASM']) ? 'T' : 'N',
-          'ZWYZKA_ZCP' => (isset($options['TWCHP']) && $options['TWCHP']) ? 'T' : 'N',
+          // 'CZY_RODZINA' => $isFamily ? 'T' : 'N',
+          // 'ZWYZKA_ASZ' => (isset($options['TWAWS']) && $options['TWAWS']) ? 'T' : 'N',
+          // 'ZWYZKA_ASM' => (isset($options['TWASM']) && $options['TWASM']) ? 'T' : 'N',
+          // 'ZWYZKA_ZCP' => (isset($options['TWCHP']) && $options['TWCHP']) ? 'T' : 'N',
             // tak to moze ewentualnie wygladac przy obecnym zapisie
             // 'ZWYZKA_ASZ'  => (bool) $options['TWAWS'],
             // 'ZWYZKA_ASM'  => (bool) $options['TWASM'],
             // 'ZWYZKA_ZCP'  => (bool) $options['TWCHP'],
         ];
+
+        $params = array_merge($params, $insuredsOptions);
 
         $data = $excelFile->getCalculatedValues($params);
         $amountValue = 0;
