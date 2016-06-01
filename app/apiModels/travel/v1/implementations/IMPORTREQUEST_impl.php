@@ -124,15 +124,20 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
         
         if ($config['quotation']['resultCurrency'] != 'PLN') {
             $recalculation = $this->recalculate2pln($amountValue, $config['quotation']['resultCurrency']);
+            $nettoRecalculation = $this->recalculate2pln($nettoAmountValue, $config['quotation']['resultCurrency']);
             $AmountPLN = $recalculation['amount'];
+            $nettoAmountPLN = $nettoRecalculation['amount'];
             $this->tariff_amount->setCurrencyRate($recalculation['rate']);
             $this->tariff_amount->setDateRate($recalculation['date']);
+            $this->netto_amount->setCurrencyRate($nettoRecalculation['rate']);
+            $this->netto_amount->setDateRate($nettoRecalculation['date']);
         } else {
             $AmountPLN = $amountValue;
+            $nettoAmountPLN = $nettoAmountValue;
         }
-        $this->tariff_amount->setValue($AmountPLN);
 
-//        print_r($this->tariff_amount); //->setValueBaseCurrency('GBN');
+        $this->tariff_amount->setValue($AmountPLN);
+        $this->netto_amount->setValue($nettoAmountPLN);
     }
 
     private function recalculate2pln($amount, $amountCurrency)
