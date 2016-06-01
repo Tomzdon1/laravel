@@ -63,7 +63,7 @@ class AppServiceProvider extends ServiceProvider
         *   $parameters[1] currency_rate
         *   $parameters[2] precision
         */
-        app('validator')->extend('value_conversion', function($attribute, $value, $parameters, $validator) {
+        app('validator')->extend('valueConversion', function($attribute, $value, $parameters, $validator) {
             $value_base = array_get($validator->getData(), $parameters[0], null);
             $currency_rate = array_get($validator->getData(), $parameters[1], null);
             $precision = $parameters[2];
@@ -78,7 +78,7 @@ class AppServiceProvider extends ServiceProvider
         *   $parameters[1] tariff_amount (value_base)
         *   $parameters[2] precision
         */
-        app('validator')->extend('promotional_amount', function($attribute, $value, $parameters, $validator) {
+        app('validator')->extend('promotionalAmount', function($attribute, $value, $parameters, $validator) {
             $promo_code = array_get($validator->getData(), $parameters[0], null);
             $tariff_value_base = array_get($validator->getData(), $parameters[1], null);
             $precision = $parameters[2];
@@ -91,7 +91,8 @@ class AppServiceProvider extends ServiceProvider
         * 
         *   $parameters[0] amount type (e.g. netto_amount)
         */
-        app('validator')->extend('amount_value', function($attribute, $value, $parameters, $validator) {
+        app('validator')->extend('amountValue', function($attribute, $value, $parameters, $validator) {
+            $valid = true;
             $amountType =  strstr($attribute, '.', true);
             $amountTypeGetter = camel_case('get' . $amountType);
 
@@ -116,23 +117,30 @@ class AppServiceProvider extends ServiceProvider
                         if ($excelFile) {
                             $valueBaseImport = $importPolicy->{$amountTypeGetter}()->getValueBase();
                             $importPolicy->calculateExcelAmount($dbOffer['configuration'], $excelFile);
-                            if ($valueBaseImport != $importPolicy->{$amountTypeGetter}()->getValueBase()) {
-                                app('log')->debug("Validator amount_value fails! Received: $valueBaseImport, should be: " . $importPolicy->{$amountTypeGetter}()->getValueBase());
-                                return false;
+                            $valueBaseCalculated = $importPolicy->{$amountTypeGetter}()->getValueBase();
+                            
+                            if ($valueBaseImport != $valueBaseCalculated) {
+                                $validator->addReplacer('amountValue', function ($message, $attribute, $rule, $parameters) use ($valueBaseImport, $valueBaseCalculated) {
+                                    return str_replace(':calculation', $valueBaseCalculated, str_replace(':value', $valueBaseImport, $message));
+                                });
+
+                                app('log')->debug("Validator amount_value fails! Received: $valueBaseImport, should be: " . $valueBaseCalculated);
+                                
+                                $valid = false;
                             }
                         }
                     }
                 }
             }
-
-            return true;
+            
+            return $valid;
         });
 
         /**
         *   Validate product reference.
         *
         */
-        app('validator')->extend('product_ref', function($attribute, $value, $parameters, $validator) {
+        app('validator')->extend('productRef', function($attribute, $value, $parameters, $validator) {
             return !empty(app('db')->collection(CP_TRAVEL_OFFERS_COL)->find($value));
         });
     }
