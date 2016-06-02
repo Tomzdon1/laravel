@@ -25,6 +25,19 @@ class QUOTE_impl extends QUOTE
     public static $validators = [
         //
     ];
+    /**
+     *
+     * Current cached excel file path
+     * @var type string
+     */
+    public static $staticExcelFile;
+    
+    /**
+     * 
+     * Cached offers
+     * @var type mixed
+     */
+    public static $staticOffers;
 
     /**
      * Constructor
@@ -68,17 +81,32 @@ class QUOTE_impl extends QUOTE
             'DATA_DO' => $request->getData()->getEndDate(),
             'DATA_URODZENIA' => $birthDates,
             //przekazywac true/false w bibliotece Excela mapować na T/N
-            'CZY_RODZINA' => $isFamily ? 'T' : 'N',
-            'ZWYZKA_ASZ' => (isset($options['TWAWS']) && $options['TWAWS']) ? 'T' : 'N',
-            'ZWYZKA_ASM' => (isset($options['TWASM']) && $options['TWASM']) ? 'T' : 'N',
-            'ZWYZKA_ZCP' => (isset($options['TWCHP']) && $options['TWCHP']) ? 'T' : 'N',
+//            'CZY_RODZINA' => $isFamily ? 'T' : 'N',
+//            'ZWYZKA_ASZ' => (isset($options['TWAWS']) && $options['TWAWS']) ? 'T' : 'N',
+//            'ZWYZKA_ASM' => (isset($options['TWASM']) && $options['TWASM']) ? 'T' : 'N',
+//            'ZWYZKA_ZCP' => (isset($options['TWCHP']) && $options['TWCHP']) ? 'T' : 'N',
             // tak to moze ewentualnie wygladac przy obecnym zapisie
             // 'ZWYZKA_ASZ'  => (bool) $options['TWAWS'],
             // 'ZWYZKA_ASM'  => (bool) $options['TWASM'],
             // 'ZWYZKA_ZCP'  => (bool) $options['TWCHP'],
         ];
+        /*
+         * Pobranie mozliwych wartosci z konfiguracji oferty
+         */
+        if (!empty($config['options'])) {
+            foreach ($config['options'] as $opt) {
+                $optName = strtoupper($opt['tucode']);
+                $params[$optName] = (isset($options[$optName]) && $options[$optName]) ? 'T' : 'N';
+            }
+        }
 
-        $data = $excelFile->getCalculatedValues($params);
+        if ($excelFile->excelFilePath == QUOTE_impl::$staticExcelFile) {
+            $data = QUOTE_impl::$staticOffers;
+        } else {
+            QUOTE_impl::$staticExcelFile = $excelFile->excelFilePath;
+            $data = $excelFile->getCalculatedValues($params);
+            QUOTE_impl::$staticOffers = $data;
+        }
         $amountValue = 0;
         foreach ($data as $wariant) {
             if ($wariant['WARIANT'] == $this->varCode) {

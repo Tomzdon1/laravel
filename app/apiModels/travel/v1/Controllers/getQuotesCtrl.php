@@ -86,6 +86,8 @@ class getQuotesCtrl extends RequestCtrl
         $listToResponse = array();
         $i = 0;
 //        foreach ($list as $dbOffer) {
+        $staticExcelPath = '';
+        $staticExcelFile = '';
         foreach ($data as $dbOffer) {
             $responseData = array();
             $responseData['quote_ref'] = (string) $this->quote_doc['_id'] . $i++; //
@@ -105,7 +107,12 @@ class getQuotesCtrl extends RequestCtrl
                 $offer->calculateAmount($dbOffer['configuration']);
             } elseif ($dbOffer['configuration']['quotation']['type'] == 'excel') {
                 $excelPath = env('EXCEL_DIRECTORY') . '/' . $dbOffer['configuration']['quotation']['file'];
-                $excelFile = $this->loadExcelFile($excelPath);
+                if ($excelPath != $staticExcelPath) {
+                    $excelFile = $this->loadExcelFile($excelPath);
+                    $staticExcelFile = $excelFile;
+                } else {
+                    $excelFile = $staticExcelFile;
+                }
                 $offer->calculateExcelAmount($dbOffer['configuration'], $excelFile, $this->quote_request);
             }
 

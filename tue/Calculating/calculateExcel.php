@@ -6,8 +6,9 @@ abstract class calculateExcel{
 	
 	private $objPHPExcel; //obiekt PHPexcel
 	protected $params; //tablica parametrow 
-	protected $excelFilePath; //sciezka do excela
 	protected $calculatedRange; // obszar do zwrócenia danych z excela
+
+        public $excelFilePath; //sciezka do excela
 
 	public function __construct($excelFilePath){
 		$this->excelFilePath = $excelFilePath;
