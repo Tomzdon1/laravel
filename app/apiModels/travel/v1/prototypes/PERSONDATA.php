@@ -38,7 +38,7 @@ use \ArrayAccess;
  * PERSONDATA Class Doc Comment
  *
  * @category    Class
- * @description Dane osobowe
+ * @description Dane osoby
  * @package     App\apiModels\travel\v1
  * @author      http://github.com/swagger-api/swagger-codegen
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
@@ -56,7 +56,11 @@ class PERSONDATA extends \App\apiModels\ApiModel implements ArrayAccess
         'birth_date' => '\DateTime',
         'pesel' => 'string',
         'nationality' => 'string',
-        'document_no' => 'string'
+        'document_no' => 'string',
+        'business_name' => 'string',
+        'short_business_name' => 'string',
+        'nip' => 'string',
+        'type' => 'string'
     );
   
     /** 
@@ -69,7 +73,11 @@ class PERSONDATA extends \App\apiModels\ApiModel implements ArrayAccess
         'birth_date' => 'birth_date',
         'pesel' => 'pesel',
         'nationality' => 'nationality',
-        'document_no' => 'document_no'
+        'document_no' => 'document_no',
+        'business_name' => 'business_name',
+        'short_business_name' => 'short_business_name',
+        'nip' => 'nip',
+        'type' => 'type'
     );
   
     /**
@@ -82,7 +90,11 @@ class PERSONDATA extends \App\apiModels\ApiModel implements ArrayAccess
         'birth_date' => 'setBirthDate',
         'pesel' => 'setPesel',
         'nationality' => 'setNationality',
-        'document_no' => 'setDocumentNo'
+        'document_no' => 'setDocumentNo',
+        'business_name' => 'setBusinessName',
+        'short_business_name' => 'setShortBusinessName',
+        'nip' => 'setNip',
+        'type' => 'setType'
     );
   
     /**
@@ -95,7 +107,11 @@ class PERSONDATA extends \App\apiModels\ApiModel implements ArrayAccess
         'birth_date' => 'getBirthDate',
         'pesel' => 'getPesel',
         'nationality' => 'getNationality',
-        'document_no' => 'getDocumentNo'
+        'document_no' => 'getDocumentNo',
+        'business_name' => 'getBusinessName',
+        'short_business_name' => 'getShortBusinessName',
+        'nip' => 'getNip',
+        'type' => 'getType'
     );
   
     
@@ -135,6 +151,30 @@ class PERSONDATA extends \App\apiModels\ApiModel implements ArrayAccess
       */
     protected $document_no;
     
+    /**
+      * $business_name Nazwa działalności
+      * @var string
+      */
+    protected $business_name;
+    
+    /**
+      * $short_business_name Skrócona nazwa działalności
+      * @var string
+      */
+    protected $short_business_name;
+    
+    /**
+      * $nip NIP
+      * @var string
+      */
+    protected $nip;
+    
+    /**
+      * $type Typ osoby
+      * @var string
+      */
+    protected $type;
+    
 
     /**
      * Constructor
@@ -149,6 +189,10 @@ class PERSONDATA extends \App\apiModels\ApiModel implements ArrayAccess
             $this->pesel = $data["pesel"];
             $this->nationality = $data["nationality"];
             $this->document_no = $data["document_no"];
+            $this->business_name = $data["business_name"];
+            $this->short_business_name = $data["short_business_name"];
+            $this->nip = $data["nip"];
+            $this->type = $data["type"];
         }
     }
     
@@ -275,6 +319,93 @@ class PERSONDATA extends \App\apiModels\ApiModel implements ArrayAccess
     {
         
         $this->document_no = $document_no;
+        return $this;
+    }
+    
+    /**
+     * Gets business_name
+     * @return string
+     */
+    public function getBusinessName()
+    {
+        return $this->business_name;
+    }
+  
+    /**
+     * Sets business_name
+     * @param string $business_name Nazwa działalności
+     * @return $this
+     */
+    public function setBusinessName($business_name)
+    {
+        
+        $this->business_name = $business_name;
+        return $this;
+    }
+    
+    /**
+     * Gets short_business_name
+     * @return string
+     */
+    public function getShortBusinessName()
+    {
+        return $this->short_business_name;
+    }
+  
+    /**
+     * Sets short_business_name
+     * @param string $short_business_name Skrócona nazwa działalności
+     * @return $this
+     */
+    public function setShortBusinessName($short_business_name)
+    {
+        
+        $this->short_business_name = $short_business_name;
+        return $this;
+    }
+    
+    /**
+     * Gets nip
+     * @return string
+     */
+    public function getNip()
+    {
+        return $this->nip;
+    }
+  
+    /**
+     * Sets nip
+     * @param string $nip NIP
+     * @return $this
+     */
+    public function setNip($nip)
+    {
+        
+        $this->nip = $nip;
+        return $this;
+    }
+    
+    /**
+     * Gets type
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+  
+    /**
+     * Sets type
+     * @param string $type Typ osoby
+     * @return $this
+     */
+    public function setType($type)
+    {
+        $allowed_values = array("private", "sole_trader", "company");
+        if (!in_array($type, $allowed_values)) {
+            throw new \InvalidArgumentException("Invalid value for 'type', must be one of 'private', 'sole_trader', 'company'");
+        }
+        $this->type = $type;
         return $this;
     }
     
