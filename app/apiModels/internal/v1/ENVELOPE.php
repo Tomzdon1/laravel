@@ -307,7 +307,7 @@ class Envelope extends \App\apiModels\ApiModel implements ArrayAccess
     public function setSrcId($src_id)
     {
         
-        $this->src_id = $src_id;
+        $this->src_id = (string)$src_id;
         return $this;
     }
     
