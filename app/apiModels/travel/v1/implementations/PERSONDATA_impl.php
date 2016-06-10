@@ -24,7 +24,8 @@ class PERSONDATA_impl extends PERSONDATA
      */
     public static $validators = [
 //        'birth_date' => 'required_if:type,private|before:today',
-        'pesel' => 'pesel',
+//        'pesel' => 'pesel',
+        
         'nationality' => 'countryCode',
         'business_name' => 'required_if:type,sole_trader,company',
         'nip' => 'required_if:type,sole_trader,company'
