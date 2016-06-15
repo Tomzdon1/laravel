@@ -79,10 +79,13 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
                         $insuredsOptions[$option->getCode()] = [];
                     }
 
-                    if ($option->getValue() == true || $option->getValue() == 'T') {
+                    if (in_array(strtolower($option->getValue()), [true, 'true', 't'])) {
                         $value = 'T';
-                    } else {
+                    } else if (in_array(strtolower($option->getValue()), [false, 'false', 'f'])) {
                         $value = 'N';
+                    }
+                    else {
+                        $value = $option->getValue();
                     }
 
                     $insuredsOptions[$option->getCode()][] = $value;
