@@ -24,7 +24,8 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
      */
     public static $validators = [
         'product_ref'                 => 'product_ref',
-        'policy_number'               => 'unique:policies'
+        'policy_number'               => 'unique:policies',
+        'policy_date.date'            => 'before_equal:data.start_date.date'
     ];
 
     /**

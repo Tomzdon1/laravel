@@ -13,14 +13,33 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-    	app('validator')->extend('afterEqual', function($attribute, $value, $parameters) {
+    	app('validator')->extend('afterEqual', function($attribute, $value, $parameters, $validator) {
             $date = $parameters[0];
+            
+            if (!strtotime($date)) {
+                $date = array_get($validator->getData(), $parameters[0], null);
+            }
+
             return strtotime($value) >= strtotime($date);
         });
 
         app('validator')->replacer('afterEqual', function($message, $attribute, $rule, $parameters) {
 	        return str_replace(':date', $parameters[0], $message);
 	    });
+
+        app('validator')->extend('beforeEqual', function($attribute, $value, $parameters, $validator) {
+            $date = $parameters[0];
+            
+            if (!strtotime($date)) {
+                $date = array_get($validator->getData(), $parameters[0], null);
+            }
+            
+            return strtotime($value) <= strtotime($date);
+        });
+
+        app('validator')->replacer('beforeEqual', function($message, $attribute, $rule, $parameters) {
+            return str_replace(':date', $parameters[0], $message);
+        });
 
         app('validator')->extend('countryCode', function($attribute, $value, $parameters) {
         	return (new \Monarobase\CountryList\CountryList())->has($value);
