@@ -189,7 +189,7 @@ class RequestCtrl extends BaseController
     */
     private function getTime()
     {
-        return \DateTime::createFromFormat('U.u', microtime(true))->format("YmdHisu");
+        return \DateTime::createFromFormat('U.u', sprintf("%.6F", microtime(true)))->format("YmdHisu");
     }
     
     public static function mongoCursorToarray($object)
