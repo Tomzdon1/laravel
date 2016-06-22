@@ -66,6 +66,7 @@ class PolicyModel implements \JsonSerializable
         }
 
         $policy['quote_ref']    = $this->policyData['quote_ref'];
+        $policy['policy_date']    = $this->policyData['policy_date'];
         $policy['policy_number']    = $this->policyData['policy_number'];
         $policy['start_date']   = $this->policyData['data']['start_date'];
         $policy['end_date']     = $this->policyData['data']['end_date'];

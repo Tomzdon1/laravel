@@ -58,6 +58,7 @@ class importPoliciesCtrl extends RequestCtrl
             'data' => $data['data'],
             'policy_holder' => $data['policy_holder'],
             'insured' => $data['insured'],
+            'policy_date' => $data['policy_date'],
             'policy_number' => $data['policy_number']
         );
 
