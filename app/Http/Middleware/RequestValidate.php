@@ -19,15 +19,14 @@ class RequestValidate
      */
     public function handle($request, Closure $next, $apiDefinitionPath, $errorClass)
     {
-        app('log')->debug('RequestValidate starting');
-        app('log')->debug('RequestValidate Request content: ' . var_export($request->getContent(), true));
-
         $responseBody = json_decode($request->getContent());
-
         $path = $request->getPathInfo();
 
-        app('log')->debug("RequestValidate for path $path");
-        
+        if (env('APP_DEBUG', false)) {
+            app('log')->debug("RequestValidate starting for path $path");
+            app('log')->debug('RequestValidate Request content: ' . var_export($request->getContent(), true));
+        }
+
         // Parametry GET nie są walidowane
         // $params = $request->input();
         $httpMethod = $request->getMethod();
@@ -43,7 +42,6 @@ class RequestValidate
         $validator->check($responseBody, $responseSchema);                
         
         if (!$validator->isValid()) {
-            app('log')->debug('RequestValidate validation error');
 
             $errors = [];
             
@@ -61,12 +59,17 @@ class RequestValidate
                 $e->setErrors(array_merge($e->getErrors(), [$error['message']]));
             }
 
-            app('log')->debug('RequestValidate Errors: ' . var_export($errors, true));
+            if (env('APP_DEBUG', false)) {
+                app('log')->debug('RequestValidate validation error');
+                app('log')->debug('RequestValidate Errors: ' . var_export($errors, true));
+            }
 
             return response(array_values($errors), Response::HTTP_BAD_REQUEST);
         }
         
-        app('log')->debug('RequestValidate success');
+        if (env('APP_DEBUG', false)) {
+            app('log')->debug('RequestValidate success');
+        }
 
         return $next($request);
     }
