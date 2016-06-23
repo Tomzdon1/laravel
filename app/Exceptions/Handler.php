@@ -30,7 +30,7 @@ class Handler extends ExceptionHandler
     public function report(Exception $e)
     {
         if ($e instanceof HttpException) {
-            app('log')->error('exception caused by request ' . app('request')->getcontent());
+            app('log')->error('exception caused by request (esb_id: ' . app('request')->input('request_id') . ') content: '. app('request')->getcontent());
         }
 
         return parent::report($e);
