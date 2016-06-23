@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Log;
-use Cache;
-use Validator;
 use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use App\Http\Partner;
@@ -16,7 +13,6 @@ define('CP_QUOTES_REF', 'quotes');
 define('CP_POLICIES', 'policies');
 define('CP_TRAVEL_PROMO_CODE', 'travel_promo');
 define('OFFERS_STD_PARTNER', 'STD');
-    // define('EXCEL_DIR', './excels');
     
 class RequestCtrl extends BaseController
 {
@@ -123,21 +119,5 @@ class RequestCtrl extends BaseController
     private function getTime()
     {
         return \DateTime::createFromFormat('U.u', sprintf("%.6F", microtime(true)))->format("YmdHisu");
-    }
-    
-    public static function mongoCursorToarray($object)
-    {
-        if (is_a($object, '\MongoDB\BSON\ObjectId')) {
-            return $object;
-        } else {
-            if (is_array($object) || is_object($object)) {
-                $result = array();
-                foreach ($object as $key => $value) {
-                    $result[$key] = RequestCtrl::mongoCursorToarray($value);
-                }
-                return $result;
-            }
-            return $object;
-        }
     }
 }
