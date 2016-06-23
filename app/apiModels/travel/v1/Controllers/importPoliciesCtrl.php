@@ -42,7 +42,7 @@ class importPoliciesCtrl extends RequestCtrl
 
             $this->response[] = $this->savePolicy($policy, $status, $errors);
         }
-        $this->endLogSave();
+
         return $this->response;
     }
 
@@ -68,12 +68,8 @@ class importPoliciesCtrl extends RequestCtrl
         $policyData['tariff_amount'] = $data['tariff_amount'];
         $policyData['netto_amount'] = $data['netto_amount'];
         $policyData['solicitors'] = $data['solicitors'];
+        $policyData['request']['quote_ref'] = '';
 
-        if (!empty($this->quote_doc['quote_ref'])) {
-            $policyData['request']['quote_ref'] = $this->quote_doc['quote_ref'];
-        } else {
-            $policyData['request']['quote_ref'] = '';
-        }
 
         $policyM = new \App\apiModels\travel\PolicyModel();
         $policyPrint = $policyM->setPolicy($product_ref, $policyData, $this->partner, $status, $errors);
@@ -94,11 +90,7 @@ class importPoliciesCtrl extends RequestCtrl
         }
 
         $policyId = (string) $policyM->policyId;
-        $policyDate = date('Y-m-d h:i:s');
-
-        $this->quoteLogAdd('policyId', $policyId);
-        $this->quoteLogAdd('policyDate', $policyDate);
-
+        
         //Po wygenerowaniu modelu zawierającego IMPORT_STATUS należy refaktoryzować na model
         return ['status' => $status, 'policy_ref' => $policyId, 'messages' => $errors];
     }

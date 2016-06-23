@@ -22,11 +22,6 @@ class issuePolicyCtrl extends RequestCtrl
     {
         parent::request($request, $parter_id, $request_id);
 
-
-        if ($this->quoteLogGetValue('policyId')) {
-            abort(Response::HTTP_LOCKED, 'Policy exists');
-        }
-
         $this->objSer = new \App\apiModels\ObjectSerializer();
         $this->issue_request = $this->objSer->deserialize($this->data, '\App\apiModels\travel\v1\prototypes\CALCULATE');
 
@@ -103,9 +98,6 @@ class issuePolicyCtrl extends RequestCtrl
 
         $policyId = (string) $policyM->policyId;
         $policyDate = date('Y-m-d h:i:s');
-
-        $this->quoteLogAdd('policyId', $policyId);
-        $this->quoteLogAdd('policyDate', $policyDate);
 
         $responseData = array();
 //    $responseData['calculate'] = $data;

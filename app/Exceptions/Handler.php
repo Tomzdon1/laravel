@@ -6,6 +6,7 @@ use Exception;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpFoundation\Response as Response;
+use Symfony\Component\HttpFoundation\Request as Request;
 
 class Handler extends ExceptionHandler
 {
@@ -15,7 +16,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        HttpException::class,
+        // HttpException::class,
     ];
 
     /**
@@ -28,6 +29,10 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
+        if ($e instanceof HttpException) {
+            app('log')->error('exception caused by request ' . app('request')->getcontent());
+        }
+
         return parent::report($e);
     }
 
@@ -45,7 +50,7 @@ class Handler extends ExceptionHandler
         }
 
         if ($e instanceof \Symfony\Component\HttpKernel\Exception\HttpExceptionInterface) {
-            return response(['status' => $e->getStatusCode(), 'data' => (object)null], Response::HTTP_OK);
+            return response(['status' => $e->getStatusCode(), 'data' => json_decode($e->getMessage()) ?: $e->getMessage()], Response::HTTP_OK);
         }
         else {
             return response(['status' => Response::HTTP_INTERNAL_SERVER_ERROR, 'data' => (object)null], Response::HTTP_OK);

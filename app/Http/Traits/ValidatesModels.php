@@ -47,7 +47,7 @@ trait ValidatesModels
                 $errors = $validator->errors()->getMessages();
             }
 
-            throw new HttpResponseException(new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY));
+            abort(Response::HTTP_UNPROCESSABLE_ENTITY, json_encode($errors));
         }
     }
 

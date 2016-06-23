@@ -26,7 +26,6 @@ class RequestCtrl extends BaseController
     protected $response_doc = array();
     protected $quoteRequestDate = null;
     protected $quote_ref;
-    protected $ResponseSaved = false;
 
     public function request(Request $request, $parter_id, $request_id, $force_create_new_quote_log = false)
     {
@@ -59,59 +58,11 @@ class RequestCtrl extends BaseController
         $this->data = $data;
         
         $this->quoteLog($force_create_new_quote_log);
-        
-        
-        if ($this->partner->isAuth()) {
-            //$collection = $this->mongoDB->selectCollection(CP_QUOTES_REF);
-            $this->quote_doc[$this->path][$this->quoteRequestDate]['response_time'] = $this->getTime();
-            $this->quote_doc[$this->path][$this->quoteRequestDate]['response'] = $this->response_doc;
-            unset($this->quote_doc['quote_ref']);
-
-            $result = app('db')->collection(CP_QUOTES_REF)->
-                where('_id', $this->quote_doc['_id'])->update($this->quote_doc);
-        }
-    }
-    /**
-     * Metoda zapisuje do bazy odpowiedz przekazana klientowi.
-     * Dopisuje przy tym response_doc do istniejącego quote_doc
-     */
-    public function destruct()
-    {
-        // Nie używajmy destruktora w celu logowania i innych ważnych działań
-        // Sprawdzanie czy partner jest zautoryzowany tylko w celu ominięcia błędu
-        // Gdy środowisko jest produkcyjne destruktor uruchamia się razem
-        // z Garbage Collector np. gdy partner nie jest autoryzowany
-        // a destruktor próbuje coś logować
-        if ($this->ResponseSaved) {
-            return;
-        }
-        
-        if ($this->partner->isAuth()) {
-//            $collection = $this->mongoDB->selectCollection(CP_QUOTES_REF);
-            $this->quote_doc[$this->path][$this->quoteRequestDate]['response_time'] = $this->getTime();
-            $this->quote_doc[$this->path][$this->quoteRequestDate]['response'] = $this->response_doc;
-            unset($this->quote_doc['quote_ref']);
-            $result = app('db')->collection(CP_QUOTES_REF)->
-                where('_id', $this->quote_doc['_id'])->update($this->quote_doc);
-        }
-    }
-    
-    public function endLogSave()
-    {
-
-
-        if ($this->partner->isAuth()) {
-
-            $this->quote_doc[$this->path][$this->quoteRequestDate]['response_time'] = $this->getTime();
-            $this->quote_doc[$this->path][$this->quoteRequestDate]['response'] = $this->response_doc;
-            unset($this->quote_doc['quote_ref']);
-            $result = app('db')->collection(CP_QUOTES_REF)->
-                where('_id', $this->quote_doc['_id'])->update($this->quote_doc);
-        }
-        $this->ResponseSaved = true;
     }
     
     /**
+     * FUNKCJA PRZEZNACZONA DO USUNIĘCIA, POZOSTAWIONA TYLKO Z POWODU WIELU WYWOŁAŃ
+     * 
      * Pobieranie Quote na podstawie id lub tworzenie nowego rekordu gdy nie znaleziono pasującego
      *
      * Jeśli przekazano w zapytaniu quote_ref i istnieje w bazie zapis o takim _id,
@@ -134,6 +85,7 @@ class RequestCtrl extends BaseController
             
             $dbRef = substr($this->quote_ref, 0, 24);
             $data = app('db')->collection(CP_QUOTES_REF)->find($dbRef);
+        dd($data);
 
             if (empty($data)) {
                 abort(Response::HTTP_NOT_ACCEPTABLE);
@@ -149,44 +101,25 @@ class RequestCtrl extends BaseController
             $this->quote_doc[$this->path][$this->quoteRequestDate]['request'] = $this->data;
             //$resp = $collection->insert($this->quote_doc,array('w'));
             
-            $id = app('db')->collection(CP_QUOTES_REF)->insertGetId($this->quote_doc);
+            // $id = app('db')->collection(CP_QUOTES_REF)->insertGetId($this->quote_doc);
            
-            $this->quote_doc['_id'] = $id;
+            // $this->quote_doc['_id'] = $id;
         }
         
-        $this->quote_doc['quote_ref'] = $this->quote_doc['_id']->__toString();
 
+        if (isset($this->quote_doc['_id'])) {
+            $this->quote_doc['quote_ref'] = $this->quote_doc['_id']->__toString();
+        } else if (app('request')->attributes->has('requestId')) {
+            $this->quote_doc['_id'] = app('request')->attributes->get('requestId');
+        }
+        
     }
+
     /**
-     *
-     * Wstawia do rekordu w quotes parę klucz wartość. Jeśli klucz istnieje,
-     * a nie ustawiono parametru zwróci false. W wypadku powodzenia zwróci true.
-     * @param string $key nazwa parametru do wstawienia
-     * @param mixed $value wartosc parametru do wstawienia
-     * @param boolean $doReplace Czy w jeśli parametr istnieje ma go zamienic - domyslnie false
-     * @return boolean true w wypadku powodzenia
+     * FUNKCJA PRZEZNACZONA DO USUNIĘCIA, POZOSTAWIONA TYLKO Z POWODU FUNKCJI quoteLog
+     * 
+     * Metoda zwraca sformatowany znacznik czasu
      */
-    protected function quoteLogAdd($key, $value, $doReplace = false)
-    {
-        if (empty($this->quote_doc[$key])||($doReplace)) {
-            $this->quote_doc[$key] = $value;
-            return true;
-        }
-        return false;
-    }
-    
-    protected function quoteLogGetValue($key)
-    {
-        if (!empty($this->quote_doc[$key])) {
-            return $this->quote_doc[$key];
-        } else {
-            return false;
-        }
-    }
-
-    /**
-    * Metoda zwraca sformatowany znacznik czasu
-    */
     private function getTime()
     {
         return \DateTime::createFromFormat('U.u', sprintf("%.6F", microtime(true)))->format("YmdHisu");

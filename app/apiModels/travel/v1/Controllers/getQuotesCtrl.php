@@ -36,8 +36,7 @@ class getQuotesCtrl extends RequestCtrl
             $this->response_doc[] = $quote;
         }
 
-        $this->EndLogSave();
-        return $this->response; //response()->json($this->response);
+        return $this->response;
     }
 
     /**

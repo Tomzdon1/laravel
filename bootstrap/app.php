@@ -61,6 +61,7 @@ $app->middleware([
     // Illuminate\View\Middleware\ShareErrorsFromSession::class,
     // Laravel\Lumen\Http\Middleware\VerifyCsrfToken::class,
     App\Http\Middleware\WrapResponse::class,
+    App\Http\Middleware\RequestResponseLogger::class,
 ]);
 
 $app->routeMiddleware([
@@ -82,6 +83,7 @@ $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
 $app->register(App\Providers\EsbServiceProvider::class);
 $app->register(App\Providers\PdfPrintingServiceProvider::class);
+$app->register(App\Providers\RequestResponseLoggerServiceProvider::class);
 $app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
 $app->register(Monarobase\CountryList\CountryListServiceProvider::class);
 $app->register(FintechFab\LaravelQueueRabbitMQ\LaravelQueueRabbitMQServiceProvider::class);
