@@ -64,7 +64,7 @@ class RequestValidate
                 app('log')->debug('RequestValidate Errors: ' . var_export($errors, true));
             }
 
-            return response(array_values($errors), Response::HTTP_BAD_REQUEST);
+            abort(Response::HTTP_BAD_REQUEST, json_encode($errors));
         }
         
         if (env('APP_DEBUG', false)) {
