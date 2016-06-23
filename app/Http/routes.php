@@ -1,5 +1,9 @@
 <?php
 
+$app->get('echo', function(){
+	return 'echo';
+});
+
 $app->group([
     'prefix' => 'travel/v1', 
     'middleware' => 'request_validate:'.env('API_DEFINITION_TRAVEL_V1').','.env('ERROR_MODEL_IMPL_TRAVEL_V1'), 
