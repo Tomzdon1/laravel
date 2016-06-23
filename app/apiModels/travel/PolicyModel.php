@@ -91,35 +91,14 @@ class PolicyModel implements \JsonSerializable
         $policy['partner']['code']          = $this->partnerData['code'];
         $policy['partner']['customerId']    = $this->partnerData['customerId'];
         $policy['partner']['travel_api']    = $this->partnerData['apis']['travel']['version'];
-        $policy['product']['code']      = $this->product['code'];
-
-        if(array_key_exists('wube', $this->product['configuration'])){
-            $policy['product']['wube'] = $this->product['configuration']['wube'];
-        }
-
-        if(array_key_exists('folderType', $this->product['configuration'])){
-            $policy['product']['folderType'] = $this->product['configuration']['folderType'];
-        }
         
-        if(array_key_exists('formCode', $this->product['configuration'])){
-            $policy['product']['formCode'] = $this->product['configuration']['formCode'];
+        $policy['product'] = $this->product['configuration'];
+
+        if(array_key_exists('quotation', $this->product['configuration'])){
+            unset($this->product['configuration']['quotation']);
         }
 
-        if(array_key_exists('formType', $this->product['configuration'])){
-            $policy['product']['formType'] = $this->product['configuration']['formType'];
-        }
-
-        if(array_key_exists('formCode', $this->product['configuration'])){
-            $policy['product']['formCode'] = $this->product['configuration']['formCode'];
-        }
-
-        if(array_key_exists('attendants', $this->product['configuration'])){
-            $policy['product']['attendants'] = $this->product['configuration']['attendants'];
-        }
-
-        if(array_key_exists('isCession', $this->product['configuration'])){
-            $policy['product']['isCession'] = $this->product['configuration']['isCession'];
-        }
+        $policy['product']['code'] = $this->product['code'];
 
         $policy['product']['elements'] = [];
         foreach ($this->product['elements'] as $elem) {
