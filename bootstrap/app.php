@@ -2,8 +2,11 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-// @todo - refactoring sprawdzic wydajnosc, jezeli niska to stworzyć pliki konfiguracyjne w /config
-Dotenv::load(__DIR__.'/../');
+try {
+    (new Dotenv\Dotenv(__DIR__.'/../'))->load();
+} catch (Dotenv\Exception\InvalidPathException $e) {
+    //
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -86,7 +89,7 @@ $app->register(App\Providers\PdfPrintingServiceProvider::class);
 $app->register(App\Providers\RequestResponseLoggerServiceProvider::class);
 $app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
 $app->register(Monarobase\CountryList\CountryListServiceProvider::class);
-$app->register(FintechFab\LaravelQueueRabbitMQ\LaravelQueueRabbitMQServiceProvider::class);
+$app->register(VladimirYuldashev\LaravelQueueRabbitMQ\LaravelQueueRabbitMQServiceProvider::class);
 
 $app->withEloquent();
  
