@@ -16,8 +16,8 @@ class WrapResponse
      */
     public function handle($request, Closure $next)
     {
-        /* @var $response Response */        
-        $response = $next($request);                
+        /* @var $response Response */
+        $response = $next($request);
         
         $content = json_decode($response->getContent()) ?: $response->getContent();
         $response->setContent(['status' => $response->getStatusCode(), 'data' => $content]);

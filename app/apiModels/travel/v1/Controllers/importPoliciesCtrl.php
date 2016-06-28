@@ -4,6 +4,7 @@ namespace App\apiModels\travel\v1\Controllers;
 
 use App\Http\Controllers\RequestCtrl;
 use App\apiModels\travel\v1\implementations\IMPORTREQUEST_impl;
+use App\apiModels\travel\v1\implementations\IMPORTSTATUS_impl;
 use Symfony\Component\HttpFoundation\Response as Response;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Validation\Validator;
@@ -17,32 +18,42 @@ class importPoliciesCtrl extends RequestCtrl
     {
         parent::request($request, $parter_id, $request_id);
 
+        $importStatuses = [];
+
         $this->objSer = new \App\apiModels\ObjectSerializer();
 
         foreach ($this->data as $policy) {
-            $errors = [];
+            $status = 'OK';
+            $importStatus = new IMPORTSTATUS_impl();
 
             $calculatedPolicy = $this->objSer->deserialize($policy, '\App\apiModels\travel\v1\prototypes\IMPORTREQUEST');
             $calculatedPolicy->calculateAmount();
-
-            $status = 'OK';
 
             $validator = app('validator')->make($policy, IMPORTREQUEST_impl::$warningValidators, [], ['calculatedPolicy' => $calculatedPolicy]);
 
             if ($validator->fails()) {
                 foreach ($validator->errors()->toArray() as $property => $error) {
-                    $errors[] = ['code' => $property, 'text' => implode(', ', $error)];
+                    $importStatus->addMessage($property, implode(', ', $error));
                 }
                 $status = 'WARN';
             }
 
-            $this->response[] = $this->savePolicy($policy, $status, $errors);
+            $importStatus->setStatus($status);
+            $importStatus->setPolicyRef($this->savePolicy($policy, $status, $importStatus->getMessages()));
+            $importStatus->setQuoteRef($request->attributes->get('requestId'));
+            $importStatus->setMessages($importStatus->getMessages());
+
+            $importStatuses[] = $importStatus;
         }
 
-        return $this->response;
+        return $importStatuses;
     }
 
-    // Ta funkcja powinna być w klasie IMPORTREQUEST
+    /* 
+    * @todo 
+    * Ta funkcja powinna być w klasie POLICY i nic nie zwracać
+    * Funkcja powinna być wykonywana na obiekcie i ustawiać jego pola
+    */
     private function savePolicy($data, $status, $errors)
     {
         $messages = array();
@@ -76,7 +87,6 @@ class importPoliciesCtrl extends RequestCtrl
 
         $policyId = (string) $policyM->policyId;
         
-        //Po wygenerowaniu modelu zawierającego IMPORT_STATUS należy refaktoryzować na model
-        return ['status' => $status, 'policy_ref' => $policyId, 'messages' => $errors];
+        return $policyId;
     }
 }
