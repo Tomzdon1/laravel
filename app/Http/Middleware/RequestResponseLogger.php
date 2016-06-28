@@ -65,7 +65,11 @@ class RequestResponseLogger
         $this->requestLog[$request->getPathInfo()][$this->requestDate]['response_time'] = $this->getFormattedTime(microtime(true));
         $this->requestLog[$request->getPathInfo()][$this->requestDate]['response'] = $this->responseBody;
 
-        app('db')->collection('quotes')->where('_id', $this->requestLog['_id'])->update($this->requestLog);
+        try {
+            app('db')->collection('quotes')->where('_id', $this->requestLog['_id'])->update($this->requestLog);
+        } catch (\Exception $e) {
+            app('log')->error('Can not log response to database');
+        }
     }
 
     private function getFormattedTime($timestamp) {
