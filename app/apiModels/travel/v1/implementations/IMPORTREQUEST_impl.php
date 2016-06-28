@@ -33,8 +33,8 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
      * @var array
      */
     public static $warningValidators = [
-        'tariff_amount.value_base'    => 'amount_value',
-        'netto_amount.value_base'     => 'amount_value',
+        'tariff_amount.value_base'    => 'bail|correct_calculation|amount_value',
+        'netto_amount.value_base'     => 'bail|correct_calculation|amount_value',
     ];
 
     /**
@@ -51,14 +51,35 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
         $this->varCode = $code;
     }
 
+    public function calculateAmount() {
+        $dbOffer = app('db')->collection(CP_TRAVEL_OFFERS_COL)->find($this->product_ref);
+                
+        if ($dbOffer) {
+            $this->setVarCode($dbOffer['code']);
+
+            if ($dbOffer['configuration']['quotation']['type'] == 'formula') {
+                // Not implemented
+                // $this->calculateAmount($dbOffer['configuration']);
+            } elseif ($dbOffer['configuration']['quotation']['type'] == 'excel') {
+                $excelPath = env('EXCEL_DIRECTORY') . '/' . $dbOffer['configuration']['quotation']['file'];
+
+                if ($excelPath) {
+                    $excelFile = new \Tue\Calculating\calculateTravelExcel($excelPath);
+                }
+
+                if ($excelFile) {
+                    $this->calculateExcelAmount($dbOffer['configuration'], $excelFile);
+                }
+            }
+        }
+    }
+
     public function calculateExcelAmount($config, $excelFile)
     {
-//        print_r($config);
 
         $this->tariff_amount->setValueBaseCurrency($config['quotation']['resultCurrency']);
         $this->tariff_amount->setValueCurrency('PLN');
 
-//        print_r($this->option_values);
         $options = array();
         if (is_array($this->getData()->getOptionValues()) || $this->getData()->getOptionValues() instanceof Traversable) {
             foreach ($this->getData()->getOptionValues() as $option) {

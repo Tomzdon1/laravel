@@ -2,14 +2,10 @@
 
 namespace App\apiModels\travel\v1\Controllers;
 
-use Log;
-use Cache;
-//use App\Http\Controllers\Controller;
 use App\Http\Controllers\RequestCtrl;
-use Illuminate\Http\Request;
-use App\apiModels\travel\PolicyData;
 use App\apiModels\travel\v1\implementations\IMPORTREQUEST_impl;
 use Symfony\Component\HttpFoundation\Response as Response;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\Validation\Validator;
 
 class importPoliciesCtrl extends RequestCtrl
@@ -22,21 +18,21 @@ class importPoliciesCtrl extends RequestCtrl
         parent::request($request, $parter_id, $request_id);
 
         $this->objSer = new \App\apiModels\ObjectSerializer();
-        $this->importRequests = [];
 
         foreach ($this->data as $policy) {
             $errors = [];
 
-            $this->importRequests[] = $this->objSer->deserialize($policy, '\App\apiModels\travel\v1\prototypes\IMPORTREQUEST');
+            $calculatedPolicy = $this->objSer->deserialize($policy, '\App\apiModels\travel\v1\prototypes\IMPORTREQUEST');
+            $calculatedPolicy->calculateAmount();
+
             $status = 'OK';
 
-            $validator = app('validator')->make($policy, IMPORTREQUEST_impl::$warningValidators);
+            $validator = app('validator')->make($policy, IMPORTREQUEST_impl::$warningValidators, [], ['calculatedPolicy' => $calculatedPolicy]);
 
             if ($validator->fails()) {
                 foreach ($validator->errors()->toArray() as $property => $error) {
                     $errors[] = ['code' => $property, 'text' => implode(', ', $error)];
                 }
-                $this->importRequests[] = $this->objSer->deserialize($policy, '\App\apiModels\travel\v1\prototypes\IMPORTREQUEST', null, false);
                 $status = 'WARN';
             }
 
@@ -73,17 +69,6 @@ class importPoliciesCtrl extends RequestCtrl
 
         $policyM = new \App\apiModels\travel\PolicyModel();
         $policyPrint = $policyM->setPolicy($product_ref, $policyData, $this->partner, $status, $errors);
-// Mozliwe, że model polisy powinien byc spojny dla roznych typow
-// Trzeba zdecydowac, czy walidacje maja się odbywac w kontrolerze, czy raczej w modelu
-// mysle, ze powinny byc w policy model, w takim wypadku status i message's powinny przychodzic z modelu
-// $status = $policyM->getStatus();
-// $messages = $policyM->getMessages();
-// w przeciwnym powinny byc w nim ustawiane
-// $policyM->setStatus($status);
-// $policyM->getMessages($messages);    
-        // $policyCollection = $this->mongoDB->selectCollection(CP_POLICIES);
-        // $policyCollection->insert($policyPrint,array('w'));
-        // $policyId = (string)$policyPrint["_id"];
 
         if (!$policyM->save()) {
             abort(Response::HTTP_INTERNAL_SERVER_ERROR);

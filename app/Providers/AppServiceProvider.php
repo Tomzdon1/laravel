@@ -108,48 +108,48 @@ class AppServiceProvider extends ServiceProvider
         /**
         *   Validate amount.
         * 
-        *   $parameters[0] amount type (e.g. netto_amount)
         */
         app('validator')->extend('amountValue', function($attribute, $value, $parameters, $validator) {
             $valid = true;
             $amountType =  strstr($attribute, '.', true);
-            $amountTypeGetter = camel_case('get' . $amountType);
+            $amountTypeGetter = camel_case('get_' . $amountType);
 
-            foreach (json_decode(app('request')->getContent(), true) as $policy) {
-                // $cursor = app('db')->selectCollection(CP_TRAVEL_OFFERS_COL)->find(['_id' => $validator->getData()['product_ref']]);
-                $dbOffer = app('db')->collection(CP_TRAVEL_OFFERS_COL)->find($validator->getData()['product_ref']);
-                
-                if ($dbOffer) {
-                    $serializer = new \App\apiModels\ObjectSerializer();
-                    $importPolicy = $serializer->deserialize($policy, '\App\apiModels\travel\v1\prototypes\IMPORTREQUEST', null, false);
-                    $importPolicy->setVarCode($dbOffer['code']);
+            $calculatedPolicy = $validator->getCustomAttributes()['calculatedPolicy'];
+            $valueBaseCalculated = $calculatedPolicy->{$amountTypeGetter}()->getValueBase();
+            
+            if ($value != $valueBaseCalculated) {
+                $validator->addReplacer('amountValue', function ($message, $attribute, $rule, $parameters) use ($value, $valueBaseCalculated) {
+                    return str_replace(':calculation', $valueBaseCalculated, str_replace(':value', $value, $message));
+                });
 
-                    if ($dbOffer['configuration']['quotation']['type'] == 'formula') {
-                        $importPolicy->calculateAmount($dbOffer['configuration']);
-                    } elseif ($dbOffer['configuration']['quotation']['type'] == 'excel') {
-                        $excelPath = env('EXCEL_DIRECTORY') . '/' . $dbOffer['configuration']['quotation']['file'];
-
-                        if ($excelPath) {
-                            $excelFile = new \Tue\Calculating\calculateTravelExcel($excelPath);
-                        }
-
-                        if ($excelFile) {
-                            $valueBaseImport = $importPolicy->{$amountTypeGetter}()->getValueBase();
-                            $importPolicy->calculateExcelAmount($dbOffer['configuration'], $excelFile);
-                            $valueBaseCalculated = $importPolicy->{$amountTypeGetter}()->getValueBase();
-                            
-                            if ($valueBaseImport != $valueBaseCalculated) {
-                                $validator->addReplacer('amountValue', function ($message, $attribute, $rule, $parameters) use ($valueBaseImport, $valueBaseCalculated) {
-                                    return str_replace(':calculation', $valueBaseCalculated, str_replace(':value', $valueBaseImport, $message));
-                                });
-
-                                app('log')->debug("Validator amount_value fails! Received: $valueBaseImport, should be: " . $valueBaseCalculated);
-                                
-                                $valid = false;
-                            }
-                        }
-                    }
+                if (env('APP_DEBUG', false)) {
+                    app('log')->debug("Validator amount_value fails! Received: $value, should be: " . $valueBaseCalculated);
                 }
+
+                $valid = false;
+            }
+            
+            return $valid;
+        });
+
+        /**
+        *   Check that calculation is correct.
+        * 
+        */
+        app('validator')->extend('correctCalculation', function($attribute, $value, $parameters, $validator) {
+            $valid = true;
+            $amountType =  strstr($attribute, '.', true);
+            $amountTypeGetter = camel_case('get_' . $amountType);
+
+            $calculatedPolicy = $validator->getCustomAttributes()['calculatedPolicy'];
+            $valueBaseCalculated = $calculatedPolicy->{$amountTypeGetter}()->getValueBase();
+            
+            if ($valueBaseCalculated < 0) {
+                if (env('APP_DEBUG', false)) {
+                    app('log')->debug("Data used for the calculation are incompatible with GCI.");
+                }
+                
+                $valid = false;
             }
             
             return $valid;
