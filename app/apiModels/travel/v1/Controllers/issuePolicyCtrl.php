@@ -7,7 +7,6 @@ use Cache;
 use Validator;
 use App\Http\Controllers\RequestCtrl;
 use Illuminate\Http\Request;
-use App\apiModels\travel\PolicyData;
 use App\apiModels\travel\v1\prototypes\CALCULATE_impl;
 use App\Events\IssuedPolicyEvent;
 use Symfony\Component\HttpFoundation\Response as Response;

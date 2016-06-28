@@ -8,7 +8,6 @@ use Validator;
 //use App\Http\Controllers\Controller;
 use App\Http\Controllers\RequestCtrl;
 use Illuminate\Http\Request;
-use App\apiModels\travel\PolicyData;
 use App\apiModels\travel\v1\prototypes\QUOTEREQUEST_impl;
 use Symfony\Component\HttpFoundation\Response as Response;
 use Tue\Calculating\calculateTravelExcel;
