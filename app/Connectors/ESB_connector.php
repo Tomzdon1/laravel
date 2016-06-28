@@ -2,13 +2,6 @@
 
 namespace App\Connectors;
 
-
-
-/**
- * Description of ESB_connector
- *
- * @author dalek
- */
 class ESB_connector 
 {
     public function show()
@@ -32,8 +25,8 @@ class ESB_connector
                       'content' => $requestString,
                       'contentType' => 'BINARY',
                       'customerId' => 'COLLAB',
-                      'queryType' => $this->queryType,//'NONLIFE',
-                      'serviceName' => $serviceName,//'COLLAB.checkKubeKod',
+                      'queryType' => $this->queryType,
+                      'serviceName' => $serviceName,
                       'requestTimeout' => 5000
                   )
               )
