@@ -50,10 +50,10 @@ class Handler extends ExceptionHandler
         }
 
         if ($e instanceof \Symfony\Component\HttpKernel\Exception\HttpExceptionInterface) {
-            return response(['status' => $e->getStatusCode(), 'data' => json_decode($e->getMessage()) ?: $e->getMessage()], Response::HTTP_OK);
+            return response(json_decode($e->getMessage()) ?: $e->getMessage(), $e->getStatusCode());
         }
         else {
-            return response(['status' => Response::HTTP_INTERNAL_SERVER_ERROR, 'data' => (object)null], Response::HTTP_OK);
+            return response(null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

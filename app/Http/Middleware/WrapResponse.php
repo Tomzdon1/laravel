@@ -19,14 +19,10 @@ class WrapResponse
         /* @var $response Response */        
         $response = $next($request);                
         
-        /* Wrapper should only work for json */
-        if ($response->headers->contains('Content-Type','application/json')) {
-            
-            $content = json_decode($response->getContent());
-            $wrapped = json_encode(['status' => $response->getStatusCode(), 'data' => $content]);
-            $response->setContent($wrapped);
-            $response->setStatusCode(Response::HTTP_OK);
-        }
+        $content = json_decode($response->getContent()) ?: $response->getContent();
+        $response->setContent(['status' => $response->getStatusCode(), 'data' => $content]);
+        $response->setStatusCode(Response::HTTP_OK);
+        
         return $response;
     }
 }
