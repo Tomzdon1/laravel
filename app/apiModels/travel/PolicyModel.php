@@ -17,12 +17,6 @@ class PolicyModel implements \JsonSerializable
     public $product;
     public $status;
     public $policyId = null;
-    
-    public function __construct()
-    {
-//        $this->mongoDB = $mongoDB;
-        
-    }
 
     public function jsonSerialize()
     {
@@ -48,17 +42,11 @@ class PolicyModel implements \JsonSerializable
     
     public function getProduct($productRef)
     {
-//        $collection = $this->mongoDB->selectCollection(CP_TRAVEL_OFFERS_COL);
-//        $m1 = new \MongoId(CP_TRAVEL_OFFERS_COL);
-//        $product = $collection->findOne(array('_id'=>$m1));
-        $product = app('db')->collection(CP_TRAVEL_OFFERS_COL)->find($productRef);
-        
-        return $product;
+        return app('db')->collection(CP_TRAVEL_OFFERS_COL)->find($productRef);
     }
     
     private function getPolicy()
     {
-        
         $policy = array();
 
         if ($this->policyId) {
