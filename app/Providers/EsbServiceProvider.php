@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Connectors;
+use App\Connectors\ESB_connector;
 
 class EsbServiceProvider extends ServiceProvider
 {
@@ -15,15 +15,8 @@ class EsbServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('ESB_conn', function(){
-
-            return new \App\Connectors\ESB_connector();
-
+            return new ESB_connector();
         });
-//       $this->app->bind('App\Connectors\ESB_conn', function(){
-//
-//            return new \App\Connectors\ESB_connector();
-//
-//        });
     }
     
     

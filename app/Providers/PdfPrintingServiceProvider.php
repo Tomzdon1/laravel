@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Connectors;
 use Tue\Printing\PrinterFactory;
 
 class PdfPrintingServiceProvider extends ServiceProvider
@@ -16,9 +15,7 @@ class PdfPrintingServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('PdfPrinter', function(){
-
             return PrinterFactory::getPdfPrinter(env("PRINTOUT_WSDL"));
-
         });
 
     }
