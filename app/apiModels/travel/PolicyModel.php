@@ -87,6 +87,7 @@ class PolicyModel implements \JsonSerializable
         }
 
         $policy['product']['code'] = $this->product['code'];
+        $policy['product']['name'] = $this->product['name'];
 
         $policy['product']['elements'] = [];
         foreach ($this->product['elements'] as $elem) {
