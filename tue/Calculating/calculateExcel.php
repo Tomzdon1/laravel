@@ -19,14 +19,24 @@ abstract class calculateExcel{
 	}
 	
 	private function createPHPExcelObject(){
+		// https://github.com/PHPOffice/PHPExcel/issues/905
+		// Błąd związny ze zmianą precyzji w PHPExcel
+		// Problem został usunięty od wersji 1.9 (w tym momencie jeszcze gałąź deweloperska)
+		// Docelowo do unięcia
+		$defaultPrecision = ini_get('precision');
+
 		$objReader = new \PHPExcel_Reader_Excel2007();
+		
+		// Wynika z błędu opisanego powyżej, docelowo do usunięcia
+		ini_set('precision',$defaultPrecision);
+
 		$objReader->setReadDataOnly(true);
+		
 		try {
 			$this->objPHPExcel = $objReader->load($this->excelFilePath);
 		} catch(PHPExcel_Reader_Exception $e) {
 			die('Error loading file: '.$e->getMessage());
 		}
-		//$this->objPHPExcel = PHPExcel_IOFactory::load($this->excelFilePath);
 	}
 	
 	private function setParamsInExcelObject(){
