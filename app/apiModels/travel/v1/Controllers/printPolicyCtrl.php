@@ -11,9 +11,9 @@ use App\Http\Partner;
 class printPolicyCtrl extends RequestCtrl
 {
 
-    public function request(Request $request, $parter_id = null, $request_id = null, $create_new_quote_log = null)
+    public function request(Request $request, $partner_id = null, $request_id = null, $create_new_quote_log = null)
     {
-        parent::request($request, $parter_id, $request_id);
+        parent::request($request, $partner_id, $request_id);
 
 //        $queryArray = [];
 //        $queryArray['_id'] = new \MongoId($this->data['policy_ref']);
