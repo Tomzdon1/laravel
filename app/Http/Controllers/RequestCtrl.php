@@ -23,10 +23,10 @@ class RequestCtrl extends BaseController
     protected $quoteRequestDate = null;
     protected $quote_ref;
 
-    public function request(Request $request, $parter_id, $request_id, $force_create_new_quote_log = false)
+    public function request(Request $request, $partner_id, $request_id, $force_create_new_quote_log = false)
     {
-        if (!$parter_id) {
-            $parter_id = $request->input('customer_id');
+        if (!$partner_id) {
+            $partner_id = $request->input('customer_id');
         }
 
         if (!$request_id) {
@@ -43,10 +43,10 @@ class RequestCtrl extends BaseController
             abort(Response::HTTP_BAD_REQUEST);
         }
         
-        $this->partnerCode = $parter_id;
+        $this->partnerCode = $partner_id;
         $this->request_id = $request_id;
         /*utworzenie obiektu partnera. Jeśli nie znaleziony, to komunikat błędu*/
-        $this->partner = new  \App\Http\Partner($parter_id, 'travel');
+        $this->partner = new  \App\Http\Partner($partner_id, 'travel');
         if (!$this->partner->isAuth()) {
             abort(Response::HTTP_UNAUTHORIZED);
         }

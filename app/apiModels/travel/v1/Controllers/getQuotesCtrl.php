@@ -19,9 +19,9 @@ class getQuotesCtrl extends RequestCtrl
     public $excelPath;
     public $productRefarray = array();
 
-    public function request(Request $request, $parter_id = null, $request_id = null, $create_new_quote_log = null)
+    public function request(Request $request, $partner_id = null, $request_id = null, $create_new_quote_log = null)
     {
-        parent::request($request, $parter_id, $request_id, true);
+        parent::request($request, $partner_id, $request_id, true);
 
         $this->objSer = new \App\apiModels\ObjectSerializer();
         $this->quote_request = $this->objSer->
