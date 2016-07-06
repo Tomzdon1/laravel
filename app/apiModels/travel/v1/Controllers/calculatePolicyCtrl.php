@@ -22,7 +22,8 @@ class calculatePolicyCtrl extends RequestCtrl
         parent::request($request, $parter_id, $request_id);
 
         $this->objSer = new \App\apiModels\ObjectSerializer();
-        $this->calculate_request = $this->objSer->deserialize($this->data, '\App\apiModels\travel\v1\prototypes\CALCULATEREQUEST');
+        $this->calculate_request =
+            $this->objSer->deserialize($this->data, '\App\apiModels\travel\v1\prototypes\CALCULATEREQUEST');
 
         $this->response = $this->response_doc = $this->calculatePolicy($this->data);
 

@@ -7,9 +7,9 @@ use App\apiModels\travel\v1\prototypes\PERMISSION;
 /**
  * PERMISSION_impl Class Doc Comment
  * @category    Class
- * @description 
+ * @description
  * @package     travel\v1
- * @author      Tomasz Duda <tomasz.duda@tueuropa.pl>   
+ * @author      Tomasz Duda <tomasz.duda@tueuropa.pl>
  */
 class PERMISSION_impl extends PERMISSION
 {

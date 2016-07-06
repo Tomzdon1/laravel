@@ -7,9 +7,9 @@ use App\apiModels\travel\v1\prototypes\IMPORTSTATUS;
 /**
  * IMPORTSTATUS_impl Class Doc Comment
  * @category    Class
- * @description 
+ * @description
  * @package     travel\v1
- * @author      Tomasz Duda <tomasz.duda@tueuropa.pl>   
+ * @author      Tomasz Duda <tomasz.duda@tueuropa.pl>
  */
 class IMPORTSTATUS_impl extends IMPORTSTATUS
 {
@@ -32,7 +32,7 @@ class IMPORTSTATUS_impl extends IMPORTSTATUS
     public $quote_ref;
     
     /**
-      * $messages 
+      * $messages
       * @var object[]
       */
     public $messages;
@@ -56,8 +56,8 @@ class IMPORTSTATUS_impl extends IMPORTSTATUS
 
     /**
      * Add message
-     * @param string $code 
-     * @param string $text 
+     * @param string $code
+     * @param string $text
      * @return $this
      */
     public function addMessage($code, $text)

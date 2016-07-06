@@ -26,10 +26,16 @@ class importPoliciesCtrl extends RequestCtrl
             $status = 'OK';
             $importStatus = new IMPORTSTATUS_impl();
 
-            $calculatedPolicy = $this->objSer->deserialize($policy, '\App\apiModels\travel\v1\prototypes\IMPORTREQUEST');
+            $calculatedPolicy =
+                $this->objSer->deserialize($policy, '\App\apiModels\travel\v1\prototypes\IMPORTREQUEST');
             $calculatedPolicy->calculateAmount();
 
-            $validator = app('validator')->make($policy, IMPORTREQUEST_impl::$warningValidators, [], ['calculatedPolicy' => $calculatedPolicy]);
+            $validator = app('validator')->make(
+                $policy,
+                IMPORTREQUEST_impl::$warningValidators,
+                [],
+                ['calculatedPolicy' => $calculatedPolicy]
+            );
 
             if ($validator->fails()) {
                 foreach ($validator->errors()->toArray() as $property => $error) {
@@ -49,7 +55,7 @@ class importPoliciesCtrl extends RequestCtrl
         return $importStatuses;
     }
 
-    /* 
+    /*
     * @todo 
     * Ta funkcja powinna być w klasie POLICY i nic nie zwracać
     * Funkcja powinna być wykonywana na obiekcie i ustawiać jego pola
@@ -69,7 +75,8 @@ class importPoliciesCtrl extends RequestCtrl
             'policy_number' => $data['policy_number']
         );
 
-        $policyData['request']['data']['destination'] = (!empty($data['data']['destination'])) ? $data['data']['destination'] : '';
+        $policyData['request']['data']['destination'] =
+            (!empty($data['data']['destination'])) ? $data['data']['destination'] : '';
         $policyData['amount'] = $data['amount'];
         
         $policyData['tariff_amount'] = $data['tariff_amount'];

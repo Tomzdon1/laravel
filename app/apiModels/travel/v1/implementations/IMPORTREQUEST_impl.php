@@ -6,7 +6,7 @@
  * PHP version 5
  *
  * @category    Class
- * @description 
+ * @description
  * @package     travel\v1
  * @author      Krzysztof Dałek <krzysztof.dalek@tueuropa.pl>
  */
@@ -23,9 +23,9 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
      * @var array
      */
     public static $validators = [
-        'product_ref'                 => 'product_ref',
-        'policy_number'               => 'unique:policies',
-        'policy_date.date'            => 'before_equal:data.start_date.date'
+        'product_ref' => 'product_ref',
+        'policy_number' => 'unique:policies',
+        'policy_date.date' => 'before_equal:data.start_date.date'
     ];
 
     /**
@@ -33,8 +33,8 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
      * @var array
      */
     public static $warningValidators = [
-        'tariff_amount.value_base'    => 'bail|correct_calculation|amount_value',
-        'netto_amount.value_base'     => 'bail|correct_calculation|amount_value',
+        'tariff_amount.value_base' => 'bail|correct_calculation|amount_value',
+        'netto_amount.value_base' => 'bail|correct_calculation|amount_value',
     ];
 
     /**
@@ -51,9 +51,10 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
         $this->varCode = $code;
     }
 
-    public function calculateAmount() {
+    public function calculateAmount()
+    {
         $dbOffer = app('db')->collection(CP_TRAVEL_OFFERS_COL)->find($this->product_ref);
-                
+
         if ($dbOffer) {
             $this->setVarCode($dbOffer['code']);
 
@@ -81,7 +82,8 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
         $this->tariff_amount->setValueCurrency('PLN');
 
         $options = array();
-        if (is_array($this->getData()->getOptionValues()) || $this->getData()->getOptionValues() instanceof Traversable) {
+        if (is_array($this->getData()->getOptionValues()) ||
+                $this->getData()->getOptionValues() instanceof Traversable) {
             foreach ($this->getData()->getOptionValues() as $option) {
                 if ($option->getValue() == true) {
                     $options[$option->getCode()] = true;
@@ -106,8 +108,7 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
                         $value = 'T';
                     } else if (in_array(strtolower($option->getValue()), [false, 'false', 'f'])) {
                         $value = 'N';
-                    }
-                    else {
+                    } else {
                         $value = $option->getValue();
                     }
 
@@ -117,14 +118,14 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
         }
 
         $params = [
-          'DATA_OD' => $this->getData()->getStartDate(),
-          'DATA_DO' => $this->getData()->getEndDate(),
-          'DATA_URODZENIA' => $birthDates,
-          //przekazywac true/false w bibliotece Excela mapować na T/N
-          // 'CZY_RODZINA' => $isFamily ? 'T' : 'N',
-          // 'ZWYZKA_ASZ' => (isset($options['TWAWS']) && $options['TWAWS']) ? 'T' : 'N',
-          // 'ZWYZKA_ASM' => (isset($options['TWASM']) && $options['TWASM']) ? 'T' : 'N',
-          // 'ZWYZKA_ZCP' => (isset($options['TWCHP']) && $options['TWCHP']) ? 'T' : 'N',
+            'DATA_OD' => $this->getData()->getStartDate(),
+            'DATA_DO' => $this->getData()->getEndDate(),
+            'DATA_URODZENIA' => $birthDates,
+            //przekazywac true/false w bibliotece Excela mapować na T/N
+            // 'CZY_RODZINA' => $isFamily ? 'T' : 'N',
+            // 'ZWYZKA_ASZ' => (isset($options['TWAWS']) && $options['TWAWS']) ? 'T' : 'N',
+            // 'ZWYZKA_ASM' => (isset($options['TWASM']) && $options['TWASM']) ? 'T' : 'N',
+            // 'ZWYZKA_ZCP' => (isset($options['TWCHP']) && $options['TWCHP']) ? 'T' : 'N',
             // tak to moze ewentualnie wygladac przy obecnym zapisie
             // 'ZWYZKA_ASZ'  => (bool) $options['TWAWS'],
             // 'ZWYZKA_ASM'  => (bool) $options['TWASM'],
@@ -147,7 +148,7 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
         }
         $this->tariff_amount->setValueBase($amountValue);
         $this->netto_amount->setValueBase($nettoAmountValue);
-        
+
         if ($config['quotation']['resultCurrency'] != 'PLN') {
             $recalculation = $this->recalculate2pln($amountValue, $config['quotation']['resultCurrency']);
             $nettoRecalculation = $this->recalculate2pln($nettoAmountValue, $config['quotation']['resultCurrency']);
@@ -171,7 +172,7 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
         $date = new \DateTime;
         $rate = 4.229;
         if ($amountCurrency == 'EUR') {
-            return ['amount'=>round(($amount * $rate), 2), 'rate'=>$rate, 'date'=> $date ];
+            return ['amount' => round(($amount * $rate), 2), 'rate' => $rate, 'date' => $date];
         }
     }
 }

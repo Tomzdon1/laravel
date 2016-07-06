@@ -7,9 +7,9 @@ use App\apiModels\travel\v1\prototypes\INSURED;
 /**
  * CALCULATE_REQUEST Class Doc Comment
  * @category    Class
- * @description 
+ * @description
  * @package     travel\v1
- * @author      Tomasz Duda <tomasz.duda@tueuropa.pl>   
+ * @author      Tomasz Duda <tomasz.duda@tueuropa.pl>
  */
 class INSURED_impl extends INSURED
 {

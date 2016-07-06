@@ -7,9 +7,9 @@ use App\apiModels\travel\v1\prototypes\QUOTEREQUEST;
 /**
  * QUOTEREQUEST Class Doc Comment
  * @category    Class
- * @description 
+ * @description
  * @package     travel\v1
- * @author      Krzysztof Dałek <krzysztof.dalek@tueuropa.pl>   
+ * @author      Krzysztof Dałek <krzysztof.dalek@tueuropa.pl>
  */
 class QUOTEREQUEST_impl extends QUOTEREQUEST
 {

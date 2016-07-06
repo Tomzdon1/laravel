@@ -6,7 +6,7 @@
  * PHP version 5
  *
  * @category    Class
- * @description 
+ * @description
  * @package     travel\v1
  * @author      Krzysztof Dałek <krzysztof.dalek@tueuropa.pl>
  */

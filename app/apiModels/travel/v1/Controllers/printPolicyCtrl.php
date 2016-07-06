@@ -26,8 +26,9 @@ class printPolicyCtrl extends RequestCtrl
 //
 //        $collection = $this->mongoDB->selectCollection(CP_POLICIES);
 //        $policy = $collection->findOne($queryArray);
-        
-        $policy = app('db')->collection(CP_POLICIES)->find($this->data['policy_ref'])->where('quote_ref',$this->data['quote_ref']);
+
+        $policy = app('db')->collection(CP_POLICIES)->find($this->data['policy_ref'])
+            ->where('quote_ref', $this->data['quote_ref']);
 
         if ($policy) {
             try {

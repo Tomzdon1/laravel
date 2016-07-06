@@ -60,7 +60,6 @@ class issuePolicyCtrl extends RequestCtrl
         $calculate_path = str_replace('get_quotes', 'calculate_policy', $path);
         $policy_calculation = null;
         foreach ($this->quote_doc[$calculate_path] as $time => $record) {
-
             if (json_encode($inputData) == json_encode($record['response'])) {
                 $policy_calculation = $this->quote_doc[$calculate_path][$time];
 //            Log::info('isss');

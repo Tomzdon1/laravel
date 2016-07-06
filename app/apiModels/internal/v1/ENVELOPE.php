@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Envelope
  *
@@ -34,6 +35,7 @@
 namespace App\apiModels\internal\v1;
 
 use \ArrayAccess;
+
 /**
  * Envelope Class Doc Comment
  *
@@ -44,13 +46,14 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class Envelope extends \App\apiModels\ApiModel implements ArrayAccess 
+class Envelope extends \App\apiModels\ApiModel implements ArrayAccess
 {
+
     /**
-      * Array of property to type mappings. Used for (de)serialization 
-      * @var string[]
-      */
-    static $swaggerTypes = array(
+     * Array of property to type mappings. Used for (de)serialization
+     * @var string[]
+     */
+    public static $swaggerTypes = array(
         'type' => 'string',
         'api' => 'object',
         'status' => 'string',
@@ -61,12 +64,12 @@ class Envelope extends \App\apiModels\ApiModel implements ArrayAccess
         'send_dt' => '\DateTime',
         'body' => 'object'
     );
-  
-    /** 
-      * Array of attributes where the key is the local name, and the value is the original name
-      * @var string[] 
-      */
-    static $attributeMap = array(
+
+    /**
+     * Array of attributes where the key is the local name, and the value is the original name
+     * @var string[]
+     */
+    public static $attributeMap = array(
         'type' => 'type',
         'api' => 'api',
         'status' => 'status',
@@ -77,12 +80,12 @@ class Envelope extends \App\apiModels\ApiModel implements ArrayAccess
         'send_dt' => 'sendDT',
         'body' => 'body'
     );
-  
+
     /**
-      * Array of attributes to setter functions (for deserialization of responses)
-      * @var string[]
-      */
-    static $setters = array(
+     * Array of attributes to setter functions (for deserialization of responses)
+     * @var string[]
+     */
+    public static $setters = array(
         'type' => 'setType',
         'api' => 'setApi',
         'status' => 'setStatus',
@@ -93,12 +96,12 @@ class Envelope extends \App\apiModels\ApiModel implements ArrayAccess
         'send_dt' => 'setSendDt',
         'body' => 'setBody'
     );
-  
+
     /**
-      * Array of attributes to getter functions (for serialization of requests)
-      * @var string[]
-      */
-    static $getters = array(
+     * Array of attributes to getter functions (for serialization of requests)
+     * @var string[]
+     */
+    public static $getters = array(
         'type' => 'getType',
         'api' => 'getApi',
         'status' => 'getStatus',
@@ -109,62 +112,60 @@ class Envelope extends \App\apiModels\ApiModel implements ArrayAccess
         'send_dt' => 'getSendDt',
         'body' => 'getBody'
     );
-  
-    
+
     /**
-      * $type Opis typu wiadomości. Np: policy
-      * @var string
-      */
+     * $type Opis typu wiadomości. Np: policy
+     * @var string
+     */
     protected $type;
-    
+
     /**
-      * $api Informacje dotyczące użytej wersji API
-      * @var object
-      */
+     * $api Informacje dotyczące użytej wersji API
+     * @var object
+     */
     protected $api;
-    
+
     /**
-      * $status Status przesyłanego obiektu
-      * @var string
-      */
+     * $status Status przesyłanego obiektu
+     * @var string
+     */
     protected $status;
-    
+
     /**
-      * $errors Błędy przesyłanego obiektu
-      * @var string[]
-      */
+     * $errors Błędy przesyłanego obiektu
+     * @var string[]
+     */
     protected $errors;
-    
+
     /**
-      * $company Określenie spółki, której dotyczy wiadomość
-      * @var string[]
-      */
+     * $company Określenie spółki, której dotyczy wiadomość
+     * @var string[]
+     */
     protected $company;
-    
+
     /**
-      * $src_id Identyfikator w systemie wysyłającym. W przypadku CP skrócona nazwaKolekcji_MongoId
-      * @var string
-      */
+     * $src_id Identyfikator w systemie wysyłającym. W przypadku CP skrócona nazwaKolekcji_MongoId
+     * @var string
+     */
     protected $src_id;
-    
+
     /**
-      * $dst_id Identyfikator w procesie docelowym, jeśli jest znany
-      * @var string
-      */
+     * $dst_id Identyfikator w procesie docelowym, jeśli jest znany
+     * @var string
+     */
     protected $dst_id;
-    
+
     /**
-      * $send_dt Czas utworzenia wiadomości
-      * @var \DateTime
-      */
+     * $send_dt Czas utworzenia wiadomości
+     * @var \DateTime
+     */
     protected $send_dt;
-    
+
     /**
-      * $body Przesyłany obiekt
-      * @var object
-      */
+     * $body Przesyłany obiekt
+     * @var object
+     */
     protected $body;
-    
 
     /**
      * Constructor
@@ -184,7 +185,7 @@ class Envelope extends \App\apiModels\ApiModel implements ArrayAccess
             $this->body = $data["body"];
         }
     }
-    
+
     /**
      * Gets type
      * @return string
@@ -193,7 +194,7 @@ class Envelope extends \App\apiModels\ApiModel implements ArrayAccess
     {
         return $this->type;
     }
-  
+
     /**
      * Sets type
      * @param string $type Opis typu wiadomości. Np: policy
@@ -201,11 +202,11 @@ class Envelope extends \App\apiModels\ApiModel implements ArrayAccess
      */
     public function setType($type)
     {
-        
+
         $this->type = $type;
         return $this;
     }
-    
+
     /**
      * Gets api
      * @return object
@@ -214,7 +215,7 @@ class Envelope extends \App\apiModels\ApiModel implements ArrayAccess
     {
         return $this->api;
     }
-  
+
     /**
      * Sets api
      * @param object $api Informacje dotyczące użytej wersji API
@@ -222,11 +223,11 @@ class Envelope extends \App\apiModels\ApiModel implements ArrayAccess
      */
     public function setApi($api)
     {
-        
+
         $this->api = $api;
         return $this;
     }
-    
+
     /**
      * Gets status
      * @return string
@@ -235,7 +236,7 @@ class Envelope extends \App\apiModels\ApiModel implements ArrayAccess
     {
         return $this->status;
     }
-  
+
     /**
      * Sets status
      * @param string $status Status przesyłanego obiektu
@@ -243,11 +244,11 @@ class Envelope extends \App\apiModels\ApiModel implements ArrayAccess
      */
     public function setStatus($status)
     {
-        
+
         $this->status = $status;
         return $this;
     }
-    
+
     /**
      * Gets errors
      * @return string[]
@@ -256,7 +257,7 @@ class Envelope extends \App\apiModels\ApiModel implements ArrayAccess
     {
         return $this->errors;
     }
-  
+
     /**
      * Sets errors
      * @param string[] $errors Błędy przesyłanego obiektu
@@ -264,11 +265,11 @@ class Envelope extends \App\apiModels\ApiModel implements ArrayAccess
      */
     public function setErrors($errors)
     {
-        
+
         $this->errors = $errors;
         return $this;
     }
-    
+
     /**
      * Gets company
      * @return string[]
@@ -277,7 +278,7 @@ class Envelope extends \App\apiModels\ApiModel implements ArrayAccess
     {
         return $this->company;
     }
-  
+
     /**
      * Sets company
      * @param string[] $company Określenie spółki, której dotyczy wiadomość
@@ -285,11 +286,11 @@ class Envelope extends \App\apiModels\ApiModel implements ArrayAccess
      */
     public function setCompany($company)
     {
-        
+
         $this->company = $company;
         return $this;
     }
-    
+
     /**
      * Gets src_id
      * @return string
@@ -298,7 +299,7 @@ class Envelope extends \App\apiModels\ApiModel implements ArrayAccess
     {
         return $this->src_id;
     }
-  
+
     /**
      * Sets src_id
      * @param string $src_id Identyfikator w systemie wysyłającym. W przypadku CP skrócona nazwaKolekcji_MongoId
@@ -306,11 +307,11 @@ class Envelope extends \App\apiModels\ApiModel implements ArrayAccess
      */
     public function setSrcId($src_id)
     {
-        
-        $this->src_id = (string)$src_id;
+
+        $this->src_id = (string) $src_id;
         return $this;
     }
-    
+
     /**
      * Gets dst_id
      * @return string
@@ -319,7 +320,7 @@ class Envelope extends \App\apiModels\ApiModel implements ArrayAccess
     {
         return $this->dst_id;
     }
-  
+
     /**
      * Sets dst_id
      * @param string $dst_id Identyfikator w procesie docelowym, jeśli jest znany
@@ -327,11 +328,11 @@ class Envelope extends \App\apiModels\ApiModel implements ArrayAccess
      */
     public function setDstId($dst_id)
     {
-        
+
         $this->dst_id = $dst_id;
         return $this;
     }
-    
+
     /**
      * Gets send_dt
      * @return \DateTime
@@ -340,7 +341,7 @@ class Envelope extends \App\apiModels\ApiModel implements ArrayAccess
     {
         return $this->send_dt;
     }
-  
+
     /**
      * Sets send_dt
      * @param \DateTime $send_dt Czas utworzenia wiadomości
@@ -348,11 +349,11 @@ class Envelope extends \App\apiModels\ApiModel implements ArrayAccess
      */
     public function setSendDt($send_dt)
     {
-        
+
         $this->send_dt = $send_dt;
         return $this;
     }
-    
+
     /**
      * Gets body
      * @return object
@@ -361,7 +362,7 @@ class Envelope extends \App\apiModels\ApiModel implements ArrayAccess
     {
         return $this->body;
     }
-  
+
     /**
      * Sets body
      * @param object $body Przesyłany obiekt
@@ -369,34 +370,34 @@ class Envelope extends \App\apiModels\ApiModel implements ArrayAccess
      */
     public function setBody($body)
     {
-        
+
         $this->body = $body;
         return $this;
     }
-    
+
     /**
      * Returns true if offset exists. False otherwise.
-     * @param  integer $offset Offset 
+     * @param  integer $offset Offset
      * @return boolean
      */
     public function offsetExists($offset)
     {
         return isset($this->$offset);
     }
-  
+
     /**
      * Gets offset.
-     * @param  integer $offset Offset 
-     * @return mixed 
+     * @param  integer $offset Offset
+     * @return mixed
      */
     public function offsetGet($offset)
     {
         return $this->$offset;
     }
-  
+
     /**
      * Sets value based on offset.
-     * @param  integer $offset Offset 
+     * @param  integer $offset Offset
      * @param  mixed   $value  Value to be set
      * @return void
      */
@@ -404,17 +405,17 @@ class Envelope extends \App\apiModels\ApiModel implements ArrayAccess
     {
         $this->$offset = $value;
     }
-  
+
     /**
      * Unsets offset.
-     * @param  integer $offset Offset 
+     * @param  integer $offset Offset
      * @return void
      */
     public function offsetUnset($offset)
     {
         unset($this->$offset);
     }
-  
+
     /**
      * Gets the string presentation of the object
      * @return string

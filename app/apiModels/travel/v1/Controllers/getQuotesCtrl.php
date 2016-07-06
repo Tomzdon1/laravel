@@ -14,6 +14,7 @@ use Tue\Calculating\calculateTravelExcel;
 
 class getQuotesCtrl extends RequestCtrl
 {
+
     public $partner;
     public $excelPath;
     public $productRefarray = array();
@@ -48,33 +49,28 @@ class getQuotesCtrl extends RequestCtrl
         $partnerCode = $this->partner->getCode();
         $data = $inputData;
         //$offers = new offerList($pc,$data);
-
         //$this->mongoManager
-        
 //        $users = app('db')->collection(CP_TRAVEL_OFFERS_COL)->where('partner', $partnerCode)->get();
 //        \Log::info('MONGOJ'.print_r($users,1));
 //         $users = app('db')->collection(CP_TRAVEL_OFFERS_COL)->where('partner', OFFERS_STD_PARTNER)->get();
 //        \Log::info('MONGOJ'.print_r($users,1));
-        
 //        $filter = Array('partner' => $partnerCode);
 //        $query = new \MongoDB\Driver\Query($filter);
 //        $cursor = $this->mongoManager->executeQuery(env('MONGO_CP_DB') . '.' . CP_TRAVEL_OFFERS_COL, $query);
-        
 //        $collection = $this->mongoDB->selectCollection(CP_TRAVEL_OFFERS_COL);
 //        $cursor = $collection->find(array('partner' => $partnerCode));
-        
 //        \Log::info(print_r($cursor,1));
 //        $data = $cursor->toArray();
         $data = app('db')->collection(CP_TRAVEL_OFFERS_COL)->where('partner', $partnerCode)->get();
 
         $cnt = count($data);
-        
+
         if ($cnt == 0) {
 //            $cursor = $collection->find(array('partner' => OFFERS_STD_PARTNER));
 //            $filter = Array('partner' => OFFERS_STD_PARTNER);
 //            $query = new \MongoDB\Driver\Query($filter);
 //            $cursor = $this->mongoManager->executeQuery(env('MONGO_CP_DB') . '.' . CP_TRAVEL_OFFERS_COL, $query);
-            $data= app('db')->collection(CP_TRAVEL_OFFERS_COL)->where('partner', OFFERS_STD_PARTNER)->get();
+            $data = app('db')->collection(CP_TRAVEL_OFFERS_COL)->where('partner', OFFERS_STD_PARTNER)->get();
         }
 //    foreach ($cursor as $doc) {
 //      $this->offers[] = $doc;

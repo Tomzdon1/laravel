@@ -111,7 +111,6 @@ class PolicyModel implements \JsonSerializable
                         }
                     }
                 }
-
             }
         }
         $policy['DateTime'] = \DateTime::createFromFormat('U.u', microtime(true))->format("YmdHisu");
