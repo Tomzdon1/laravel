@@ -26,10 +26,6 @@ abstract class calculateExcel{
 		$defaultPrecision = ini_get('precision');
 
 		$objReader = new \PHPExcel_Reader_Excel2007();
-		
-		// Wynika z błędu opisanego powyżej, docelowo do usunięcia
-		ini_set('precision',$defaultPrecision);
-
 		$objReader->setReadDataOnly(true);
 		
 		try {
@@ -37,6 +33,9 @@ abstract class calculateExcel{
 		} catch(PHPExcel_Reader_Exception $e) {
 			die('Error loading file: '.$e->getMessage());
 		}
+
+		// Wynika z błędu opisanego powyżej, docelowo do usunięcia
+		ini_set('precision',$defaultPrecision);
 	}
 	
 	private function setParamsInExcelObject(){
