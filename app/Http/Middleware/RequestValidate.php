@@ -42,7 +42,6 @@ class RequestValidate
         $validator->check($responseBody, $responseSchema);
 
         if (!$validator->isValid()) {
-
             $errors = [];
 
             foreach ($validator->getErrors() as $error) {

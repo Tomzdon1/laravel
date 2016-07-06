@@ -79,7 +79,6 @@ class RequestCtrl extends BaseController
             $this->quote_ref = $this->data['request']['quote_ref'];
         }
         if (!empty($this->quote_ref) && !$force_create_new_quote_log) {
-
             $dbRef = substr($this->quote_ref, 0, 24);
             $data = app('db')->collection(CP_QUOTES_REF)->find($dbRef);
             dd($data);

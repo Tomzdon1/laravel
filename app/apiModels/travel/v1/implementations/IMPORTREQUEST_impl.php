@@ -106,7 +106,7 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
 
                     if (in_array(strtolower($option->getValue()), [true, 'true', 't'])) {
                         $value = 'T';
-                    } else if (in_array(strtolower($option->getValue()), [false, 'false', 'f'])) {
+                    } elseif (in_array(strtolower($option->getValue()), [false, 'false', 'f'])) {
                         $value = 'N';
                     } else {
                         $value = $option->getValue();

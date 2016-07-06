@@ -61,7 +61,8 @@ class RequestResponseLogger
     {
         $this->responseBody = json_decode($response->getContent());
 
-        $this->requestLog[$request->getPathInfo()][$this->requestDate]['response_time'] = $this->getFormattedTime(microtime(true));
+        $this->requestLog[$request->getPathInfo()][$this->requestDate]['response_time']
+            = $this->getFormattedTime(microtime(true));
         $this->requestLog[$request->getPathInfo()][$this->requestDate]['response'] = $this->responseBody;
 
         try {
