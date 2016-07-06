@@ -14,10 +14,8 @@ class EsbServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('ESB_conn', function(){
+        $this->app->singleton('ESB_conn', function () {
             return new ESB_connector();
         });
     }
-    
-    
 }

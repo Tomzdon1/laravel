@@ -11,8 +11,11 @@ class Partner
 {
 
     private $isAuthorized = false;
-    public $partnerData = Array();
-    public $name, $code, $dbId, $offerType;
+    public $partnerData = array();
+    public $name;
+    public $code;
+    public $dbId;
+    public $offerType;
     public $customerId;
 
     public function __construct($customerId, $type)
@@ -39,7 +42,7 @@ class Partner
         return $this->code;
     }
 
-    function getPartnerData()
+    public function getPartnerData()
     {
         return $this->partnerData;
     }
@@ -47,13 +50,16 @@ class Partner
     public function partnerAuthAndConfig($customerId)
     {
 
-        $data= app('db')->collection(CP_PARTNERS_COL)->where('customerId', $customerId)->where('offerType.'.$this->offerType, true)->get();
+        $data = app('db')->collection(CP_PARTNERS_COL)->where(
+            'customerId',
+            $customerId
+        )->where('offerType.' . $this->offerType, true)->get();
 
         $cnt = count($data);
         if ($cnt == 0) {
             return false;
         }
-        $this->partnerData = Array();
+        $this->partnerData = array();
         $this->partnerData['name'] = $data[0]['name'];
         $this->partnerData['code'] = $data[0]['code'];
         $this->partnerData['offerType'] = $data[0]['offerType'];
@@ -68,5 +74,4 @@ class Partner
         $collection = $this->mongoDB->selectCollection(CP_PARTNERS_COL);
         return $collection->findOne(['code' => 'STD']);
     }
-    
 }

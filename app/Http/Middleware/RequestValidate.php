@@ -3,13 +3,13 @@
 namespace App\Http\Middleware;
 
 use Closure;
-
 use App\apiModels\RequestSchemaManager;
 use JsonSchema\Validator;
 use Symfony\Component\HttpFoundation\Response as Response;
 
 class RequestValidate
 {
+
     /**
      * Handle an incoming request.
      *
@@ -37,23 +37,22 @@ class RequestValidate
         $schemaManager = new RequestSchemaManager($uri);
 
         $responseSchema = $schemaManager->getResponseSchema($path, $httpMethod, $httpCode);
-        
+
         $validator = new Validator();
-        $validator->check($responseBody, $responseSchema);                
-        
+        $validator->check($responseBody, $responseSchema);
+
         if (!$validator->isValid()) {
 
             $errors = [];
-            
+
             foreach ($validator->getErrors() as $error) {
                 if (array_key_exists($error['property'], $errors)) {
-                    $e =& $errors[$error['property']];
-                }
-                else {
+                    $e = & $errors[$error['property']];
+                } else {
                     $e = new $errorClass();
                     $e->setProperty($error['property']);
                     $e->setErrors([]);
-                    $errors[] =& $e;
+                    $errors[] = & $e;
                 }
 
                 $e->setErrors(array_merge($e->getErrors(), [$error['message']]));
@@ -66,7 +65,7 @@ class RequestValidate
 
             abort(Response::HTTP_BAD_REQUEST, json_encode($errors));
         }
-        
+
         if (env('APP_DEBUG', false)) {
             app('log')->debug('RequestValidate success');
         }

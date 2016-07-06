@@ -30,7 +30,8 @@ class Handler extends ExceptionHandler
     public function report(Exception $e)
     {
         if ($e instanceof HttpException) {
-            app('log')->error('exception caused by request (esb_id: ' . app('request')->input('request_id') . ') content: '. app('request')->getcontent());
+            app('log')->error('exception caused by request (esb_id: '
+                .app('request')->input('request_id') . ') content: '. app('request')->getcontent());
         }
 
         return parent::report($e);
@@ -51,8 +52,7 @@ class Handler extends ExceptionHandler
 
         if ($e instanceof \Symfony\Component\HttpKernel\Exception\HttpExceptionInterface) {
             return response(json_decode($e->getMessage()) ?: $e->getMessage(), $e->getStatusCode());
-        }
-        else {
+        } else {
             return response(null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }

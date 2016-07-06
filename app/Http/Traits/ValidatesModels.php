@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response as Response;
 
 trait ValidatesModels
 {
+
     /**
      * Validate the given model with the given rules.
      *
@@ -17,7 +18,8 @@ trait ValidatesModels
      * @param  array  $customAttributes
      * @return void
      */
-    public function validate($errorClass = null, array $rules = [], array $messages = [], array $customAttributes = []) {
+    public function validate($errorClass = null, array $rules = [], array $messages = [], array $customAttributes = [])
+    {
         $data = [];
 
         if (!count($rules)) {
@@ -42,8 +44,7 @@ trait ValidatesModels
                     $data['errors'] = $errorsMessage;
                     $errors[] = new $errorClass($data);
                 }
-            }
-            else {
+            } else {
                 $errors = $validator->errors()->getMessages();
             }
 
@@ -65,9 +66,9 @@ trait ValidatesModels
         foreach ($array as $key => $value) {
             if (is_object($value)) {
                 $value = get_object_vars($value);
-                $results = array_merge($results, static::dotObject($value, $prepend.$key.'.'));
+                $results = array_merge($results, static::dotObject($value, $prepend . $key . '.'));
             } else {
-                $results[$prepend.$key] = $value;
+                $results[$prepend . $key] = $value;
             }
         }
 

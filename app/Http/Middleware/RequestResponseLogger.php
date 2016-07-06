@@ -1,17 +1,16 @@
 <?php
- 
-namespace App\Http\Middleware;
- 
-use Closure;
 
+namespace App\Http\Middleware;
+
+use Closure;
 use Illuminate\Http\Exception\HttpResponseException;
- 
+
 class RequestResponseLogger
 {
+
     private $requestDate;
     private $requestBody;
     private $responseBody;
-
     private $requestLog = [];
 
     /**
@@ -50,7 +49,7 @@ class RequestResponseLogger
 
         return $next($request);
     }
- 
+
     /**
      * Execute after the response has been sent to the browser.
      *
@@ -72,7 +71,8 @@ class RequestResponseLogger
         }
     }
 
-    private function getFormattedTime($timestamp) {
+    private function getFormattedTime($timestamp)
+    {
         return \DateTime::createFromFormat('U.u', sprintf("%.6F", $timestamp))->format("YmdHisu");
     }
 }
