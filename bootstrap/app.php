@@ -68,7 +68,8 @@ $app->middleware([
 ]);
 
 $app->routeMiddleware([
-    'request_validate' => 'App\Http\Middleware\RequestValidate',   
+    'auth' => App\Http\Middleware\Authenticate::class,
+    'request_validate' => App\Http\Middleware\RequestValidate::class,   
 ]);
 
 /*
@@ -82,6 +83,7 @@ $app->routeMiddleware([
 |
 */
 
+$app->register(App\Providers\AuthServiceProvider::class);
 $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
 $app->register(App\Providers\EsbServiceProvider::class);

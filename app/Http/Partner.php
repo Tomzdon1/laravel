@@ -34,6 +34,11 @@ class Partner
         return $this->isAuthorized;
     }
 
+    public function guest()
+    {
+        return !$this->isAuth();
+    }
+
     public function getCode()
     {
         return $this->code;
@@ -47,7 +52,7 @@ class Partner
     public function partnerAuthAndConfig($customerId)
     {
 
-        $data= app('db')->collection(CP_PARTNERS_COL)->where('customerId', $customerId)->where('offerType.'.$this->offerType, true)->get();
+        $data= app('db')->collection('partners')->where('customerId', $customerId)->where('offerType.'.$this->offerType, true)->get();
 
         $cnt = count($data);
         if ($cnt == 0) {
@@ -65,7 +70,7 @@ class Partner
 
     public function getStdPartnerData()
     {
-        $collection = $this->mongoDB->selectCollection(CP_PARTNERS_COL);
+        $collection = $this->mongoDB->selectCollection('partners');
         return $collection->findOne(['code' => 'STD']);
     }
     

@@ -11,7 +11,7 @@ use App\Http\Partner;
 class printPolicyCtrl extends RequestCtrl
 {
 
-    public function request(Request $request, $partner_id = null, $request_id = null, $create_new_quote_log = null)
+    public function request(Request $request)
     {
         parent::request($request, $partner_id, $request_id);
 

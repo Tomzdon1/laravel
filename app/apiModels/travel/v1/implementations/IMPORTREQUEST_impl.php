@@ -52,7 +52,7 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
     }
 
     public function calculateAmount() {
-        $dbOffer = app('db')->collection(CP_TRAVEL_OFFERS_COL)->find($this->product_ref);
+        $dbOffer = app('db')->collection('travel_offers')->find($this->product_ref);
                 
         if ($dbOffer) {
             $this->setVarCode($dbOffer['code']);

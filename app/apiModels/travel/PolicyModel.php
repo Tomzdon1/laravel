@@ -42,7 +42,7 @@ class PolicyModel implements \JsonSerializable
     
     public function getProduct($productRef)
     {
-        return app('db')->collection(CP_TRAVEL_OFFERS_COL)->find($productRef);
+        return app('db')->collection('travel_offers')->find($productRef);
     }
     
     private function getPolicy()
@@ -123,7 +123,7 @@ class PolicyModel implements \JsonSerializable
     {
         $policy = $this->getPolicy();
 
-        if ($this->policyId = app('db')->collection(CP_POLICIES)->insertGetId($policy)) {
+        if ($this->policyId = app('db')->collection('policies')->insertGetId($policy)) {
             event(new IssuedPolicyEvent($this));
             return true;
         }

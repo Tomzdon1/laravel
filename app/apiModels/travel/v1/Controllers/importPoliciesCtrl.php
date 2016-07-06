@@ -2,31 +2,27 @@
 
 namespace App\apiModels\travel\v1\Controllers;
 
-use App\Http\Controllers\RequestCtrl;
+use App\Http\Controllers\Controller;
 use App\apiModels\travel\v1\implementations\IMPORTREQUEST_impl;
 use App\apiModels\travel\v1\implementations\IMPORTSTATUS_impl;
 use Symfony\Component\HttpFoundation\Response as Response;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Validation\Validator;
 
-class importPoliciesCtrl extends RequestCtrl
+class importPoliciesCtrl extends Controller
 {
-
-    public $partner;
-
-    public function request(Request $request, $partner_id = null, $request_id = null, $create_new_quote_log = null)
+    public function request(Request $request)
     {
-        parent::request($request, $partner_id, $request_id);
-
         $importStatuses = [];
 
-        $this->objSer = new \App\apiModels\ObjectSerializer();
+        // @todo
+        // Modele powinny być deserializowane w pełni automatycznie i wstrzykiwane do kontrolera
+        $objSer = new \App\apiModels\ObjectSerializer();
 
-        foreach ($this->data as $policy) {
+        foreach (json_decode($request->getContent(), true) as $policy) {
             $status = 'OK';
             $importStatus = new IMPORTSTATUS_impl();
 
-            $calculatedPolicy = $this->objSer->deserialize($policy, '\App\apiModels\travel\v1\prototypes\IMPORTREQUEST');
+            $calculatedPolicy = $objSer->deserialize($policy, '\App\apiModels\travel\v1\prototypes\IMPORTREQUEST');
             $calculatedPolicy->calculateAmount();
 
             $validator = app('validator')->make($policy, IMPORTREQUEST_impl::$warningValidators, [], ['calculatedPolicy' => $calculatedPolicy]);
@@ -39,7 +35,7 @@ class importPoliciesCtrl extends RequestCtrl
             }
 
             $importStatus->setStatus($status);
-            $importStatus->setPolicyRef($this->savePolicy($policy, $status, $importStatus->getMessages()));
+            $importStatus->setPolicyRef($this->savePolicy($policy, $status, $importStatus->getMessages(), $request->user()));
             $importStatus->setQuoteRef($request->attributes->get('requestId'));
             $importStatus->setMessages($importStatus->getMessages());
 
@@ -51,10 +47,10 @@ class importPoliciesCtrl extends RequestCtrl
 
     /* 
     * @todo 
-    * Ta funkcja powinna być w klasie POLICY i nic nie zwracać
+    * Ta funkcja powinna być w modelu POLICY i nic nie zwracać
     * Funkcja powinna być wykonywana na obiekcie i ustawiać jego pola
     */
-    private function savePolicy($data, $status, $errors)
+    private function savePolicy($data, $status, $errors, $partner)
     {
         $messages = array();
         $policyId = '';
@@ -79,7 +75,7 @@ class importPoliciesCtrl extends RequestCtrl
 
 
         $policyM = new \App\apiModels\travel\PolicyModel();
-        $policyPrint = $policyM->setPolicy($product_ref, $policyData, $this->partner, $status, $errors);
+        $policyPrint = $policyM->setPolicy($product_ref, $policyData, $partner, $status, $errors);
 
         if (!$policyM->save()) {
             abort(Response::HTTP_INTERNAL_SERVER_ERROR);
