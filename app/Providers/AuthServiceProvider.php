@@ -1,6 +1,6 @@
 <?php
 namespace App\Providers;
-use App\Http\Partner;
+use App\Partner;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 class AuthServiceProvider extends ServiceProvider
@@ -23,15 +23,13 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->app['auth']->viaRequest('api', function ($request) {
             if ($request->has('customer_id')) {
-            	$partner = new Partner($request->input('customer_id'), 'travel');
-		        
-		        if ($partner->isAuth()) {
-		            return $partner;
-		        }
+                $matches = [];
+                
+                if (preg_match('/^([a-zA-Z])+/', $request->path(), $matches)) {
+                    return Partner::where('customerId', $request->input('customer_id'))->where('offerType.'.$matches[0], true)->first();
+                }
 
-		        // @todo
-		        // Powinno być oparte o Eloquent ORM
-                // return User::where('api_token', $request->input('api_token'))->first();
+                return null;
             }
         });
     }

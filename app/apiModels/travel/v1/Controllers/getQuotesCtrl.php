@@ -37,7 +37,7 @@ class getQuotesCtrl extends Controller
      */
     private function getquotes($inputData)
     {
-        $partnerCode = app('auth')->user()->getCode();
+        $partnerCode = app('auth')->user()->code;
         $data = app('db')->collection('travel_offers')->where('partner', $partnerCode)->get();
 
         $cnt = count($data);

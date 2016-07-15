@@ -37,7 +37,7 @@ class calculatePolicyCtrl extends RequestCtrl
     private function calculatePolicy($inputData)
     {
 
-        $partnerCode = $this->partner->getCode();
+        $partnerCode = $this->partner->code;
         $data = $inputData;
 
         $path = $this->quote_doc['path'];

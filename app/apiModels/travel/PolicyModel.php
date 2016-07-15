@@ -36,7 +36,6 @@ class PolicyModel implements \JsonSerializable
         $this->partner = $partner;
         $this->status = $status;
         $this->errors = $errors;
-        $this->partnerData = $this->partner->getPartnerData();
         return $this->getPolicy();
     }
     
@@ -76,9 +75,9 @@ class PolicyModel implements \JsonSerializable
         $policy['netto_amount']   = $this->netto_amount;
         $policy['solicitors']   = $this->solicitors;
         
-        $policy['partner']['code']          = $this->partnerData['code'];
-        $policy['partner']['customerId']    = $this->partnerData['customerId'];
-        $policy['partner']['travel_api']    = $this->partnerData['apis']['travel']['version'];
+        $policy['partner']['code']          = $this->partner->code;
+        $policy['partner']['customerId']    = $this->partner->customerId;
+        $policy['partner']['travel_api']    = $this->partner->apis['travel']['version'];
         
         $policy['product'] = $this->product['configuration'];
 

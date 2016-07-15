@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\RequestCtrl;
 use App\Printout\PrintOutService;
-use App\Http\Partner;
+use App\Partner;
 
 class printPolicyCtrl extends RequestCtrl
 {
@@ -31,9 +31,9 @@ class printPolicyCtrl extends RequestCtrl
 
         if ($policy) {
             try {
-                $template_name = $this->partner->getPartnerData()['apis']['travel']['printTemplateSettings']['name'];
+                $template_name = $this->partner->apis['travel']['printTemplateSettings']['name'];
             } catch (\Exception $e) {
-                $template_name = $this->partner->getStdPartnerData()['apis']['travel']['printTemplateSettings']['name'];
+                $template_name = $this->partner->apis['travel']['printTemplateSettings']['name'];
             }
 
             $printing = app()->make('PdfPrinter');

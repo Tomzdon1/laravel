@@ -36,7 +36,7 @@ class issuePolicyCtrl extends RequestCtrl
      */
     private function issuePolicy($inputData)
     {
-        $partnerCode = $this->partner->getCode();
+        $partnerCode = $this->partner->code;
         $data = $inputData;
 
         $path = $this->quote_doc['path'];
