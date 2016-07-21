@@ -9,7 +9,7 @@ $app->group([
     'middleware' => ['auth', 'request_validate:'.env('API_DEFINITION_TRAVEL_V1').','.env('ERROR_MODEL_IMPL_TRAVEL_V1'), 'deserialize_request_object:'.env('API_PROTOTYPES_NAMESPACES_TRAVEL_V1')],
     'namespace' => 'App\apiModels\travel\v1\Controllers'
     ], function ($app) {
-        $app->post('get_quotes','getQuotesCtrl@request');
+        $app->post('get_quotes','QuoteController@get');
         $app->post('calculate_policy','calculatePolicyCtrl@request');
         $app->post('issue_policy','issuePolicyCtrl@request');
         $app->post('import_policies','importPoliciesCtrl@request');

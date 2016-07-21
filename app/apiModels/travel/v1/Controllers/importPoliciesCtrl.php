@@ -13,19 +13,18 @@ class importPoliciesCtrl extends Controller
     public function request(Request $request)
     {
         $importStatuses = [];
+        $importRequests = $request->attributes->get('deserializedRequestObject');
 
-        // @todo
-        // Modele powinny być deserializowane w pełni automatycznie i wstrzykiwane do kontrolera
-        $objSer = new \App\apiModels\ObjectSerializer();
-
-        foreach (json_decode($request->getContent(), true) as $policy) {
+        foreach ($importRequests as $importRequest) {
             $status = 'OK';
             $importStatus = new IMPORTSTATUS_impl();
 
-            $calculatedPolicy = $objSer->deserialize($policy, '\App\apiModels\travel\v1\prototypes\IMPORTREQUEST');
-            $calculatedPolicy->calculateAmount();
+            $calculatedPolicy = clone $importRequest;
+            $calculatedPolicy->recalculateAmounts();
 
-            $validator = app('validator')->make($policy, IMPORTREQUEST_impl::$warningValidators, [], ['calculatedPolicy' => $calculatedPolicy]);
+            // @todo
+            // walidacje nie działają - należy przekazać tablicę, a nie obiekt, ale konwertowanie jest słabe
+            $validator = app('validator')->make($importRequest, IMPORTREQUEST_impl::$warningValidators, [], ['calculatedPolicy' => $calculatedPolicy]);
 
             if ($validator->fails()) {
                 foreach ($validator->errors()->toArray() as $property => $error) {
@@ -34,8 +33,9 @@ class importPoliciesCtrl extends Controller
                 $status = 'WARN';
             }
 
+            // @todo amount są puste w save policy
             $importStatus->setStatus($status);
-            $importStatus->setPolicyRef($this->savePolicy($policy, $status, $importStatus->getMessages(), $request->user()));
+            $importStatus->setPolicyRef($this->savePolicy($importRequest, $status, $importStatus->getMessages(), $request->user()));
             $importStatus->setQuoteRef($request->attributes->get('requestId'));
             $importStatus->setMessages($importStatus->getMessages());
 

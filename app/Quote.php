@@ -2,15 +2,15 @@
 
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
-class Partner extends Eloquent 
+class Quote extends Eloquent 
 {
-    /**
+	 /**
      * The attributes that aren't mass assignable.
      *
      * @var array
      */
     protected $guarded = [];
-    
+
     /**
      * Validators of model atributes
      *
@@ -19,9 +19,4 @@ class Partner extends Eloquent
     public static $validators = [
         //
     ];
-
-    public function guest()
-    {
-        return !$this->exists;
-    }
 }

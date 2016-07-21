@@ -14,6 +14,7 @@
 namespace App\apiModels\travel\v1\implementations;
 
 use App\apiModels\travel\v1\prototypes\IMPORTREQUEST;
+use Symfony\Component\HttpFoundation\Response as Response;
 
 class IMPORTREQUEST_impl extends IMPORTREQUEST
 {
@@ -51,7 +52,13 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
         $this->varCode = $code;
     }
 
-    public function calculateAmount() {
+    public function recalculateAmounts() {
+        $amounts = $this->calculateAmounts();
+        $this->netto_amount = $amounts['netto_amount'];
+        $this->tariff_amount = $amounts['tariff_amount'];
+    }
+
+    public function calculateAmounts() {
         $dbOffer = app('db')->collection('travel_offers')->find($this->product_ref);
                 
         if ($dbOffer) {
@@ -59,7 +66,8 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
 
             if ($dbOffer['configuration']['quotation']['type'] == 'formula') {
                 // Not implemented
-                // $this->calculateAmount($dbOffer['configuration']);
+                // return $this->calculateQuotationAmounts($dbOffer['configuration']);
+                abort(Response::HTTP_NOT_IMPLEMENTED);
             } elseif ($dbOffer['configuration']['quotation']['type'] == 'excel') {
                 $excelPath = env('EXCEL_DIRECTORY') . '/' . $dbOffer['configuration']['quotation']['file'];
 
@@ -68,17 +76,19 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
                 }
 
                 if ($excelFile) {
-                    $this->calculateExcelAmount($dbOffer['configuration'], $excelFile);
+                    return $this->calculateExcelAmounts($dbOffer['configuration'], $excelFile);
                 }
             }
         }
     }
 
-    public function calculateExcelAmount($config, $excelFile)
+    protected function calculateExcelAmounts($config, $excelFile)
     {
+        $tariff_amount = new self::$swaggerTypes['tariff_amount']();
+        $netto_amount = new self::$swaggerTypes['netto_amount']();
 
-        $this->tariff_amount->setValueBaseCurrency($config['quotation']['resultCurrency']);
-        $this->tariff_amount->setValueCurrency('PLN');
+        $tariff_amount->setValueBaseCurrency($config['quotation']['resultCurrency']);
+        $tariff_amount->setValueCurrency('PLN');
 
         $options = array();
         if (is_array($this->getData()->getOptionValues()) || $this->getData()->getOptionValues() instanceof Traversable) {
@@ -145,25 +155,27 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
                 $nettoAmountValue = $wariant['NETTO'];
             }
         }
-        $this->tariff_amount->setValueBase($amountValue);
-        $this->netto_amount->setValueBase($nettoAmountValue);
+        $tariff_amount->setValueBase($amountValue);
+        $netto_amount->setValueBase($nettoAmountValue);
         
         if ($config['quotation']['resultCurrency'] != 'PLN') {
             $recalculation = $this->recalculate2pln($amountValue, $config['quotation']['resultCurrency']);
             $nettoRecalculation = $this->recalculate2pln($nettoAmountValue, $config['quotation']['resultCurrency']);
             $AmountPLN = $recalculation['amount'];
             $nettoAmountPLN = $nettoRecalculation['amount'];
-            $this->tariff_amount->setCurrencyRate($recalculation['rate']);
-            $this->tariff_amount->setDateRate($recalculation['date']);
-            $this->netto_amount->setCurrencyRate($nettoRecalculation['rate']);
-            $this->netto_amount->setDateRate($nettoRecalculation['date']);
+            $tariff_amount->setCurrencyRate($recalculation['rate']);
+            $tariff_amount->setDateRate($recalculation['date']);
+            $netto_amount->setCurrencyRate($nettoRecalculation['rate']);
+            $netto_amount->setDateRate($nettoRecalculation['date']);
         } else {
             $AmountPLN = $amountValue;
             $nettoAmountPLN = $nettoAmountValue;
         }
 
-        $this->tariff_amount->setValue($AmountPLN);
-        $this->netto_amount->setValue($nettoAmountPLN);
+        $tariff_amount->setValue($AmountPLN);
+        $netto_amount->setValue($nettoAmountPLN);
+
+        return ['tariff_amount' => $tariff_amount, 'netto_amount' => $netto_amount];
     }
 
     private function recalculate2pln($amount, $amountCurrency)

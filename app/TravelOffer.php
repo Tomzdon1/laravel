@@ -2,9 +2,9 @@
 
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
-class Partner extends Eloquent 
+class TravelOffer extends Eloquent 
 {
-    /**
+	/**
      * The attributes that aren't mass assignable.
      *
      * @var array
@@ -19,9 +19,4 @@ class Partner extends Eloquent
     public static $validators = [
         //
     ];
-
-    public function guest()
-    {
-        return !$this->exists;
-    }
 }
