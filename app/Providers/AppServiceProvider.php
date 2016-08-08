@@ -112,10 +112,9 @@ class AppServiceProvider extends ServiceProvider
         app('validator')->extend('amountValue', function($attribute, $value, $parameters, $validator) {
             $valid = true;
             $amountType =  strstr($attribute, '.', true);
-            $amountTypeGetter = camel_case('get_' . $amountType);
 
-            $calculatedPolicy = $validator->getCustomAttributes()['calculatedPolicy'];
-            $valueBaseCalculated = $calculatedPolicy->{$amountTypeGetter}()->getValueBase();
+            $calculatedAmounts = $validator->getCustomAttributes()['calculatedAmounts'];
+            $valueBaseCalculated = $calculatedAmounts[$amountType]->getValueBase();
             
             if ($value != $valueBaseCalculated) {
                 $validator->addReplacer('amountValue', function ($message, $attribute, $rule, $parameters) use ($value, $valueBaseCalculated) {
@@ -139,10 +138,9 @@ class AppServiceProvider extends ServiceProvider
         app('validator')->extend('correctCalculation', function($attribute, $value, $parameters, $validator) {
             $valid = true;
             $amountType =  strstr($attribute, '.', true);
-            $amountTypeGetter = camel_case('get_' . $amountType);
 
-            $calculatedPolicy = $validator->getCustomAttributes()['calculatedPolicy'];
-            $valueBaseCalculated = $calculatedPolicy->{$amountTypeGetter}()->getValueBase();
+            $calculatedAmounts = $validator->getCustomAttributes()['calculatedAmounts'];
+            $valueBaseCalculated = $calculatedAmounts[$amountType]->getValueBase();
             
             if ($valueBaseCalculated < 0) {
                 if (env('APP_DEBUG', false)) {

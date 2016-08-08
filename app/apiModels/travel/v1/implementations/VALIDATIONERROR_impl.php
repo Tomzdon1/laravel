@@ -20,18 +20,6 @@ class VALIDATIONERROR_impl extends VALIDATIONERROR
 {
 
     /**
-     * $property Nazwa atrybutu, którego dotyczą błędy
-     * @var string
-     */
-    public $property;
-
-    /**
-     * $errors Tablica opisów błędów
-     * @var string[]
-     */
-    public $errors = [];
-
-    /**
      * Valdators for model
      * @var array
      */

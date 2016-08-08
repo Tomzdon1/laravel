@@ -10,8 +10,9 @@ $app->group([
     'namespace' => 'App\apiModels\travel\v1\Controllers'
     ], function ($app) {
         $app->post('get_quotes','QuoteController@get');
-        $app->post('calculate_policy','calculatePolicyCtrl@request');
-        $app->post('issue_policy','issuePolicyCtrl@request');
-        $app->post('import_policies','importPoliciesCtrl@request');
-        $app->post('print_policy','printPolicyCtrl@request');
+        $app->post('calculate_policy','PolicyController@calculate');
+        $app->post('issue_policy','PolicyController@issue');
+        $app->post('import_policies','PolicyController@import');
+        $app->get('policy/{id}/print','PolicyController@printPolicy');
+        $app->get('policy/{policy}','PolicyController@show');
 });
