@@ -107,43 +107,43 @@ class QUOTE extends \App\apiModels\ApiModel implements ArrayAccess
       * $quote_ref Identyfikator oferty
       * @var string
       */
-    protected $quote_ref;
+    public $quote_ref;
     
     /**
       * $amount Składka
       * @var App\apiModels\travel\v1\prototypes\AMOUNT
       */
-    protected $amount;
+    public $amount;
     
     /**
       * $promo_code_valid Czy kod promocyjny jest prawidłowy
       * @var bool
       */
-    protected $promo_code_valid;
+    public $promo_code_valid;
     
     /**
       * $description Opis wariantu
       * @var string
       */
-    protected $description;
+    public $description;
     
     /**
       * $details Tablica detali oferty
       * @var App\apiModels\travel\v1\prototypes\DETAIL[]
       */
-    protected $details;
+    public $details;
     
     /**
       * $option_definitions Definicje atrybutów, które można użyć do kalkulacji (nie wolno zmieniać wartości atrybutów, dla których pole changable == false)
       * @var App\apiModels\travel\v1\prototypes\OPTIONDEFINITION[]
       */
-    protected $option_definitions;
+    public $option_definitions;
     
     /**
       * $option_values Wartości, które zostały użyte do kalkulacji
       * @var App\apiModels\travel\v1\prototypes\OPTIONVALUE[]
       */
-    protected $option_values;
+    public $option_values;
     
 
     /**

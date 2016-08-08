@@ -3,15 +3,9 @@
 namespace App\apiModels\travel\v1\implementations;
 
 use App\apiModels\travel\v1\prototypes\INSURED;
+use App\apiModels\travel\v1\interfaces\PersonInterface;
 
-/**
- * CALCULATE_REQUEST Class Doc Comment
- * @category    Class
- * @description
- * @package     travel\v1
- * @author      Tomasz Duda <tomasz.duda@tueuropa.pl>
- */
-class INSURED_impl extends INSURED
+class INSURED_impl extends INSURED implements PersonInterface
 {
 
     /**
@@ -29,5 +23,16 @@ class INSURED_impl extends INSURED
     public function __construct(array $data = null)
     {
         parent::__construct($data);
+    }
+
+    public function getBirthDate()
+    {
+        return $this->getData()->getBirthDate();
+    }
+
+    public function setBirthDate($birth_date)
+    {
+        parent::setBirthDate($birth_date);
+        $this->birth_date->setTimezone(new \DateTimeZone('Europe/Warsaw'));
     }
 }

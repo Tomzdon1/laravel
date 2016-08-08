@@ -95,25 +95,25 @@ class IMPORTSTATUS extends \App\apiModels\ApiModel implements ArrayAccess
       * $status Status importu polisy
       * @var string
       */
-    protected $status;
+    public $status;
     
     /**
       * $policy_ref Identyfikator polisy
       * @var string
       */
-    protected $policy_ref;
+    public $policy_ref;
     
     /**
       * $quote_ref Identyfikator oferty
       * @var string
       */
-    protected $quote_ref;
+    public $quote_ref;
     
     /**
       * $messages 
       * @var object[]
       */
-    protected $messages;
+    public $messages;
     
 
     /**

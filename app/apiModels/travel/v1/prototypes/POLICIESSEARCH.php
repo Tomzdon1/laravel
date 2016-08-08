@@ -87,13 +87,13 @@ class POLICIESSEARCH extends \App\apiModels\ApiModel implements ArrayAccess
       * $date Dzień utworzenia polisy
       * @var \DateTime
       */
-    protected $date;
+    public $date;
     
     /**
       * $policy_ref Identyfikator polisy
       * @var string
       */
-    protected $policy_ref;
+    public $policy_ref;
     
 
     /**

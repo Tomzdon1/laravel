@@ -91,19 +91,19 @@ class INSURED extends \App\apiModels\ApiModel implements ArrayAccess
       * $data Dane osobowe
       * @var App\apiModels\travel\v1\prototypes\PERSONDATA
       */
-    protected $data;
+    public $data;
     
     /**
       * $address Dane adresowe
       * @var App\apiModels\travel\v1\prototypes\ADDRESS
       */
-    protected $address;
+    public $address;
     
     /**
       * $option_values Tablica wartości dodatkowych atrybutów
       * @var App\apiModels\travel\v1\prototypes\OPTIONVALUE[]
       */
-    protected $option_values;
+    public $option_values;
     
 
     /**

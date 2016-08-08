@@ -19,9 +19,11 @@ class WrapResponse
         /* @var $response Response */
         $response = $next($request);
         
-        $content = json_decode($response->getContent()) ?: $response->getContent();
-        $response->setContent(['status' => $response->getStatusCode(), 'data' => $content]);
-        $response->setStatusCode(Response::HTTP_OK);
+        if (!($response->exception && env('APP_DEBUG', false))) {
+            $content = json_decode($response->getContent()) ?: $response->getContent();
+            $response->setContent(['status' => $response->getStatusCode(), 'data' => $content]);
+            $response->setStatusCode(Response::HTTP_OK);
+        }
         
         return $response;
     }

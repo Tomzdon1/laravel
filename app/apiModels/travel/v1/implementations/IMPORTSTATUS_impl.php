@@ -14,30 +14,6 @@ use App\apiModels\travel\v1\prototypes\IMPORTSTATUS;
 class IMPORTSTATUS_impl extends IMPORTSTATUS
 {
     /**
-      * $status Status importu polisy
-      * @var string
-      */
-    public $status;
-    
-    /**
-      * $policy_ref Identyfikator polisy
-      * @var string
-      */
-    public $policy_ref;
-    
-    /**
-      * $quote_ref Identyfikator oferty
-      * @var string
-      */
-    public $quote_ref;
-    
-    /**
-      * $messages
-      * @var object[]
-      */
-    public $messages;
-
-    /**
      * Valdators for model
      * @var array
      */

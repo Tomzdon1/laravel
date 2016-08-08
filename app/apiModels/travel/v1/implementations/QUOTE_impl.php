@@ -1,22 +1,13 @@
 <?php
 
-/**
- * QUOTE
- *
- * PHP version 5
- *
- * @category    Class
- * @description
- * @package     travel\v1
- * @author      Krzysztof Dałek <krzysztof.dalek@tueuropa.pl>
- */
-
 namespace App\apiModels\travel\v1\implementations;
 
 use App\apiModels\travel\v1\prototypes\QUOTE;
+use App\apiModels\travel\v1\traits\AmountsCalculator;
 
 class QUOTE_impl extends QUOTE
 {
+    use AmountsCalculator;
 
     /**
      * Valdators for model
@@ -25,19 +16,6 @@ class QUOTE_impl extends QUOTE
     public static $validators = [
         //
     ];
-    /**
-     *
-     * Current cached excel file path
-     * @var type string
-     */
-    public static $staticExcelFile;
-    
-    /**
-     *
-     * Cached offers
-     * @var type mixed
-     */
-    public static $staticOffers;
 
     /**
      * Constructor
@@ -45,97 +23,13 @@ class QUOTE_impl extends QUOTE
      */
     public function __construct(array $data = null)
     {
-        print_r($data);
         parent::__construct($data);
     }
 
-    public function setVarCode($code)
-    {
-        $this->varCode = $code;
-    }
-
-    public function calculateExcelAmount($config, $excelFile, $request)
-    {
-//        print_r($config);
-
-        $this->amount->setValueBaseCurrency($config['quotation']['resultCurrency']);
-        $this->amount->setValueCurrency('PLN');
-
-//        print_r($this->option_values);
-        $options = array();
-        if (is_array($this->option_values) || $this->option_values instanceof Traversable) {
-            foreach ($this->option_values as $option) {
-                if ($option->getValue() == true) {
-                    $options[$option->getCode()] = true;
-                }
-            }
-        }
-
-        $isFamily = false;
-        $birthDates = array();
-        foreach ($request->getPrepersons() as $preperson) {
-            $birthDates[] = $preperson->getBirthDate();
-        }
-        $params = [
-            'DATA_OD' => $request->getData()->getStartDate(),
-            'DATA_DO' => $request->getData()->getEndDate(),
-            'DATA_URODZENIA' => $birthDates,
-            //przekazywac true/false w bibliotece Excela mapować na T/N
-//            'CZY_RODZINA' => $isFamily ? 'T' : 'N',
-//            'ZWYZKA_ASZ' => (isset($options['TWAWS']) && $options['TWAWS']) ? 'T' : 'N',
-//            'ZWYZKA_ASM' => (isset($options['TWASM']) && $options['TWASM']) ? 'T' : 'N',
-//            'ZWYZKA_ZCP' => (isset($options['TWCHP']) && $options['TWCHP']) ? 'T' : 'N',
-            // tak to moze ewentualnie wygladac przy obecnym zapisie
-            // 'ZWYZKA_ASZ'  => (bool) $options['TWAWS'],
-            // 'ZWYZKA_ASM'  => (bool) $options['TWASM'],
-            // 'ZWYZKA_ZCP'  => (bool) $options['TWCHP'],
-        ];
-        /*
-         * Pobranie mozliwych wartosci z konfiguracji oferty
-         */
-        if (!empty($config['options'])) {
-            foreach ($config['options'] as $opt) {
-                $optName = strtoupper($opt['tucode']);
-                $params[$optName] = (isset($options[$optName]) && $options[$optName]) ? 'T' : 'N';
-            }
-        }
-
-        if ($excelFile->excelFilePath == QUOTE_impl::$staticExcelFile) {
-            $data = QUOTE_impl::$staticOffers;
-        } else {
-            QUOTE_impl::$staticExcelFile = $excelFile->excelFilePath;
-            $data = $excelFile->getCalculatedValues($params);
-            QUOTE_impl::$staticOffers = $data;
-        }
-        $amountValue = 0;
-        foreach ($data as $wariant) {
-            if ($wariant['WARIANT'] == $this->varCode) {
-                // $this->cached[$wariant['WARIANT']] = $wariant['SKLADKA'];
-                // $result = $wariant['SKLADKA'];
-                $amountValue = $wariant['SKLADKA'];
-            }
-        }
-        $this->amount->setValueBase($amountValue);
-
-        if ($config['quotation']['resultCurrency'] != 'PLN') {
-            $recalculation = $this->recalculate2pln($amountValue, $config['quotation']['resultCurrency']);
-            $AmountPLN = $recalculation['amount'];
-            $this->amount->setCurrencyRate($recalculation['rate']);
-            $this->amount->setDateRate($recalculation['date']);
-        } else {
-            $AmountPLN = $amountValue;
-        }
-        $this->amount->setValue($AmountPLN);
-
-//        print_r($this->amount); //->setValueBaseCurrency('GBN');
-    }
-
-    private function recalculate2pln($amount, $amountCurrency)
-    {
-        $date = new \DateTime;
-        $rate = 4.229;
-        if ($amountCurrency == 'EUR') {
-            return ['amount' => round(($amount * $rate), 2), 'rate' => $rate, 'date' => $date];
-        }
+    /**
+     * Override getInsureds function in AmountsCalculator trait to return preperson instead preperson
+     */
+    public function getInsureds ($quoteRequest) {
+      return $quoteRequest->getPrepersons();
     }
 }

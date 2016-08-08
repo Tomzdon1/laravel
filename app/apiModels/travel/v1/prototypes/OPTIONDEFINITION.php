@@ -103,37 +103,37 @@ class OPTIONDEFINITION extends \App\apiModels\ApiModel implements ArrayAccess
       * $name Nazwa atrybutu
       * @var string
       */
-    protected $name;
+    public $name;
     
     /**
       * $description Opis atrybutu
       * @var string
       */
-    protected $description;
+    public $description;
     
     /**
       * $code Kod atrybutu
       * @var string
       */
-    protected $code;
+    public $code;
     
     /**
       * $value_type Oczekiwany typ danych wartości atrybutu
       * @var string
       */
-    protected $value_type;
+    public $value_type;
     
     /**
       * $changeable Czy jest możliwa zmiana wartości tego atrybutu
       * @var bool
       */
-    protected $changeable;
+    public $changeable;
     
     /**
       * $sub_options Tablica definicji atrybutów
       * @var App\apiModels\travel\v1\prototypes\OPTIONDEFINITION[]
       */
-    protected $sub_options;
+    public $sub_options;
     
 
     /**

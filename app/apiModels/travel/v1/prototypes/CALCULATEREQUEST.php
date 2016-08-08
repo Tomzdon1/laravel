@@ -52,6 +52,7 @@ class CALCULATEREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $swaggerTypes = array(
         'quote_ref' => 'string',
+        'product_id' => 'string',
         'data' => 'App\apiModels\travel\v1\prototypes\POLICYDATA',
         'policy_holder' => 'App\apiModels\travel\v1\prototypes\POLICYHOLDER',
         'insured' => 'App\apiModels\travel\v1\prototypes\INSURED[]'
@@ -63,6 +64,7 @@ class CALCULATEREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $attributeMap = array(
         'quote_ref' => 'quote_ref',
+        'product_id' => 'product_id',
         'data' => 'data',
         'policy_holder' => 'policy_holder',
         'insured' => 'insured'
@@ -74,6 +76,7 @@ class CALCULATEREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $setters = array(
         'quote_ref' => 'setQuoteRef',
+        'product_id' => 'setProductId',
         'data' => 'setData',
         'policy_holder' => 'setPolicyHolder',
         'insured' => 'setInsured'
@@ -85,6 +88,7 @@ class CALCULATEREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $getters = array(
         'quote_ref' => 'getQuoteRef',
+        'product_id' => 'getProductId',
         'data' => 'getData',
         'policy_holder' => 'getPolicyHolder',
         'insured' => 'getInsured'
@@ -95,25 +99,31 @@ class CALCULATEREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
       * $quote_ref Identyfikator oferty
       * @var string
       */
-    protected $quote_ref;
+    public $quote_ref;
+
+    /**
+      * $quote_ref Identyfikator produktu
+      * @var string
+      */
+    public $product_id;
     
     /**
       * $data Dane polisy
       * @var App\apiModels\travel\v1\prototypes\POLICYDATA
       */
-    protected $data;
+    public $data;
     
     /**
       * $policy_holder Dane ubezpieczającego
       * @var App\apiModels\travel\v1\prototypes\POLICYHOLDER
       */
-    protected $policy_holder;
+    public $policy_holder;
     
     /**
       * $insured Dane ubezpieczonych
       * @var App\apiModels\travel\v1\prototypes\INSURED[]
       */
-    protected $insured;
+    public $insured;
     
 
     /**
@@ -124,10 +134,32 @@ class CALCULATEREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
     {
         if ($data != null) {
             $this->quote_ref = $data["quote_ref"];
+            $this->product_id = $data["product_id"];
             $this->data = $data["data"];
             $this->policy_holder = $data["policy_holder"];
             $this->insured = $data["insured"];
         }
+    }
+
+    /**
+     * Gets product_id
+     * @return string
+     */
+    public function getProductId()
+    {
+        return $this->product_id;
+    }
+
+    /**
+     * Sets product_id
+     * @param string $quote_ref Identyfikator produktu
+     * @return $this
+     */
+    public function setProductId($product_id)
+    {
+        
+        $this->product_id = $product_id;
+        return $this;
     }
     
     /**

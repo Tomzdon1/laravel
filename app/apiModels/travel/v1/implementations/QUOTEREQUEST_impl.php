@@ -3,14 +3,8 @@
 namespace App\apiModels\travel\v1\implementations;
 
 use App\apiModels\travel\v1\prototypes\QUOTEREQUEST;
+use App\TravelOffer;
 
-/**
- * QUOTEREQUEST Class Doc Comment
- * @category    Class
- * @description
- * @package     travel\v1
- * @author      Krzysztof Dałek <krzysztof.dalek@tueuropa.pl>
- */
 class QUOTEREQUEST_impl extends QUOTEREQUEST
 {
 
@@ -29,5 +23,27 @@ class QUOTEREQUEST_impl extends QUOTEREQUEST
     public function __construct(array $data = null)
     {
         parent::__construct($data);
+    }
+
+    public function getQuotes()
+    {
+        $partnerCode = app('auth')->user()->code;
+        $offers = TravelOffer::where('partner', $partnerCode)->get();
+
+        $quotes = [];
+        $quoteNumber = 0;
+
+        foreach ($offers as $offer) {
+            $quote = new QUOTE_impl();
+            $quote->setDescription($offer->name);
+            $quote->setDetails($offer->elements);
+            $quote->setOptionDefinitions($offer->options);
+            $quote->setQuoteRef(app('request')->attributes->get('requestId') . $quoteNumber++);
+            $quote->setOptionValues($this->getData()->getOptionValues());
+            $quote->recalculateAmounts($offer, $this, false);
+            $quotes[] = $quote;
+        }
+
+        return $quotes;
     }
 }

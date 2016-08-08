@@ -32,8 +32,8 @@ class IssuedPolicyListener
         $event->policy->product['company'] = 'M';
 
         $api = new internal\API();
-        $api->setName(array_keys($event->policy->partnerData['apis'])[0]);
-        $api->setVersion($event->policy->partnerData['apis'][$api->getName()]['version']);
+        $api->setName(array_keys($event->policy->partner->apis)[0]);
+        $api->setVersion($event->policy->partner->apis[$api->getName()]['version']);
 
         $envelope = new internal\ENVELOPE();
         $envelope->setType('policy');

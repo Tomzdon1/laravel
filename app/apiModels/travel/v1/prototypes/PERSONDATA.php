@@ -119,61 +119,61 @@ class PERSONDATA extends \App\apiModels\ApiModel implements ArrayAccess
       * $first_name Imię
       * @var string
       */
-    protected $first_name;
+    public $first_name;
     
     /**
       * $last_name Nazwisko
       * @var string
       */
-    protected $last_name;
+    public $last_name;
     
     /**
       * $birth_date Data urodzenia
       * @var \DateTime
       */
-    protected $birth_date;
+    public $birth_date;
     
     /**
       * $pesel Numer PESEL
       * @var string
       */
-    protected $pesel;
+    public $pesel;
     
     /**
       * $nationality Obywatelstwo (kod kraju zgodny z ISO 3166-1 alpha-2)
       * @var string
       */
-    protected $nationality;
+    public $nationality;
     
     /**
       * $document_no Numer dokumentu tożsamości
       * @var string
       */
-    protected $document_no;
+    public $document_no;
     
     /**
       * $business_name Nazwa działalności
       * @var string
       */
-    protected $business_name;
+    public $business_name;
     
     /**
       * $short_business_name Skrócona nazwa działalności
       * @var string
       */
-    protected $short_business_name;
+    public $short_business_name;
     
     /**
       * $nip NIP
       * @var string
       */
-    protected $nip;
+    public $nip;
     
     /**
       * $type Typ osoby
       * @var string
       */
-    protected $type;
+    public $type;
     
 
     /**

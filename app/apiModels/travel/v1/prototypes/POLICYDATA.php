@@ -103,37 +103,37 @@ class POLICYDATA extends \App\apiModels\ApiModel implements ArrayAccess
       * $promo_code Kod promocyjny
       * @var string
       */
-    protected $promo_code;
+    public $promo_code;
     
     /**
       * $start_date Data rozpoczęcia ochrony
       * @var \DateTime
       */
-    protected $start_date;
+    public $start_date;
     
     /**
       * $end_date Data zakończenia ochrony
       * @var \DateTime
       */
-    protected $end_date;
+    public $end_date;
     
     /**
       * $abroad Czy ubezpieczony przebywa za granicą Polski w momencie przystąpienia do ubezpieczenia (informacja ważna ze względu na ewentualną karencję w ochronie ubezpieczeniowej)
       * @var bool
       */
-    protected $abroad;
+    public $abroad;
     
     /**
       * $destination Cel podróży (kod kraju określony w ISO 3166-1 alpha-2 lub EU - Unia Europejska lub WR - świat)
       * @var string
       */
-    protected $destination;
+    public $destination;
     
     /**
       * $option_values Tablica wartości dodatkowych atrybutów
       * @var App\apiModels\travel\v1\prototypes\OPTIONVALUE[]
       */
-    protected $option_values;
+    public $option_values;
     
 
     /**

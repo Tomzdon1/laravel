@@ -38,6 +38,7 @@ class RequestValidate
 
         $responseSchema = $schemaManager->getResponseSchema($path, $httpMethod, $httpCode);
 
+        $request->attributes->add(['requestSchema' => $responseSchema]);
         $validator = new Validator();
         $validator->check($responseBody, $responseSchema);
 
