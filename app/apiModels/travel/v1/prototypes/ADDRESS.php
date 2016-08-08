@@ -103,37 +103,37 @@ class ADDRESS extends \App\apiModels\ApiModel implements ArrayAccess
       * $country Kraj (kod kraju zgodny z ISO 3166-1 alpha-2)
       * @var string
       */
-    protected $country;
+    public $country;
     
     /**
       * $post_code Kod pocztowy
       * @var string
       */
-    protected $post_code;
+    public $post_code;
     
     /**
       * $city Miejscowość
       * @var string
       */
-    protected $city;
+    public $city;
     
     /**
       * $street Ulica
       * @var string
       */
-    protected $street;
+    public $street;
     
     /**
       * $house_no Numer domu
       * @var string
       */
-    protected $house_no;
+    public $house_no;
     
     /**
       * $flat_no Numer mieszkania
       * @var string
       */
-    protected $flat_no;
+    public $flat_no;
     
 
     /**

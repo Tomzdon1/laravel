@@ -95,25 +95,25 @@ class CALCULATE extends \App\apiModels\ApiModel implements ArrayAccess
       * $request Zapytanie, na podstawie którego obliczono amount i wartość promo_code_valid
       * @var App\apiModels\travel\v1\prototypes\CALCULATEREQUEST
       */
-    protected $request;
+    public $request;
     
     /**
       * $amount Obiekt z informacją o składce
       * @var App\apiModels\travel\v1\prototypes\AMOUNT
       */
-    protected $amount;
+    public $amount;
     
     /**
       * $payment_date Data zapłaty
       * @var \DateTime
       */
-    protected $payment_date;
+    public $payment_date;
     
     /**
       * $promo_code_valid Czy kod promocyjny jest ważny i został uwzględniony
       * @var bool
       */
-    protected $promo_code_valid;
+    public $promo_code_valid;
     
 
     /**

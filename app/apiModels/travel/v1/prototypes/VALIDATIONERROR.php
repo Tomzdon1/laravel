@@ -87,13 +87,13 @@ class VALIDATIONERROR extends \App\apiModels\ApiModel implements ArrayAccess
       * $property Nazwa atrybutu, którego dotyczą błędy
       * @var string
       */
-    protected $property;
+    public $property;
     
     /**
       * $errors Tablica opisów błędów
       * @var string[]
       */
-    protected $errors;
+    public $errors;
     
 
     /**

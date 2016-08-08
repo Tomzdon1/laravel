@@ -87,13 +87,13 @@ class QUOTEREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
       * $data Dane do kalkulacji oferty
       * @var App\apiModels\travel\v1\prototypes\POLICYDATA
       */
-    protected $data;
+    public $data;
     
     /**
       * $prepersons Wstępne informacje o ubezpieczonych
       * @var App\apiModels\travel\v1\prototypes\PREPERSON[]
       */
-    protected $prepersons;
+    public $prepersons;
     
 
     /**

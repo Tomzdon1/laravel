@@ -87,13 +87,13 @@ class PREPERSON extends \App\apiModels\ApiModel implements ArrayAccess
       * $birth_date Data urodzenia
       * @var \DateTime
       */
-    protected $birth_date;
+    public $birth_date;
     
     /**
       * $option_values Tablica wartości dodatkowych atrybutów
       * @var App\apiModels\travel\v1\prototypes\OPTIONVALUE[]
       */
-    protected $option_values;
+    public $option_values;
     
 
     /**

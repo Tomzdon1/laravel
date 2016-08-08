@@ -91,19 +91,19 @@ class SOLICITOR extends \App\apiModels\ApiModel implements ArrayAccess
       * $solicitor_id Identyfikator OWCY w rejestrze KNF (tzw numer RA)
       * @var string
       */
-    protected $solicitor_id;
+    public $solicitor_id;
     
     /**
       * $agent_id Identyfikator Agenta w systemi KNF (tzw numer RA agenta)
       * @var string
       */
-    protected $agent_id;
+    public $agent_id;
     
     /**
       * $permissions Wykorzystane uprawnienia
       * @var App\apiModels\travel\v1\prototypes\PERMISSION[]
       */
-    protected $permissions;
+    public $permissions;
     
 
     /**

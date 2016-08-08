@@ -103,37 +103,37 @@ class AMOUNT extends \App\apiModels\ApiModel implements ArrayAccess
       * $value_base Kwota składki w walucie podstawowej
       * @var float
       */
-    protected $value_base;
+    public $value_base;
     
     /**
       * $value_base_currency Waluta podstawowa (kod waluty zgodny z ISO 4217)
       * @var string
       */
-    protected $value_base_currency;
+    public $value_base_currency;
     
     /**
       * $value Kwota składki
       * @var float
       */
-    protected $value;
+    public $value;
     
     /**
       * $value_currency Waluta (kod waluty zgodny z ISO 4217)
       * @var string
       */
-    protected $value_currency;
+    public $value_currency;
     
     /**
       * $currency_rate Kurs waluty
       * @var float
       */
-    protected $currency_rate;
+    public $currency_rate;
     
     /**
       * $date_rate Data kursu
       * @var \DateTime
       */
-    protected $date_rate;
+    public $date_rate;
     
 
     /**

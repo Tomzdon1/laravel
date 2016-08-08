@@ -99,31 +99,31 @@ class POLICYHOLDER extends \App\apiModels\ApiModel implements ArrayAccess
       * $data Dane osobowe
       * @var App\apiModels\travel\v1\prototypes\PERSONDATA
       */
-    protected $data;
+    public $data;
     
     /**
       * $address Dane adresowe
       * @var App\apiModels\travel\v1\prototypes\ADDRESS
       */
-    protected $address;
+    public $address;
     
     /**
       * $email Adres e-mail
       * @var string
       */
-    protected $email;
+    public $email;
     
     /**
       * $telephone Numer telefonu
       * @var string
       */
-    protected $telephone;
+    public $telephone;
     
     /**
       * $agreements Informacja o wyrażonych/odrzuconych zgodach
       * @var App\apiModels\travel\v1\prototypes\AGREEMENT[]
       */
-    protected $agreements;
+    public $agreements;
     
 
     /**

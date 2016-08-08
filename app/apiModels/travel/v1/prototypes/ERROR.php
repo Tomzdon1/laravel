@@ -83,7 +83,7 @@ class ERROR extends \App\apiModels\ApiModel implements ArrayAccess
       * $description Opis błędu
       * @var string
       */
-    protected $description;
+    public $description;
     
 
     /**

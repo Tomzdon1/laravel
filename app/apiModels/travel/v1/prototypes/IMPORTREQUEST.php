@@ -127,73 +127,73 @@ class IMPORTREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
       * $product_ref Identyfikator produktu
       * @var string
       */
-    protected $product_ref;
+    public $product_ref;
     
     /**
       * $data Dane polisy
       * @var App\apiModels\travel\v1\prototypes\POLICYDATA
       */
-    protected $data;
+    public $data;
     
     /**
       * $payment_date Data zapłaty
       * @var \DateTime
       */
-    protected $payment_date;
+    public $payment_date;
     
     /**
       * $policy_date Data zawarcia polisy
       * @var \DateTime
       */
-    protected $policy_date;
+    public $policy_date;
     
     /**
       * $policy_number Numer polisy
       * @var string
       */
-    protected $policy_number;
+    public $policy_number;
     
     /**
       * $policy_holder Dane ubezpieczającego
       * @var App\apiModels\travel\v1\prototypes\POLICYHOLDER
       */
-    protected $policy_holder;
+    public $policy_holder;
     
     /**
       * $insured Dane ubezpieczonych
       * @var App\apiModels\travel\v1\prototypes\INSURED[]
       */
-    protected $insured;
+    public $insured;
     
     /**
       * $amount Obiekt z informacją o składce pobranej
       * @var App\apiModels\travel\v1\prototypes\AMOUNT
       */
-    protected $amount;
+    public $amount;
     
     /**
       * $tariff_amount Obiekt z informacją o składce wynikającej z taryfy
       * @var App\apiModels\travel\v1\prototypes\AMOUNT
       */
-    protected $tariff_amount;
+    public $tariff_amount;
     
     /**
       * $netto_amount Obiekt z informacją o składce netto
       * @var App\apiModels\travel\v1\prototypes\AMOUNT
       */
-    protected $netto_amount;
+    public $netto_amount;
     
     /**
       * $promo_code Kod promocyjny
       * @var string
       */
-    protected $promo_code;
+    public $promo_code;
     
     /**
       * $solicitors Informacje o OWCA biorących udział w sprzedaży polisy; Wartości tego pola są weryfikowane a dokładnie uprawnienia agenta/owca do sprzedaży danego typu polisy
       * @var App\apiModels\travel\v1\prototypes\SOLICITOR[]
       */
-    protected $solicitors;
+    public $solicitors;
     
 
     /**

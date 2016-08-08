@@ -91,19 +91,19 @@ class AGREEMENT extends \App\apiModels\ApiModel implements ArrayAccess
       * $description Treść zgody
       * @var string
       */
-    protected $description;
+    public $description;
     
     /**
       * $value Wartość zgody
       * @var bool
       */
-    protected $value;
+    public $value;
     
     /**
       * $code Kod zgody
       * @var string
       */
-    protected $code;
+    public $code;
     
 
     /**

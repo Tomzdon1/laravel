@@ -87,13 +87,13 @@ class DETAIL extends \App\apiModels\ApiModel implements ArrayAccess
       * $name Nazwa detalu
       * @var string
       */
-    protected $name;
+    public $name;
     
     /**
       * $value Wartość detalu
       * @var string
       */
-    protected $value;
+    public $value;
     
 
     /**

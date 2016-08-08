@@ -95,25 +95,25 @@ class POLICY extends \App\apiModels\ApiModel implements ArrayAccess
       * $calculate Kalkulacja na podstawie której utworzono polisę
       * @var App\apiModels\travel\v1\prototypes\CALCULATE
       */
-    protected $calculate;
+    public $calculate;
     
     /**
       * $policy_ref Identyfikator polisy
       * @var string
       */
-    protected $policy_ref;
+    public $policy_ref;
     
     /**
       * $policy_number Numer polisy
       * @var string
       */
-    protected $policy_number;
+    public $policy_number;
     
     /**
       * $policy_date Data zawarcia polisy
       * @var \DateTime
       */
-    protected $policy_date;
+    public $policy_date;
     
 
     /**

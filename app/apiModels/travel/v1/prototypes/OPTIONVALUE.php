@@ -91,19 +91,19 @@ class OPTIONVALUE extends \App\apiModels\ApiModel implements ArrayAccess
       * $code Kod atrybutu
       * @var string
       */
-    protected $code;
+    public $code;
     
     /**
       * $value Wartość atrybutu
       * @var string
       */
-    protected $value;
+    public $value;
     
     /**
       * $sub_options Tablica wartości dodatkowych atrybutów
       * @var App\apiModels\travel\v1\prototypes\OPTIONVALUE[]
       */
-    protected $sub_options;
+    public $sub_options;
     
 
     /**
