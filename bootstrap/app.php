@@ -23,7 +23,9 @@ $app = new Laravel\Lumen\Application(
     realpath(__DIR__.'/../')
 );
 
-// $app->withFacades();
+// Required with Bschmitt\Amqp
+$app->withFacades();
+class_alias('Illuminate\Support\Facades\App', 'App');
 
 /*
 |--------------------------------------------------------------------------
@@ -75,6 +77,13 @@ $app->routeMiddleware([
 
 /*
 |--------------------------------------------------------------------------
+| Load custom configure files
+|--------------------------------------------------------------------------
+*/
+$app->configure('amqp');
+
+/*
+|--------------------------------------------------------------------------
 | Register Service Providers
 |--------------------------------------------------------------------------
 |
@@ -92,7 +101,7 @@ $app->register(App\Providers\PdfPrintingServiceProvider::class);
 $app->register(App\Providers\RequestResponseLoggerServiceProvider::class);
 $app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
 $app->register(Monarobase\CountryList\CountryListServiceProvider::class);
-$app->register(VladimirYuldashev\LaravelQueueRabbitMQ\LaravelQueueRabbitMQServiceProvider::class);
+$app->register(Bschmitt\Amqp\LumenServiceProvider::class);
 
 $app->withEloquent();
  

@@ -13,7 +13,7 @@
         "phpoffice/phpexcel": "^1.8",
         "monarobase/country-list": "~1.2.3",
         "alcohol/iso4217": "^3.0",
-        "vladimir-yuldashev/laravel-queue-rabbitmq": "5.2",
+        "bschmitt/laravel-amqp": "1.*",
         "jenssegers/mongodb": "^3.0"
     },
     "require-dev": {

@@ -45,7 +45,7 @@ class IssuedPolicyListener
         $envelope->setSendDT(new \DateTime());
         $envelope->setBody($event->policy);
 
-        app('queue')->pushRaw($envelope);
+        app('Amqp')->publish(env('RABBITMQ_ROUTING_KEY_EXPORT_POLICY'), (string) $envelope);
 
         app('log')->debug('End IssuedPolicyListener');
     }
