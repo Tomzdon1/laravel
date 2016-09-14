@@ -13,6 +13,6 @@ $app->group([
         $app->post('calculate_policy', 'PolicyController@calculate');
         $app->post('issue_policy', 'PolicyController@issue');
         $app->post('import_policies', 'PolicyController@import');
-        $app->get('policy/{id}/print', 'PolicyController@printPolicy');
-        $app->get('policy/{policy}', 'PolicyController@show');
+        $app->post('print_policy', 'PolicyController@printPolicy');
+        $app->post('search_policies', 'PolicyController@searchPolicy');
 });

@@ -49,10 +49,13 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
         $errosCounter = 0;
 
         $partnerCode = app('auth')->user()->code;
-        $offer = TravelOffer::find($this->getProductRef())->where('partner', $partnerCode)->first();
+        $offer = TravelOffer::find($this->getProductRef());
         $calculatedAmounts = $this->calculateAmounts($offer, $this);
 
         $validator = app('validator')->make(app('request')->input()[0], self::$warningValidators, [], ['calculatedAmounts' => $calculatedAmounts]);
+
+        $status = 'OK';
+        $importStatus->setMessages([]);
 
         if ($validator->fails()) {
             foreach ($validator->errors()->toArray() as $property => $error) {
@@ -60,11 +63,14 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
             }
             $status = 'WARN';
         }
+
         
         $requestedPolicy = new Policy;
         $requestedPolicy->fillFromImportRequest($this, $importStatus);
         $requestedPolicy->save();
 
+        $importStatus->setStatus($status);
+        $importStatus->setPolicyRef($requestedPolicy->id);
 
         return $importStatus;
     }

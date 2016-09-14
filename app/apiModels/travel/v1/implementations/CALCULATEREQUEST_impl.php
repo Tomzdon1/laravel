@@ -27,7 +27,7 @@ class CALCULATEREQUEST_impl extends CALCULATEREQUEST
     public function calculate()
     {
         $partnerCode = app('auth')->user()->code;
-        $offer = TravelOffer::find($this->getProductId())->where('partner', $partnerCode)->first();
+        $offer = TravelOffer::find($this->getProductId());
 
         if ($offer) {
             $calculate = new CALCULATE_impl();
