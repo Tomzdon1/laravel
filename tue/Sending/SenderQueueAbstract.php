@@ -54,7 +54,7 @@ abstract class SenderQueueAbstract {
 
         // @todo dodać logowanie do mongo o wysłanej wiadomości
 
-        app('Amqp')->publish(env('RABBITMQ_ROUTING_KEY_EXPORT_POLICY'), (string) $this->envelope);
+        app('Amqp')->publish(static::QUEUE_ROUTING_KEY, (string) $this->envelope, ['exchange' => static::QUEUE_EXCHANGE]);
         app('log')->debug('Publish ' . static::TYPE . ' in version ' . static::VERSION . ' in RabbitMQ: ' . env('RABBITMQ_ROUTING_KEY_EXPORT_POLICY'));
     }
 }

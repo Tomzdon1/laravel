@@ -8,6 +8,8 @@ class PolicySender extends SenderQueueAbstract implements SenderInterface  {
    
     const TYPE = 'policy-issue-request';
     const VERSION = '2.0.0';
+    const QUEUE_EXCHANGE = 'cp.out.all';
+    const QUEUE_ROUTING_KEY = 'cp.out.all';
 
     private $policyIssueRequest;
 
