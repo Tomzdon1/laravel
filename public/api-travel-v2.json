@@ -1,0 +1,2092 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Travel API",
+        "description": "Interfejs do obsługi produktów turystycznych oferowanych przez Towarzystwo Ubezpieczeń Europa S. A.\n\nW przypadku komunikacji protokołem SOAP wszelkie komunikaty opisywane w tym dokumencie są przesyłane przy użyciu funkcji INVOKE opisanej w dokumencie Specyfikacja_ESB.pdf.",
+        "version": "2.0-draft3",
+        "termsOfService": "",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.tueuropa.pl",
+            "email": "apisupport@tueuropa.pl"
+        }
+    },
+    "host": "api.tueuropa.pl",
+    "schemes": [
+        "https"
+    ],
+    "produces": [
+        "per \"application/json\""
+    ],
+    "paths": {
+        "/travel/v2/option-definitions": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Definicje opcji",
+                "description": "Zwrócenie definicji dostępnych opcji dla wskazanego produktu ubezpieczeniowego",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "Zestaw danych do zwrócenia definicji opcji",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/OPTION_DEFINITIONS_REQUEST"
+                        }
+                    },
+                    {
+                        "name": "customer_id",
+                        "in": "query",
+                        "description": "Identyfikator klienta otrzymany od ubezpieczyciela (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "request_id",
+                        "in": "query",
+                        "description": "Identyfikator żądania (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Definicje opcji",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/OPTION_DEFINITION"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Błędne żądanie",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/VALIDATION_ERROR"
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Błąd walidacji danych",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/VALIDATION_ERROR"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Niespodziewany błąd",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/travel/v2/quotes": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Wystawienie ofert",
+                "description": "Wystawienie dostępnych ofert dla danych wejściowych. Oferty posiadają orientacyjną składkę, która może w docelowej kalkulacji mieć inną wartość, ze względu na stosowanie różnych opcji (zniżek/zwyżek) ustalanych na etapie kalkulacji polisy. Funkcja może być wykorzystywana m.in. w porównywarkach cenowych, w przedstawieniu przybliżonej składki dla klienta bazując na minimalnej ilości danych wejściowych.",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "Zestaw danych do wystawienia ofert",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/QUOTES_REQUEST"
+                        }
+                    },
+                    {
+                        "name": "customer_id",
+                        "in": "query",
+                        "description": "Identyfikator klienta otrzymany od ubezpieczyciela (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "request_id",
+                        "in": "query",
+                        "description": "Identyfikator żądania (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Oferty",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/QUOTE"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Błędne żądanie",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/VALIDATION_ERROR"
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Błąd walidacji danych",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/VALIDATION_ERROR"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Niespodziewany błąd",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/travel/v2/policies/calculate": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Kalkulacja polisy",
+                "description": "Przeprowadzenie kalkulacji polisy. Zwrócona składka będzie taka sama jak składka polisy utworzonej na podstawie tej kalkulacji.",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "Zestaw danych do kalkulacji polisy",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CALCULATE_POLICY_REQUEST"
+                        }
+                    },
+                    {
+                        "name": "customer_id",
+                        "in": "query",
+                        "description": "Identyfikator klienta otrzymany od ubezpieczyciela (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "request_id",
+                        "in": "query",
+                        "description": "Identyfikator żądania (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Kalkulacja polisy",
+                        "schema": {
+                            "$ref": "#/definitions/CALCULATION_POLICY"
+                        }
+                    },
+                    "400": {
+                        "description": "Błędne żądanie",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/VALIDATION_ERROR"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Błąd identyfikacji klienta",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Błąd autoryzacji klienta",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Nie znaleziono żądanego zasobu",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "Błąd identyfikacji żądania w ciągu zapytań",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Błąd walidacji danych",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/VALIDATION_ERROR"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Błąd wewnętrzny serwera",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Niespodziewany błąd",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/travel/v2/policies/purchase": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Zakup polisy",
+                "description": "Stworzenie zamówienia polisy w systemie ubezpieczyciela z płatnością w systemie ubezpieczyciela. Zwrócone potwierdzenie zamówienia polisy zawiera link do płatności online. Jeżeli płatność przebiegnie pomyślnie zamówienie zostanie zrealizowane, a polisa wystawiona.",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "Zestaw danych do zakupu polisy",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/PURCHASE_POLICY_REQUEST"
+                        }
+                    },
+                    {
+                        "name": "customer_id",
+                        "in": "query",
+                        "description": "Identyfikator klienta otrzymany od ubezpieczyciela (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "request_id",
+                        "in": "query",
+                        "description": "Identyfikator żądania (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Potwierdzenie zamówienia polisy",
+                        "schema": {
+                            "$ref": "#/definitions/POLICY_ORDER"
+                        }
+                    },
+                    "400": {
+                        "description": "Błędne żądanie",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/VALIDATION_ERROR"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Błąd identyfikacji klienta",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Błąd autoryzacji klienta",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Nie znaleziono żądanego zasobu",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "Błąd identyfikacji żądania w ciągu zapytań",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Błąd walidacji danych",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/VALIDATION_ERROR"
+                            }
+                        }
+                    },
+                    "423": {
+                        "description": "Błąd blokujący utworzenie polisy",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/VALIDATION_ERROR"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Błąd wewnętrzny serwera",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Niespodziewany błąd",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/travel/v2/orders/status": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Stan zamówienia",
+                "description": "Zwrócenie stanu wskazanego zamówienia",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "Zestaw danych do sprawdzenia stanu zamówienia",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ORDER_STATUS_REQUEST"
+                        }
+                    },
+                    {
+                        "name": "customer_id",
+                        "in": "query",
+                        "description": "Identyfikator klienta otrzymany od ubezpieczyciela (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "request_id",
+                        "in": "query",
+                        "description": "Identyfikator żądania (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Status zamówienia",
+                        "schema": {
+                            "$ref": "#/definitions/ORDER_STATUS"
+                        }
+                    },
+                    "400": {
+                        "description": "Błędne żądanie",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/VALIDATION_ERROR"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Błąd identyfikacji klienta",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Błąd autoryzacji klienta",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Nie znaleziono żądanego zasobu",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "Błąd identyfikacji żądania w ciągu zapytań",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Błąd walidacji danych",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/VALIDATION_ERROR"
+                            }
+                        }
+                    },
+                    "423": {
+                        "description": "Błąd blokujący utworzenie polisy",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/VALIDATION_ERROR"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Błąd wewnętrzny serwera",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Niespodziewany błąd",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/travel/v2/policies/issue": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Wystawienie polisy",
+                "description": "Stworzenie polisy w systemie ubezpieczyciela z płatnością poza systemem ubezpieczyciela. Zwracana jest utworzona polisa. Wywołanie tej funkcji jest jednoznaczne z koniecznością przekazania składki do ubezpieczyciela.",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "Zestaw danych do stworzenia polisy",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ISSUE_POLICY_REQUEST"
+                        }
+                    },
+                    {
+                        "name": "customer_id",
+                        "in": "query",
+                        "description": "Identyfikator klienta otrzymany od ubezpieczyciela (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "request_id",
+                        "in": "query",
+                        "description": "Identyfikator żądania (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Polisa",
+                        "schema": {
+                            "$ref": "#/definitions/POLICY"
+                        }
+                    },
+                    "400": {
+                        "description": "Błędne żądanie",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/VALIDATION_ERROR"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Błąd identyfikacji klienta",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Błąd autoryzacji klienta",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Nie znaleziono żądanego zasobu",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "Błąd identyfikacji żądania w ciągu zapytań",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Błąd walidacji danych",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/VALIDATION_ERROR"
+                            }
+                        }
+                    },
+                    "423": {
+                        "description": "Błąd blokujący utworzenie polisy",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/VALIDATION_ERROR"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Błąd wewnętrzny serwera",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Niespodziewany błąd",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/travel/v2/policies/import": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Import polis",
+                "description": "Zapisanie wystawionych wcześniej polis w systemie ubezpieczyciela",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "Importowane polisy",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "description": "Zestaw danych do zaimportowania polisy",
+                            "items": {
+                                "$ref": "#/definitions/IMPORT_POLICY_REQUEST"
+                            }
+                        }
+                    },
+                    {
+                        "name": "customer_id",
+                        "in": "query",
+                        "description": "Identyfikator klienta otrzymany od ubezpieczyciela (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "request_id",
+                        "in": "query",
+                        "description": "Identyfikator żądania (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Potwierdzenie importu",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/IMPORT_POLICY_STATUS"
+                            }
+                        }
+                    },
+                    "303": {
+                        "description": "Zaimportowane, wystąpiły błędy",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/IMPORT_POLICY_STATUS"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Błędne żądanie",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/VALIDATION_ERROR"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Błąd identyfikacji klienta",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Błąd autoryzacji klienta",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Nie znaleziono żądanego zasobu",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "Błąd identyfikacji żądania w ciągu zapytań",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Błąd walidacji danych",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/VALIDATION_ERROR"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Błąd wewnętrzny serwera",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Niespodziewany błąd",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/travel/v2/policies/print": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Wydruk polisy",
+                "description": "Generowanie potwierdzenia zawarcia polisy w postaci pliku PDF",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "Żądanie wydruku potwierdzenia zawarcia polisy",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/PRINT_POLICY_REQUEST"
+                        }
+                    },
+                    {
+                        "name": "customer_id",
+                        "in": "query",
+                        "description": "Identyfikator klienta otrzymany od ubezpieczyciela (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "request_id",
+                        "in": "query",
+                        "description": "Identyfikator żądania (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Potwierdzenie polisy w postaci pliku PDF"
+                    },
+                    "400": {
+                        "description": "Błędne żądanie",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/VALIDATION_ERROR"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Błąd identyfikacji klienta",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Błąd autoryzacji klienta",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Nie znaleziono żądanego zasobu",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "Błąd identyfikacji żądania w ciągu zapytań",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Błąd walidacji danych",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/VALIDATION_ERROR"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Błąd wewnętrzny serwera",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Niespodziewany błąd",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ERROR"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "ADDRESS": {
+            "type": "object",
+            "description": "Dane adresowe",
+            "properties": {
+                "country": {
+                    "type": "string",
+                    "pattern": "^[A-Z]{2}$",
+                    "description": "Kraj (kod kraju zgodny z ISO 3166-1 alpha-2)"
+                },
+                "post_code": {
+                    "type": "string",
+                    "description": "Kod pocztowy",
+                    "minLength": 1
+                },
+                "city": {
+                    "type": "string",
+                    "description": "Miejscowość",
+                    "minLength": 1
+                },
+                "street": {
+                    "type": "string",
+                    "description": "Ulica",
+                    "minLength": 1
+                },
+                "house_no": {
+                    "type": "string",
+                    "description": "Numer domu",
+                    "minLength": 1
+                },
+                "flat_no": {
+                    "type": "string",
+                    "description": "Numer mieszkania",
+                    "minLength": 1
+                }
+            },
+            "required": [
+                "country",
+                "post_code",
+                "city",
+                "street",
+                "house_no"
+            ],
+            "example": {
+                "country": "PL",
+                "post_code": "53-413",
+                "city": "Wrocław",
+                "street": "Gwiaździsta",
+                "house_no": "62",
+                "flat_no": "6"
+            }
+        },
+        "AGREEMENT": {
+            "type": "object",
+            "description": "Zgoda (np. marketingowa)",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "description": "Treść zgody",
+                    "minLength": 1
+                },
+                "value": {
+                    "type": "boolean",
+                    "description": "Wartość zgody"
+                },
+                "code": {
+                    "type": "string",
+                    "description": "Kod zgody",
+                    "minLength": 1
+                }
+            },
+            "required": [
+                "description",
+                "value",
+                "code"
+            ],
+            "example": {
+                "description": "Oświadczam, iż przed zawarciem umowy ubezpieczeniowej zapoznałem się z Ogólnymi Warunkami Ubezpieczenia, na podstawie których zostałem objęty ochroną ubezpieczeniową.",
+                "value": true,
+                "code": "zgodam"
+            }
+        },
+        "CALCULATE_POLICY_REQUEST": {
+            "type": "object",
+            "description": "Zestaw danych do kalkulacji polisy",
+            "properties": {
+                "quote_id": {
+                    "type": "string",
+                    "description": "Identyfikator oferty",
+                    "minLength": 24
+                },
+                "product_id": {
+                    "type": "string",
+                    "description": "Identyfikator produktu",
+                    "minLength": 24
+                },
+                "data": {
+                    "$ref": "#/definitions/POLICY_DATA"
+                },
+                "policy_holder": {
+                    "$ref": "#/definitions/POLICY_HOLDER"
+                },
+                "insured": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/INSURED"
+                    },
+                    "minItems": 1,
+                    "description": "Dane ubezpieczonych"
+                }
+            },
+            "required": [
+                "product_id",
+                "data",
+                "policy_holder",
+                "insured"
+            ],
+            "example": {
+                "quote_id": "55ac435aabb4760c03fc3568",
+                "product_id": "98a7c8c7a97cc9abc8af7bbc",
+                "data": {},
+                "policy_holder": {},
+                "insured": []
+            }
+        },
+        "CALCULATION_POLICY": {
+            "type": "object",
+            "description": "Kalkulacja",
+            "properties": {
+                "calculation_id": {
+                    "type": "string",
+                    "description": "Identyfikator kalkulacji",
+                    "minLength": 24
+                },
+                "premium": {
+                    "$ref": "#/definitions/PREMIUM",
+                    "description": "Składka pobrana/należna"
+                },
+                "tariff_premium": {
+                    "$ref": "#/definitions/PREMIUM",
+                    "description": "Składka wynikająca z taryfy"
+                },
+                "due_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Data ważności kalkulacji"
+                },
+                "checksum": {
+                    "type": "string",
+                    "description": "Suma kontrolna kalkulacji",
+                    "minLength": 32
+                },
+                "promo_code_valid": {
+                    "type": "boolean",
+                    "description": "Czy kod promocyjny jest ważny i został uwzględniony"
+                }
+            },
+            "required": [
+                "calculation_id",
+                "premium",
+                "tariff_premium",
+                "due_date",
+                "checksum"
+            ],
+            "example": {
+                "calculation_id": "57ac2f43286f54131c003854",
+                "premium": {},
+                "tariff_premium": {},
+                "due_date": "2017-01-01T12:00:00+01:00",
+                "checksum": "91162629d258a876ee994e9233b2ad87",
+                "promo_code_valid": true
+            }
+        },
+        "DETAIL": {
+            "type": "object",
+            "description": "Detal oferty",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Nazwa detalu",
+                    "minLength": 1
+                },
+                "value": {
+                    "type": "string",
+                    "description": "Wartość detalu",
+                    "minLength": 1
+                }
+            },
+            "required": [
+                "name",
+                "value"
+            ],
+            "example": {
+                "name": "Koszty leczenia",
+                "value": "100 000 PLN"
+            }
+        },
+        "ERROR": {
+            "type": "object",
+            "description": "Błąd",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "description": "Opis błędu",
+                    "minLength": 1
+                }
+            },
+            "required": [
+                "description"
+            ],
+            "example": {
+                "description": "Brak uprawnień do żądanego zasobu"
+            }
+        },
+        "IMPORT_POLICY_REQUEST": {
+            "type": "object",
+            "description": "Zestaw danych do zaimportowania polisy",
+            "properties": {
+                "product_id": {
+                    "type": "string",
+                    "description": "Identyfikator produkz",
+                    "minLength": 24
+                },
+                "data": {
+                    "$ref": "#/definitions/POLICY_DATA"
+                },
+                "payment_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Data zapłaty"
+                },
+                "policy_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Data zawarcia polisy"
+                },
+                "policy_number": {
+                    "type": "string",
+                    "description": "Numer polisy",
+                    "minLength": 1
+                },
+                "policy_holder": {
+                    "$ref": "#/definitions/POLICY_HOLDER"
+                },
+                "insured": {
+                    "type": "array",
+                    "description": "Dane ubezpieczonych",
+                    "items": {
+                        "$ref": "#/definitions/INSURED"
+                    },
+                    "minItems": 1
+                },
+                "premium": {
+                    "$ref": "#/definitions/PREMIUM",
+                    "description": "Składka pobrana/należna"
+                },
+                "tariff_premium": {
+                    "$ref": "#/definitions/PREMIUM",
+                    "description": "Składka wynikająca z taryfy"
+                },
+                "netto_premium": {
+                    "$ref": "#/definitions/PREMIUM",
+                    "description": "Składka netto"
+                },
+                "solicitors": {
+                    "type": "array",
+                    "description": "Informacje o OWCA biorących udział w sprzedaży polisy; Wartości tego pola są weryfikowane a dokładnie uprawnienia agenta/owca do sprzedaży danego typu polisy",
+                    "items": {
+                        "$ref": "#/definitions/SOLICITOR"
+                    },
+                    "minItems": 1
+                }
+            },
+            "required": [
+                "product_id",
+                "data",
+                "payment_date",
+                "policy_date",
+                "policy_number",
+                "policy_holder",
+                "insured",
+                "premium",
+                "tariff_premium",
+                "netto_premium",
+                "solicitors"
+            ],
+            "example": {
+                "product_id": "98a7c8c7a97cc9abc8af7bbc",
+                "data": {},
+                "payment_date": "2017-01-01T12:00:00+01:00",
+                "policy_date": "2017-01-01T12:00:10+01:00",
+                "policy_number": "TWIND0000001234",
+                "policy_holder": {},
+                "insured": [],
+                "premium": {},
+                "tariff_premium": {},
+                "netto_premium": {},
+                "solicitors": []
+            }
+        },
+        "IMPORT_POLICY_STATUS": {
+            "type": "object",
+            "description": "Opis statusu importu polisy",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "OK",
+                        "WARN",
+                        "ERR"
+                    ],
+                    "description": "Status importu polisy"
+                },
+                "policy_id": {
+                    "type": "string",
+                    "description": "Identyfikator polisy",
+                    "minLength": 24
+                },
+                "messages": {
+                    "type": "array",
+                    "description": "Błędy importu wskazanej polisy",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "code": {
+                                "type": "string",
+                                "description": "Kod błędu",
+                                "minLength": 1
+                            },
+                            "text": {
+                                "type": "string",
+                                "description": "Opis błędu",
+                                "minLength": 1
+                            }
+                        }
+                    }
+                }
+            },
+            "required": [
+                "status",
+                "policy_id"
+            ],
+            "example": {
+                "status": "OK",
+                "policy_id": "54fc43dfabb4760c04dc3569",
+                "messages": []
+            }
+        },
+        "INSURED": {
+            "type": "object",
+            "description": "Ubezpieczony",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/PERSON_DATA"
+                },
+                "address": {
+                    "$ref": "#/definitions/ADDRESS"
+                },
+                "options": {
+                    "type": "array",
+                    "description": "Wybrane opcje dodatkowe",
+                    "items": {
+                        "$ref": "#/definitions/OPTION_VALUE"
+                    }
+                },
+                "addons": {
+                    "type": "array",
+                    "description": "Dodatkowe atrybuty",
+                    "items": {
+                        "$ref": "#/definitions/OPTION_VALUE"
+                    }
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "example": {
+                "data": {},
+                "address": {},
+                "options": [],
+                "addons": []
+            }
+        },
+        "ISSUE_POLICY_REQUEST": {
+            "type": "object",
+            "description": "Zestaw danych do stworzenia polisy",
+            "properties": {
+                "calculation_id": {
+                    "type": "string",
+                    "description": "Identyfikator kalkulacji",
+                    "minLength": 24
+                },
+                "payment_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Data zapłaty"
+                },
+                "policy_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Data zawarcia polisy"
+                },
+                "solicitors": {
+                    "type": "array",
+                    "description": "Informacje o OWCA biorących udział w sprzedaży polisy; Wartości tego pola są weryfikowane a dokładnie uprawnienia agenta/owca do sprzedaży danego typu polisy",
+                    "items": {
+                        "$ref": "#/definitions/SOLICITOR"
+                    },
+                    "minItems": 1
+                },
+                "checksum": {
+                    "type": "string",
+                    "description": "Suma kontrolna kalkulacji",
+                    "minLength": 32
+                }
+            },
+            "required": [
+                "calculation_id",
+                "payment_date",
+                "policy_date",
+                "solicitors",
+                "checksum"
+            ],
+            "example": {
+                "calculation_id": "57ac2f43286f54131c003854",
+                "payment_date": "2017-01-01T12:00:00+01:00",
+                "policy_date": "2017-01-01T12:00:10+01:00",
+                "solicitors": [],
+                "checksum": "91162629d258a876ee994e9233b2ad87"
+            }
+        },
+        "OPTION_DEFINITION": {
+            "type": "object",
+            "description": "Definicja opcji",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Nazwa opcji",
+                    "minLength": 1
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Opis opcji",
+                    "minLength": 1
+                },
+                "code": {
+                    "type": "string",
+                    "description": "Kod opcji",
+                    "minLength": 1
+                },
+                "value_type": {
+                    "type": "string",
+                    "default": "string",
+                    "enum": [
+                        "string",
+                        "number",
+                        "date",
+                        "boolean"
+                    ],
+                    "description": "Oczekiwany typ danych wartości opcji"
+                },
+                "changeable": {
+                    "type": "boolean",
+                    "description": "Czy jest możliwa zmiana wartości tej opcji"
+                },
+                "scope": {
+                    "type": "string",
+                    "enum": [
+                        "POLICY_DATA",
+                        "INSURED",
+                        "POLICY_HOLDER"
+                    ],
+                    "description": "Zakres stosowania opcji"
+                },
+                "sub_options": {
+                    "type": "array",
+                    "description": "Definicje subopcji",
+                    "items": {
+                        "$ref": "#/definitions/OPTION_DEFINITION"
+                    }
+                }
+            },
+            "required": [
+                "name",
+                "description",
+                "code",
+                "value_type",
+                "changeable",
+                "scope"
+            ],
+            "example": {
+                "name": "Komfortowa Kieszeń",
+                "description": "Komfortowa Kieszeń - ubezpieczenie telefonu komórkowego, dokumentów, portfela od kradzieży z włamaniem i rabunku podczas podróży",
+                "code": "TWKK",
+                "value_type": "number",
+                "changeable": true,
+                "Scope": "POLICY_DATA",
+                "sub_options": []
+            }
+        },
+        "OPTION_DEFINITIONS_REQUEST": {
+            "type": "object",
+            "description": "Zestaw danych do zwrócenia definicji opcji",
+            "properties": {
+                "product_id": {
+                    "type": "string",
+                    "description": "Identyfikator produktu",
+                    "minLength": 24
+                }
+            },
+            "required": [
+                "product_id"
+            ],
+            "example": {
+                "product_id": "98a7c8c7a97cc9abc8af7bbc"
+            }
+        },
+        "OPTION_VALUE": {
+            "type": "object",
+            "description": "Wartość opcji",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "description": "Kod opcji",
+                    "minLength": 1
+                },
+                "value": {
+                    "type": "string",
+                    "description": "Wartość opcji"
+                },
+                "sub_options": {
+                    "type": "array",
+                    "description": "Wartości subopcji",
+                    "items": {
+                        "$ref": "#/definitions/OPTION_VALUE"
+                    }
+                }
+            },
+            "required": [
+                "code",
+                "value"
+            ],
+            "example": {
+                "code": "TWKK",
+                "value": "5000",
+                "sub_options": []
+            }
+        },
+        "ORDER_STATUS": {
+            "type": "object",
+            "description": "Status zamówienia",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "OK",
+                        "WARN",
+                        "ERR"
+                    ],
+                    "description": "Status zamówienia"
+                }
+            },
+            "required": [
+                "status"
+            ],
+            "example": {
+                "status": "OK"
+            }
+        },
+        "ORDER_STATUS_REQUEST": {
+            "type": "object",
+            "description": "Zestaw danych do sprawdzenia stanu zamówienia",
+            "properties": {
+                "order_id": {
+                    "type": "string",
+                    "description": "Identyfikator zakupu",
+                    "minLength": 24
+                }
+            },
+            "required": [
+                "order_id"
+            ],
+            "example": {
+                "order_id": "87ba979cbafca6bacf76acbf"
+            }
+        },
+        "PERSON_DATA": {
+            "type": "object",
+            "description": "Dane osoby",
+            "properties": {
+                "first_name": {
+                    "type": "string",
+                    "description": "Imię",
+                    "minLength": 1
+                },
+                "last_name": {
+                    "type": "string",
+                    "description": "Nazwisko",
+                    "minLength": 1
+                },
+                "birth_date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Data urodzenia"
+                },
+                "pesel": {
+                    "type": "string",
+                    "description": "Numer PESEL",
+                    "pattern": "^[0-9]{11}$"
+                },
+                "nationality": {
+                    "type": "string",
+                    "pattern": "^[A-Z]{2}$",
+                    "description": "Obywatelstwo (kod kraju zgodny z ISO 3166-1 alpha-2)"
+                },
+                "document_no": {
+                    "type": "string",
+                    "description": "Numer dokumentu tożsamości",
+                    "minLength": 1
+                },
+                "business_name": {
+                    "type": "string",
+                    "description": "Nazwa działalności",
+                    "minLength": 1
+                },
+                "short_business_name": {
+                    "type": "string",
+                    "description": "Skrócona nazwa działalności",
+                    "minLength": 1
+                },
+                "nip": {
+                    "type": "string",
+                    "description": "NIP",
+                    "pattern": "^[0-9]{10}$"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "private",
+                        "sole_trader",
+                        "company"
+                    ],
+                    "description": "Typ osoby"
+                }
+            },
+            "required": [
+                "type"
+            ],
+            "example": {
+                "first_name": "Jan",
+                "last_name": "Kowalski",
+                "birth_date": "1950-01-01",
+                "pesel": "50112502677",
+                "nationality": "PL",
+                "document_no": "AJG122578",
+                "type": "private"
+            }
+        },
+        "POLICY": {
+            "type": "object",
+            "description": "Polisa",
+            "properties": {
+                "policy_id": {
+                    "type": "string",
+                    "description": "Identyfikator polisy",
+                    "minLength": 24
+                },
+                "policy_number": {
+                    "type": "string",
+                    "description": "Numer polisy",
+                    "minLength": 1
+                },
+                "policy_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Data zawarcia polisy"
+                },
+                "premium": {
+                    "$ref": "#/definitions/PREMIUM",
+                    "description": "Składka pobrana/należna"
+                },
+                "tariff_premium": {
+                    "$ref": "#/definitions/PREMIUM",
+                    "description": "Składka wynikająca z taryfy"
+                },
+                "netto_premium": {
+                    "$ref": "#/definitions/PREMIUM",
+                    "description": "Składka netto"
+                },
+                "data": {
+                    "$ref": "#/definitions/POLICY_DATA"
+                },
+                "policy_holder": {
+                    "$ref": "#/definitions/POLICY_HOLDER"
+                },
+                "insured": {
+                    "type": "array",
+                    "description": "Dane ubezpieczonych",
+                    "items": {
+                        "$ref": "#/definitions/INSURED"
+                    },
+                    "minItems": 1
+                },
+                "checksum": {
+                    "type": "string",
+                    "description": "Suma kontrolna polisy",
+                    "minLength": 32
+                }
+            },
+            "required": [
+                "policy_id",
+                "policy_number",
+                "policy_date",
+                "premium",
+                "tariff_premium",
+                "data",
+                "policy_holder",
+                "checksum"
+            ],
+            "example": {
+                "policy_id": "54fc43dfabb4760c04dc3569",
+                "policy_number": "TWIND0000001234",
+                "policy_date": "2017-01-01T12:00:10+01:00",
+                "premium": {},
+                "traiff_premium": {},
+                "netto_premium": {},
+                "data": {},
+                "policy_holder": {},
+                "insured": [],
+                "chekcsum": "6a645004f620c691731b5a292c25d37f"
+            }
+        },
+        "POLICY_DATA": {
+            "type": "object",
+            "description": "Dane polisy",
+            "properties": {
+                "promo_code": {
+                    "type": "string",
+                    "description": "Kod promocyjny",
+                    "minLength": 1
+                },
+                "start_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Data rozpoczęcia ochrony"
+                },
+                "end_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Data zakończenia ochrony"
+                },
+                "abroad": {
+                    "type": "boolean",
+                    "description": "Czy ubezpieczony przebywa za granicą Polski w momencie przystąpienia do ubezpieczenia (informacja ważna ze względu na ewentualną karencję w ochronie ubezpieczeniowej)"
+                },
+                "destination": {
+                    "type": "string",
+                    "pattern": "^[A-Z]{2}$",
+                    "description": "Cel podróży (kod kraju określony w ISO 3166-1 alpha-2 lub EU - Unia Europejska lub WR - świat)"
+                },
+                "options": {
+                    "type": "array",
+                    "description": "Wybrane opcje dodatkowe",
+                    "items": {
+                        "$ref": "#/definitions/OPTION_VALUE"
+                    }
+                },
+                "addons": {
+                    "type": "array",
+                    "description": "Dodatkowe atrybuty",
+                    "items": {
+                        "$ref": "#/definitions/OPTION_VALUE"
+                    }
+                }
+            },
+            "required": [
+                "start_date",
+                "end_date"
+            ],
+            "example": {
+                "promo_code": "KOD_PROMOCYJNY",
+                "start_date": "2017-01-02T00:00:00+01:00",
+                "end_date": "2017-01-03T00:00:00+01:00",
+                "abroad": true,
+                "destination": "EU",
+                "options": [],
+                "addons": []
+            }
+        },
+        "POLICY_HOLDER": {
+            "type": "object",
+            "description": "Dane bezpieczającego",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/PERSON_DATA"
+                },
+                "address": {
+                    "$ref": "#/definitions/ADDRESS"
+                },
+                "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "Adres e-mail"
+                },
+                "telephone": {
+                    "type": "string",
+                    "description": "Numer telefonu",
+                    "pattern": "^\\+((48[0-9]{9})|((?!48)[0-9]{6,15}))$"
+                },
+                "agreements": {
+                    "type": "array",
+                    "description": "Wyrażonych/odrzucone zgodach",
+                    "items": {
+                        "$ref": "#/definitions/AGREEMENT"
+                    }
+                },
+                "options": {
+                    "type": "array",
+                    "description": "Wybrane opcje dodatkowe",
+                    "items": {
+                        "$ref": "#/definitions/OPTION_VALUE"
+                    }
+                },
+                "addons": {
+                    "type": "array",
+                    "description": "Dodatkowe atrybuty",
+                    "items": {
+                        "$ref": "#/definitions/OPTION_VALUE"
+                    }
+                }
+            },
+            "required": [
+                "data",
+                "agreements"
+            ],
+            "example": {
+                "data": {},
+                "address": {},
+                "email": "j.kowalski@poczta.pl",
+                "telephone": "+48123456789",
+                "agreements": [],
+                "options": [],
+                "addons": []
+            }
+        },
+        "PREMIUM": {
+            "type": "object",
+            "description": "Składka",
+            "properties": {
+                "value_base": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Kwota składki w walucie podstawowej"
+                },
+                "value_base_currency": {
+                    "type": "string",
+                    "pattern": "^[A-Z]{3}$",
+                    "description": "Waluta podstawowa (kod waluty zgodny z ISO 4217)"
+                },
+                "value": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Kwota składki"
+                },
+                "value_currency": {
+                    "type": "string",
+                    "pattern": "^[A-Z]{3}$",
+                    "description": "Waluta (kod waluty zgodny z ISO 4217)"
+                },
+                "currency_rate": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Kurs waluty"
+                },
+                "date_rate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Data kursu"
+                }
+            },
+            "required": [
+                "value_base",
+                "value_base_currency",
+                "value",
+                "value_currency",
+                "currency_rate",
+                "date_rate"
+            ],
+            "example": {
+                "value_base": 119.58,
+                "value_base_currency": "PLN",
+                "value": 29,
+                "value_currency": "EUR",
+                "currency_rate": 4.1234,
+                "date_rate": "2017-01-01T12:00:00+01:00"
+            }
+        },
+        "PREPERSON": {
+            "type": "object",
+            "description": "Podstawowe dane osobowe",
+            "properties": {
+                "birth_date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Data urodzenia"
+                },
+                "options": {
+                    "type": "array",
+                    "description": "Wybrane opcje dodatkowe",
+                    "items": {
+                        "$ref": "#/definitions/OPTION_VALUE"
+                    }
+                },
+                "addons": {
+                    "type": "array",
+                    "description": "Dodatkowe atrybuty",
+                    "items": {
+                        "$ref": "#/definitions/OPTION_VALUE"
+                    }
+                }
+            },
+            "required": [
+                "birth_date"
+            ],
+            "example": {
+                "birth_date": "1950-01-01",
+                "options": [],
+                "addons": []
+            }
+        },
+        "PRINT_POLICY_REQUEST": {
+            "type": "object",
+            "description": "Żądanie wydruku potwierdzenia zawarcia polisy",
+            "properties": {
+                "policy_id": {
+                    "type": "string",
+                    "description": "Identyfikator polisy",
+                    "minLength": 24
+                },
+                "checksum": {
+                    "type": "string",
+                    "description": "Suma kontrolna polisy",
+                    "minLength": 32
+                }
+            },
+            "required": [
+                "policy_id",
+                "checksum"
+            ],
+            "example": {
+                "policy_id": "54fc43dfabb4760c04dc3569",
+                "chekcsum": "6a645004f620c691731b5a292c25d37f"
+            }
+        },
+        "POLICY_ORDER": {
+            "type": "object",
+            "description": "Potwierdzenie zamówienia polisy",
+            "properties": {
+                "order_id": {
+                    "type": "string",
+                    "description": "Identyfikator zakupu",
+                    "minLength": 24
+                },
+                "redirect_url": {
+                    "type": "string",
+                    "description": "Adres do płatności online, pod który należy przekierować kupującego",
+                    "minLength": 1
+                }
+            },
+            "required": [
+                "order_id",
+                "redirect_url"
+            ],
+            "example": {
+                "order_id": "87ba979cbafca6bacf76acbf",
+                "redirect_url": "https://payment-form.url/?payment_id=987654321"
+            }
+        },
+        "PURCHASE_POLICY_REQUEST": {
+            "type": "object",
+            "description": "Zestaw danych do zakupu polisy",
+            "properties": {
+                "calculation_id": {
+                    "type": "string",
+                    "description": "Identyfikator kalkulacji",
+                    "minLength": 24
+                },
+                "continue_url": {
+                    "type": "string",
+                    "description": "Adres URL, na który kupujący zostanie przekierowany po zakończeniu procesu płatności. W przypadku braku autoryzacji do URL'a doklejany jest parametr error=501. Adres ma tylko charakter informacyjny, nie można na jego podstawie podejmować żadnych decyzji.",
+                    "minLength": 1
+                },
+                "notify_url": {
+                    "type": "string",
+                    "description": "Adres URL, na który przychodzić będą powiadomienia o zmianie statusu zakupu polisy",
+                    "minLength": 1
+                },
+                "solicitors": {
+                    "type": "array",
+                    "description": "Informacje o OWCA biorących udział w sprzedaży polisy; Wartości tego pola są weryfikowane a dokładnie uprawnienia agenta/owca do sprzedaży danego typu polisy",
+                    "items": {
+                        "$ref": "#/definitions/SOLICITOR"
+                    },
+                    "minItems": 1
+                },
+                "checksum": {
+                    "type": "string",
+                    "description": "Suma kontrolna kalkulacji",
+                    "minLength": 32
+                }
+            },
+            "required": [
+                "calculation_id",
+                "solicitors",
+                "checksum"
+            ],
+            "example": {
+                "calculation_id": "57ac2f43286f54131c003854",
+                "continue_url": "https://insurance-form.url/continue?insurance_id=123456789",
+                "notify_url": "https://api.insurance-form.url/notify?insurance_id=123456789",
+                "solicitors": [],
+                "checksum": "91162629d258a876ee994e9233b2ad87"
+            }
+        },
+        "QUOTE": {
+            "type": "object",
+            "description": "Oferta",
+            "properties": {
+                "quote_id": {
+                    "type": "string",
+                    "description": "Identyfikator oferty",
+                    "minLength": 24
+                },
+                "product_id": {
+                    "type": "string",
+                    "description": "Identyfikator produktu",
+                    "minLength": 24
+                },
+                "premium": {
+                    "$ref": "#/definitions/PREMIUM",
+                    "description": "Składka pobrana/należna"
+                },
+                "tariff_premium": {
+                    "$ref": "#/definitions/PREMIUM",
+                    "description": "Składka wynikająca z taryfy"
+                },
+                "promo_code_valid": {
+                    "type": "boolean",
+                    "description": "Czy kod promocyjny jest prawidłowy"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Opis wariantu",
+                    "minLength": 1
+                },
+                "details": {
+                    "type": "array",
+                    "description": "Detale oferty",
+                    "items": {
+                        "$ref": "#/definitions/DETAIL"
+                    }
+                }
+            },
+            "required": [
+                "quote_id",
+                "product_id",
+                "premium",
+                "tariff_premium",
+                "description",
+                "details"
+            ],
+            "example": {
+                "quote_id": "55ac435aabb4760c03fc3568",
+                "product_id": "98a7c8c7a97cc9abc8af7bbc",
+                "premium": {},
+                "tariff_premium": {},
+                "promo_code_valid": true,
+                "description": "Travel World Standard",
+                "details": []
+            }
+        },
+        "QUOTES_REQUEST": {
+            "type": "object",
+            "description": "Zestaw danych do wystawienia ofert",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/POLICY_DATA"
+                },
+                "prepersons": {
+                    "type": "array",
+                    "description": "Podstawowe informacje o ubezpieczonych",
+                    "items": {
+                        "$ref": "#/definitions/PREPERSON"
+                    },
+                    "minItems": 1
+                }
+            },
+            "required": [
+                "data",
+                "prepersons"
+            ],
+            "example": {
+                "data": {},
+                "prepersons": []
+            }
+        },
+        "SOLICITOR": {
+            "type": "object",
+            "description": "Osoba Wykonująca Czynności Agencyjne (OWCA)",
+            "properties": {
+                "solicitor_id": {
+                    "type": "string",
+                    "description": "Identyfikator OWCA w rejestrze KNF"
+                },
+                "agent_id": {
+                    "type": "string",
+                    "description": "Identyfikator agenta ubezpieczeniowego w rejestrze agentów ubezpieczeniowych (RUA)"
+                },
+                "permissions": {
+                    "type": "array",
+                    "description": "Wykorzystane uprawnienia",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "ADM",
+                            "DDZ",
+                            "ZAW"
+                        ],
+                        "description": "Rodzaj uprawnienia, która wykorzustuje agent podczas kontaktu z klientem (ADM - administracja, DDZ -  doprowadzenie, ZAW - zawarcie)"
+                    }
+                }
+            },
+            "required": [
+                "solicitor_id",
+                "agent_id",
+                "permissions"
+            ],
+            "example": {
+                "solicitor_id": "YYYY",
+                "agent_id": "XXXX",
+                "permissions": [
+                    "ADM"
+                ]
+            }
+        },
+        "VALIDATION_ERROR": {
+            "type": "object",
+            "description": "Błąd walidacji",
+            "properties": {
+                "property": {
+                    "type": "string",
+                    "description": "Nazwa atrybutu, którego dotyczą błędy"
+                },
+                "errors": {
+                    "type": "array",
+                    "description": "Opisy błędów",
+                    "items": {
+                        "type": "string",
+                        "description": "Opis błędu",
+                        "minLength": 1
+                    },
+                    "minItems": 1
+                }
+            },
+            "required": [
+                "property",
+                "errors"
+            ],
+            "example": {
+                "property": "end_date",
+                "errors": [
+                    "Data zakończenie nie może być wcześniejsza niż data rozpoczęcia",
+                    "Data zakończenia nie może być pusta"
+                ]
+            }
+        }
+    }
+}

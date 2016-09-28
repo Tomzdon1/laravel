@@ -3,11 +3,9 @@
 namespace App\Listeners;
 
 use App\Events\IssuedPolicyEvent;
-use App\apiModels\internal\v1 as internal;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use App\apiModels\internal\v2 as internal;
 
-class IssuedPolicyListener
+class IssuedPolicyListener extends Listener
 {
     /**
      * Create the event listener.
@@ -28,24 +26,52 @@ class IssuedPolicyListener
     {
         app('log')->debug('Start IssuedPolicyListener');
 
-        // Do usunięcia stąd (np. przechowywać w bazie)
-        $event->policy->product['company'] = 'M';
+        // @todo Do usunięcia stąd (np. przechowywać w bazie)
+        $event->policy->product['company'] = ['M'];
 
-        $api = new internal\API();
-        $api->setName(array_keys($event->policy->partner->apis)[0]);
-        $api->setVersion($event->policy->partner->apis[$api->getName()]['version']);
+        $policySender = app()->make('PolicySender');
+                
+        try {
+            $PolicyIssueRequest = internal\Mappers\PolicyIssueRequestMapper::fromModel($event->policy, $policySender->getBody());
+        } catch (\InvalidArgumentException $exception) {
+            $policySender->setStatus($policySender::STATUS_ERR);
+        }
 
-        $envelope = new internal\ENVELOPE();
-        $envelope->setType('policy');
-        $envelope->setApi($api);
-        $envelope->setStatus($event->policy->status);
-        $envelope->setErrors($event->policy->errors);
-        $envelope->setCompany($event->policy->product['company']);
-        $envelope->setSrcId($event->policy->policyId);
-        $envelope->setSendDT(new \DateTime());
-        $envelope->setBody($event->policy);
+        $policySender->setErrors($event->policy->errors);
+        $policySender->setSrcId($event->policy->id);
+        $policySender->setCompany($event->policy->product['company']);
+        $policySender->send();
 
-        app('Amqp')->publish(env('RABBITMQ_ROUTING_KEY_EXPORT_POLICY'), (string) $envelope);
+        if (isset($event->policy->policy_holder->telephone) && isset($event->policy->product['configuration']['smsCampId']) &&
+            ($event->policy->getSource() == 'import' && $event->policy->product['configuration']['smsOnImport']) || 
+            ($event->policy->getSource() == 'issue' && $event->policy->product['configuration']['smsOnIssue'])) {
+
+                $smsSender = app()->make('SmsSender');
+
+                try {
+                    $SmsSendRequest = $smsSender->getBody();
+
+                    $messageValues = [];
+
+                    $messageValueClassName = substr($SmsSendRequest->swaggerTypes()['message'], 0, -2);
+                    $messageValue = new $messageValueClassName;
+                    $messageValue->setKey('wiad_par_z01');
+                    // @todo parser template
+                    // $messageValue->setValue(Parser::parser($template, $event->policy));
+                    $messageValue->setValue('wiadomosc testowa z CP');
+                    $messageValues[] = $messageValue;
+
+                    $SmsSendRequest->setCampaignId($event->policy->product['configuration']['smsCampId']);
+                    $SmsSendRequest->setMessage($messageValues);
+                    $SmsSendRequest->setTelephone($event->policy->policy_holder->telephone);
+                } catch (\InvalidArgumentException $exception) {
+                    $smsSender->setStatus($policySender::STATUS_ERR);
+                }
+
+                $smsSender->setSrcId($event->policy->id);
+                $smsSender->setCompany($event->policy->product['company']);
+                $smsSender->send();
+        }
 
         app('log')->debug('End IssuedPolicyListener');
     }

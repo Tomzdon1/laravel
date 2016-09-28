@@ -98,6 +98,8 @@ $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
 $app->register(App\Providers\EsbServiceProvider::class);
 $app->register(App\Providers\PdfPrintingServiceProvider::class);
+$app->register(App\Providers\SMSSendingServiceProvider::class);
+$app->register(App\Providers\PolicySendingServiceProvider::class);
 $app->register(App\Providers\RequestResponseLoggerServiceProvider::class);
 $app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
 $app->register(Monarobase\CountryList\CountryListServiceProvider::class);

@@ -21,8 +21,7 @@ class ADDRESS_impl extends ADDRESS
      * @var array
      */
     public static $validators = [
-//        'value_base_currency' => 'currency_code',
-//        'value_currency' => 'currency_code',
+        // 
     ];
     
     /**
