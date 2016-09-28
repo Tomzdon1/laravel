@@ -47,6 +47,10 @@ abstract class SenderQueueAbstract {
         $this->setSendDate(new \DateTime());
         $this->setType(static::TYPE);
         $this->setVersion(static::VERSION);
+
+        if (!$this->getErrors()) {
+            $this->setErrors([]);
+        }
         
         if (!$this->valid()) {
             $this->setStatus(self::STATUS_ERR);
