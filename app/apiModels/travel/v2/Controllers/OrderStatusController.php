@@ -9,7 +9,6 @@ class OrderStatusController extends Controller
 {
     public function show(Request $request)
     {
-    	// @todo usunąć po zaimplementowaniu
         return Response::HTTP_NOT_IMPLEMENTED;
 
         $quoteRequest = $request->attributes->get('deserializedRequestObject');

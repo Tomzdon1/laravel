@@ -10,7 +10,7 @@ class QuoteController extends Controller
 {
     public function get(Request $request)
     {
-    	// @todo deprecated API
+    	// deprecated API
         return Response::HTTP_GONE;
 
         $quoteRequest = $request->attributes->get('deserializedRequestObject');

@@ -17,7 +17,6 @@ class PolicyController extends Controller
 
     public function purchase(Request $request)
     {
-        // @todo usunąć po zaimplementowaniu
         return Response::HTTP_NOT_IMPLEMENTED;
 
         $purchaseRequest = $request->attributes->get('deserializedRequestObject');
@@ -47,7 +46,6 @@ class PolicyController extends Controller
 
     public function printPolicy(Request $request, $policyId)
     {
-        // @todo usunąć po zaimplementowaniu
         return Response::HTTP_NOT_IMPLEMENTED;
         
         $policy = Policy::find($policyId)->first();
@@ -72,7 +70,6 @@ class PolicyController extends Controller
 
     public function show(Request $request, $policyId=null)
     {
-        // @todo usunąć po zaimplementowaniu
         return Response::HTTP_NOT_IMPLEMENTED;
 
         return Policy::find($policyId)->first();

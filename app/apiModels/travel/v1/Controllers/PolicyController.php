@@ -11,7 +11,7 @@ class PolicyController extends Controller
 {
     public function calculate(Request $request)
     {
-        // @todo deprecated API
+        // deprecated API
         return Response::HTTP_GONE;
 
         $calculateRequest = $request->attributes->get('deserializedRequestObject');
@@ -20,7 +20,7 @@ class PolicyController extends Controller
 
     public function issue(Request $request)
     {
-        // @todo deprecated API
+        // deprecated API
         return Response::HTTP_GONE;
 
         $issueRequest = $request->attributes->get('deserializedRequestObject');
@@ -41,7 +41,7 @@ class PolicyController extends Controller
 
     public function printPolicy(Request $request, $policyId = null)
     {
-        // @todo deprecated API
+        // deprecated API
         return Response::HTTP_GONE;
         
         $policy = Policy::find($policyId)->first();
@@ -66,7 +66,7 @@ class PolicyController extends Controller
 
     public function searchPolicy(Request $request)
     {
-        // @todo deprecated API
+        // deprecated API
         return Response::HTTP_GONE;
     }
 }
