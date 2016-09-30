@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\IssuedPolicyEvent;
+// @todo usunac zaleznosci internal - mapowanie w policysender
 use App\apiModels\internal\v2 as internal;
 
 class IssuedPolicyListener extends Listener
@@ -56,9 +57,9 @@ class IssuedPolicyListener extends Listener
                     $messageValueClassName = substr($SmsSendRequest->swaggerTypes()['message'], 0, -2);
                     $messageValue = new $messageValueClassName;
                     $messageValue->setKey('wiad_par_z01');
-                    // @todo parser template
-                    // $messageValue->setValue(Parser::parser($template, $event->policy));
-                    $messageValue->setValue('wiadomosc testowa z CP');
+                    $template = '[CP TEST] policyId: [id]'; 
+                    $parser = app()->make('TemplateParserFromObject');
+                    $messageValue->setValue($parser::parse($template, $event->policy));
                     $messageValues[] = $messageValue;
 
                     $SmsSendRequest->setCampaignId($event->policy->product['configuration']['smsCampId']);

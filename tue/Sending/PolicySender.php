@@ -4,7 +4,7 @@ namespace Tue\Sending;
 
 use App\apiModels\internal\v2 as internal;
 
-class PolicySender extends SenderQueueAbstract implements SenderInterface  {
+class PolicySender extends SenderQueueAbstract {
    
     const TYPE = 'policy-issue-request';
     const VERSION = '2.0.0';

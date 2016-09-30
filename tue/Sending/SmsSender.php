@@ -4,7 +4,7 @@ namespace Tue\Sending;
 
 use App\apiModels\internal\v2 as internal;
 
-class SmsSender extends SenderQueueAbstract implements SenderInterface  {
+class SmsSender extends SenderQueueAbstract {
    
     const TYPE = 'sms-send-request';
     const VERSION = '2.0.0';

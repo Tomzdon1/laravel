@@ -4,7 +4,7 @@ namespace Tue\Sending;
 
 use App\apiModels\internal\v2 as internal;
 
-abstract class SenderQueueAbstract {
+abstract class SenderQueueAbstract implements SenderInterface {
 
     const STATUS_OK = 'OK';
     const STATUS_WARN = 'WARN';
