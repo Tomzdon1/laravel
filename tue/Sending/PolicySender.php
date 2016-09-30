@@ -3,6 +3,7 @@
 namespace Tue\Sending;
 
 use App\apiModels\internal\v2 as internal;
+use App\Policy;
 
 class PolicySender extends SenderQueueAbstract {
    
@@ -17,5 +18,9 @@ class PolicySender extends SenderQueueAbstract {
         parent::__construct();
 
         $this->setBody(new internal\Model\PolicyIssueRequest());
+    }
+    
+    public function setPolicy(Policy $policy) {
+        internal\Mappers\PolicyIssueRequestMapper::fromModel($policy, $this->getBody());
     }
 }
