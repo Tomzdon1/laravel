@@ -8,11 +8,13 @@ use App\apiModels\travel\v1\implementations\POLICY_impl;
 use App\apiModels\travel\v1\traits\AmountsCalculator;
 use App\TravelOffer;
 use App\Policy;
+use App\apiModels\travel\v1\Traits;
 
 class IMPORTREQUEST_impl extends IMPORTREQUEST
 {
     use AmountsCalculator;
-
+    use Traits\SwaggerDeserializationTrait;
+    
     /**
      * Valdators for model
      * @var array

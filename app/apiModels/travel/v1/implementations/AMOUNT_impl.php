@@ -13,9 +13,12 @@
 namespace App\apiModels\travel\v1\implementations;
 
 use \App\apiModels\travel\v1\prototypes\AMOUNT;
+use App\apiModels\travel\v1\Traits;
 
 class AMOUNT_impl extends AMOUNT
 {
+    use Traits\SwaggerDeserializationTrait;
+    
     /**
      * Valdators for model
      * @var array

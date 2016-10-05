@@ -14,10 +14,12 @@
 namespace App\apiModels\travel\v1\implementations;
 
 use App\apiModels\travel\v1\prototypes\DETAIL;
+use App\apiModels\travel\v1\Traits;
 
 class DETAIL_impl extends DETAIL
 {
-
+    use Traits\SwaggerDeserializationTrait;
+    
     /**
      * Valdators for model
      * @var array
