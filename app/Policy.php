@@ -24,6 +24,13 @@ class Policy extends Eloquent
     ];
 
     /**
+     * Source of Policy
+     *
+     * @var string
+     */
+    private $source;
+
+    /**
      * The "booting" method of the model.
      *
      * @return void
@@ -41,16 +48,37 @@ class Policy extends Eloquent
         });
     }
 
+    public function getSource() {
+        return $this->source;
+    }
+
+    public function setSource($source) {
+        $this->source = $source;
+    }
+
+    // @todo zastapic funkcje mapperem osobnym dla kazdego api
     public function fillFromImportRequest($importRequest, $importStatus, $partner = null) {
         if ($partner == null) {
             $partner = app('auth')->user();
         }
+
+        $this->setSource('import');
         
         $this->status = $importStatus->getStatus();
         $this->errors = $importStatus->getMessages();
-        $this->quote_ref = $importStatus->getQuoteRef();
+        
+        // zgodnosc z api v1
+        if (method_exists($importStatus, 'getQuoteRef')) {
+            $this->quote_ref = $importStatus->getQuoteRef();
+        }
 
-        $this->product_ref = $importRequest->getProductRef();
+        // zgodnosc z api v1
+        if (method_exists($importRequest, 'getProductRef')) {
+            $this->product_ref = $importRequest->getProductRef();
+        } else {
+            $this->product_id = $importRequest->getProductId();
+        }
+
         $this->policy_date = $importRequest->getPolicyDate();
         $this->policy_number = $importRequest->getPolicyNumber();
         $this->start_date = $importRequest->getData()->getStartDate();
@@ -59,11 +87,31 @@ class Policy extends Eloquent
         $this->destination = $importRequest->getData()->getDestination();
         $this->policy_holder = $importRequest->getPolicyHolder();
         $this->insured = $importRequest->getInsured();
-        $this->amount = $importRequest->getAmount();
-        $this->tariff_amount = $importRequest->getTariffAmount();
-        $this->netto_amount = $importRequest->getNettoAmount();
+        
+        // zgodnosc z api v1
+        if (method_exists($importRequest, 'getAmount')) {
+            $this->premium = $importRequest->getAmount();
+            $this->tariff_premium = $importRequest->getTariffAmount();
+            $this->netto_premium = $importRequest->getNettoAmount();
+        } else {
+            $this->premium = $importRequest->getPremium();
+            $this->tariff_premium = $importRequest->getTariffPremium();
+            $this->netto_premium = $importRequest->getNettoPremium();
+        }
+        
         $this->partner = $partner;
-        $this->product = TravelOffer::find($this->product_ref);
+
+        // zgodnosc z api v1
+        if (isset($this->product_ref)) {
+            $this->product = TravelOffer::find($this->product_ref);
+        } else {
+            $this->product = TravelOffer::find($this->product_id);
+        }
+        
         $this->DateTime = \DateTime::createFromFormat('U.u', microtime(true))->format("YmdHisu");
+    }
+
+    public function fillFromIssueRequest() {
+        $this->source = 'issue';
     }
 }

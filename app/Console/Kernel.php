@@ -24,6 +24,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //
+        $schedule->call(function () {
+            app('log')->info('Call everyMinute scheduler');
+            
+            dispatch(new \App\Jobs\ConsumeCPQueue);
+            
+            app('log')->info('Finish everyMinute scheduler');
+        })->everyMinute();
     }
 }

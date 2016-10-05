@@ -8,11 +8,13 @@ use App\apiModels\travel\v1\implementations\POLICY_impl;
 use App\apiModels\travel\v1\traits\AmountsCalculator;
 use App\TravelOffer;
 use App\Policy;
+use App\apiModels\travel\v1\Traits;
 
 class IMPORTREQUEST_impl extends IMPORTREQUEST
 {
     use AmountsCalculator;
-
+    use Traits\SwaggerDeserializationTrait;
+    
     /**
      * Valdators for model
      * @var array
@@ -49,10 +51,13 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
         $errosCounter = 0;
 
         $partnerCode = app('auth')->user()->code;
-        $offer = TravelOffer::find($this->getProductRef())->where('partner', $partnerCode)->first();
+        $offer = TravelOffer::find($this->getProductRef());
         $calculatedAmounts = $this->calculateAmounts($offer, $this);
 
         $validator = app('validator')->make(app('request')->input()[0], self::$warningValidators, [], ['calculatedAmounts' => $calculatedAmounts]);
+
+        $status = 'OK';
+        $importStatus->setMessages([]);
 
         if ($validator->fails()) {
             foreach ($validator->errors()->toArray() as $property => $error) {
@@ -60,11 +65,14 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
             }
             $status = 'WARN';
         }
+
         
         $requestedPolicy = new Policy;
         $requestedPolicy->fillFromImportRequest($this, $importStatus);
         $requestedPolicy->save();
 
+        $importStatus->setStatus($status);
+        $importStatus->setPolicyRef($requestedPolicy->id);
 
         return $importStatus;
     }

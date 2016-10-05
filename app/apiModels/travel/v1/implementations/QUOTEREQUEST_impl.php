@@ -4,10 +4,12 @@ namespace App\apiModels\travel\v1\implementations;
 
 use App\apiModels\travel\v1\prototypes\QUOTEREQUEST;
 use App\TravelOffer;
+use App\apiModels\travel\v1\Traits;
 
 class QUOTEREQUEST_impl extends QUOTEREQUEST
 {
-
+    use Traits\SwaggerDeserializationTrait;
+    
     /**
      * Valdators for model
      * @var array

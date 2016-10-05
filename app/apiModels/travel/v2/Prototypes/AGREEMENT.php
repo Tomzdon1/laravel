@@ -1,12 +1,11 @@
 <?php
-
 /**
- * Api
+ * AGREEMENT
  *
  * PHP version 5
  *
  * @category Class
- * @package  App\apiModels\travel\v1
+ * @package  App\apiModels\travel\v2
  * @author   http://github.com/swagger-api/swagger-codegen
  * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link     https://github.com/swagger-api/swagger-codegen
@@ -32,70 +31,80 @@
  * Do not edit the class manually.
  */
 
-namespace App\apiModels\internal\v1;
+namespace App\apiModels\travel\v2\Prototypes ;
 
 use \ArrayAccess;
-
 /**
- * Api Class Doc Comment
+ * AGREEMENT Class Doc Comment
  *
  * @category    Class
- * @description Informacje dotyczące użytej wersji API
- * @package     App\apiModels\travel\v1
+ * @description Zgoda (np. marketingowa)
+ * @package     App\apiModels\travel\v2
  * @author      http://github.com/swagger-api/swagger-codegen
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class API extends \App\apiModels\ApiModel implements ArrayAccess
+class AGREEMENT extends \App\apiModels\ApiModel implements ArrayAccess 
 {
-
     /**
-     * Array of property to type mappings. Used for (de)serialization
-     * @var string[]
-     */
-    public static $swaggerTypes = array(
-        'name' => 'string',
-        'version' => 'string'
+      * Array of property to type mappings. Used for (de)serialization 
+      * @var string[]
+      */
+    static $swaggerTypes = array(
+        'description' => 'string',
+        'value' => 'bool',
+        'code' => 'string'
     );
-
-    /**
-     * Array of attributes where the key is the local name, and the value is the original name
-     * @var string[]
-     */
-    public static $attributeMap = array(
-        'name' => 'name',
-        'version' => 'version'
+  
+    /** 
+      * Array of attributes where the key is the local name, and the value is the original name
+      * @var string[] 
+      */
+    static $attributeMap = array(
+        'description' => 'description',
+        'value' => 'value',
+        'code' => 'code'
     );
-
+  
     /**
-     * Array of attributes to setter functions (for deserialization of responses)
-     * @var string[]
-     */
-    public static $setters = array(
-        'name' => 'setName',
-        'version' => 'setVersion'
+      * Array of attributes to setter functions (for deserialization of responses)
+      * @var string[]
+      */
+    static $setters = array(
+        'description' => 'setDescription',
+        'value' => 'setValue',
+        'code' => 'setCode'
     );
-
+  
     /**
-     * Array of attributes to getter functions (for serialization of requests)
-     * @var string[]
-     */
-    public static $getters = array(
-        'name' => 'getName',
-        'version' => 'getVersion'
+      * Array of attributes to getter functions (for serialization of requests)
+      * @var string[]
+      */
+    static $getters = array(
+        'description' => 'getDescription',
+        'value' => 'getValue',
+        'code' => 'getCode'
     );
-
+  
+    
     /**
-     * $name Nazwa API
-     * @var string
-     */
-    public $name;
-
+      * $description Treść zgody
+      * @var string
+      */
+    public $description;
+    
     /**
-     * $version Wersja API
-     * @var string
-     */
-    public $version;
+      * $value Wartość zgody
+      * @var bool
+      */
+    public $value;
+    
+    /**
+      * $code Kod zgody
+      * @var string
+      */
+    public $code;
+    
 
     /**
      * Constructor
@@ -104,76 +113,98 @@ class API extends \App\apiModels\ApiModel implements ArrayAccess
     public function __construct(array $data = null)
     {
         if ($data != null) {
-            $this->name = $data["name"];
-            $this->version = $data["version"];
+            $this->description = $data["description"];
+            $this->value = $data["value"];
+            $this->code = $data["code"];
         }
     }
-
+    
     /**
-     * Gets name
+     * Gets description
      * @return string
      */
-    public function getName()
+    public function getDescription()
     {
-        return $this->name;
+        return $this->description;
     }
-
+  
     /**
-     * Sets name
-     * @param string $name Nazwa API
+     * Sets description
+     * @param string $description Treść zgody
      * @return $this
      */
-    public function setName($name)
+    public function setDescription($description)
     {
-
-        $this->name = $name;
+        
+        $this->description = $description;
         return $this;
     }
-
+    
     /**
-     * Gets version
+     * Gets value
+     * @return bool
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+  
+    /**
+     * Sets value
+     * @param bool $value Wartość zgody
+     * @return $this
+     */
+    public function setValue($value)
+    {
+        
+        $this->value = $value;
+        return $this;
+    }
+    
+    /**
+     * Gets code
      * @return string
      */
-    public function getVersion()
+    public function getCode()
     {
-        return $this->version;
+        return $this->code;
     }
-
+  
     /**
-     * Sets version
-     * @param string $version Wersja API
+     * Sets code
+     * @param string $code Kod zgody
      * @return $this
      */
-    public function setVersion($version)
+    public function setCode($code)
     {
-
-        $this->version = $version;
+        
+        $this->code = $code;
         return $this;
     }
-
+    
     /**
      * Returns true if offset exists. False otherwise.
-     * @param  integer $offset Offset
+     * @param  integer $offset Offset 
      * @return boolean
      */
     public function offsetExists($offset)
     {
         return isset($this->$offset);
     }
-
+  
     /**
      * Gets offset.
-     * @param  integer $offset Offset
-     * @return mixed
+     * @param  integer $offset Offset 
+     * @return mixed 
      */
     public function offsetGet($offset)
     {
         return $this->$offset;
     }
-
+  
     /**
      * Sets value based on offset.
-     * @param  integer $offset Offset
+     * @param  integer $offset Offset 
      * @param  mixed   $value  Value to be set
      * @return void
      */
@@ -181,17 +212,17 @@ class API extends \App\apiModels\ApiModel implements ArrayAccess
     {
         $this->$offset = $value;
     }
-
+  
     /**
      * Unsets offset.
-     * @param  integer $offset Offset
+     * @param  integer $offset Offset 
      * @return void
      */
     public function offsetUnset($offset)
     {
         unset($this->$offset);
     }
-
+  
     /**
      * Gets the string presentation of the object
      * @return string

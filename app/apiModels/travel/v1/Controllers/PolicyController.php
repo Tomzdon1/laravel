@@ -11,14 +11,17 @@ class PolicyController extends Controller
 {
     public function calculate(Request $request)
     {
+        // deprecated API
+        return Response::HTTP_GONE;
+
         $calculateRequest = $request->attributes->get('deserializedRequestObject');
         return $calculateRequest->calculate();
     }
 
     public function issue(Request $request)
     {
-        // @todo usunąć po zaimplementowaniu
-        return Response::HTTP_NOT_IMPLEMENTED;
+        // deprecated API
+        return Response::HTTP_GONE;
 
         $issueRequest = $request->attributes->get('deserializedRequestObject');
         return $issueRequest->issue();
@@ -36,18 +39,10 @@ class PolicyController extends Controller
         return $importStatuses;
     }
 
-    public function show(Request $request, $policyId=null)
+    public function printPolicy(Request $request, $policyId = null)
     {
-        // @todo usunąć po zaimplementowaniu
-        return Response::HTTP_NOT_IMPLEMENTED;
-
-        return Policy::find($policyId)->first();
-    }
-
-    public function printPolicy(Request $request, $policyId)
-    {
-        // @todo usunąć po zaimplementowaniu
-        return Response::HTTP_NOT_IMPLEMENTED;
+        // deprecated API
+        return Response::HTTP_GONE;
         
         $policy = Policy::find($policyId)->first();
 
@@ -67,5 +62,11 @@ class PolicyController extends Controller
         }
 
         return (new Response($pdf->File()))->header('Content-Type', $pdf->ContentType());
+    }
+
+    public function searchPolicy(Request $request)
+    {
+        // deprecated API
+        return Response::HTTP_GONE;
     }
 }

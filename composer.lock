@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9a3ae657d9a53cff42dd4d95c71e9b5a",
-    "content-hash": "3722ca4107599a2b44fc5bf0dd706350",
+    "hash": "05c8c17679e8f52a5f35bca5b0e009cd",
+    "content-hash": "68f658cea14f3ddf0d4f8d3371751b0a",
     "packages": [
         {
             "name": "alcohol/iso4217",
@@ -59,6 +59,60 @@
                 "library"
             ],
             "time": "2015-11-04 11:48:24"
+        },
+        {
+            "name": "bschmitt/laravel-amqp",
+            "version": "1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bschmitt/laravel-amqp.git",
+                "reference": "57421e038d3a8f7a16413faadedf24f37f1ee8a0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bschmitt/laravel-amqp/zipball/57421e038d3a8f7a16413faadedf24f37f1ee8a0",
+                "reference": "57421e038d3a8f7a16413faadedf24f37f1ee8a0",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": ">=5.1 <5.3",
+                "php": ">=5.5.9",
+                "php-amqplib/php-amqplib": "2.*"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Bschmitt\\Amqp\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Björn Schmitt",
+                    "email": "code@bjoern.io"
+                }
+            ],
+            "description": "AMQP wrapper for Laravel and Lumen to publish and consume messages",
+            "keywords": [
+                "AMQP",
+                "Björn Schmitt",
+                "bschmitt",
+                "laravel",
+                "laravel5",
+                "lumen",
+                "message queue",
+                "package",
+                "queue",
+                "rabbitmq"
+            ],
+            "time": "2016-06-29 07:23:30"
         },
         {
             "name": "container-interop/container-interop",
@@ -3789,45 +3843,6 @@
             "time": "2012-11-27 09:51:19"
         },
         {
-            "name": "vladimir-yuldashev/laravel-queue-rabbitmq",
-            "version": "5.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/vladimir-yuldashev/laravel-queue-rabbitmq.git",
-                "reference": "e501804e43caa08f07f04af19a1dfa161c654c3c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/vladimir-yuldashev/laravel-queue-rabbitmq/zipball/e501804e43caa08f07f04af19a1dfa161c654c3c",
-                "reference": "e501804e43caa08f07f04af19a1dfa161c654c3c",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/queue": "5.2.*",
-                "illuminate/support": "5.2.*",
-                "php": ">=5.5.9",
-                "php-amqplib/php-amqplib": "2.6.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "VladimirYuldashev\\LaravelQueueRabbitMQ": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Vladimir Yuldashev",
-                    "email": "misterio92@gmail.com"
-                }
-            ],
-            "description": "RabbitMQ driver for Laravel Queue",
-            "time": "2016-06-23 18:21:24"
-        },
-        {
             "name": "vlucas/phpdotenv",
             "version": "v2.3.0",
             "source": {
@@ -4276,6 +4291,45 @@
                 "fixtures"
             ],
             "time": "2016-04-29 12:21:54"
+        },
+        {
+            "name": "vladimir-yuldashev/laravel-queue-rabbitmq",
+            "version": "5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vladimir-yuldashev/laravel-queue-rabbitmq.git",
+                "reference": "e501804e43caa08f07f04af19a1dfa161c654c3c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vladimir-yuldashev/laravel-queue-rabbitmq/zipball/e501804e43caa08f07f04af19a1dfa161c654c3c",
+                "reference": "e501804e43caa08f07f04af19a1dfa161c654c3c",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/queue": "5.2.*",
+                "illuminate/support": "5.2.*",
+                "php": ">=5.5.9",
+                "php-amqplib/php-amqplib": "2.6.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "VladimirYuldashev\\LaravelQueueRabbitMQ": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vladimir Yuldashev",
+                    "email": "misterio92@gmail.com"
+                }
+            ],
+            "description": "RabbitMQ driver for Laravel Queue",
+            "time": "2016-06-23 18:21:24"
         }
     ],
     "aliases": [],

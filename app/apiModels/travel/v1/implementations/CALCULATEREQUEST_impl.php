@@ -4,9 +4,12 @@ namespace App\apiModels\travel\v1\implementations;
 
 use App\apiModels\travel\v1\prototypes\CALCULATEREQUEST;
 use App\TravelOffer;
+use App\apiModels\travel\v1\Traits;
 
 class CALCULATEREQUEST_impl extends CALCULATEREQUEST
 {
+    use Traits\SwaggerDeserializationTrait;
+    
     /**
      * Valdators for model
      * @var array
@@ -27,7 +30,7 @@ class CALCULATEREQUEST_impl extends CALCULATEREQUEST
     public function calculate()
     {
         $partnerCode = app('auth')->user()->code;
-        $offer = TravelOffer::find($this->getProductId())->where('partner', $partnerCode)->first();
+        $offer = TravelOffer::find($this->getProductId());
 
         if ($offer) {
             $calculate = new CALCULATE_impl();
