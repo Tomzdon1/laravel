@@ -47,7 +47,7 @@ class SendSMSNotificationIssuedPolicy extends Listener
                     $messageValue->setValue($parser::parse($template, $event->policy));
                     $messageValues[] = $messageValue;
 
-                    $SmsSendRequest->setCampaignId($event->policy->product['configuration']['smsCampId']);
+                    $SmsSendRequest->setCampaignId((string)$event->policy->product['configuration']['smsCampId']);
                     $SmsSendRequest->setMessage($messageValues);
                     $SmsSendRequest->setTelephone($event->policy->policy_holder->telephone);
                 } catch (\InvalidArgumentException $exception) {
