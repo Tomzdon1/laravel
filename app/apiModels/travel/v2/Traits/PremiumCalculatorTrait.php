@@ -28,7 +28,10 @@ trait PremiumCalculatorTrait {
     {
         $this->withNettoPremium = $withNettoPremium;
     }
-
+    
+    /**
+    * Calculate premiums and set them
+    */
     public function recalculatePremiums()
     {
         $premiums = $this->calculatePremiums();
@@ -40,7 +43,10 @@ trait PremiumCalculatorTrait {
             $this->setNettoPremium($premiums['netto_premium']);
         }
     }
-
+    
+    /**
+    * Calculate premiums and return them
+    */
     public function calculatePremiums()
     {
         if ($this->offer) {
