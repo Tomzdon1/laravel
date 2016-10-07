@@ -16,6 +16,8 @@ class PolicyController extends Controller
     {
         $calculateRequest = $request->attributes->get('deserializedRequestObject');
         
+        $offer = TravelOffer::find($calculateRequest->getProductId());
+        
         // @todo uncomment below after add feauture (przeniesienie kalkulacji do uslugi kalkulacji)
         // $calculationCalaculator = app()->make('calculationCalaculator');
         // $calculatedCalculation = $calculationCalaculator->calculate($calculateRequest);
@@ -23,7 +25,7 @@ class PolicyController extends Controller
         
         // @todo remove below block after add feauture (przeniesienie kalkulacji do uslugi kalkulacji)
         $calculateRequest->setCalculateRequest($calculateRequest);
-        $calculateRequest->setOffer(TravelOffer::find($calculateRequest->getProductId()));
+        $calculateRequest->setOffer($offer);
         $calculatedPremiums = $calculateRequest->calculatePremiums();
         // remove this and above
         
@@ -31,9 +33,12 @@ class PolicyController extends Controller
         $calculationPolicyResponse->setPremium($calculatedPremiums['premium']);
         $calculationPolicyResponse->setTariffPremium($calculatedPremiums['tariff_premium']);
         
-        //@todo brak obslugi waznosci kalkulacji - wyliczanie i zapisywanie
-        //$calculationPolicyResponse->setDueDate();
-        
+        $calculatedDueDate = new \DateTime();
+        $calculatedDueDate->add(new \DateInterval($offer->configuration['calculationMaxExpirationTime']));
+        $startDate = $calculateRequest->getData()->getStartDate();
+        $dueDate = min($calculatedDueDate, $startDate);
+        $calculationPolicyResponse->setDueDate($dueDate->format(\DateTime::ATOM));
+
         //@todo brak obslugi checksum - wyliczanie i zapisywanie
         //$calculationPolicyResponse->setChecksum();
         
