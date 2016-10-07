@@ -72,9 +72,10 @@ class ObjectSerializer
             }
             return $data;
         } elseif (is_object($data)) {
-
-            if (method_exists($data, 'toJson')) {
+            if ($data instanceof \JsonSerializable) {
                 return $data;
+            } else if (method_exists($data, 'toJson')) {
+                return (string) $data;
             }
 
             $values = array();
