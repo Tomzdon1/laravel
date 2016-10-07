@@ -8,13 +8,42 @@ use App\Policy;
 use App\TravelOffer;
 use Symfony\Component\HttpFoundation\Response as Response;
 use App\apiModels\travel\v2\Implementations;
+use App\apiModels\travel\v2\Mappers;
 
 class PolicyController extends Controller
 {
     public function calculate(Request $request)
     {
         $calculateRequest = $request->attributes->get('deserializedRequestObject');
-        return $calculateRequest->calculate();
+        
+        // @todo uncomment below after add feauture (przeniesienie kalkulacji do uslugi kalkulacji)
+        // $calculationCalaculator = app()->make('calculationCalaculator');
+        // $calculatedCalculation = $calculationCalaculator->calculate($calculateRequest);
+        // $calucaltedPremiums = $calculatedCalculation->getPremiums();
+        
+        // @todo remove below block after add feauture (przeniesienie kalkulacji do uslugi kalkulacji)
+        $calculateRequest->setCalculateRequest($calculateRequest);
+        $calculateRequest->setOffer(TravelOffer::find($calculateRequest->getProductId()));
+        $calculatedPremiums = $calculateRequest->calculatePremiums();
+        // remove this and above
+        
+        $calculationPolicyResponse = new Implementations\CALCULATIONPOLICY_impl;
+        $calculationPolicyResponse->setPremium($calculatedPremiums['premium']);
+        $calculationPolicyResponse->setTariffPremium($calculatedPremiums['tariff_premium']);
+        
+        //@todo brak obslugi waznosci kalkulacji - wyliczanie i zapisywanie
+        //$calculationPolicyResponse->setDueDate();
+        
+        //@todo brak obslugi checksum - wyliczanie i zapisywanie
+        //$calculationPolicyResponse->setChecksum();
+        
+        $calculation = Mappers\CalculationMapper::fromCalculationPolicy($calculationPolicyResponse, $calculateRequest);
+        $calculation->partner_id = app('auth')->user()->id;
+        $calculation->save();
+        
+        $calculationPolicyResponse->setCalculationId($calculation->id);
+        
+        return $calculationPolicyResponse;
     }
 
     public function purchase(Request $request)
@@ -43,9 +72,6 @@ class PolicyController extends Controller
         // $policyCalaculator = app()->make('PolicyCalaculator');
 
         foreach ($importRequests as $importRequest) {
-
-            $partnerCode = app('auth')->user()->code;
-            
             // @todo uncomment below after add feauture (przeniesienie kalkulacji do uslugi kalkulacji)
             // $calculatedPolicy = $policyCalaculator->calculate($importRequest);
             // $calucaltedPremiums = $calculatedPolicy->getPremiums();
@@ -58,24 +84,24 @@ class PolicyController extends Controller
 
             $validator = app('validator')->make(app('request')->input()[0], $importRequest::$warningValidators, [], ['calculatedAmounts' => $calculatedPremiums]);
 
-            $importPolicyStatus = new Implementations\IMPORTPOLICYSTATUS_impl;
+            $importPolicyStatusResponse = new Implementations\IMPORTPOLICYSTATUS_impl;
 
             if ($validator->fails()) {
                 foreach ($validator->errors()->toArray() as $property => $error) {
-                    $importPolicyStatus->addMessage($property, implode(', ', $error));
+                    $importPolicyStatusResponse->addMessage($property, implode(', ', $error));
                 }
-                $importPolicyStatus->setStatus($importPolicyStatus::STATUS_WARN);
+                $importPolicyStatusResponse->setStatus($importPolicyStatusResponse::STATUS_WARN);
             } else {
-                $importPolicyStatus->setStatus($importPolicyStatus::STATUS_OK);
+                $importPolicyStatusResponse->setStatus($importPolicyStatusResponse::STATUS_OK);
             }
             
             $requestedPolicy = new Policy;
             // @todo mapper na policy per api (na pewno bez importPolicyStatus)
-            $requestedPolicy->fillFromImportRequest($importRequest, $importPolicyStatus);
+            $requestedPolicy->fillFromImportRequest($importRequest, $importPolicyStatusResponse);
             $requestedPolicy->save();
 
-            $importPolicyStatus->setPolicyId($requestedPolicy->id);
-            $importStatuses[] = $importPolicyStatus;
+            $importPolicyStatusResponse->setPolicyId($requestedPolicy->id);
+            $importStatuses[] = $importPolicyStatusResponse;
         }
 
         return $importStatuses;

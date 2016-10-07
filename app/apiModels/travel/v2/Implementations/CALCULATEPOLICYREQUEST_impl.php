@@ -2,13 +2,15 @@
 
 namespace App\apiModels\travel\v2\Implementations;
 
-use App\apiModels\travel\v2\Prototypes\CALCULATEREQUEST;
+use App\apiModels\travel\v2\Prototypes\CALCULATEPOLICYREQUEST;
+use App\TravelOffer;
 use App\apiModels\travel\v2\Traits;
 
-class CALCULATEREQUEST_impl extends CALCULATEREQUEST
+class CALCULATEPOLICYREQUEST_impl extends CALCULATEPOLICYREQUEST
 {
     use Traits\SwaggerDeserializationTrait;
-
+    use Traits\PremiumCalculatorTrait;
+    
     /**
      * Valdators for model
      * @var array

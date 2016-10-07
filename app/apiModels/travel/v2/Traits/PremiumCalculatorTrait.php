@@ -19,6 +19,7 @@ trait PremiumCalculatorTrait {
         $this->offer = $offer;
     }
 
+    // ta funkcja jest celowa, pomoze przy przenoszeniu funkcjonalnosci do klasy
     public function setCalculateRequest($calculateRequest)
     {
         $this->calculateRequest = $calculateRequest;
@@ -36,7 +37,7 @@ trait PremiumCalculatorTrait {
     {
         $premiums = $this->calculatePremiums();
         
-        $this->setPremium($premiums['tariff_premium']);
+        $this->setPremium($premiums['premium']);
         $this->setTariffPremium($premiums['tariff_premium']);
 
         if ($this->withNettoPremium) {
