@@ -75,7 +75,7 @@ class ObjectSerializer
             if ($data instanceof \JsonSerializable) {
                 return $data;
             } else if (method_exists($data, 'toJson')) {
-                return (string) $data;
+                return (string)$data;
             }
 
             $values = array();
