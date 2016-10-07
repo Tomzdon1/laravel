@@ -74,7 +74,7 @@ class ObjectSerializer
         } elseif (is_object($data)) {
 
             if (method_exists($data, 'toJson')) {
-                return (string)$data;
+                return $data;
             }
 
             $values = array();
