@@ -126,7 +126,7 @@ class PolicyController extends Controller
                 $importPolicyStatusResponse->setStatus($importPolicyStatusResponse::STATUS_OK);
             }
             
-            $requestedPolicy = new Policy;
+            $requestedPolicy = new App\Policy;
             // @todo mapper na policy per api (na pewno bez importPolicyStatus)
             $requestedPolicy->fillFromImportRequest($importRequest, $importPolicyStatusResponse);
             $requestedPolicy->save();
