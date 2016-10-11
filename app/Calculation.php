@@ -2,9 +2,9 @@
 
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
-class Quote extends Eloquent 
+class Calculation extends Eloquent 
 {
-	 /**
+	/**
      * The attributes that aren't mass assignable.
      *
      * @var array
@@ -12,7 +12,7 @@ class Quote extends Eloquent
     protected $guarded = [
         //
     ];
-
+    
     /**
      * Validators of model atributes
      *
@@ -21,7 +21,7 @@ class Quote extends Eloquent
     public static $validators = [
         //
     ];
-    
+
     /**
      * The "booting" method of the model.
      *

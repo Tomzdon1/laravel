@@ -26,14 +26,14 @@ class RequestResponseLogger
         $requestBody = json_decode($request->getContent());
 
         if (isset($requestBody->quote_ref)) {
-            $this->requestLog = app('db')->collection('quotes')->find(substr($requestBody->quote_ref, 0, 24));
+            $this->requestLog = app('db')->collection('flow')->find(substr($requestBody->quote_ref, 0, 24));
         }
 
         if (empty($this->requestLog)) {
             $this->requestLog['partnerCode'] = $request->input('customer_id');
             $this->requestLog['startPath'] = $request->getPathInfo();
 
-            $this->requestLog['_id'] = app('db')->collection('quotes')->insertGetId($this->requestLog);
+            $this->requestLog['_id'] = app('db')->collection('flow')->insertGetId($this->requestLog);
         }
 
         if ($request->has('request_id')) {
@@ -43,7 +43,7 @@ class RequestResponseLogger
         $this->requestLog[$request->getPathInfo()][$this->requestDate]['request'] = $requestBody;
 
 
-        app('db')->collection('quotes')->where('_id', $this->requestLog['_id'])->update($this->requestLog);
+        app('db')->collection('flow')->where('_id', $this->requestLog['_id'])->update($this->requestLog);
 
         $request->attributes->add(['requestId' => (string) $this->requestLog['_id']]);
 
@@ -66,7 +66,7 @@ class RequestResponseLogger
         $this->requestLog[$request->getPathInfo()][$this->requestDate]['response'] = $this->responseBody;
 
         try {
-            app('db')->collection('quotes')->where('_id', $this->requestLog['_id'])->update($this->requestLog);
+            app('db')->collection('flow')->where('_id', $this->requestLog['_id'])->update($this->requestLog);
         } catch (\Exception $e) {
             app('log')->error('Can not log response to database');
         }

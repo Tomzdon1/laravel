@@ -36,6 +36,7 @@ class SendIssuedPolicy extends Listener
             $policySender->setStatus($policySender::STATUS_ERR);
         }
 
+        $policySender->setStatus($event->policy->status);
         $policySender->setErrors($event->policy->errors);
         $policySender->setSrcId($event->policy->id);
         $policySender->setCompany($event->policy->product['company']);

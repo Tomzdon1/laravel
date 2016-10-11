@@ -32,6 +32,7 @@ class PolicyIssueRequestMapper
         $policyIssueRequest->setAddons([]);
         $policyIssueRequest->setPolicyHolder($policy->policy_holder);
         $policyIssueRequest->setInsured($policy->insured);
+        $policyIssueRequest->setSolicitors($policy->solicitors);
         $policyIssueRequest->setPremium($policy->premium);
         $policyIssueRequest->setTariffPremium($policy->tariff_premium);
         $policyIssueRequest->setNettoPremium($policy->netto_premium);

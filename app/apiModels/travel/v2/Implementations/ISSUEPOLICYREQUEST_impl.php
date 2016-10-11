@@ -2,10 +2,10 @@
 
 namespace App\apiModels\travel\v2\Implementations;
 
-use App\apiModels\travel\v2\Prototypes\CALCULATEREQUEST;
+use App\apiModels\travel\v2\Prototypes\ISSUEPOLICYREQUEST;
 use App\apiModels\travel\v2\Traits;
 
-class CALCULATEREQUEST_impl extends CALCULATEREQUEST
+class ISSUEPOLICYREQUEST_impl extends ISSUEPOLICYREQUEST
 {
     use Traits\SwaggerDeserializationTrait;
 
@@ -14,7 +14,8 @@ class CALCULATEREQUEST_impl extends CALCULATEREQUEST
      * @var array
      */
     public static $validators = [
-        //
+        'calculation_id' => 'valid_calculation_id',
+        'policy_date.date' => 'bail|before_equal:now|valid_calculation_due_date:calculation_id',
     ];
 
     /**

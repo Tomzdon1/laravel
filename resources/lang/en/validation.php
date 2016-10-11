@@ -96,6 +96,8 @@ return [
     'amount_value' => 'The value of :attribute (:value) is different from the calculation (:calculation).',
     'correct_calculation' => 'Data used for the calculation are incompatible with GCI.',
     'product_ref' => 'The value of :attribute is invalid.',
+    'valid_calculation_id' => 'The calculation is not exists.',
+    'valid_calculation_due_date' => 'The calculation has expired.',
 
     'custom' => [
         'attribute-name' => [

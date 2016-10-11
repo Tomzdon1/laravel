@@ -85,8 +85,15 @@ class Policy extends Eloquent
         $this->end_date = $importRequest->getData()->getEndDate();
         $this->abroad = $importRequest->getData()->getAbroad();
         $this->destination = $importRequest->getData()->getDestination();
+        
+        // zgodnosc z api v2
+        if (method_exists($importRequest->getData(), 'getOptions')) {
+            $this->options = $importRequest->getData()->getOptions();
+        }
+        
         $this->policy_holder = $importRequest->getPolicyHolder();
         $this->insured = $importRequest->getInsured();
+        $this->solicitors = $importRequest->getSolicitors();
         
         // zgodnosc z api v1
         if (method_exists($importRequest, 'getAmount')) {

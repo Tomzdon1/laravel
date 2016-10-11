@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -168,6 +169,26 @@ class AppServiceProvider extends ServiceProvider
          */
         app('validator')->extend('productRef', function ($attribute, $value, $parameters, $validator) {
             return !empty(app('db')->collection('travel_offers')->find($value));
+        });
+        
+        /**
+         *   Validate calculation reference.
+         *
+         */
+        app('validator')->extend('validCalculationId', function ($attribute, $value, $parameters, $validator) {
+            return !empty(App\Calculation::find($value));
+        });
+        
+        /**
+         *   Validate product reference.
+         *
+         */
+        app('validator')->extend('validCalculationDueDate', function ($attribute, $value, $parameters, $validator) {
+            $calculationId = array_get($validator->getData(), $parameters[0], null);
+
+            $calculation = App\Calculation::find($calculationId);
+            
+            return $calculation ? strtotime($calculation->due_date) > strtotime($value) : false;
         });
     }
 

@@ -54,6 +54,7 @@ abstract class SenderQueueAbstract implements SenderInterface {
         
         if (!$this->valid()) {
             $this->setStatus(self::STATUS_ERR);
+            // @todo nie dodawane sa bledy walidacji koperty (i nieco slusznie, bo bledy dotycza body, ale status juz wszystkiego :-( )
         }
 
         // @todo dodać logowanie do mongo o wysłanej wiadomości

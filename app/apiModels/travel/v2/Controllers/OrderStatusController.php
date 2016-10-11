@@ -10,8 +10,5 @@ class OrderStatusController extends Controller
     public function show(Request $request)
     {
         return Response::HTTP_NOT_IMPLEMENTED;
-
-        $quoteRequest = $request->attributes->get('deserializedRequestObject');
-        return $quoteRequest->show();
     }
 }

@@ -537,15 +537,11 @@ class Envelope implements ArrayAccess
      */
     public function __toString()
     {
-        try {
         if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
             return json_encode(\App\apiModels\internal\v2\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
         }
 
         return json_encode(\App\apiModels\internal\v2\ObjectSerializer::sanitizeForSerialization($this));
-    } catch (\Exception $e) {
-        dd($e);
-    }
     }
 }
 
