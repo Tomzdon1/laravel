@@ -65,13 +65,13 @@ class IMPORTREQUEST_impl extends IMPORTREQUEST
             }
             $status = 'WARN';
         }
-
+        
+        $importStatus->setStatus($status);
         
         $requestedPolicy = new Policy;
         $requestedPolicy->fillFromImportRequest($this, $importStatus);
         $requestedPolicy->save();
-
-        $importStatus->setStatus($status);
+        
         $importStatus->setPolicyRef($requestedPolicy->id);
 
         return $importStatus;
