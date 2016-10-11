@@ -23,13 +23,6 @@ class Calculation extends Eloquent
     ];
 
     /**
-     * Source of Policy
-     *
-     * @var string
-     */
-    private $source;
-
-    /**
      * The "booting" method of the model.
      *
      * @return void
@@ -37,7 +30,7 @@ class Calculation extends Eloquent
     protected static function boot()
     {
         parent::boot();
-
+        
         static::addGlobalScope('partner', function(Builder $builder) {
             $builder->where('partner_id', app('auth')->user()->id);
         });
