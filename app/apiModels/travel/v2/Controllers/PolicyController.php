@@ -4,8 +4,7 @@ namespace App\apiModels\travel\v2\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Policy;
-use App\TravelOffer;
+use App;
 use Symfony\Component\HttpFoundation\Response as Response;
 use App\apiModels\travel\v2\Implementations;
 use App\apiModels\travel\v2\Mappers;
@@ -16,7 +15,7 @@ class PolicyController extends Controller
     {
         $calculateRequest = $request->attributes->get('deserializedRequestObject');
         
-        $offer = TravelOffer::find($calculateRequest->getProductId());
+        $offer = App\TravelOffer::find($calculateRequest->getProductId());
         
         // @todo uncomment below after add feauture (przeniesienie kalkulacji do uslugi kalkulacji)
         // $calculationCalaculator = app()->make('calculationCalaculator');
@@ -54,18 +53,45 @@ class PolicyController extends Controller
     public function purchase(Request $request)
     {
         return Response::HTTP_NOT_IMPLEMENTED;
-
-        $purchaseRequest = $request->attributes->get('deserializedRequestObject');
-        return $purchaseRequest->purchaseRequest();
     }
 
     public function issue(Request $request)
     {
-        // @todo usunąć po zaimplementowaniu
-        return Response::HTTP_NOT_IMPLEMENTED;
+        $issuePolicyRequest = $request->attributes->get('deserializedRequestObject');
+        
+        $calculation = App\Calculation::find($issuePolicyRequest->getCalculationId());
+        
+        // // @todo uncomment below after add feauture (przeniesienie kalkulacji do uslugi kalkulacji)
+        // // $calculationCalaculator = app()->make('calculationCalaculator');
+        // // $calculatedCalculation = $calculationCalaculator->calculate($calculateRequest);
+        // // $calucaltedPremiums = $calculatedCalculation->getPremiums();
+        
+        // // @todo remove below block after add feauture (przeniesienie kalkulacji do uslugi kalkulacji)
+        // $calculateRequest->setCalculateRequest($calculateRequest);
+        // $calculateRequest->setOffer($offer);
+        // $calculatedPremiums = $calculateRequest->calculatePremiums();
+        // // remove this and above
+        
+        // $calculationPolicyResponse = new Implementations\CALCULATIONPOLICY_impl;
+        // $calculationPolicyResponse->setPremium($calculatedPremiums['premium']);
+        // $calculationPolicyResponse->setTariffPremium($calculatedPremiums['tariff_premium']);
+        
+        // $calculatedDueDate = new \DateTime();
+        // $calculatedDueDate->add(new \DateInterval($offer->configuration['calculationMaxExpirationTime']));
+        // $startDate = $calculateRequest->getData()->getStartDate();
+        // $dueDate = min($calculatedDueDate, $startDate);
+        // $calculationPolicyResponse->setDueDate($dueDate->format(\DateTime::ATOM));
 
-        $issueRequest = $request->attributes->get('deserializedRequestObject');
-        return $issueRequest->issue();
+        // //@todo brak obslugi checksum - wyliczanie i zapisywanie
+        // //$calculationPolicyResponse->setChecksum();
+        
+        // $calculation = Mappers\CalculationMapper::fromCalculationPolicy($calculationPolicyResponse, $calculateRequest);
+        // $calculation->partner_id = app('auth')->user()->id;
+        // $calculation->save();
+        
+        // $calculationPolicyResponse->setCalculationId($calculation->id);
+        
+        // return $calculationPolicyResponse;
     }
 
     public function import(Request $request)
@@ -83,7 +109,7 @@ class PolicyController extends Controller
             
             // @todo remove below block after add feauture (przeniesienie kalkulacji do uslugi kalkulacji)
             $importRequest->setCalculateRequest($importRequest);
-            $importRequest->setOffer(TravelOffer::find($importRequest->getProductId()));
+            $importRequest->setOffer(App\TravelOffer::find($importRequest->getProductId()));
             $importRequest->setWithNettoPremium(true);
             $calculatedPremiums = $importRequest->calculatePremiums();
 
@@ -116,7 +142,7 @@ class PolicyController extends Controller
     {
         return Response::HTTP_NOT_IMPLEMENTED;
         
-        $policy = Policy::find($policyId)->first();
+        $policy = App\Policy::find($policyId)->first();
 
         try {
             $template_name = $request->user()->apis['travel']['printTemplateSettings']['name'];
@@ -140,6 +166,6 @@ class PolicyController extends Controller
     {
         return Response::HTTP_NOT_IMPLEMENTED;
 
-        return Policy::find($policyId)->first();
+        return App\Policy::find($policyId)->first();
     }
 }

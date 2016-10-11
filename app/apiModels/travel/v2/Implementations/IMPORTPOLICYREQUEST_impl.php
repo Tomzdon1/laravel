@@ -3,8 +3,6 @@
 namespace App\apiModels\travel\v2\Implementations;
 
 use App\apiModels\travel\v2\Prototypes\IMPORTPOLICYREQUEST;
-use App\TravelOffer;
-use App\Policy;
 use App\apiModels\travel\v2\Traits;
 
 class IMPORTPOLICYREQUEST_impl extends IMPORTPOLICYREQUEST
