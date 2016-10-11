@@ -8,16 +8,16 @@ use App\apiModels\travel\v2\Mappers\DetailMapper;
 
 class QuoteMapper
 {
-    public static function fromModels($offers)
+    public static function fromOfferModels($offers)
     {
     	$qoutes = [];
         foreach ($offers as $offer) {
-        	$qoutes[] = self::fromModel($offer);
+        	$qoutes[] = self::fromOfferModel($offer);
         }
         return $qoutes;
     }
 
-    public static function fromModel(TravelOffer $offer)
+    public static function fromOfferModel(TravelOffer $offer)
     {
 		$quote = new QUOTE_impl();
         $quote->setOffer($offer);

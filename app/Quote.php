@@ -9,7 +9,9 @@ class Quote extends Eloquent
      *
      * @var array
      */
-    protected $guarded = [];
+    protected $guarded = [
+        //
+    ];
 
     /**
      * Validators of model atributes
@@ -19,4 +21,18 @@ class Quote extends Eloquent
     public static $validators = [
         //
     ];
+    
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::addGlobalScope('partner', function($builder) {
+            $builder->where('partner_id', app('auth')->user()->id);
+        });
+    }
 }

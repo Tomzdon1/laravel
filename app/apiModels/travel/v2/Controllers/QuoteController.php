@@ -5,7 +5,7 @@ namespace App\apiModels\travel\v2\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\TravelOffer;
-use App\apiModels\travel\v2\Mappers\QuoteMapper;
+use App\apiModels\travel\v2\Mappers;
 
 class QuoteController extends Controller
 {
@@ -19,12 +19,16 @@ class QuoteController extends Controller
         $quotes = [];
         $quoteNumber = 0;
 
-        foreach (QuoteMapper::fromModels($offers) as $quote) {
-            $quote->setQuoteId(app('request')->attributes->get('requestId') . $quoteNumber++);
+        foreach (Mappers\QuoteMapper::fromOfferModels($offers) as $quote) {
             $quote->setCalculateRequest($quoteRequest);
             $quote->setPromoCodeValid(false);
             $quote->recalculatePremiums();
-            $quotes[] = $quote;
+            
+            $quoteModel = Mappers\QuoteModelMapper::fromQuote($quote, $quoteRequest);
+            $quoteModel->save();
+            
+            $quote->setQuoteId($quoteModel->id);
+            $quotes[] = $quote;           
         }
 
         return $quotes;
