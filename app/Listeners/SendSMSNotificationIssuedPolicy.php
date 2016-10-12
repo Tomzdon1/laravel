@@ -28,7 +28,9 @@ class SendSMSNotificationIssuedPolicy extends Listener
         // @todo Do usunięcia stąd (np. przechowywać w bazie)
         $event->policy->product['company'] = ['M'];
 
-        if (isset($event->policy->policy_holder->telephone) && isset($event->policy->product['configuration']['smsCampId']) &&
+        if (isset($event->policy->policy_holder->telephone) &&
+            isset($event->policy->product['configuration']['smsTemplate']) &&
+            isset($event->policy->product['configuration']['smsCampId']) &&
             ($event->policy->getSource() == 'import' && $event->policy->product['configuration']['smsOnImport']) || 
             ($event->policy->getSource() == 'issue' && $event->policy->product['configuration']['smsOnIssue'])) {
 
@@ -42,7 +44,7 @@ class SendSMSNotificationIssuedPolicy extends Listener
                     $messageValueClassName = substr($SmsSendRequest->swaggerTypes()['message'], 0, -2);
                     $messageValue = new $messageValueClassName;
                     $messageValue->setKey('wiad_par_z01');
-                    $template = '[CP TEST] policyId: [id]'; 
+                    $template = $event->policy->product['configuration']['smsTemplate']; 
                     $parser = app()->make('TemplateParserFromObject');
                     $messageValue->setValue($parser::parse($template, $event->policy));
                     $messageValues[] = $messageValue;
