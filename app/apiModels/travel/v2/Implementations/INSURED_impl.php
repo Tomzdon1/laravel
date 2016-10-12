@@ -3,7 +3,7 @@
 namespace App\apiModels\travel\v2\Implementations;
 
 use App\apiModels\travel\v2\Prototypes\INSURED;
-use App\apiModels\travel\v1\Interfaces\PersonInterface;
+use App\apiModels\travel\v2\Interfaces\PersonInterface;
 use App\apiModels\travel\v2\Traits;
 
 class INSURED_impl extends INSURED implements PersonInterface
