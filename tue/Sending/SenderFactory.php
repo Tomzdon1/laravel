@@ -6,9 +6,9 @@ class SenderFactory {
     public static function getSender($type){
     	switch ($type) {
     		case 'sms':
-		        return smsSender::getInstance();
+		        return SmsSender::getInstance();
 	        case 'policy':
-	        	return policySender::getInstance();  
+	        	return PolicySender::getInstance();  
     	}
     }
 }

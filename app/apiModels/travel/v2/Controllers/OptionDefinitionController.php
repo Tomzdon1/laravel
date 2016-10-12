@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\apiModels\travel\v2\Mappers\OptionDefinitionMapper;
 use App\TravelOffer;
-use Tue\Sending;
 use App\apiModels\internal\v2 as internal;
 
 class OptionDefinitionController extends Controller
