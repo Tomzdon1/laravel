@@ -3,13 +3,12 @@
 namespace App\apiModels\travel\v1\implementations;
 
 use App\apiModels\travel\v1\prototypes\CALCULATE;
-use App\apiModels\travel\v1\traits\AmountsCalculator;
-use App\apiModels\travel\v1\Traits;
+use App\apiModels\travel\v1\traits;
 
 class CALCULATE_impl extends CALCULATE
 {
-    use AmountsCalculator;
-    use Traits\SwaggerDeserializationTrait;
+    use traits\AmountsCalculator;
+    use traits\SwaggerDeserializationTrait;
     
     /**
      * Valdators for model

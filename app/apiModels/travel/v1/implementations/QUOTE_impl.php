@@ -3,13 +3,12 @@
 namespace App\apiModels\travel\v1\implementations;
 
 use App\apiModels\travel\v1\prototypes\QUOTE;
-use App\apiModels\travel\v1\traits\AmountsCalculator;
-use App\apiModels\travel\v1\Traits;
+use App\apiModels\travel\v1\traits;
 
 class QUOTE_impl extends QUOTE
 {
-    use AmountsCalculator;
-    use Traits\SwaggerDeserializationTrait;
+    use traits\AmountsCalculator;
+    use traits\SwaggerDeserializationTrait;
     
     /**
      * Valdators for model

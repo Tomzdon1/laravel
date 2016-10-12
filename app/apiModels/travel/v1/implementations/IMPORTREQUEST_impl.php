@@ -5,15 +5,14 @@ namespace App\apiModels\travel\v1\implementations;
 use App\apiModels\travel\v1\prototypes\IMPORTREQUEST;
 use App\apiModels\travel\v1\implementations\IMPORTSTATUS_impl;
 use App\apiModels\travel\v1\implementations\POLICY_impl;
-use App\apiModels\travel\v1\traits\AmountsCalculator;
+use App\apiModels\travel\v1\traits;
 use App\TravelOffer;
 use App\Policy;
-use App\apiModels\travel\v1\Traits;
 
 class IMPORTREQUEST_impl extends IMPORTREQUEST
 {
-    use AmountsCalculator;
-    use Traits\SwaggerDeserializationTrait;
+    use traits\AmountsCalculator;
+    use traits\SwaggerDeserializationTrait;
     
     /**
      * Valdators for model

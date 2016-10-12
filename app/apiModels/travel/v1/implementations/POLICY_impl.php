@@ -14,11 +14,11 @@
 namespace App\apiModels\travel\v1\implementations;
 
 use App\apiModels\travel\v1\prototypes\POLICY;
-use App\apiModels\travel\v1\Traits;
+use App\apiModels\travel\v1\traits;
 
 class POLICY_impl extends POLICY
 {
-    use Traits\SwaggerDeserializationTrait;
+    use traits\SwaggerDeserializationTrait;
     
     public static $validators = [];
 

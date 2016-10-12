@@ -4,11 +4,11 @@ namespace App\apiModels\travel\v1\implementations;
 
 use App\apiModels\travel\v1\prototypes\ISSUEREQUEST;
 use App\TravelOffer;
-use App\apiModels\travel\v1\Traits;
+use App\apiModels\travel\v1\traits;
 
 class ISSUEREQUEST_impl extends ISSUEREQUEST
 {
-    use Traits\SwaggerDeserializationTrait;
+    use traits\SwaggerDeserializationTrait;
     
     /**
      * Valdators for model

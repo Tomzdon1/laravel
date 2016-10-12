@@ -4,11 +4,11 @@ namespace App\apiModels\travel\v1\implementations;
 
 use App\apiModels\travel\v1\prototypes\CALCULATEREQUEST;
 use App\TravelOffer;
-use App\apiModels\travel\v1\Traits;
+use App\apiModels\travel\v1\traits;
 
 class CALCULATEREQUEST_impl extends CALCULATEREQUEST
 {
-    use Traits\SwaggerDeserializationTrait;
+    use traits\SwaggerDeserializationTrait;
     
     /**
      * Valdators for model

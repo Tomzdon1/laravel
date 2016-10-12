@@ -3,7 +3,7 @@
 namespace App\apiModels\travel\v1\implementations;
 
 use App\apiModels\travel\v1\prototypes\IMPORTSTATUS;
-use App\apiModels\travel\v1\Traits;
+use App\apiModels\travel\v1\traits;
 
 /**
  * IMPORTSTATUS_impl Class Doc Comment
@@ -14,7 +14,7 @@ use App\apiModels\travel\v1\Traits;
  */
 class IMPORTSTATUS_impl extends IMPORTSTATUS
 {
-    use Traits\SwaggerDeserializationTrait;
+    use traits\SwaggerDeserializationTrait;
     
     /**
      * Valdators for model

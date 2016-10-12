@@ -15,11 +15,11 @@
 namespace App\apiModels\travel\v1\implementations;
 
 use App\apiModels\travel\v1\prototypes\VALIDATIONERROR;
-use App\apiModels\travel\v1\Traits;
+use App\apiModels\travel\v1\traits;
 
 class VALIDATIONERROR_impl extends VALIDATIONERROR
 {
-    use Traits\SwaggerDeserializationTrait;
+    use traits\SwaggerDeserializationTrait;
     
     /**
      * Valdators for model

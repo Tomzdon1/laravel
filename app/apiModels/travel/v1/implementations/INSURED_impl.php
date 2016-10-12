@@ -4,11 +4,11 @@ namespace App\apiModels\travel\v1\implementations;
 
 use App\apiModels\travel\v1\prototypes\INSURED;
 use App\apiModels\travel\v1\interfaces\PersonInterface;
-use App\apiModels\travel\v1\Traits;
+use App\apiModels\travel\v1\traits;
 
 class INSURED_impl extends INSURED implements PersonInterface
 {
-    use Traits\SwaggerDeserializationTrait;
+    use traits\SwaggerDeserializationTrait;
     
     /**
      * Valdators for model

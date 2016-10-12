@@ -3,7 +3,7 @@
 namespace App\apiModels\travel\v1\implementations;
 
 use App\apiModels\travel\v1\prototypes\SOLICITOR;
-use App\apiModels\travel\v1\Traits;
+use App\apiModels\travel\v1\traits;
 
 /**
  * SOLICITOR_impl Class Doc Comment
@@ -14,7 +14,7 @@ use App\apiModels\travel\v1\Traits;
  */
 class SOLICITOR_impl extends SOLICITOR
 {
-    use Traits\SwaggerDeserializationTrait;
+    use traits\SwaggerDeserializationTrait;
     
     /**
      * Valdators for model

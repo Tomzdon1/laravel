@@ -4,11 +4,11 @@ namespace App\apiModels\travel\v1\implementations;
 
 use App\apiModels\travel\v1\prototypes\PREPERSON;
 use App\apiModels\travel\v1\interfaces\PrePersonInterface;
-use App\apiModels\travel\v1\Traits;
+use App\apiModels\travel\v1\traits;
 
 class PREPERSON_impl extends PREPERSON implements PrePersonInterface
 {
-    use Traits\SwaggerDeserializationTrait;
+    use traits\SwaggerDeserializationTrait;
     
     /**
      * Valdators for model

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\apiModels\travel\v1\Traits;
+namespace App\apiModels\travel\v1\traits;
 
 trait SwaggerDeserializationTrait {
     public static function swaggerTypes()
