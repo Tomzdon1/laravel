@@ -66,13 +66,13 @@ $app->middleware([
     // Illuminate\View\Middleware\ShareErrorsFromSession::class,
     // Laravel\Lumen\Http\Middleware\VerifyCsrfToken::class,
     App\Http\Middleware\WrapResponse::class,
+    App\Http\Middleware\RequestResponseLogger::class,
 ]);
 
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
     'request_validate' => App\Http\Middleware\RequestValidate::class,
     'deserialize_request_object' => App\Http\Middleware\DeserializeRequestObject::class,
-    'request_response_logger' => App\Http\Middleware\RequestResponseLogger::class,
 ]);
 
 /*
