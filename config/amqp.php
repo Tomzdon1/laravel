@@ -17,8 +17,8 @@ return [
             'exchange_durable'    => env('RABBITMQ_EXCHANGE_DURABLE', ['t', true,]),
             'consumer_tag'        => env('RABBITMQ_CONSUMER'),
             'ssl_options'         => [], // See https://secure.php.net/manual/en/context.ssl.php
-            'connect_options'     => ['x-ha-policy' => ['S', 'all']], // See https://github.com/php-amqplib/php-amqplib/blob/master/PhpAmqpLib/Connection/AMQPSSLConnection.php
-            'queue_properties'    => [],
+            'connect_options'     => [], // See https://github.com/php-amqplib/php-amqplib/blob/master/PhpAmqpLib/Connection/AMQPSSLConnection.php
+            'queue_properties'    => ['x-ha-policy' => ['S', 'all']],
             'exchange_properties' => [],
             'timeout'             => 0
         ],
