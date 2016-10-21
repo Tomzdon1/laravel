@@ -22,22 +22,22 @@ class PolicyIssueRequestMapper
             $policyIssueRequest = new PolicyIssueRequest();
         }
         
-        $policyIssueRequest->setPolicyDate($policy->policy_date);
-        $policyIssueRequest->setPolicyNumber($policy->policy_number);
-        $policyIssueRequest->setStartDate($policy->start_date);
-        $policyIssueRequest->setEndDate($policy->end_date);
-        $policyIssueRequest->setAbroad($policy->abroad);
-        $policyIssueRequest->setDestination($policy->destination);
+        !isset($policy->policy_date) ?: $policyIssueRequest->setPolicyDate($policy->policy_date);
+        !isset($policy->policy_number) ?: $policyIssueRequest->setPolicyNumber($policy->policy_number);
+        !isset($policy->start_date) ?: $policyIssueRequest->setStartDate($policy->start_date);
+        !isset($policy->end_date) ?: $policyIssueRequest->setEndDate($policy->end_date);
+        !isset($policy->abroad) ?: $policyIssueRequest->setAbroad($policy->abroad);
+        !isset($policy->destination) ?: $policyIssueRequest->setDestination($policy->destination);
         $policyIssueRequest->setOptions([]);
         $policyIssueRequest->setAddons([]);
-        $policyIssueRequest->setPolicyHolder($policy->policy_holder);
-        $policyIssueRequest->setInsured($policy->insured);
-        $policyIssueRequest->setSolicitors($policy->solicitors);
-        $policyIssueRequest->setPremium($policy->premium);
-        $policyIssueRequest->setTariffPremium($policy->tariff_premium);
-        $policyIssueRequest->setNettoPremium($policy->netto_premium);
-        $policyIssueRequest->setPartner($policy->partner);
-        $policyIssueRequest->setProduct($policy->product);
+        !isset($policy->policy_holder) ?: $policyIssueRequest->setPolicyHolder($policy->policy_holder);
+        !isset($policy->insured) ?: $policyIssueRequest->setInsured($policy->insured);
+        !isset($policy->solicitors) ?: $policyIssueRequest->setSolicitors($policy->solicitors);
+        !isset($policy->premium) ?: $policyIssueRequest->setPremium($policy->premium);
+        !isset($policy->tariff_premium) ?: $policyIssueRequest->setTariffPremium($policy->tariff_premium);
+        !isset($policy->netto_premium) ?: $policyIssueRequest->setNettoPremium($policy->netto_premium);
+        !isset($policy->partner) ?: $policyIssueRequest->setPartner($policy->partner);
+        !isset($policy->product) ?: $policyIssueRequest->setProduct($policy->product);
 
 		return $policyIssueRequest;
     }

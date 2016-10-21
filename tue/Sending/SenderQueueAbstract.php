@@ -42,8 +42,11 @@ abstract class SenderQueueAbstract implements SenderInterface {
         return call_user_func_array(array($this->envelope, $name), $arguments);
     }
 
-    public function send() {
+    public function addErrors($errors) {
+        $this->setErrors(array_merge($this->getErrors() ?: [], $errors));
+    }
 
+    public function send() {
         $this->setSendDate(new \DateTime());
         $this->setType(static::TYPE);
         $this->setVersion(static::VERSION);
