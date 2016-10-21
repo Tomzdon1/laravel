@@ -8,10 +8,6 @@
     # Redirect Trailing Slashes...
     RewriteRule ^(.*)/$ /$1 [L,R=301]
 
-    #@todo wylaczyc z ponizszych regul taki url ktory zawiera parametr customer_id
-    #RewriteRule ^(.*)/(.*)/(.*)/(.*)/(.*)$ /$1/$2/$3?customer_id=$4&request_id=$5 [L,R=307]
-    #RewriteRule ^(.*)/(.*)/(.*)/(.*)$ /$1/$2/$3?customer_id=$4 [L,R=307]
-
     # Handle Front Controller...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
