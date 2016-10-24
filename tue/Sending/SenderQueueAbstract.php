@@ -50,6 +50,7 @@ abstract class SenderQueueAbstract implements SenderInterface {
         $this->setSendDate(new \DateTime());
         $this->setType(static::TYPE);
         $this->setVersion(static::VERSION);
+        $this->setSrcSystem(env('APP_CODE', 'cp'));
 
         if (!$this->getErrors()) {
             $this->setErrors([]);

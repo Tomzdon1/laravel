@@ -33,6 +33,7 @@ class SendIssuedPolicy extends Listener
         $policySender->addErrors(['code' => 'POLICY_ERRORS', 'text' => json_encode($event->policy->errors)]);
         $policySender->setSrcId($event->policy->id);
         $policySender->setCompany($event->policy->product['company']);
+        $policySender->setSrcType('policy');
         
         try {
             $policySender->setPolicy($event->policy);

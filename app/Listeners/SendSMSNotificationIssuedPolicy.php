@@ -58,6 +58,7 @@ class SendSMSNotificationIssuedPolicy extends Listener
 
                 $smsSender->setSrcId($event->policy->id);
                 $smsSender->setCompany($event->policy->product['company']);
+                $smsSender->setSrcType('policy');
                 $smsSender->send();
         }
 
