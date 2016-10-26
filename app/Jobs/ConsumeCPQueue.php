@@ -31,6 +31,10 @@ class ConsumeCPQueue extends Job
            
             if ($envelope) {
                 switch ($envelope->type) {
+                    case 'mail-status':
+                        $resolver->acknowledge($message);
+                        dispatch(new \App\Jobs\SaveMailConfirmation($message->body));
+                        break;
                     case 'sms-status':
                         $resolver->acknowledge($message);
                         dispatch(new \App\Jobs\SaveSMSConfirmation($message->body));

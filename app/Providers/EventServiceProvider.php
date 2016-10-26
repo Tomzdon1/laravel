@@ -15,6 +15,7 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\IssuedPolicyEvent' => [
             'App\Listeners\SendIssuedPolicy',
             'App\Listeners\SendSMSNotificationIssuedPolicy',
+            'App\Listeners\SendMailNotificationIssuedPolicy',
         ],
     ];
 }
