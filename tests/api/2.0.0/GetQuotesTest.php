@@ -16,13 +16,13 @@ class GetQuotesTest extends TestCase
 
 	public static function setUpBeforeClass()
 	{
-		$uri = 'file://' . env('API_DEFINITION_TRAVEL_V1');
+		$uri = 'file://' . env('API_DEFINITION_TRAVEL_V2');
 		self::$schemaManager = new SchemaManager($uri);
 	}
 
 	public function getRequest(callable $callback = null)
 	{
-		$validJsonRequest = '{"data":{"promo_code":"TESTOWY_KOD","abroad":true,"start_date":"","end_date":"","destination":"PL","option_values":[{"code":"TWCHP","value":"true"}]},"prepersons":[{"birth_date":"","option_values":[{"code": "student", "value": "true"}]},{"birth_date":""}]}';
+		$validJsonRequest = '{"data":{"promo_code":"TESTOWY_KOD","abroad":true,"start_date":"","end_date":"","destination":"PL","options":[{"code":"TWCHP","value":"true"}]},"prepersons":[{"birth_date":"","options":[{"code": "student", "value": "true"}]},{"birth_date":""}]}';
 		$request = json_decode($validJsonRequest);
 
 		$request->data->start_date =  date('c', strtotime('+10 days'));
@@ -64,21 +64,21 @@ class GetQuotesTest extends TestCase
 		'None data' => [400, $this->getRequest(function(&$request){unset($request->data);})],
 		'None data.start_date' => [400, $this->getRequest(function(&$request){unset($request->data->start_date);})],
 		'None data.end_date' => [400, $this->getRequest(function(&$request){unset($request->data->end_date);})],
-		'None data.option_values.code' => [400, $this->getRequest(function(&$request){unset($request->data->option_values[0]->code);})],
-		'None data.option_values.value' => [400, $this->getRequest(function(&$request){unset($request->data->option_values[0]->value);})],
+		'None data.options.code' => [400, $this->getRequest(function(&$request){unset($request->data->options[0]->code);})],
+		'None data.options.value' => [400, $this->getRequest(function(&$request){unset($request->data->options[0]->value);})],
 		'None prepersons' => [400, $this->getRequest(function(&$request){unset($request->prepersons);})],
 		'None prepersons.birth_date' => [400, $this->getRequest(function(&$request){unset($request->prepersons[0]->birth_date);})],
-		'None prepersons.option_values.code' => [400, $this->getRequest(function(&$request){unset($request->prepersons[0]->option_values[0]->code);})],
-		'None prepersons.option_values.value' => [400, $this->getRequest(function(&$request){unset($request->prepersons[0]->option_values[0]->value);})],
+		'None prepersons.options.code' => [400, $this->getRequest(function(&$request){unset($request->prepersons[0]->options[0]->code);})],
+		'None prepersons.options.value' => [400, $this->getRequest(function(&$request){unset($request->prepersons[0]->options[0]->value);})],
 
 		'Empty request object' => [400, (object) []],
 		'Empty data' => [400, $this->getRequest(function(&$request){$request->data = (object) [];})],
 		'Empty data.start_date' => [400, $this->getRequest(function(&$request){$request->data->start_date = '';})],
 		'Empty data.end_date' => [400, $this->getRequest(function(&$request){$request->data->end_date = '';})],
-		'Empty data.option_values.code' => [400, $this->getRequest(function(&$request){$request->data->option_values[0]->code = '';})],
+		'Empty data.options.code' => [400, $this->getRequest(function(&$request){$request->data->options[0]->code = '';})],
 		'Empty prepersons' => [400, $this->getRequest(function(&$request){$request->prepersons = [];})],
 		'Empty prepersons.birth_date' => [400, $this->getRequest(function(&$request){$request->prepersons[0]->birth_date = '';})],
-		'Empty prepersons.option_values.code' => [400, $this->getRequest(function(&$request){$request->prepersons[0]->option_values[0]->code = '';})],
+		'Empty prepersons.options.code' => [400, $this->getRequest(function(&$request){$request->prepersons[0]->options[0]->code = '';})],
 
 		'Invalid type of request' => [400, []],
 		'Invalid type of data' => [400, $this->getRequest(function(&$request){$request->data = [];})],
@@ -87,16 +87,16 @@ class GetQuotesTest extends TestCase
 		'Invalid type of data.end_date' => [400, $this->getRequest(function(&$request){$request->data->end_date = [];})],
 		'Invalid type of data.abroad' => [400, $this->getRequest(function(&$request){$request->data->abroad = [];})],
 		'Invalid type of data.destination' => [400, $this->getRequest(function(&$request){$request->data->destination = [];})],
-		'Invalid type of data.option_values' => [400, $this->getRequest(function(&$request){$request->data->option_values = (object) [];})],
-		'Invalid type of data.option_values.code' => [400, $this->getRequest(function(&$request){$request->data->option_values[0]->code = [];})],
-		'Invalid type of data.option_values.value' => [400, $this->getRequest(function(&$request){$request->data->option_values[0]->value = [];})],
-		'Invalid type of data.option_values.sub_options' => [400, $this->getRequest(function(&$request){$request->data->option_values[0]->sub_options = (object) [];})],
+		'Invalid type of data.options' => [400, $this->getRequest(function(&$request){$request->data->options = (object) [];})],
+		'Invalid type of data.options.code' => [400, $this->getRequest(function(&$request){$request->data->options[0]->code = [];})],
+		'Invalid type of data.options.value' => [400, $this->getRequest(function(&$request){$request->data->options[0]->value = [];})],
+		'Invalid type of data.options.sub_options' => [400, $this->getRequest(function(&$request){$request->data->options[0]->sub_options = (object) [];})],
 		'Invalid type of prepersons' => [400, $this->getRequest(function(&$request){$request->prepersons = (object) [];})],
 		'Invalid type of prepersons.birth_date' => [400, $this->getRequest(function(&$request){$request->prepersons[0]->birth_date = (object) [];})],
-		'Invalid type of prepersons.option_values' => [400, $this->getRequest(function(&$request){$request->prepersons[0]->option_values = (object) [];})],
-		'Invalid type of prepersons.option_values.code' => [400, $this->getRequest(function(&$request){$request->prepersons[0]->option_values[0]->code = [];})],
-		'Invalid type of prepersons.option_values.value' => [400, $this->getRequest(function(&$request){$request->prepersons[0]->option_values[0]->value = [];})],
-		'Invalid type of prepersons.option_values.sub_options' => [400, $this->getRequest(function(&$request){$request->prepersons[0]->option_values[0]->sub_options = (object) [];})],
+		'Invalid type of prepersons.options' => [400, $this->getRequest(function(&$request){$request->prepersons[0]->options = (object) [];})],
+		'Invalid type of prepersons.options.code' => [400, $this->getRequest(function(&$request){$request->prepersons[0]->options[0]->code = [];})],
+		'Invalid type of prepersons.options.value' => [400, $this->getRequest(function(&$request){$request->prepersons[0]->options[0]->value = [];})],
+		'Invalid type of prepersons.options.sub_options' => [400, $this->getRequest(function(&$request){$request->prepersons[0]->options[0]->sub_options = (object) [];})],
 
 		'Invalid value pattern of data.start_date' => [400, $this->getRequest(function(&$request){$request->data->start_date = '';})],
 		'Invalid value pattern of data.start_date' => [400, $this->getRequest(function(&$request){$request->data->start_date = '2016-10-30';})],
@@ -146,13 +146,13 @@ class GetQuotesTest extends TestCase
 		'Valid request without data.promo_code' => [200, $this->getRequest(function(&$request){unset($request->data->promo_code);})],
 		'Valid request without data.abroad' => [200, $this->getRequest(function(&$request){unset($request->data->abroad);})],
 		'Valid request without data.destination' => [200, $this->getRequest(function(&$request){unset($request->data->destination);})],
-		'Valid request without data.option_values' => [200, $this->getRequest(function(&$request){unset($request->data->option_values);})],
-		'Valid request without prepersons.option_values' => [200, $this->getRequest(function(&$request){unset($request->prepersons[0]->option_values);})],
+		'Valid request without data.options' => [200, $this->getRequest(function(&$request){unset($request->data->options);})],
+		'Valid request without prepersons.options' => [200, $this->getRequest(function(&$request){unset($request->prepersons[0]->options);})],
 
-		'Valid empty data.option_values' => [200, $this->getRequest(function(&$request){$request->data->option_values = [];})],
-		'Valid empty data.option_values.value' => [200, $this->getRequest(function(&$request){$request->data->option_values[0]->value = '';})],
-		'Valid empty prepersons.option_values' => [200, $this->getRequest(function(&$request){$request->prepersons[0]->option_values = [];})],
-		'Valid empty prepersons.option_values.value' => [200, $this->getRequest(function(&$request){$request->prepersons[0]->option_values[0]->value = '';})],
+		'Valid empty data.options' => [200, $this->getRequest(function(&$request){$request->data->options = [];})],
+		'Valid empty data.options.value' => [200, $this->getRequest(function(&$request){$request->data->options[0]->value = '';})],
+		'Valid empty prepersons.options' => [200, $this->getRequest(function(&$request){$request->prepersons[0]->options = [];})],
+		'Valid empty prepersons.options.value' => [200, $this->getRequest(function(&$request){$request->prepersons[0]->options[0]->value = '';})],
 
 		'Valid value of data.promo_code (char)' => [200, $this->getRequest(function(&$request){$request->data->promo_code = 'A';})],
 		'Valid value of data.promo_code (special chars)' => [200, $this->getRequest(function(&$request){$request->data->promo_code = '!@#$%^&*(),./;:"[]{}|<>?~`\\-+=_';})],
@@ -173,28 +173,28 @@ class GetQuotesTest extends TestCase
 		'Valid value of data.destination (AD)' => [200, $this->getRequest(function(&$request){$request->data->destination = 'AD';})],
 		'Valid value of data.destination (PL)' => [200, $this->getRequest(function(&$request){$request->data->destination = 'PL';})],
 		'Valid value of data.destination (ZW)' => [200, $this->getRequest(function(&$request){$request->data->destination = 'ZW';})],
-		'Valid value of data.option_values.code (char)' => [200, $this->getRequest(function(&$request){$request->data->option_values[0]->code = 'A';})],
-		'Valid value of data.option_values.code (special chars)' => [200, $this->getRequest(function(&$request){$request->data->option_values[0]->code = '!@#$%^&*(),./;:"[]{}|<>?~`\\-+=_';})],
-		'Valid value of data.option_values.code (digit)' => [200, $this->getRequest(function(&$request){$request->data->option_values[0]->code = '1';})],
-		'Valid value of data.option_values.code (string)' => [200, $this->getRequest(function(&$request){$request->data->option_values[0]->code = 'ABCDEFGHIJKLMNOPQRSTUWXYZ';})],
-		'Valid value of data.option_values.code (number)' => [200, $this->getRequest(function(&$request){$request->data->option_values[0]->code = '12345678910111213141516171819120';})],
-		'Valid value of data.option_values.value (char)' => [200, $this->getRequest(function(&$request){$request->data->option_values[0]->value = 'A';})],
-		'Valid value of data.option_values.value (special chars)' => [200, $this->getRequest(function(&$request){$request->data->option_values[0]->value = '!@#$%^&*(),./;:"[]{}|<>?~`\\-+=_';})],
-		'Valid value of data.option_values.value (digit)' => [200, $this->getRequest(function(&$request){$request->data->option_values[0]->value = '1';})],
-		'Valid value of data.option_values.value (string)' => [200, $this->getRequest(function(&$request){$request->data->option_values[0]->value = 'ABCDEFGHIJKLMNOPQRSTUWXYZ';})],
-		'Valid value of data.option_values.value (number)' => [200, $this->getRequest(function(&$request){$request->data->option_values[0]->value = '12345678910111213141516171819120';})],
+		'Valid value of data.options.code (char)' => [200, $this->getRequest(function(&$request){$request->data->options[0]->code = 'A';})],
+		'Valid value of data.options.code (special chars)' => [200, $this->getRequest(function(&$request){$request->data->options[0]->code = '!@#$%^&*(),./;:"[]{}|<>?~`\\-+=_';})],
+		'Valid value of data.options.code (digit)' => [200, $this->getRequest(function(&$request){$request->data->options[0]->code = '1';})],
+		'Valid value of data.options.code (string)' => [200, $this->getRequest(function(&$request){$request->data->options[0]->code = 'ABCDEFGHIJKLMNOPQRSTUWXYZ';})],
+		'Valid value of data.options.code (number)' => [200, $this->getRequest(function(&$request){$request->data->options[0]->code = '12345678910111213141516171819120';})],
+		'Valid value of data.options.value (char)' => [200, $this->getRequest(function(&$request){$request->data->options[0]->value = 'A';})],
+		'Valid value of data.options.value (special chars)' => [200, $this->getRequest(function(&$request){$request->data->options[0]->value = '!@#$%^&*(),./;:"[]{}|<>?~`\\-+=_';})],
+		'Valid value of data.options.value (digit)' => [200, $this->getRequest(function(&$request){$request->data->options[0]->value = '1';})],
+		'Valid value of data.options.value (string)' => [200, $this->getRequest(function(&$request){$request->data->options[0]->value = 'ABCDEFGHIJKLMNOPQRSTUWXYZ';})],
+		'Valid value of data.options.value (number)' => [200, $this->getRequest(function(&$request){$request->data->options[0]->value = '12345678910111213141516171819120';})],
 		'Valid value of prepersons.birth_date (yesterday)' => [200, $this->getRequest(function(&$request){$request->prepersons[0]->birth_date =  date('Y-m-d', strtotime('-1 day'));})],
 		'Valid value of prepersons.birth_date (-10 years)' => [200, $this->getRequest(function(&$request){$request->prepersons[0]->birth_date =  date('Y-m-d', strtotime('-10 years'));})],
-		'Valid value of prepersons.option_values.code (char)' => [200, $this->getRequest(function(&$request){$request->prepersons[0]->option_values[0]->code = 'A';})],
-		'Valid value of prepersons.option_values.code (special chars)' => [200, $this->getRequest(function(&$request){$request->prepersons[0]->option_values[0]->code = '!@#$%^&*(),./;:"[]{}|<>?~`\\-+=_';})],
-		'Valid value of prepersons.option_values.code (digit)' => [200, $this->getRequest(function(&$request){$request->prepersons[0]->option_values[0]->code = '1';})],
-		'Valid value of prepersons.option_values.code (string)' => [200, $this->getRequest(function(&$request){$request->prepersons[0]->option_values[0]->code = 'ABCDEFGHIJKLMNOPQRSTUWXYZ';})],
-		'Valid value of prepersons.option_values.code (number)' => [200, $this->getRequest(function(&$request){$request->prepersons[0]->option_values[0]->code = '12345678910111213141516171819120';})],
-		'Valid value of prepersons.option_values.value (char)' => [200, $this->getRequest(function(&$request){$request->prepersons[0]->option_values[0]->value = 'A';})],
-		'Valid value of prepersons.option_values.value (special chars)' => [200, $this->getRequest(function(&$request){$request->prepersons[0]->option_values[0]->value = '!@#$%^&*(),./;:"[]{}|<>?~`\\-+=_';})],
-		'Valid value of prepersons.option_values.value (digit)' => [200, $this->getRequest(function(&$request){$request->prepersons[0]->option_values[0]->value = '1';})],
-		'Valid value of prepersons.option_values.value (string)' => [200, $this->getRequest(function(&$request){$request->prepersons[0]->option_values[0]->value = 'ABCDEFGHIJKLMNOPQRSTUWXYZ';})],
-		'Valid value of prepersons.option_values.value (number)' => [200, $this->getRequest(function(&$request){$request->prepersons[0]->option_values[0]->value = '12345678910111213141516171819120';})],
+		'Valid value of prepersons.options.code (char)' => [200, $this->getRequest(function(&$request){$request->prepersons[0]->options[0]->code = 'A';})],
+		'Valid value of prepersons.options.code (special chars)' => [200, $this->getRequest(function(&$request){$request->prepersons[0]->options[0]->code = '!@#$%^&*(),./;:"[]{}|<>?~`\\-+=_';})],
+		'Valid value of prepersons.options.code (digit)' => [200, $this->getRequest(function(&$request){$request->prepersons[0]->options[0]->code = '1';})],
+		'Valid value of prepersons.options.code (string)' => [200, $this->getRequest(function(&$request){$request->prepersons[0]->options[0]->code = 'ABCDEFGHIJKLMNOPQRSTUWXYZ';})],
+		'Valid value of prepersons.options.code (number)' => [200, $this->getRequest(function(&$request){$request->prepersons[0]->options[0]->code = '12345678910111213141516171819120';})],
+		'Valid value of prepersons.options.value (char)' => [200, $this->getRequest(function(&$request){$request->prepersons[0]->options[0]->value = 'A';})],
+		'Valid value of prepersons.options.value (special chars)' => [200, $this->getRequest(function(&$request){$request->prepersons[0]->options[0]->value = '!@#$%^&*(),./;:"[]{}|<>?~`\\-+=_';})],
+		'Valid value of prepersons.options.value (digit)' => [200, $this->getRequest(function(&$request){$request->prepersons[0]->options[0]->value = '1';})],
+		'Valid value of prepersons.options.value (string)' => [200, $this->getRequest(function(&$request){$request->prepersons[0]->options[0]->value = 'ABCDEFGHIJKLMNOPQRSTUWXYZ';})],
+		'Valid value of prepersons.options.value (number)' => [200, $this->getRequest(function(&$request){$request->prepersons[0]->options[0]->value = '12345678910111213141516171819120';})],
 		];
 	}
 
@@ -267,7 +267,7 @@ class GetQuotesTest extends TestCase
 	}
 
 	/**
-	 * Function provide request to test option_values value in response of get_quotes resource
+	 * Function provide request to test options value in response of get_quotes resource
 	 * 
 	 * @return Array
 	 */
@@ -285,7 +285,7 @@ class GetQuotesTest extends TestCase
 	public function testResponseSchema($expectedHttpCode, $request)
 	{
 		$httpMethod = 'POST';
-		$path = '/travel/v1/get_quotes';
+		$path = '/travel/v2/quotes?customer_id=e4913f9229914b9a846f44a7ef1db6ba';
 
 		$response = $this->call($httpMethod, $path, [], [], [], ['CONTENT_TYPE' => 'application/json'], (is_null($request) ? null : json_encode($request)));
 		$responseBody = json_decode($response->getContent());
@@ -303,11 +303,11 @@ class GetQuotesTest extends TestCase
     public function testResponseCode400($expectedHttpCode, $request)
     {
     	$httpMethod = 'POST';
-    	$path = '/travel/v1/get_quotes';
+    	$path = '/travel/v2/quotes?customer_id=e4913f9229914b9a846f44a7ef1db6ba';
 
     	$response = $this->call($httpMethod, $path, [], [], [], ['CONTENT_TYPE' => 'application/json'], (is_null($request) ? null : json_encode($request)));
     	$responseBody = json_decode($response->getContent());
-    	$httpCode = $responseBody->status;
+		$httpCode = $responseBody->status;
 
     	$this->assertEquals($expectedHttpCode, $httpCode);
     }
@@ -321,7 +321,7 @@ class GetQuotesTest extends TestCase
     public function testResponseCode422($expectedHttpCode, $request)
     {
     	$httpMethod = 'POST';
-    	$path = '/travel/v1/get_quotes';
+    	$path = '/travel/v2/quotes?customer_id=e4913f9229914b9a846f44a7ef1db6ba';
 
     	$response = $this->call($httpMethod, $path, [], [], [], ['CONTENT_TYPE' => 'application/json'], (is_null($request) ? null : json_encode($request)));
     	$responseBody = json_decode($response->getContent());
@@ -339,7 +339,7 @@ class GetQuotesTest extends TestCase
     public function testResponseCode200($expectedHttpCode, $request)
     {
     	$httpMethod = 'POST';
-    	$path = '/travel/v1/get_quotes';
+    	$path = '/travel/v2/quotes?customer_id=e4913f9229914b9a846f44a7ef1db6ba';
 
     	$response = $this->call($httpMethod, $path, [], [], [], ['CONTENT_TYPE' => 'application/json'], (is_null($request) ? null : json_encode($request)));
     	$responseBody = json_decode($response->getContent());
