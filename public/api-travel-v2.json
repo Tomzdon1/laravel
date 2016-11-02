@@ -3,7 +3,7 @@
     "info": {
         "title": "Travel API",
         "description": "Interfejs do obsługi produktów turystycznych oferowanych przez Towarzystwo Ubezpieczeń Europa S. A.\n\nW przypadku komunikacji protokołem SOAP wszelkie komunikaty opisywane w tym dokumencie są przesyłane przy użyciu funkcji INVOKE opisanej w dokumencie Specyfikacja_ESB.pdf.",
-        "version": "2.0-draft3",
+        "version": "2.0.0",
         "termsOfService": "",
         "contact": {
             "name": "API Support",
@@ -36,7 +36,7 @@
                         "description": "Zestaw danych do zwrócenia definicji opcji",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/OPTION_DEFINITIONS_REQUEST"
+                            "$ref": "#/definitions/OptionDefinitionsRequest"
                         }
                     },
                     {
@@ -60,7 +60,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/OPTION_DEFINITION"
+                                "$ref": "#/definitions/OptionDefinition"
                             }
                         }
                     },
@@ -69,7 +69,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/VALIDATION_ERROR"
+                                "$ref": "#/definitions/ValidationError"
                             }
                         }
                     },
@@ -78,7 +78,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/VALIDATION_ERROR"
+                                "$ref": "#/definitions/ValidationError"
                             }
                         }
                     },
@@ -87,7 +87,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     }
@@ -111,7 +111,7 @@
                         "description": "Zestaw danych do wystawienia ofert",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/QUOTES_REQUEST"
+                            "$ref": "#/definitions/QuotesRequest"
                         }
                     },
                     {
@@ -135,7 +135,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/QUOTE"
+                                "$ref": "#/definitions/Quote"
                             }
                         }
                     },
@@ -144,7 +144,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/VALIDATION_ERROR"
+                                "$ref": "#/definitions/ValidationError"
                             }
                         }
                     },
@@ -153,7 +153,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/VALIDATION_ERROR"
+                                "$ref": "#/definitions/ValidationError"
                             }
                         }
                     },
@@ -162,7 +162,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     }
@@ -186,7 +186,7 @@
                         "description": "Zestaw danych do kalkulacji polisy",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/CALCULATE_POLICY_REQUEST"
+                            "$ref": "#/definitions/CalculatePolicyRequest"
                         }
                     },
                     {
@@ -208,7 +208,7 @@
                     "200": {
                         "description": "Kalkulacja polisy",
                         "schema": {
-                            "$ref": "#/definitions/CALCULATION_POLICY"
+                            "$ref": "#/definitions/CalculationPolicy"
                         }
                     },
                     "400": {
@@ -216,7 +216,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/VALIDATION_ERROR"
+                                "$ref": "#/definitions/ValidationError"
                             }
                         }
                     },
@@ -225,7 +225,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -234,7 +234,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -243,7 +243,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -252,7 +252,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -261,7 +261,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/VALIDATION_ERROR"
+                                "$ref": "#/definitions/ValidationError"
                             }
                         }
                     },
@@ -270,7 +270,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -279,7 +279,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     }
@@ -303,7 +303,7 @@
                         "description": "Zestaw danych do zakupu polisy",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/PURCHASE_POLICY_REQUEST"
+                            "$ref": "#/definitions/PurchasePolicyRequest"
                         }
                     },
                     {
@@ -325,7 +325,7 @@
                     "201": {
                         "description": "Potwierdzenie zamówienia polisy",
                         "schema": {
-                            "$ref": "#/definitions/POLICY_ORDER"
+                            "$ref": "#/definitions/PolicyOrder"
                         }
                     },
                     "400": {
@@ -333,7 +333,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/VALIDATION_ERROR"
+                                "$ref": "#/definitions/ValidationError"
                             }
                         }
                     },
@@ -342,7 +342,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -351,7 +351,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -360,7 +360,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -369,7 +369,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -378,7 +378,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/VALIDATION_ERROR"
+                                "$ref": "#/definitions/ValidationError"
                             }
                         }
                     },
@@ -387,7 +387,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/VALIDATION_ERROR"
+                                "$ref": "#/definitions/ValidationError"
                             }
                         }
                     },
@@ -396,7 +396,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -405,7 +405,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     }
@@ -429,7 +429,7 @@
                         "description": "Zestaw danych do sprawdzenia stanu zamówienia",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ORDER_STATUS_REQUEST"
+                            "$ref": "#/definitions/OrderStatusRequest"
                         }
                     },
                     {
@@ -451,7 +451,7 @@
                     "201": {
                         "description": "Status zamówienia",
                         "schema": {
-                            "$ref": "#/definitions/ORDER_STATUS"
+                            "$ref": "#/definitions/OrderStatus"
                         }
                     },
                     "400": {
@@ -459,7 +459,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/VALIDATION_ERROR"
+                                "$ref": "#/definitions/ValidationError"
                             }
                         }
                     },
@@ -468,7 +468,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -477,7 +477,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -486,7 +486,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -495,7 +495,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -504,7 +504,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/VALIDATION_ERROR"
+                                "$ref": "#/definitions/ValidationError"
                             }
                         }
                     },
@@ -513,7 +513,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/VALIDATION_ERROR"
+                                "$ref": "#/definitions/ValidationError"
                             }
                         }
                     },
@@ -522,7 +522,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -531,7 +531,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     }
@@ -555,7 +555,7 @@
                         "description": "Zestaw danych do stworzenia polisy",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ISSUE_POLICY_REQUEST"
+                            "$ref": "#/definitions/IssuePolicyRequest"
                         }
                     },
                     {
@@ -577,7 +577,7 @@
                     "201": {
                         "description": "Polisa",
                         "schema": {
-                            "$ref": "#/definitions/POLICY"
+                            "$ref": "#/definitions/Policy"
                         }
                     },
                     "400": {
@@ -585,7 +585,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/VALIDATION_ERROR"
+                                "$ref": "#/definitions/ValidationError"
                             }
                         }
                     },
@@ -594,7 +594,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -603,7 +603,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -612,7 +612,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -621,7 +621,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -630,7 +630,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/VALIDATION_ERROR"
+                                "$ref": "#/definitions/ValidationError"
                             }
                         }
                     },
@@ -639,7 +639,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/VALIDATION_ERROR"
+                                "$ref": "#/definitions/ValidationError"
                             }
                         }
                     },
@@ -648,7 +648,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -657,7 +657,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     }
@@ -684,7 +684,7 @@
                             "type": "array",
                             "description": "Zestaw danych do zaimportowania polisy",
                             "items": {
-                                "$ref": "#/definitions/IMPORT_POLICY_REQUEST"
+                                "$ref": "#/definitions/ImportPolicyRequest"
                             }
                         }
                     },
@@ -709,7 +709,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/IMPORT_POLICY_STATUS"
+                                "$ref": "#/definitions/ImportPolicyStatus"
                             }
                         }
                     },
@@ -718,7 +718,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/IMPORT_POLICY_STATUS"
+                                "$ref": "#/definitions/ImportPolicyStatus"
                             }
                         }
                     },
@@ -727,7 +727,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/VALIDATION_ERROR"
+                                "$ref": "#/definitions/ValidationError"
                             }
                         }
                     },
@@ -736,7 +736,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -745,7 +745,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -754,7 +754,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -763,7 +763,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -772,7 +772,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/VALIDATION_ERROR"
+                                "$ref": "#/definitions/ValidationError"
                             }
                         }
                     },
@@ -781,7 +781,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -790,7 +790,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     }
@@ -814,7 +814,7 @@
                         "description": "Żądanie wydruku potwierdzenia zawarcia polisy",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/PRINT_POLICY_REQUEST"
+                            "$ref": "#/definitions/PrintPolicyRequest"
                         }
                     },
                     {
@@ -841,7 +841,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/VALIDATION_ERROR"
+                                "$ref": "#/definitions/ValidationError"
                             }
                         }
                     },
@@ -850,7 +850,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -859,7 +859,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -868,7 +868,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -877,7 +877,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -886,7 +886,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/VALIDATION_ERROR"
+                                "$ref": "#/definitions/ValidationError"
                             }
                         }
                     },
@@ -895,7 +895,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     },
@@ -904,7 +904,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ERROR"
+                                "$ref": "#/definitions/Error"
                             }
                         }
                     }
@@ -913,7 +913,7 @@
         }
     },
     "definitions": {
-        "ADDRESS": {
+        "Address": {
             "type": "object",
             "description": "Dane adresowe",
             "properties": {
@@ -964,7 +964,7 @@
                 "flat_no": "6"
             }
         },
-        "AGREEMENT": {
+        "Agreement": {
             "type": "object",
             "description": "Zgoda (np. marketingowa)",
             "properties": {
@@ -994,7 +994,7 @@
                 "code": "zgodam"
             }
         },
-        "CALCULATE_POLICY_REQUEST": {
+        "CalculatePolicyRequest": {
             "type": "object",
             "description": "Zestaw danych do kalkulacji polisy",
             "properties": {
@@ -1009,15 +1009,15 @@
                     "minLength": 24
                 },
                 "data": {
-                    "$ref": "#/definitions/POLICY_DATA"
+                    "$ref": "#/definitions/PolicyData"
                 },
                 "policy_holder": {
-                    "$ref": "#/definitions/POLICY_HOLDER"
+                    "$ref": "#/definitions/PolicyHolder"
                 },
                 "insured": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/INSURED"
+                        "$ref": "#/definitions/Insured"
                     },
                     "minItems": 1,
                     "description": "Dane ubezpieczonych"
@@ -1037,7 +1037,7 @@
                 "insured": []
             }
         },
-        "CALCULATION_POLICY": {
+        "CalculationPolicy": {
             "type": "object",
             "description": "Kalkulacja",
             "properties": {
@@ -1047,11 +1047,11 @@
                     "minLength": 24
                 },
                 "premium": {
-                    "$ref": "#/definitions/PREMIUM",
+                    "$ref": "#/definitions/Premium",
                     "description": "Składka pobrana/należna"
                 },
                 "tariff_premium": {
-                    "$ref": "#/definitions/PREMIUM",
+                    "$ref": "#/definitions/Premium",
                     "description": "Składka wynikająca z taryfy"
                 },
                 "due_date": {
@@ -1085,7 +1085,7 @@
                 "promo_code_valid": true
             }
         },
-        "DETAIL": {
+        "Detail": {
             "type": "object",
             "description": "Detal oferty",
             "properties": {
@@ -1109,7 +1109,7 @@
                 "value": "100 000 PLN"
             }
         },
-        "ERROR": {
+        "Error": {
             "type": "object",
             "description": "Błąd",
             "properties": {
@@ -1126,7 +1126,7 @@
                 "description": "Brak uprawnień do żądanego zasobu"
             }
         },
-        "IMPORT_POLICY_REQUEST": {
+        "ImportPolicyRequest": {
             "type": "object",
             "description": "Zestaw danych do zaimportowania polisy",
             "properties": {
@@ -1136,7 +1136,7 @@
                     "minLength": 24
                 },
                 "data": {
-                    "$ref": "#/definitions/POLICY_DATA"
+                    "$ref": "#/definitions/PolicyData"
                 },
                 "payment_date": {
                     "type": "string",
@@ -1154,33 +1154,33 @@
                     "minLength": 1
                 },
                 "policy_holder": {
-                    "$ref": "#/definitions/POLICY_HOLDER"
+                    "$ref": "#/definitions/PolicyHolder"
                 },
                 "insured": {
                     "type": "array",
                     "description": "Dane ubezpieczonych",
                     "items": {
-                        "$ref": "#/definitions/INSURED"
+                        "$ref": "#/definitions/Insured"
                     },
                     "minItems": 1
                 },
                 "premium": {
-                    "$ref": "#/definitions/PREMIUM",
+                    "$ref": "#/definitions/Premium",
                     "description": "Składka pobrana/należna"
                 },
                 "tariff_premium": {
-                    "$ref": "#/definitions/PREMIUM",
+                    "$ref": "#/definitions/Premium",
                     "description": "Składka wynikająca z taryfy"
                 },
                 "netto_premium": {
-                    "$ref": "#/definitions/PREMIUM",
+                    "$ref": "#/definitions/Premium",
                     "description": "Składka netto"
                 },
                 "solicitors": {
                     "type": "array",
                     "description": "Informacje o OWCA biorących udział w sprzedaży polisy; Wartości tego pola są weryfikowane a dokładnie uprawnienia agenta/owca do sprzedaży danego typu polisy",
                     "items": {
-                        "$ref": "#/definitions/SOLICITOR"
+                        "$ref": "#/definitions/Solicitor"
                     },
                     "minItems": 1
                 }
@@ -1212,7 +1212,7 @@
                 "solicitors": []
             }
         },
-        "IMPORT_POLICY_STATUS": {
+        "ImportPolicyStatus": {
             "type": "object",
             "description": "Opis statusu importu polisy",
             "properties": {
@@ -1260,28 +1260,28 @@
                 "messages": []
             }
         },
-        "INSURED": {
+        "Insured": {
             "type": "object",
             "description": "Ubezpieczony",
             "properties": {
                 "data": {
-                    "$ref": "#/definitions/PERSON_DATA"
+                    "$ref": "#/definitions/PersonData"
                 },
                 "address": {
-                    "$ref": "#/definitions/ADDRESS"
+                    "$ref": "#/definitions/Address"
                 },
                 "options": {
                     "type": "array",
                     "description": "Wybrane opcje dodatkowe",
                     "items": {
-                        "$ref": "#/definitions/OPTION_VALUE"
+                        "$ref": "#/definitions/OptionValue"
                     }
                 },
                 "addons": {
                     "type": "array",
                     "description": "Dodatkowe atrybuty",
                     "items": {
-                        "$ref": "#/definitions/OPTION_VALUE"
+                        "$ref": "#/definitions/OptionValue"
                     }
                 }
             },
@@ -1295,7 +1295,7 @@
                 "addons": []
             }
         },
-        "ISSUE_POLICY_REQUEST": {
+        "IssuePolicyRequest": {
             "type": "object",
             "description": "Zestaw danych do stworzenia polisy",
             "properties": {
@@ -1318,7 +1318,7 @@
                     "type": "array",
                     "description": "Informacje o OWCA biorących udział w sprzedaży polisy; Wartości tego pola są weryfikowane a dokładnie uprawnienia agenta/owca do sprzedaży danego typu polisy",
                     "items": {
-                        "$ref": "#/definitions/SOLICITOR"
+                        "$ref": "#/definitions/Solicitor"
                     },
                     "minItems": 1
                 },
@@ -1343,7 +1343,7 @@
                 "checksum": "91162629d258a876ee994e9233b2ad87"
             }
         },
-        "OPTION_DEFINITION": {
+        "OptionDefinition": {
             "type": "object",
             "description": "Definicja opcji",
             "properties": {
@@ -1373,16 +1373,12 @@
                     ],
                     "description": "Oczekiwany typ danych wartości opcji"
                 },
-                "changeable": {
-                    "type": "boolean",
-                    "description": "Czy jest możliwa zmiana wartości tej opcji"
-                },
                 "scope": {
                     "type": "string",
                     "enum": [
-                        "POLICY_DATA",
-                        "INSURED",
-                        "POLICY_HOLDER"
+                        "PolicyData",
+                        "Insured",
+                        "PolicyHolder"
                     ],
                     "description": "Zakres stosowania opcji"
                 },
@@ -1390,7 +1386,7 @@
                     "type": "array",
                     "description": "Definicje subopcji",
                     "items": {
-                        "$ref": "#/definitions/OPTION_DEFINITION"
+                        "$ref": "#/definitions/OptionDefinition"
                     }
                 }
             },
@@ -1399,7 +1395,6 @@
                 "description",
                 "code",
                 "value_type",
-                "changeable",
                 "scope"
             ],
             "example": {
@@ -1407,12 +1402,11 @@
                 "description": "Komfortowa Kieszeń - ubezpieczenie telefonu komórkowego, dokumentów, portfela od kradzieży z włamaniem i rabunku podczas podróży",
                 "code": "TWKK",
                 "value_type": "number",
-                "changeable": true,
-                "Scope": "POLICY_DATA",
+                "Scope": "PolicyData",
                 "sub_options": []
             }
         },
-        "OPTION_DEFINITIONS_REQUEST": {
+        "OptionDefinitionsRequest": {
             "type": "object",
             "description": "Zestaw danych do zwrócenia definicji opcji",
             "properties": {
@@ -1429,7 +1423,7 @@
                 "product_id": "98a7c8c7a97cc9abc8af7bbc"
             }
         },
-        "OPTION_VALUE": {
+        "OptionValue": {
             "type": "object",
             "description": "Wartość opcji",
             "properties": {
@@ -1446,7 +1440,7 @@
                     "type": "array",
                     "description": "Wartości subopcji",
                     "items": {
-                        "$ref": "#/definitions/OPTION_VALUE"
+                        "$ref": "#/definitions/OptionValue"
                     }
                 }
             },
@@ -1460,7 +1454,7 @@
                 "sub_options": []
             }
         },
-        "ORDER_STATUS": {
+        "OrderStatus": {
             "type": "object",
             "description": "Status zamówienia",
             "properties": {
@@ -1481,7 +1475,7 @@
                 "status": "OK"
             }
         },
-        "ORDER_STATUS_REQUEST": {
+        "OrderStatusRequest": {
             "type": "object",
             "description": "Zestaw danych do sprawdzenia stanu zamówienia",
             "properties": {
@@ -1498,7 +1492,7 @@
                 "order_id": "87ba979cbafca6bacf76acbf"
             }
         },
-        "PERSON_DATA": {
+        "PersonData": {
             "type": "object",
             "description": "Dane osoby",
             "properties": {
@@ -1570,7 +1564,7 @@
                 "type": "private"
             }
         },
-        "POLICY": {
+        "Policy": {
             "type": "object",
             "description": "Polisa",
             "properties": {
@@ -1590,28 +1584,28 @@
                     "description": "Data zawarcia polisy"
                 },
                 "premium": {
-                    "$ref": "#/definitions/PREMIUM",
+                    "$ref": "#/definitions/Premium",
                     "description": "Składka pobrana/należna"
                 },
                 "tariff_premium": {
-                    "$ref": "#/definitions/PREMIUM",
+                    "$ref": "#/definitions/Premium",
                     "description": "Składka wynikająca z taryfy"
                 },
                 "netto_premium": {
-                    "$ref": "#/definitions/PREMIUM",
+                    "$ref": "#/definitions/Premium",
                     "description": "Składka netto"
                 },
                 "data": {
-                    "$ref": "#/definitions/POLICY_DATA"
+                    "$ref": "#/definitions/PolicyData"
                 },
                 "policy_holder": {
-                    "$ref": "#/definitions/POLICY_HOLDER"
+                    "$ref": "#/definitions/PolicyHolder"
                 },
                 "insured": {
                     "type": "array",
                     "description": "Dane ubezpieczonych",
                     "items": {
-                        "$ref": "#/definitions/INSURED"
+                        "$ref": "#/definitions/Insured"
                     },
                     "minItems": 1
                 },
@@ -1644,7 +1638,7 @@
                 "chekcsum": "6a645004f620c691731b5a292c25d37f"
             }
         },
-        "POLICY_DATA": {
+        "PolicyData": {
             "type": "object",
             "description": "Dane polisy",
             "properties": {
@@ -1676,14 +1670,14 @@
                     "type": "array",
                     "description": "Wybrane opcje dodatkowe",
                     "items": {
-                        "$ref": "#/definitions/OPTION_VALUE"
+                        "$ref": "#/definitions/OptionValue"
                     }
                 },
                 "addons": {
                     "type": "array",
                     "description": "Dodatkowe atrybuty",
                     "items": {
-                        "$ref": "#/definitions/OPTION_VALUE"
+                        "$ref": "#/definitions/OptionValue"
                     }
                 }
             },
@@ -1701,15 +1695,15 @@
                 "addons": []
             }
         },
-        "POLICY_HOLDER": {
+        "PolicyHolder": {
             "type": "object",
             "description": "Dane bezpieczającego",
             "properties": {
                 "data": {
-                    "$ref": "#/definitions/PERSON_DATA"
+                    "$ref": "#/definitions/PersonData"
                 },
                 "address": {
-                    "$ref": "#/definitions/ADDRESS"
+                    "$ref": "#/definitions/Address"
                 },
                 "email": {
                     "type": "string",
@@ -1725,21 +1719,21 @@
                     "type": "array",
                     "description": "Wyrażonych/odrzucone zgodach",
                     "items": {
-                        "$ref": "#/definitions/AGREEMENT"
+                        "$ref": "#/definitions/Agreement"
                     }
                 },
                 "options": {
                     "type": "array",
                     "description": "Wybrane opcje dodatkowe",
                     "items": {
-                        "$ref": "#/definitions/OPTION_VALUE"
+                        "$ref": "#/definitions/OptionValue"
                     }
                 },
                 "addons": {
                     "type": "array",
                     "description": "Dodatkowe atrybuty",
                     "items": {
-                        "$ref": "#/definitions/OPTION_VALUE"
+                        "$ref": "#/definitions/OptionValue"
                     }
                 }
             },
@@ -1757,7 +1751,7 @@
                 "addons": []
             }
         },
-        "PREMIUM": {
+        "Premium": {
             "type": "object",
             "description": "Składka",
             "properties": {
@@ -1809,7 +1803,7 @@
                 "date_rate": "2017-01-01T12:00:00+01:00"
             }
         },
-        "PREPERSON": {
+        "Preperson": {
             "type": "object",
             "description": "Podstawowe dane osobowe",
             "properties": {
@@ -1822,14 +1816,14 @@
                     "type": "array",
                     "description": "Wybrane opcje dodatkowe",
                     "items": {
-                        "$ref": "#/definitions/OPTION_VALUE"
+                        "$ref": "#/definitions/OptionValue"
                     }
                 },
                 "addons": {
                     "type": "array",
                     "description": "Dodatkowe atrybuty",
                     "items": {
-                        "$ref": "#/definitions/OPTION_VALUE"
+                        "$ref": "#/definitions/OptionValue"
                     }
                 }
             },
@@ -1842,7 +1836,7 @@
                 "addons": []
             }
         },
-        "PRINT_POLICY_REQUEST": {
+        "PrintPolicyRequest": {
             "type": "object",
             "description": "Żądanie wydruku potwierdzenia zawarcia polisy",
             "properties": {
@@ -1866,7 +1860,7 @@
                 "chekcsum": "6a645004f620c691731b5a292c25d37f"
             }
         },
-        "POLICY_ORDER": {
+        "PolicyOrder": {
             "type": "object",
             "description": "Potwierdzenie zamówienia polisy",
             "properties": {
@@ -1890,7 +1884,7 @@
                 "redirect_url": "https://payment-form.url/?payment_id=987654321"
             }
         },
-        "PURCHASE_POLICY_REQUEST": {
+        "PurchasePolicyRequest": {
             "type": "object",
             "description": "Zestaw danych do zakupu polisy",
             "properties": {
@@ -1913,7 +1907,7 @@
                     "type": "array",
                     "description": "Informacje o OWCA biorących udział w sprzedaży polisy; Wartości tego pola są weryfikowane a dokładnie uprawnienia agenta/owca do sprzedaży danego typu polisy",
                     "items": {
-                        "$ref": "#/definitions/SOLICITOR"
+                        "$ref": "#/definitions/Solicitor"
                     },
                     "minItems": 1
                 },
@@ -1936,7 +1930,7 @@
                 "checksum": "91162629d258a876ee994e9233b2ad87"
             }
         },
-        "QUOTE": {
+        "Quote": {
             "type": "object",
             "description": "Oferta",
             "properties": {
@@ -1951,11 +1945,11 @@
                     "minLength": 24
                 },
                 "premium": {
-                    "$ref": "#/definitions/PREMIUM",
+                    "$ref": "#/definitions/Premium",
                     "description": "Składka pobrana/należna"
                 },
                 "tariff_premium": {
-                    "$ref": "#/definitions/PREMIUM",
+                    "$ref": "#/definitions/Premium",
                     "description": "Składka wynikająca z taryfy"
                 },
                 "promo_code_valid": {
@@ -1971,7 +1965,7 @@
                     "type": "array",
                     "description": "Detale oferty",
                     "items": {
-                        "$ref": "#/definitions/DETAIL"
+                        "$ref": "#/definitions/Detail"
                     }
                 }
             },
@@ -1993,18 +1987,18 @@
                 "details": []
             }
         },
-        "QUOTES_REQUEST": {
+        "QuotesRequest": {
             "type": "object",
             "description": "Zestaw danych do wystawienia ofert",
             "properties": {
                 "data": {
-                    "$ref": "#/definitions/POLICY_DATA"
+                    "$ref": "#/definitions/PolicyData"
                 },
                 "prepersons": {
                     "type": "array",
                     "description": "Podstawowe informacje o ubezpieczonych",
                     "items": {
-                        "$ref": "#/definitions/PREPERSON"
+                        "$ref": "#/definitions/Preperson"
                     },
                     "minItems": 1
                 }
@@ -2018,7 +2012,7 @@
                 "prepersons": []
             }
         },
-        "SOLICITOR": {
+        "Solicitor": {
             "type": "object",
             "description": "Osoba Wykonująca Czynności Agencyjne (OWCA)",
             "properties": {
@@ -2057,7 +2051,7 @@
                 ]
             }
         },
-        "VALIDATION_ERROR": {
+        "ValidationError": {
             "type": "object",
             "description": "Błąd walidacji",
             "properties": {

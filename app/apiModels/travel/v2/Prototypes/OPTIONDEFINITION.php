@@ -55,7 +55,6 @@ class OptionDefinition extends \App\apiModels\ApiModel implements ArrayAccess
         'description' => 'string',
         'code' => 'string',
         'value_type' => 'string',
-        'changeable' => 'bool',
         'scope' => 'string',
         'sub_options' => 'App\apiModels\travel\v2\Prototypes\OptionDefinition[]'
     );
@@ -69,7 +68,6 @@ class OptionDefinition extends \App\apiModels\ApiModel implements ArrayAccess
         'description' => 'description',
         'code' => 'code',
         'value_type' => 'value_type',
-        'changeable' => 'changeable',
         'scope' => 'scope',
         'sub_options' => 'sub_options'
     );
@@ -83,7 +81,6 @@ class OptionDefinition extends \App\apiModels\ApiModel implements ArrayAccess
         'description' => 'setDescription',
         'code' => 'setCode',
         'value_type' => 'setValueType',
-        'changeable' => 'setChangeable',
         'scope' => 'setScope',
         'sub_options' => 'setSubOptions'
     );
@@ -97,7 +94,6 @@ class OptionDefinition extends \App\apiModels\ApiModel implements ArrayAccess
         'description' => 'getDescription',
         'code' => 'getCode',
         'value_type' => 'getValueType',
-        'changeable' => 'getChangeable',
         'scope' => 'getScope',
         'sub_options' => 'getSubOptions'
     );
@@ -128,12 +124,6 @@ class OptionDefinition extends \App\apiModels\ApiModel implements ArrayAccess
     public $value_type;
     
     /**
-      * $changeable Czy jest możliwa zmiana wartości tej opcji
-      * @var bool
-      */
-    public $changeable;
-    
-    /**
       * $scope Zakres stosowania opcji
       * @var string
       */
@@ -157,7 +147,6 @@ class OptionDefinition extends \App\apiModels\ApiModel implements ArrayAccess
             $this->description = $data["description"];
             $this->code = $data["code"];
             $this->value_type = $data["value_type"];
-            $this->changeable = $data["changeable"];
             $this->scope = $data["scope"];
             $this->sub_options = $data["sub_options"];
         }
@@ -247,27 +236,6 @@ class OptionDefinition extends \App\apiModels\ApiModel implements ArrayAccess
             throw new \InvalidArgumentException("Invalid value for 'value_type', must be one of 'string', 'number', 'date', 'boolean'");
         }
         $this->value_type = $value_type;
-        return $this;
-    }
-    
-    /**
-     * Gets changeable
-     * @return bool
-     */
-    public function getChangeable()
-    {
-        return $this->changeable;
-    }
-  
-    /**
-     * Sets changeable
-     * @param bool $changeable Czy jest możliwa zmiana wartości tej opcji
-     * @return $this
-     */
-    public function setChangeable($changeable)
-    {
-        
-        $this->changeable = $changeable;
         return $this;
     }
     
