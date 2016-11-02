@@ -226,7 +226,7 @@ class ObjectSerializer
                     unset($data->string);
                 }
             }
-            $classImplementation = str_replace(['prototypes', 'Prototypes'], ['implementations', 'Implementations'], $class).'_impl';
+            $classImplementation = str_replace(['prototypes', 'Prototypes'], ['implementations', 'Implementations'], $class).'Impl';
             $instance = new $classImplementation();
             foreach ($instance::$swaggerTypes as $property => $type) {
                 $propertySetter = $instance::$setters[$property];

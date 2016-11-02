@@ -28,7 +28,7 @@ class PolicyController extends Controller
         $calculatedPremiums = $calculateRequest->calculatePremiums();
         // remove this and above
         
-        $calculationPolicyResponse = new Implementations\CALCULATIONPOLICY_impl;
+        $calculationPolicyResponse = new Implementations\CalculationPolicyImpl;
         $calculationPolicyResponse->setPremium($calculatedPremiums['premium']);
         $calculationPolicyResponse->setTariffPremium($calculatedPremiums['tariff_premium']);
         
@@ -72,7 +72,7 @@ class PolicyController extends Controller
         // $calculatedPremiums = $calculateRequest->calculatePremiums();
         // // remove this and above
         
-        // $calculationPolicyResponse = new Implementations\CALCULATIONPOLICY_impl;
+        // $calculationPolicyResponse = new Implementations\CALCULATIONPOLICYImpl;
         // $calculationPolicyResponse->setPremium($calculatedPremiums['premium']);
         // $calculationPolicyResponse->setTariffPremium($calculatedPremiums['tariff_premium']);
         
@@ -115,7 +115,7 @@ class PolicyController extends Controller
 
             $validator = app('validator')->make(app('request')->input()[0], $importRequest::$warningValidators, [], ['calculatedAmounts' => $calculatedPremiums]);
 
-            $importPolicyStatusResponse = new Implementations\IMPORTPOLICYSTATUS_impl;
+            $importPolicyStatusResponse = new Implementations\ImportPolicyStatusImpl;
 
             if ($validator->fails()) {
                 foreach ($validator->errors()->toArray() as $property => $error) {

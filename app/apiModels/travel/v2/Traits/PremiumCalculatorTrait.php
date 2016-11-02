@@ -2,7 +2,7 @@
 
 namespace App\apiModels\travel\v2\Traits;
 
-use App\apiModels\travel\v2\Implementations\PREMIUM_impl;
+use App\apiModels\travel\v2\Implementations\PremiumImpl;
 
 trait PremiumCalculatorTrait {
     protected $offer;
@@ -150,7 +150,7 @@ trait PremiumCalculatorTrait {
     {
         $premiumValueBase = $this->extractPremiumValueBaseFromExcelData($premiumExcelKey, $excelData);
 
-        $premium = new PREMIUM_impl();
+        $premium = new PremiumImpl();
         $premium->setValueBaseCurrency($this->offer['configuration']['quotation']['resultCurrency']);
         $premium->setValueCurrency($this->offer['configuration']['quotation']['resultCurrency']);
         

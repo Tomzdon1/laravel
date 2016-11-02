@@ -1,6 +1,6 @@
 <?php
 /**
- * PREPERSON
+ * Preperson
  *
  * PHP version 5
  *
@@ -35,7 +35,7 @@ namespace App\apiModels\travel\v2\Prototypes ;
 
 use \ArrayAccess;
 /**
- * PREPERSON Class Doc Comment
+ * Preperson Class Doc Comment
  *
  * @category    Class
  * @description Podstawowe dane osobowe
@@ -44,7 +44,7 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class PREPERSON extends \App\apiModels\ApiModel implements ArrayAccess 
+class Preperson extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
@@ -52,8 +52,8 @@ class PREPERSON extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $swaggerTypes = array(
         'birth_date' => '\DateTime',
-        'options' => 'App\apiModels\travel\v2\Prototypes\OPTIONVALUE[]',
-        'addons' => 'App\apiModels\travel\v2\Prototypes\OPTIONVALUE[]'
+        'options' => 'App\apiModels\travel\v2\Prototypes\OptionValue[]',
+        'addons' => 'App\apiModels\travel\v2\Prototypes\OptionValue[]'
     );
   
     /** 
@@ -95,13 +95,13 @@ class PREPERSON extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
       * $options Wybrane opcje dodatkowe
-      * @var App\apiModels\travel\v2\Prototypes\OPTIONVALUE[]
+      * @var App\apiModels\travel\v2\Prototypes\OptionValue[]
       */
     public $options;
     
     /**
       * $addons Dodatkowe atrybuty
-      * @var App\apiModels\travel\v2\Prototypes\OPTIONVALUE[]
+      * @var App\apiModels\travel\v2\Prototypes\OptionValue[]
       */
     public $addons;
     
@@ -142,7 +142,7 @@ class PREPERSON extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets options
-     * @return App\apiModels\travel\v2\Prototypes\OPTIONVALUE[]
+     * @return App\apiModels\travel\v2\Prototypes\OptionValue[]
      */
     public function getOptions()
     {
@@ -151,7 +151,7 @@ class PREPERSON extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets options
-     * @param App\apiModels\travel\v2\Prototypes\OPTIONVALUE[] $options Wybrane opcje dodatkowe
+     * @param App\apiModels\travel\v2\Prototypes\OptionValue[] $options Wybrane opcje dodatkowe
      * @return $this
      */
     public function setOptions($options)
@@ -163,7 +163,7 @@ class PREPERSON extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets addons
-     * @return App\apiModels\travel\v2\Prototypes\OPTIONVALUE[]
+     * @return App\apiModels\travel\v2\Prototypes\OptionValue[]
      */
     public function getAddons()
     {
@@ -172,7 +172,7 @@ class PREPERSON extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets addons
-     * @param App\apiModels\travel\v2\Prototypes\OPTIONVALUE[] $addons Dodatkowe atrybuty
+     * @param App\apiModels\travel\v2\Prototypes\OptionValue[] $addons Dodatkowe atrybuty
      * @return $this
      */
     public function setAddons($addons)

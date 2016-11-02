@@ -1,6 +1,6 @@
 <?php
 /**
- * POLICY
+ * Policy
  *
  * PHP version 5
  *
@@ -35,7 +35,7 @@ namespace App\apiModels\travel\v2\Prototypes ;
 
 use \ArrayAccess;
 /**
- * POLICY Class Doc Comment
+ * Policy Class Doc Comment
  *
  * @category    Class
  * @description Polisa
@@ -44,7 +44,7 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class POLICY extends \App\apiModels\ApiModel implements ArrayAccess 
+class Policy extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
@@ -54,12 +54,12 @@ class POLICY extends \App\apiModels\ApiModel implements ArrayAccess
         'policy_id' => 'string',
         'policy_number' => 'string',
         'policy_date' => '\DateTime',
-        'premium' => 'App\apiModels\travel\v2\Prototypes\PREMIUM',
-        'tariff_premium' => 'App\apiModels\travel\v2\Prototypes\PREMIUM',
-        'netto_premium' => 'App\apiModels\travel\v2\Prototypes\PREMIUM',
-        'data' => 'App\apiModels\travel\v2\Prototypes\POLICYDATA',
-        'policy_holder' => 'App\apiModels\travel\v2\Prototypes\POLICYHOLDER',
-        'insured' => 'App\apiModels\travel\v2\Prototypes\INSURED[]',
+        'premium' => 'App\apiModels\travel\v2\Prototypes\Premium',
+        'tariff_premium' => 'App\apiModels\travel\v2\Prototypes\Premium',
+        'netto_premium' => 'App\apiModels\travel\v2\Prototypes\Premium',
+        'data' => 'App\apiModels\travel\v2\Prototypes\PolicyData',
+        'policy_holder' => 'App\apiModels\travel\v2\Prototypes\PolicyHolder',
+        'insured' => 'App\apiModels\travel\v2\Prototypes\Insured[]',
         'checksum' => 'string'
     );
   
@@ -135,37 +135,37 @@ class POLICY extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
       * $premium Składka pobrana/należna
-      * @var App\apiModels\travel\v2\Prototypes\PREMIUM
+      * @var App\apiModels\travel\v2\Prototypes\Premium
       */
     public $premium;
     
     /**
       * $tariff_premium Składka wynikająca z taryfy
-      * @var App\apiModels\travel\v2\Prototypes\PREMIUM
+      * @var App\apiModels\travel\v2\Prototypes\Premium
       */
     public $tariff_premium;
     
     /**
       * $netto_premium Składka netto
-      * @var App\apiModels\travel\v2\Prototypes\PREMIUM
+      * @var App\apiModels\travel\v2\Prototypes\Premium
       */
     public $netto_premium;
     
     /**
       * $data 
-      * @var App\apiModels\travel\v2\Prototypes\POLICYDATA
+      * @var App\apiModels\travel\v2\Prototypes\PolicyData
       */
     public $data;
     
     /**
       * $policy_holder 
-      * @var App\apiModels\travel\v2\Prototypes\POLICYHOLDER
+      * @var App\apiModels\travel\v2\Prototypes\PolicyHolder
       */
     public $policy_holder;
     
     /**
       * $insured Dane ubezpieczonych
-      * @var App\apiModels\travel\v2\Prototypes\INSURED[]
+      * @var App\apiModels\travel\v2\Prototypes\Insured[]
       */
     public $insured;
     
@@ -261,7 +261,7 @@ class POLICY extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets premium
-     * @return App\apiModels\travel\v2\Prototypes\PREMIUM
+     * @return App\apiModels\travel\v2\Prototypes\Premium
      */
     public function getPremium()
     {
@@ -270,7 +270,7 @@ class POLICY extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets premium
-     * @param App\apiModels\travel\v2\Prototypes\PREMIUM $premium Składka pobrana/należna
+     * @param App\apiModels\travel\v2\Prototypes\Premium $premium Składka pobrana/należna
      * @return $this
      */
     public function setPremium($premium)
@@ -282,7 +282,7 @@ class POLICY extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets tariff_premium
-     * @return App\apiModels\travel\v2\Prototypes\PREMIUM
+     * @return App\apiModels\travel\v2\Prototypes\Premium
      */
     public function getTariffPremium()
     {
@@ -291,7 +291,7 @@ class POLICY extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets tariff_premium
-     * @param App\apiModels\travel\v2\Prototypes\PREMIUM $tariff_premium Składka wynikająca z taryfy
+     * @param App\apiModels\travel\v2\Prototypes\Premium $tariff_premium Składka wynikająca z taryfy
      * @return $this
      */
     public function setTariffPremium($tariff_premium)
@@ -303,7 +303,7 @@ class POLICY extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets netto_premium
-     * @return App\apiModels\travel\v2\Prototypes\PREMIUM
+     * @return App\apiModels\travel\v2\Prototypes\Premium
      */
     public function getNettoPremium()
     {
@@ -312,7 +312,7 @@ class POLICY extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets netto_premium
-     * @param App\apiModels\travel\v2\Prototypes\PREMIUM $netto_premium Składka netto
+     * @param App\apiModels\travel\v2\Prototypes\Premium $netto_premium Składka netto
      * @return $this
      */
     public function setNettoPremium($netto_premium)
@@ -324,7 +324,7 @@ class POLICY extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets data
-     * @return App\apiModels\travel\v2\Prototypes\POLICYDATA
+     * @return App\apiModels\travel\v2\Prototypes\PolicyData
      */
     public function getData()
     {
@@ -333,7 +333,7 @@ class POLICY extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets data
-     * @param App\apiModels\travel\v2\Prototypes\POLICYDATA $data 
+     * @param App\apiModels\travel\v2\Prototypes\PolicyData $data 
      * @return $this
      */
     public function setData($data)
@@ -345,7 +345,7 @@ class POLICY extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets policy_holder
-     * @return App\apiModels\travel\v2\Prototypes\POLICYHOLDER
+     * @return App\apiModels\travel\v2\Prototypes\PolicyHolder
      */
     public function getPolicyHolder()
     {
@@ -354,7 +354,7 @@ class POLICY extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets policy_holder
-     * @param App\apiModels\travel\v2\Prototypes\POLICYHOLDER $policy_holder 
+     * @param App\apiModels\travel\v2\Prototypes\PolicyHolder $policy_holder 
      * @return $this
      */
     public function setPolicyHolder($policy_holder)
@@ -366,7 +366,7 @@ class POLICY extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets insured
-     * @return App\apiModels\travel\v2\Prototypes\INSURED[]
+     * @return App\apiModels\travel\v2\Prototypes\Insured[]
      */
     public function getInsured()
     {
@@ -375,7 +375,7 @@ class POLICY extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets insured
-     * @param App\apiModels\travel\v2\Prototypes\INSURED[] $insured Dane ubezpieczonych
+     * @param App\apiModels\travel\v2\Prototypes\Insured[] $insured Dane ubezpieczonych
      * @return $this
      */
     public function setInsured($insured)

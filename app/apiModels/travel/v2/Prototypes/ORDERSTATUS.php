@@ -1,6 +1,6 @@
 <?php
 /**
- * ORDERSTATUS
+ * OrderStatus
  *
  * PHP version 5
  *
@@ -35,7 +35,7 @@ namespace App\apiModels\travel\v2\Prototypes ;
 
 use \ArrayAccess;
 /**
- * ORDERSTATUS Class Doc Comment
+ * OrderStatus Class Doc Comment
  *
  * @category    Class
  * @description Status zamówienia
@@ -44,7 +44,7 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class ORDERSTATUS extends \App\apiModels\ApiModel implements ArrayAccess 
+class OrderStatus extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 

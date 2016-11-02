@@ -1,6 +1,6 @@
 <?php
 /**
- * QUOTESREQUEST
+ * QuotesRequest
  *
  * PHP version 5
  *
@@ -35,7 +35,7 @@ namespace App\apiModels\travel\v2\Prototypes ;
 
 use \ArrayAccess;
 /**
- * QUOTESREQUEST Class Doc Comment
+ * QuotesRequest Class Doc Comment
  *
  * @category    Class
  * @description Zestaw danych do wystawienia ofert
@@ -44,15 +44,15 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class QUOTESREQUEST extends \App\apiModels\ApiModel implements ArrayAccess 
+class QuotesRequest extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
       * @var string[]
       */
     static $swaggerTypes = array(
-        'data' => 'App\apiModels\travel\v2\Prototypes\POLICYDATA',
-        'prepersons' => 'App\apiModels\travel\v2\Prototypes\PREPERSON[]'
+        'data' => 'App\apiModels\travel\v2\Prototypes\PolicyData',
+        'prepersons' => 'App\apiModels\travel\v2\Prototypes\Preperson[]'
     );
   
     /** 
@@ -85,13 +85,13 @@ class QUOTESREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
       * $data 
-      * @var App\apiModels\travel\v2\Prototypes\POLICYDATA
+      * @var App\apiModels\travel\v2\Prototypes\PolicyData
       */
     public $data;
     
     /**
       * $prepersons Podstawowe informacje o ubezpieczonych
-      * @var App\apiModels\travel\v2\Prototypes\PREPERSON[]
+      * @var App\apiModels\travel\v2\Prototypes\Preperson[]
       */
     public $prepersons;
     
@@ -110,7 +110,7 @@ class QUOTESREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets data
-     * @return App\apiModels\travel\v2\Prototypes\POLICYDATA
+     * @return App\apiModels\travel\v2\Prototypes\PolicyData
      */
     public function getData()
     {
@@ -119,7 +119,7 @@ class QUOTESREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets data
-     * @param App\apiModels\travel\v2\Prototypes\POLICYDATA $data 
+     * @param App\apiModels\travel\v2\Prototypes\PolicyData $data 
      * @return $this
      */
     public function setData($data)
@@ -131,7 +131,7 @@ class QUOTESREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets prepersons
-     * @return App\apiModels\travel\v2\Prototypes\PREPERSON[]
+     * @return App\apiModels\travel\v2\Prototypes\Preperson[]
      */
     public function getPrepersons()
     {
@@ -140,7 +140,7 @@ class QUOTESREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets prepersons
-     * @param App\apiModels\travel\v2\Prototypes\PREPERSON[] $prepersons Podstawowe informacje o ubezpieczonych
+     * @param App\apiModels\travel\v2\Prototypes\Preperson[] $prepersons Podstawowe informacje o ubezpieczonych
      * @return $this
      */
     public function setPrepersons($prepersons)

@@ -1,6 +1,6 @@
 <?php
 /**
- * POLICYHOLDER
+ * PolicyHolder
  *
  * PHP version 5
  *
@@ -35,7 +35,7 @@ namespace App\apiModels\travel\v2\Prototypes ;
 
 use \ArrayAccess;
 /**
- * POLICYHOLDER Class Doc Comment
+ * PolicyHolder Class Doc Comment
  *
  * @category    Class
  * @description Dane bezpieczającego
@@ -44,20 +44,20 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class POLICYHOLDER extends \App\apiModels\ApiModel implements ArrayAccess 
+class PolicyHolder extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
       * @var string[]
       */
     static $swaggerTypes = array(
-        'data' => 'App\apiModels\travel\v2\Prototypes\PERSONDATA',
-        'address' => 'App\apiModels\travel\v2\Prototypes\ADDRESS',
+        'data' => 'App\apiModels\travel\v2\Prototypes\PersonData',
+        'address' => 'App\apiModels\travel\v2\Prototypes\Address',
         'email' => 'string',
         'telephone' => 'string',
-        'agreements' => 'App\apiModels\travel\v2\Prototypes\AGREEMENT[]',
-        'options' => 'App\apiModels\travel\v2\Prototypes\OPTIONVALUE[]',
-        'addons' => 'App\apiModels\travel\v2\Prototypes\OPTIONVALUE[]'
+        'agreements' => 'App\apiModels\travel\v2\Prototypes\Agreement[]',
+        'options' => 'App\apiModels\travel\v2\Prototypes\OptionValue[]',
+        'addons' => 'App\apiModels\travel\v2\Prototypes\OptionValue[]'
     );
   
     /** 
@@ -105,13 +105,13 @@ class POLICYHOLDER extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
       * $data 
-      * @var App\apiModels\travel\v2\Prototypes\PERSONDATA
+      * @var App\apiModels\travel\v2\Prototypes\PersonData
       */
     public $data;
     
     /**
       * $address 
-      * @var App\apiModels\travel\v2\Prototypes\ADDRESS
+      * @var App\apiModels\travel\v2\Prototypes\Address
       */
     public $address;
     
@@ -129,19 +129,19 @@ class POLICYHOLDER extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
       * $agreements Wyrażonych/odrzucone zgodach
-      * @var App\apiModels\travel\v2\Prototypes\AGREEMENT[]
+      * @var App\apiModels\travel\v2\Prototypes\Agreement[]
       */
     public $agreements;
     
     /**
       * $options Wybrane opcje dodatkowe
-      * @var App\apiModels\travel\v2\Prototypes\OPTIONVALUE[]
+      * @var App\apiModels\travel\v2\Prototypes\OptionValue[]
       */
     public $options;
     
     /**
       * $addons Dodatkowe atrybuty
-      * @var App\apiModels\travel\v2\Prototypes\OPTIONVALUE[]
+      * @var App\apiModels\travel\v2\Prototypes\OptionValue[]
       */
     public $addons;
     
@@ -165,7 +165,7 @@ class POLICYHOLDER extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets data
-     * @return App\apiModels\travel\v2\Prototypes\PERSONDATA
+     * @return App\apiModels\travel\v2\Prototypes\PersonData
      */
     public function getData()
     {
@@ -174,7 +174,7 @@ class POLICYHOLDER extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets data
-     * @param App\apiModels\travel\v2\Prototypes\PERSONDATA $data 
+     * @param App\apiModels\travel\v2\Prototypes\PersonData $data 
      * @return $this
      */
     public function setData($data)
@@ -186,7 +186,7 @@ class POLICYHOLDER extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets address
-     * @return App\apiModels\travel\v2\Prototypes\ADDRESS
+     * @return App\apiModels\travel\v2\Prototypes\Address
      */
     public function getAddress()
     {
@@ -195,7 +195,7 @@ class POLICYHOLDER extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets address
-     * @param App\apiModels\travel\v2\Prototypes\ADDRESS $address 
+     * @param App\apiModels\travel\v2\Prototypes\Address $address 
      * @return $this
      */
     public function setAddress($address)
@@ -249,7 +249,7 @@ class POLICYHOLDER extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets agreements
-     * @return App\apiModels\travel\v2\Prototypes\AGREEMENT[]
+     * @return App\apiModels\travel\v2\Prototypes\Agreement[]
      */
     public function getAgreements()
     {
@@ -258,7 +258,7 @@ class POLICYHOLDER extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets agreements
-     * @param App\apiModels\travel\v2\Prototypes\AGREEMENT[] $agreements Wyrażonych/odrzucone zgodach
+     * @param App\apiModels\travel\v2\Prototypes\Agreement[] $agreements Wyrażonych/odrzucone zgodach
      * @return $this
      */
     public function setAgreements($agreements)
@@ -270,7 +270,7 @@ class POLICYHOLDER extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets options
-     * @return App\apiModels\travel\v2\Prototypes\OPTIONVALUE[]
+     * @return App\apiModels\travel\v2\Prototypes\OptionValue[]
      */
     public function getOptions()
     {
@@ -279,7 +279,7 @@ class POLICYHOLDER extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets options
-     * @param App\apiModels\travel\v2\Prototypes\OPTIONVALUE[] $options Wybrane opcje dodatkowe
+     * @param App\apiModels\travel\v2\Prototypes\OptionValue[] $options Wybrane opcje dodatkowe
      * @return $this
      */
     public function setOptions($options)
@@ -291,7 +291,7 @@ class POLICYHOLDER extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets addons
-     * @return App\apiModels\travel\v2\Prototypes\OPTIONVALUE[]
+     * @return App\apiModels\travel\v2\Prototypes\OptionValue[]
      */
     public function getAddons()
     {
@@ -300,7 +300,7 @@ class POLICYHOLDER extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets addons
-     * @param App\apiModels\travel\v2\Prototypes\OPTIONVALUE[] $addons Dodatkowe atrybuty
+     * @param App\apiModels\travel\v2\Prototypes\OptionValue[] $addons Dodatkowe atrybuty
      * @return $this
      */
     public function setAddons($addons)

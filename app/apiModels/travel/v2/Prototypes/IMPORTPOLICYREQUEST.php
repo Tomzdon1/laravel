@@ -1,6 +1,6 @@
 <?php
 /**
- * IMPORTPOLICYREQUEST
+ * ImportPolicyRequest
  *
  * PHP version 5
  *
@@ -35,7 +35,7 @@ namespace App\apiModels\travel\v2\Prototypes ;
 
 use \ArrayAccess;
 /**
- * IMPORTPOLICYREQUEST Class Doc Comment
+ * ImportPolicyRequest Class Doc Comment
  *
  * @category    Class
  * @description Zestaw danych do zaimportowania polisy
@@ -44,7 +44,7 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class IMPORTPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAccess 
+class ImportPolicyRequest extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
@@ -52,16 +52,16 @@ class IMPORTPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $swaggerTypes = array(
         'product_id' => 'string',
-        'data' => 'App\apiModels\travel\v2\Prototypes\POLICYDATA',
+        'data' => 'App\apiModels\travel\v2\Prototypes\PolicyData',
         'payment_date' => '\DateTime',
         'policy_date' => '\DateTime',
         'policy_number' => 'string',
-        'policy_holder' => 'App\apiModels\travel\v2\Prototypes\POLICYHOLDER',
-        'insured' => 'App\apiModels\travel\v2\Prototypes\INSURED[]',
-        'premium' => 'App\apiModels\travel\v2\Prototypes\PREMIUM',
-        'tariff_premium' => 'App\apiModels\travel\v2\Prototypes\PREMIUM',
-        'netto_premium' => 'App\apiModels\travel\v2\Prototypes\PREMIUM',
-        'solicitors' => 'App\apiModels\travel\v2\Prototypes\SOLICITOR[]'
+        'policy_holder' => 'App\apiModels\travel\v2\Prototypes\PolicyHolder',
+        'insured' => 'App\apiModels\travel\v2\Prototypes\Insured[]',
+        'premium' => 'App\apiModels\travel\v2\Prototypes\Premium',
+        'tariff_premium' => 'App\apiModels\travel\v2\Prototypes\Premium',
+        'netto_premium' => 'App\apiModels\travel\v2\Prototypes\Premium',
+        'solicitors' => 'App\apiModels\travel\v2\Prototypes\Solicitor[]'
     );
   
     /** 
@@ -127,7 +127,7 @@ class IMPORTPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
       * $data 
-      * @var App\apiModels\travel\v2\Prototypes\POLICYDATA
+      * @var App\apiModels\travel\v2\Prototypes\PolicyData
       */
     public $data;
     
@@ -151,37 +151,37 @@ class IMPORTPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
       * $policy_holder 
-      * @var App\apiModels\travel\v2\Prototypes\POLICYHOLDER
+      * @var App\apiModels\travel\v2\Prototypes\PolicyHolder
       */
     public $policy_holder;
     
     /**
       * $insured Dane ubezpieczonych
-      * @var App\apiModels\travel\v2\Prototypes\INSURED[]
+      * @var App\apiModels\travel\v2\Prototypes\Insured[]
       */
     public $insured;
     
     /**
       * $premium Składka pobrana/należna
-      * @var App\apiModels\travel\v2\Prototypes\PREMIUM
+      * @var App\apiModels\travel\v2\Prototypes\Premium
       */
     public $premium;
     
     /**
       * $tariff_premium Składka wynikająca z taryfy
-      * @var App\apiModels\travel\v2\Prototypes\PREMIUM
+      * @var App\apiModels\travel\v2\Prototypes\Premium
       */
     public $tariff_premium;
     
     /**
       * $netto_premium Składka netto
-      * @var App\apiModels\travel\v2\Prototypes\PREMIUM
+      * @var App\apiModels\travel\v2\Prototypes\Premium
       */
     public $netto_premium;
     
     /**
       * $solicitors Informacje o OWCA biorących udział w sprzedaży polisy; Wartości tego pola są weryfikowane a dokładnie uprawnienia agenta/owca do sprzedaży danego typu polisy
-      * @var App\apiModels\travel\v2\Prototypes\SOLICITOR[]
+      * @var App\apiModels\travel\v2\Prototypes\Solicitor[]
       */
     public $solicitors;
     
@@ -230,7 +230,7 @@ class IMPORTPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets data
-     * @return App\apiModels\travel\v2\Prototypes\POLICYDATA
+     * @return App\apiModels\travel\v2\Prototypes\PolicyData
      */
     public function getData()
     {
@@ -239,7 +239,7 @@ class IMPORTPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets data
-     * @param App\apiModels\travel\v2\Prototypes\POLICYDATA $data 
+     * @param App\apiModels\travel\v2\Prototypes\PolicyData $data 
      * @return $this
      */
     public function setData($data)
@@ -314,7 +314,7 @@ class IMPORTPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets policy_holder
-     * @return App\apiModels\travel\v2\Prototypes\POLICYHOLDER
+     * @return App\apiModels\travel\v2\Prototypes\PolicyHolder
      */
     public function getPolicyHolder()
     {
@@ -323,7 +323,7 @@ class IMPORTPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets policy_holder
-     * @param App\apiModels\travel\v2\Prototypes\POLICYHOLDER $policy_holder 
+     * @param App\apiModels\travel\v2\Prototypes\PolicyHolder $policy_holder 
      * @return $this
      */
     public function setPolicyHolder($policy_holder)
@@ -335,7 +335,7 @@ class IMPORTPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets insured
-     * @return App\apiModels\travel\v2\Prototypes\INSURED[]
+     * @return App\apiModels\travel\v2\Prototypes\Insured[]
      */
     public function getInsured()
     {
@@ -344,7 +344,7 @@ class IMPORTPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets insured
-     * @param App\apiModels\travel\v2\Prototypes\INSURED[] $insured Dane ubezpieczonych
+     * @param App\apiModels\travel\v2\Prototypes\Insured[] $insured Dane ubezpieczonych
      * @return $this
      */
     public function setInsured($insured)
@@ -356,7 +356,7 @@ class IMPORTPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets premium
-     * @return App\apiModels\travel\v2\Prototypes\PREMIUM
+     * @return App\apiModels\travel\v2\Prototypes\Premium
      */
     public function getPremium()
     {
@@ -365,7 +365,7 @@ class IMPORTPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets premium
-     * @param App\apiModels\travel\v2\Prototypes\PREMIUM $premium Składka pobrana/należna
+     * @param App\apiModels\travel\v2\Prototypes\Premium $premium Składka pobrana/należna
      * @return $this
      */
     public function setPremium($premium)
@@ -377,7 +377,7 @@ class IMPORTPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets tariff_premium
-     * @return App\apiModels\travel\v2\Prototypes\PREMIUM
+     * @return App\apiModels\travel\v2\Prototypes\Premium
      */
     public function getTariffPremium()
     {
@@ -386,7 +386,7 @@ class IMPORTPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets tariff_premium
-     * @param App\apiModels\travel\v2\Prototypes\PREMIUM $tariff_premium Składka wynikająca z taryfy
+     * @param App\apiModels\travel\v2\Prototypes\Premium $tariff_premium Składka wynikająca z taryfy
      * @return $this
      */
     public function setTariffPremium($tariff_premium)
@@ -398,7 +398,7 @@ class IMPORTPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets netto_premium
-     * @return App\apiModels\travel\v2\Prototypes\PREMIUM
+     * @return App\apiModels\travel\v2\Prototypes\Premium
      */
     public function getNettoPremium()
     {
@@ -407,7 +407,7 @@ class IMPORTPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets netto_premium
-     * @param App\apiModels\travel\v2\Prototypes\PREMIUM $netto_premium Składka netto
+     * @param App\apiModels\travel\v2\Prototypes\Premium $netto_premium Składka netto
      * @return $this
      */
     public function setNettoPremium($netto_premium)
@@ -419,7 +419,7 @@ class IMPORTPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets solicitors
-     * @return App\apiModels\travel\v2\Prototypes\SOLICITOR[]
+     * @return App\apiModels\travel\v2\Prototypes\Solicitor[]
      */
     public function getSolicitors()
     {
@@ -428,7 +428,7 @@ class IMPORTPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets solicitors
-     * @param App\apiModels\travel\v2\Prototypes\SOLICITOR[] $solicitors Informacje o OWCA biorących udział w sprzedaży polisy; Wartości tego pola są weryfikowane a dokładnie uprawnienia agenta/owca do sprzedaży danego typu polisy
+     * @param App\apiModels\travel\v2\Prototypes\Solicitor[] $solicitors Informacje o OWCA biorących udział w sprzedaży polisy; Wartości tego pola są weryfikowane a dokładnie uprawnienia agenta/owca do sprzedaży danego typu polisy
      * @return $this
      */
     public function setSolicitors($solicitors)

@@ -7,7 +7,7 @@ use App\Quote;
 
 class QuoteModelMapper
 {    
-    public static function fromQuote(Implementations\QUOTE_impl $quote, Implementations\QUOTESREQUEST_impl $quotesRequest)
+    public static function fromQuote(Implementations\QuoteImpl $quote, Implementations\QuotesRequestImpl $quotesRequest)
     {
 		$quoteModel = new Quote();
         $quoteModel->data = $quotesRequest->getData();

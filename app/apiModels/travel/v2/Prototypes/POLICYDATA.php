@@ -1,6 +1,6 @@
 <?php
 /**
- * POLICYDATA
+ * PolicyData
  *
  * PHP version 5
  *
@@ -35,7 +35,7 @@ namespace App\apiModels\travel\v2\Prototypes ;
 
 use \ArrayAccess;
 /**
- * POLICYDATA Class Doc Comment
+ * PolicyData Class Doc Comment
  *
  * @category    Class
  * @description Dane polisy
@@ -44,7 +44,7 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class POLICYDATA extends \App\apiModels\ApiModel implements ArrayAccess 
+class PolicyData extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
@@ -56,8 +56,8 @@ class POLICYDATA extends \App\apiModels\ApiModel implements ArrayAccess
         'end_date' => '\DateTime',
         'abroad' => 'bool',
         'destination' => 'string',
-        'options' => 'App\apiModels\travel\v2\Prototypes\OPTIONVALUE[]',
-        'addons' => 'App\apiModels\travel\v2\Prototypes\OPTIONVALUE[]'
+        'options' => 'App\apiModels\travel\v2\Prototypes\OptionValue[]',
+        'addons' => 'App\apiModels\travel\v2\Prototypes\OptionValue[]'
     );
   
     /** 
@@ -135,13 +135,13 @@ class POLICYDATA extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
       * $options Wybrane opcje dodatkowe
-      * @var App\apiModels\travel\v2\Prototypes\OPTIONVALUE[]
+      * @var App\apiModels\travel\v2\Prototypes\OptionValue[]
       */
     public $options;
     
     /**
       * $addons Dodatkowe atrybuty
-      * @var App\apiModels\travel\v2\Prototypes\OPTIONVALUE[]
+      * @var App\apiModels\travel\v2\Prototypes\OptionValue[]
       */
     public $addons;
     
@@ -270,7 +270,7 @@ class POLICYDATA extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets options
-     * @return App\apiModels\travel\v2\Prototypes\OPTIONVALUE[]
+     * @return App\apiModels\travel\v2\Prototypes\OptionValue[]
      */
     public function getOptions()
     {
@@ -279,7 +279,7 @@ class POLICYDATA extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets options
-     * @param App\apiModels\travel\v2\Prototypes\OPTIONVALUE[] $options Wybrane opcje dodatkowe
+     * @param App\apiModels\travel\v2\Prototypes\OptionValue[] $options Wybrane opcje dodatkowe
      * @return $this
      */
     public function setOptions($options)
@@ -291,7 +291,7 @@ class POLICYDATA extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets addons
-     * @return App\apiModels\travel\v2\Prototypes\OPTIONVALUE[]
+     * @return App\apiModels\travel\v2\Prototypes\OptionValue[]
      */
     public function getAddons()
     {
@@ -300,7 +300,7 @@ class POLICYDATA extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets addons
-     * @param App\apiModels\travel\v2\Prototypes\OPTIONVALUE[] $addons Dodatkowe atrybuty
+     * @param App\apiModels\travel\v2\Prototypes\OptionValue[] $addons Dodatkowe atrybuty
      * @return $this
      */
     public function setAddons($addons)

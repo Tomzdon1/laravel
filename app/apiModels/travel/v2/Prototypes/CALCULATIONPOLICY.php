@@ -1,6 +1,6 @@
 <?php
 /**
- * CALCULATIONPOLICY
+ * CalculationPolicy
  *
  * PHP version 5
  *
@@ -35,7 +35,7 @@ namespace App\apiModels\travel\v2\Prototypes ;
 
 use \ArrayAccess;
 /**
- * CALCULATIONPOLICY Class Doc Comment
+ * CalculationPolicy Class Doc Comment
  *
  * @category    Class
  * @description Kalkulacja
@@ -44,7 +44,7 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class CALCULATIONPOLICY extends \App\apiModels\ApiModel implements ArrayAccess 
+class CalculationPolicy extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
@@ -52,8 +52,8 @@ class CALCULATIONPOLICY extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $swaggerTypes = array(
         'calculation_id' => 'string',
-        'premium' => 'App\apiModels\travel\v2\Prototypes\PREMIUM',
-        'tariff_premium' => 'App\apiModels\travel\v2\Prototypes\PREMIUM',
+        'premium' => 'App\apiModels\travel\v2\Prototypes\Premium',
+        'tariff_premium' => 'App\apiModels\travel\v2\Prototypes\Premium',
         'due_date' => '\DateTime',
         'checksum' => 'string',
         'promo_code_valid' => 'bool'
@@ -107,13 +107,13 @@ class CALCULATIONPOLICY extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
       * $premium Składka pobrana/należna
-      * @var App\apiModels\travel\v2\Prototypes\PREMIUM
+      * @var App\apiModels\travel\v2\Prototypes\Premium
       */
     public $premium;
     
     /**
       * $tariff_premium Składka wynikająca z taryfy
-      * @var App\apiModels\travel\v2\Prototypes\PREMIUM
+      * @var App\apiModels\travel\v2\Prototypes\Premium
       */
     public $tariff_premium;
     
@@ -175,7 +175,7 @@ class CALCULATIONPOLICY extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets premium
-     * @return App\apiModels\travel\v2\Prototypes\PREMIUM
+     * @return App\apiModels\travel\v2\Prototypes\Premium
      */
     public function getPremium()
     {
@@ -184,7 +184,7 @@ class CALCULATIONPOLICY extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets premium
-     * @param App\apiModels\travel\v2\Prototypes\PREMIUM $premium Składka pobrana/należna
+     * @param App\apiModels\travel\v2\Prototypes\Premium $premium Składka pobrana/należna
      * @return $this
      */
     public function setPremium($premium)
@@ -196,7 +196,7 @@ class CALCULATIONPOLICY extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets tariff_premium
-     * @return App\apiModels\travel\v2\Prototypes\PREMIUM
+     * @return App\apiModels\travel\v2\Prototypes\Premium
      */
     public function getTariffPremium()
     {
@@ -205,7 +205,7 @@ class CALCULATIONPOLICY extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets tariff_premium
-     * @param App\apiModels\travel\v2\Prototypes\PREMIUM $tariff_premium Składka wynikająca z taryfy
+     * @param App\apiModels\travel\v2\Prototypes\Premium $tariff_premium Składka wynikająca z taryfy
      * @return $this
      */
     public function setTariffPremium($tariff_premium)

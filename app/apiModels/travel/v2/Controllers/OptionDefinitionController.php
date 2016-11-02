@@ -13,7 +13,7 @@ class OptionDefinitionController extends Controller
 	/**
      * Option definitions index for passed product_id
      * 
-     * @return OPTIONDEFINITION[]
+     * @return OptionDefinition[]
      */
     public function index(Request $request)
     {

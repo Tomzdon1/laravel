@@ -1,6 +1,6 @@
 <?php
 /**
- * PERSONDATA
+ * PersonData
  *
  * PHP version 5
  *
@@ -35,7 +35,7 @@ namespace App\apiModels\travel\v2\Prototypes ;
 
 use \ArrayAccess;
 /**
- * PERSONDATA Class Doc Comment
+ * PersonData Class Doc Comment
  *
  * @category    Class
  * @description Dane osoby
@@ -44,7 +44,7 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class PERSONDATA extends \App\apiModels\ApiModel implements ArrayAccess 
+class PersonData extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 

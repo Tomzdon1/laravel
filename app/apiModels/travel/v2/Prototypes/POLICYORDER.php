@@ -1,6 +1,6 @@
 <?php
 /**
- * POLICYORDER
+ * PolicyOrder
  *
  * PHP version 5
  *
@@ -35,7 +35,7 @@ namespace App\apiModels\travel\v2\Prototypes ;
 
 use \ArrayAccess;
 /**
- * POLICYORDER Class Doc Comment
+ * PolicyOrder Class Doc Comment
  *
  * @category    Class
  * @description Potwierdzenie zamówienia polisy
@@ -44,7 +44,7 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class POLICYORDER extends \App\apiModels\ApiModel implements ArrayAccess 
+class PolicyOrder extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 

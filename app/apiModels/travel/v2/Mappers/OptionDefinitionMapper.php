@@ -2,7 +2,7 @@
 
 namespace App\apiModels\travel\v2\Mappers;
 
-use App\apiModels\travel\v2\Implementations\OPTIONDEFINITION_impl;
+use App\apiModels\travel\v2\Implementations\OptionDefinitionImpl;
 
 class OptionDefinitionMapper
 {
@@ -17,7 +17,7 @@ class OptionDefinitionMapper
 
     public static function fromModel(array $option)
     {
-		$optionDefinition = new OPTIONDEFINITION_impl();
+		$optionDefinition = new OptionDefinitionImpl();
 		!array_key_exists('name', $option) ?: $optionDefinition->setName($option['name']);
 		!array_key_exists('description', $option) ?: $optionDefinition->setDescription($option['description']);
 		!array_key_exists('code', $option) ?: $optionDefinition->setCode($option['code']);

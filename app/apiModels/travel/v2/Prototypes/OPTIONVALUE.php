@@ -1,6 +1,6 @@
 <?php
 /**
- * OPTIONVALUE
+ * OptionValue
  *
  * PHP version 5
  *
@@ -35,7 +35,7 @@ namespace App\apiModels\travel\v2\Prototypes ;
 
 use \ArrayAccess;
 /**
- * OPTIONVALUE Class Doc Comment
+ * OptionValue Class Doc Comment
  *
  * @category    Class
  * @description Wartość opcji
@@ -44,7 +44,7 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class OPTIONVALUE extends \App\apiModels\ApiModel implements ArrayAccess 
+class OptionValue extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
@@ -53,7 +53,7 @@ class OPTIONVALUE extends \App\apiModels\ApiModel implements ArrayAccess
     static $swaggerTypes = array(
         'code' => 'string',
         'value' => 'string',
-        'sub_options' => 'App\apiModels\travel\v2\Prototypes\OPTIONVALUE[]'
+        'sub_options' => 'App\apiModels\travel\v2\Prototypes\OptionValue[]'
     );
   
     /** 
@@ -101,7 +101,7 @@ class OPTIONVALUE extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
       * $sub_options Wartości subopcji
-      * @var App\apiModels\travel\v2\Prototypes\OPTIONVALUE[]
+      * @var App\apiModels\travel\v2\Prototypes\OptionValue[]
       */
     public $sub_options;
     
@@ -163,7 +163,7 @@ class OPTIONVALUE extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets sub_options
-     * @return App\apiModels\travel\v2\Prototypes\OPTIONVALUE[]
+     * @return App\apiModels\travel\v2\Prototypes\OptionValue[]
      */
     public function getSubOptions()
     {
@@ -172,7 +172,7 @@ class OPTIONVALUE extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets sub_options
-     * @param App\apiModels\travel\v2\Prototypes\OPTIONVALUE[] $sub_options Wartości subopcji
+     * @param App\apiModels\travel\v2\Prototypes\OptionValue[] $sub_options Wartości subopcji
      * @return $this
      */
     public function setSubOptions($sub_options)

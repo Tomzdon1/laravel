@@ -1,6 +1,6 @@
 <?php
 /**
- * OPTIONDEFINITION
+ * OptionDefinition
  *
  * PHP version 5
  *
@@ -35,7 +35,7 @@ namespace App\apiModels\travel\v2\Prototypes ;
 
 use \ArrayAccess;
 /**
- * OPTIONDEFINITION Class Doc Comment
+ * OptionDefinition Class Doc Comment
  *
  * @category    Class
  * @description Definicja opcji
@@ -44,7 +44,7 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class OPTIONDEFINITION extends \App\apiModels\ApiModel implements ArrayAccess 
+class OptionDefinition extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
@@ -57,7 +57,7 @@ class OPTIONDEFINITION extends \App\apiModels\ApiModel implements ArrayAccess
         'value_type' => 'string',
         'changeable' => 'bool',
         'scope' => 'string',
-        'sub_options' => 'App\apiModels\travel\v2\Prototypes\OPTIONDEFINITION[]'
+        'sub_options' => 'App\apiModels\travel\v2\Prototypes\OptionDefinition[]'
     );
   
     /** 
@@ -141,7 +141,7 @@ class OPTIONDEFINITION extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
       * $sub_options Definicje subopcji
-      * @var App\apiModels\travel\v2\Prototypes\OPTIONDEFINITION[]
+      * @var App\apiModels\travel\v2\Prototypes\OptionDefinition[]
       */
     public $sub_options;
     
@@ -287,9 +287,9 @@ class OPTIONDEFINITION extends \App\apiModels\ApiModel implements ArrayAccess
      */
     public function setScope($scope)
     {
-        $allowed_values = array("POLICY_DATA", "INSURED", "POLICY_HOLDER");
+        $allowed_values = array("PolicyData", "Insured", "PolicyHolder");
         if (!in_array($scope, $allowed_values)) {
-            throw new \InvalidArgumentException("Invalid value for 'scope', must be one of 'POLICY_DATA', 'INSURED', 'POLICY_HOLDER'");
+            throw new \InvalidArgumentException("Invalid value for 'scope', must be one of 'PolicyData', 'Insured', 'PolicyHolder'");
         }
         $this->scope = $scope;
         return $this;
@@ -297,7 +297,7 @@ class OPTIONDEFINITION extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets sub_options
-     * @return App\apiModels\travel\v2\Prototypes\OPTIONDEFINITION[]
+     * @return App\apiModels\travel\v2\Prototypes\OptionDefinition[]
      */
     public function getSubOptions()
     {
@@ -306,7 +306,7 @@ class OPTIONDEFINITION extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets sub_options
-     * @param App\apiModels\travel\v2\Prototypes\OPTIONDEFINITION[] $sub_options Definicje subopcji
+     * @param App\apiModels\travel\v2\Prototypes\OptionDefinition[] $sub_options Definicje subopcji
      * @return $this
      */
     public function setSubOptions($sub_options)

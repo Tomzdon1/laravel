@@ -1,6 +1,6 @@
 <?php
 /**
- * PURCHASEPOLICYREQUEST
+ * PurchasePolicyRequest
  *
  * PHP version 5
  *
@@ -35,7 +35,7 @@ namespace App\apiModels\travel\v2\Prototypes ;
 
 use \ArrayAccess;
 /**
- * PURCHASEPOLICYREQUEST Class Doc Comment
+ * PurchasePolicyRequest Class Doc Comment
  *
  * @category    Class
  * @description Zestaw danych do zakupu polisy
@@ -44,7 +44,7 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class PURCHASEPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAccess 
+class PurchasePolicyRequest extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
@@ -54,7 +54,7 @@ class PURCHASEPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAcce
         'calculation_id' => 'string',
         'continue_url' => 'string',
         'notify_url' => 'string',
-        'solicitors' => 'App\apiModels\travel\v2\Prototypes\SOLICITOR[]',
+        'solicitors' => 'App\apiModels\travel\v2\Prototypes\Solicitor[]',
         'checksum' => 'string'
     );
   
@@ -115,7 +115,7 @@ class PURCHASEPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAcce
     
     /**
       * $solicitors Informacje o OWCA biorących udział w sprzedaży polisy; Wartości tego pola są weryfikowane a dokładnie uprawnienia agenta/owca do sprzedaży danego typu polisy
-      * @var App\apiModels\travel\v2\Prototypes\SOLICITOR[]
+      * @var App\apiModels\travel\v2\Prototypes\Solicitor[]
       */
     public $solicitors;
     
@@ -206,7 +206,7 @@ class PURCHASEPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAcce
     
     /**
      * Gets solicitors
-     * @return App\apiModels\travel\v2\Prototypes\SOLICITOR[]
+     * @return App\apiModels\travel\v2\Prototypes\Solicitor[]
      */
     public function getSolicitors()
     {
@@ -215,7 +215,7 @@ class PURCHASEPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAcce
   
     /**
      * Sets solicitors
-     * @param App\apiModels\travel\v2\Prototypes\SOLICITOR[] $solicitors Informacje o OWCA biorących udział w sprzedaży polisy; Wartości tego pola są weryfikowane a dokładnie uprawnienia agenta/owca do sprzedaży danego typu polisy
+     * @param App\apiModels\travel\v2\Prototypes\Solicitor[] $solicitors Informacje o OWCA biorących udział w sprzedaży polisy; Wartości tego pola są weryfikowane a dokładnie uprawnienia agenta/owca do sprzedaży danego typu polisy
      * @return $this
      */
     public function setSolicitors($solicitors)

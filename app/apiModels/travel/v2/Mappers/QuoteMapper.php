@@ -2,7 +2,7 @@
 
 namespace App\apiModels\travel\v2\Mappers;
 
-use App\apiModels\travel\v2\Implementations\QUOTE_impl;
+use App\apiModels\travel\v2\Implementations\QuoteImpl;
 use App\TravelOffer;
 use App\apiModels\travel\v2\Mappers\DetailMapper;
 
@@ -19,7 +19,7 @@ class QuoteMapper
 
     public static function fromOfferModel(TravelOffer $offer)
     {
-		$quote = new QUOTE_impl();
+		$quote = new QuoteImpl();
         $quote->setOffer($offer);
         $quote->setProductId($offer->id);
         !isset($offer->name) ?: $quote->setDescription($offer->name);

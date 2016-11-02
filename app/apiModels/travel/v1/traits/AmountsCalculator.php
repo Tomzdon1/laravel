@@ -2,7 +2,7 @@
 
 namespace App\apiModels\travel\v1\traits;
 
-use App\apiModels\travel\v1\implementations\AMOUNT_impl;
+use App\apiModels\travel\v1\implementations\AMOUNTImpl;
 
 trait AmountsCalculator {
     public function recalculateAmounts($dbOffer, $quoteRequest, $withNettoAmount = true) {
@@ -32,8 +32,8 @@ trait AmountsCalculator {
 
     protected function calculateExcelAmounts($config, $excelPath, $quoteRequest, $varCode, $withNettoAmount)
     {
-        $tariff_amount = new AMOUNT_impl();
-        $netto_amount = new AMOUNT_impl();
+        $tariff_amount = new AMOUNTImpl();
+        $netto_amount = new AMOUNTImpl();
         // $tariff_amount = new self::$swaggerTypes['tariff_amount']();
         // $netto_amount = new self::$swaggerTypes['netto_amount']();
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * QUOTE
+ * Quote
  *
  * PHP version 5
  *
@@ -35,7 +35,7 @@ namespace App\apiModels\travel\v2\Prototypes ;
 
 use \ArrayAccess;
 /**
- * QUOTE Class Doc Comment
+ * Quote Class Doc Comment
  *
  * @category    Class
  * @description Oferta
@@ -44,7 +44,7 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class QUOTE extends \App\apiModels\ApiModel implements ArrayAccess 
+class Quote extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
@@ -53,11 +53,11 @@ class QUOTE extends \App\apiModels\ApiModel implements ArrayAccess
     static $swaggerTypes = array(
         'quote_id' => 'string',
         'product_id' => 'string',
-        'premium' => 'App\apiModels\travel\v2\Prototypes\PREMIUM',
-        'tariff_premium' => 'App\apiModels\travel\v2\Prototypes\PREMIUM',
+        'premium' => 'App\apiModels\travel\v2\Prototypes\Premium',
+        'tariff_premium' => 'App\apiModels\travel\v2\Prototypes\Premium',
         'promo_code_valid' => 'bool',
         'description' => 'string',
-        'details' => 'App\apiModels\travel\v2\Prototypes\DETAIL[]'
+        'details' => 'App\apiModels\travel\v2\Prototypes\Detail[]'
     );
   
     /** 
@@ -117,13 +117,13 @@ class QUOTE extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
       * $premium Składka pobrana/należna
-      * @var App\apiModels\travel\v2\Prototypes\PREMIUM
+      * @var App\apiModels\travel\v2\Prototypes\Premium
       */
     public $premium;
     
     /**
       * $tariff_premium Składka wynikająca z taryfy
-      * @var App\apiModels\travel\v2\Prototypes\PREMIUM
+      * @var App\apiModels\travel\v2\Prototypes\Premium
       */
     public $tariff_premium;
     
@@ -141,7 +141,7 @@ class QUOTE extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
       * $details Detale oferty
-      * @var App\apiModels\travel\v2\Prototypes\DETAIL[]
+      * @var App\apiModels\travel\v2\Prototypes\Detail[]
       */
     public $details;
     
@@ -207,7 +207,7 @@ class QUOTE extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets premium
-     * @return App\apiModels\travel\v2\Prototypes\PREMIUM
+     * @return App\apiModels\travel\v2\Prototypes\Premium
      */
     public function getPremium()
     {
@@ -216,7 +216,7 @@ class QUOTE extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets premium
-     * @param App\apiModels\travel\v2\Prototypes\PREMIUM $premium Składka pobrana/należna
+     * @param App\apiModels\travel\v2\Prototypes\Premium $premium Składka pobrana/należna
      * @return $this
      */
     public function setPremium($premium)
@@ -228,7 +228,7 @@ class QUOTE extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets tariff_premium
-     * @return App\apiModels\travel\v2\Prototypes\PREMIUM
+     * @return App\apiModels\travel\v2\Prototypes\Premium
      */
     public function getTariffPremium()
     {
@@ -237,7 +237,7 @@ class QUOTE extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets tariff_premium
-     * @param App\apiModels\travel\v2\Prototypes\PREMIUM $tariff_premium Składka wynikająca z taryfy
+     * @param App\apiModels\travel\v2\Prototypes\Premium $tariff_premium Składka wynikająca z taryfy
      * @return $this
      */
     public function setTariffPremium($tariff_premium)
@@ -291,7 +291,7 @@ class QUOTE extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets details
-     * @return App\apiModels\travel\v2\Prototypes\DETAIL[]
+     * @return App\apiModels\travel\v2\Prototypes\Detail[]
      */
     public function getDetails()
     {
@@ -300,7 +300,7 @@ class QUOTE extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets details
-     * @param App\apiModels\travel\v2\Prototypes\DETAIL[] $details Detale oferty
+     * @param App\apiModels\travel\v2\Prototypes\Detail[] $details Detale oferty
      * @return $this
      */
     public function setDetails($details)

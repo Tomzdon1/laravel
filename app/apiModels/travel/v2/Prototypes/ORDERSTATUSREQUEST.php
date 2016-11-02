@@ -1,6 +1,6 @@
 <?php
 /**
- * ORDERSTATUSREQUEST
+ * OrderStatusRequest
  *
  * PHP version 5
  *
@@ -35,7 +35,7 @@ namespace App\apiModels\travel\v2\Prototypes ;
 
 use \ArrayAccess;
 /**
- * ORDERSTATUSREQUEST Class Doc Comment
+ * OrderStatusRequest Class Doc Comment
  *
  * @category    Class
  * @description Zestaw danych do sprawdzenia stanu zamówienia
@@ -44,7 +44,7 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class ORDERSTATUSREQUEST extends \App\apiModels\ApiModel implements ArrayAccess 
+class OrderStatusRequest extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 

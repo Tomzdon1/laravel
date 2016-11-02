@@ -7,7 +7,7 @@ use App\apiModels\travel\v2\Implementations;
 
 class CalculationMapper
 {
-    public static function fromCalculationPolicy(Implementations\CALCULATIONPOLICY_impl $calculationPolicy, Implementations\CALCULATEPOLICYREQUEST_impl $calculatePolicyRequest)
+    public static function fromCalculationPolicy(Implementations\CalculationPolicyImpl $calculationPolicy, Implementations\CalculatePolicyRequestImpl $calculatePolicyRequest)
     {
 		$calculation = new Calculation();
         !$calculatePolicyRequest->getQuoteId() ?: $calculation->quote_id = $calculatePolicyRequest->getQuoteId();

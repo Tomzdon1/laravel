@@ -1,6 +1,6 @@
 <?php
 /**
- * CALCULATEPOLICYREQUEST
+ * CalculatePolicyRequest
  *
  * PHP version 5
  *
@@ -35,7 +35,7 @@ namespace App\apiModels\travel\v2\Prototypes ;
 
 use \ArrayAccess;
 /**
- * CALCULATEPOLICYREQUEST Class Doc Comment
+ * CalculatePolicyRequest Class Doc Comment
  *
  * @category    Class
  * @description Zestaw danych do kalkulacji polisy
@@ -44,7 +44,7 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class CALCULATEPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAccess 
+class CalculatePolicyRequest extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
@@ -53,9 +53,9 @@ class CALCULATEPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAcc
     static $swaggerTypes = array(
         'quote_id' => 'string',
         'product_id' => 'string',
-        'data' => 'App\apiModels\travel\v2\Prototypes\POLICYDATA',
-        'policy_holder' => 'App\apiModels\travel\v2\Prototypes\POLICYHOLDER',
-        'insured' => 'App\apiModels\travel\v2\Prototypes\INSURED[]'
+        'data' => 'App\apiModels\travel\v2\Prototypes\PolicyData',
+        'policy_holder' => 'App\apiModels\travel\v2\Prototypes\PolicyHolder',
+        'insured' => 'App\apiModels\travel\v2\Prototypes\Insured[]'
     );
   
     /** 
@@ -109,19 +109,19 @@ class CALCULATEPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAcc
     
     /**
       * $data 
-      * @var App\apiModels\travel\v2\Prototypes\POLICYDATA
+      * @var App\apiModels\travel\v2\Prototypes\PolicyData
       */
     public $data;
     
     /**
       * $policy_holder 
-      * @var App\apiModels\travel\v2\Prototypes\POLICYHOLDER
+      * @var App\apiModels\travel\v2\Prototypes\PolicyHolder
       */
     public $policy_holder;
     
     /**
       * $insured Dane ubezpieczonych
-      * @var App\apiModels\travel\v2\Prototypes\INSURED[]
+      * @var App\apiModels\travel\v2\Prototypes\Insured[]
       */
     public $insured;
     
@@ -185,7 +185,7 @@ class CALCULATEPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAcc
     
     /**
      * Gets data
-     * @return App\apiModels\travel\v2\Prototypes\POLICYDATA
+     * @return App\apiModels\travel\v2\Prototypes\PolicyData
      */
     public function getData()
     {
@@ -194,7 +194,7 @@ class CALCULATEPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAcc
   
     /**
      * Sets data
-     * @param App\apiModels\travel\v2\Prototypes\POLICYDATA $data 
+     * @param App\apiModels\travel\v2\Prototypes\PolicyData $data 
      * @return $this
      */
     public function setData($data)
@@ -206,7 +206,7 @@ class CALCULATEPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAcc
     
     /**
      * Gets policy_holder
-     * @return App\apiModels\travel\v2\Prototypes\POLICYHOLDER
+     * @return App\apiModels\travel\v2\Prototypes\PolicyHolder
      */
     public function getPolicyHolder()
     {
@@ -215,7 +215,7 @@ class CALCULATEPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAcc
   
     /**
      * Sets policy_holder
-     * @param App\apiModels\travel\v2\Prototypes\POLICYHOLDER $policy_holder 
+     * @param App\apiModels\travel\v2\Prototypes\PolicyHolder $policy_holder 
      * @return $this
      */
     public function setPolicyHolder($policy_holder)
@@ -227,7 +227,7 @@ class CALCULATEPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAcc
     
     /**
      * Gets insured
-     * @return App\apiModels\travel\v2\Prototypes\INSURED[]
+     * @return App\apiModels\travel\v2\Prototypes\Insured[]
      */
     public function getInsured()
     {
@@ -236,7 +236,7 @@ class CALCULATEPOLICYREQUEST extends \App\apiModels\ApiModel implements ArrayAcc
   
     /**
      * Sets insured
-     * @param App\apiModels\travel\v2\Prototypes\INSURED[] $insured Dane ubezpieczonych
+     * @param App\apiModels\travel\v2\Prototypes\Insured[] $insured Dane ubezpieczonych
      * @return $this
      */
     public function setInsured($insured)
