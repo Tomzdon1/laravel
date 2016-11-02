@@ -22,7 +22,6 @@ class OptionDefinitionMapper
 		!array_key_exists('description', $option) ?: $optionDefinition->setDescription($option['description']);
 		!array_key_exists('code', $option) ?: $optionDefinition->setCode($option['code']);
 		!array_key_exists('value_type', $option) ?: $optionDefinition->setValueType($option['value_type']);
-		!array_key_exists('changeable', $option) ?: $optionDefinition->setChangeable($option['changeable']);
 		!array_key_exists('scope', $option) ?: $optionDefinition->setScope($option['scope']);
 		!array_key_exists('sub_options', $option) ? $optionDefinition->setSubOptions([]) : $optionDefinition->setSubOptions($option['sub_options']);
 		return $optionDefinition;
