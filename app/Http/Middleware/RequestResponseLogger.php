@@ -4,14 +4,12 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Exception\HttpResponseException;
+use App\Flow;
 
 class RequestResponseLogger
 {
-
-    private $requestDate;
-    private $requestBody;
-    private $responseBody;
-    private $requestLog = [];
+    private $flow;
+    private $recentPathIndex;
 
     /**
      * Handle an incoming request.
@@ -22,30 +20,44 @@ class RequestResponseLogger
      */
     public function handle($request, Closure $next)
     {
-        $this->requestDate = $this->getFormattedTime($request->server('REQUEST_TIME'));
         $requestBody = json_decode($request->getContent());
-
-        if (isset($requestBody->quote_ref)) {
-            $this->requestLog = app('db')->collection('flow')->find(substr($requestBody->quote_ref, 0, 24));
+        $quoteId = null;
+        $path = [];
+        
+        if (isset($requestBody->quote_id)) {
+            $quoteId = $requestBody->quote_id;
         }
-
-        if (empty($this->requestLog)) {
-            $this->requestLog['partnerCode'] = $request->input('customer_id');
-            $this->requestLog['startPath'] = $request->getPathInfo();
-
-            $this->requestLog['_id'] = app('db')->collection('flow')->insertGetId($this->requestLog);
+        
+        if ($quoteId) {
+            $this->flow = Flow::whereRaw(['quoteIds' => ['$in' => [$quoteId]]])->first();
         }
+        
+        if (!$this->flow) {
+            $this->flow = new Flow();
+            $this->flow->partnerCode = $request->input('customer_id');
+            
+            if ($quoteId) {
+                $this->flow->quoteIds = [$quoteId];
+            }
+        }
+        
+        $path['request'] = $requestBody;
+        $path['path'] = $request->getPathInfo();
 
         if ($request->has('request_id')) {
-            $this->requestLog[$request->getPathInfo()][$this->requestDate]['esb_id'] = $request->input('request_id');
+            $path['esbId'] = $request->input('request_id');
         }
 
-        $this->requestLog[$request->getPathInfo()][$this->requestDate]['request'] = $requestBody;
+        if (!is_array($this->flow->paths)) {
+            $this->flow->paths = [];
+        }
+        
+        $this->flow->paths = array_merge($this->flow->paths, [$path]);
+        $this->flow->save();
 
+        $this->recentPathIndex = max(array_keys($this->flow->paths));
 
-        app('db')->collection('flow')->where('_id', $this->requestLog['_id'])->update($this->requestLog);
-
-        $request->attributes->add(['requestId' => (string) $this->requestLog['_id']]);
+        $request->attributes->add(['flow' => (string) $this->flow]);
 
         return $next($request);
     }
@@ -59,16 +71,24 @@ class RequestResponseLogger
      */
     public function terminate($request, $response)
     {
-        $this->responseBody = json_decode($response->getContent());
-
-        $this->requestLog[$request->getPathInfo()][$this->requestDate]['response_time']
-            = $this->getFormattedTime(microtime(true));
-        $this->requestLog[$request->getPathInfo()][$this->requestDate]['response'] = $this->responseBody;
-
-        try {
-            app('db')->collection('flow')->where('_id', $this->requestLog['_id'])->update($this->requestLog);
-        } catch (\Exception $e) {
-            app('log')->error('Can not log response to database');
+        $responseBody = json_decode($response->getContent());
+        
+        if ($this->flow) {
+            if (property_exists($responseBody, 'data') && is_array($responseBody->data)) {
+                foreach ($responseBody->data as $quote) {
+                    if (property_exists($quote, 'quote_id')) {
+                        $this->flow->quoteIds = array_merge($this->flow->quoteIds ?: [], [$quote->quote_id]);
+                    }
+                }
+            }
+            
+            $path['response'] = $responseBody;
+            $path['response_time'] = $this->getFormattedTime(microtime(true));
+            $paths = $this->flow->paths;
+            $paths[$this->recentPathIndex] = array_merge($paths[$this->recentPathIndex], $path);
+            $this->flow->paths = $paths;
+            
+            $this->flow->save();
         }
     }
 
