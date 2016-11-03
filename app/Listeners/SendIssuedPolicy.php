@@ -36,11 +36,18 @@ class SendIssuedPolicy extends Listener
         }
 
         $policySender->setSrcId($event->policy->id);
-        $policySender->setCompany($event->policy->product['company']);
         $policySender->setSrcType('policy');
         
         try {
             $policySender->setPolicy($event->policy);
+            
+            $companies = [];
+            foreach ($event->policy->product->elements as $element) {
+                array_push( $companies, $element->cmp);
+            }
+            $companies = array_unique($companies);
+
+            $policySender->setCompany($companies);
         } catch (\InvalidArgumentException $exception) {
             app('log')->error('Error when setting issued policy to send');
             app('log')->error($exception);
