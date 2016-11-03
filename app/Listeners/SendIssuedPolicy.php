@@ -25,9 +25,6 @@ class SendIssuedPolicy extends Listener
     {
         app('log')->debug('Start SendIssuedPolicy');
 
-        // @todo Do usunięcia stąd (np. przechowywać w bazie)
-        $event->policy->product['company'] = ['M'];
-
         $policySender = app()->make('PolicySender');
         $policySender->setStatus($event->policy->status);
 
@@ -40,10 +37,12 @@ class SendIssuedPolicy extends Listener
         
         try {
             $policySender->setPolicy($event->policy);
+
+            $product = json_decode($event->policy->product);
             
             $companies = [];
-            foreach ($event->policy->product->elements as $element) {
-                array_push( $companies, $element->cmp);
+            foreach ($product->elements as $element) {
+                array_push($companies, $element->cmp);
             }
             $companies = array_unique($companies);
 

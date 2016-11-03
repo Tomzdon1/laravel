@@ -25,9 +25,6 @@ class SendSMSNotificationIssuedPolicy extends Listener
     {
         app('log')->debug('Start SendSMSNotificationIssuedPolicy');
 
-        // @todo Do usunięcia stąd (np. przechowywać w bazie)
-        $event->policy->product['company'] = ['M'];
-
         if (isset($event->policy->policy_holder->telephone) &&
             isset($event->policy->product['configuration']['smsTemplate']) &&
             isset($event->policy->product['configuration']['smsCampId']) &&
@@ -37,11 +34,11 @@ class SendSMSNotificationIssuedPolicy extends Listener
                 $smsSender = app()->make('SmsSender');
 
                 try {
-                    $SmsSendRequest = $smsSender->getBody();
+                    $smsSendRequest = $smsSender->getBody();
 
                     $messageValues = [];
 
-                    $messageValueClassName = substr($SmsSendRequest->swaggerTypes()['message'], 0, -2);
+                    $messageValueClassName = substr($smsSendRequest->swaggerTypes()['message'], 0, -2);
                     $messageValue = new $messageValueClassName;
                     $messageValue->setKey('wiad_par_z01');
                     $template = $event->policy->product['configuration']['smsTemplate']; 
@@ -49,15 +46,24 @@ class SendSMSNotificationIssuedPolicy extends Listener
                     $messageValue->setValue($parser::parse($template, $event->policy));
                     $messageValues[] = $messageValue;
 
-                    $SmsSendRequest->setCampaignId((string)$event->policy->product['configuration']['smsCampId']);
-                    $SmsSendRequest->setMessage($messageValues);
-                    $SmsSendRequest->setTelephone($event->policy->policy_holder->telephone);
+                    $smsSendRequest->setCampaignId((string)$event->policy->product['configuration']['smsCampId']);
+                    $smsSendRequest->setMessage($messageValues);
+                    $smsSendRequest->setTelephone($event->policy->policy_holder->telephone);
+
+                    $product = json_decode($event->policy->product);
+            
+                    $companies = [];
+                    foreach ($product->elements as $element) {
+                        array_push($companies, $element->cmp);
+                    }
+                    $companies = array_unique($companies);
+
+                    $smsSender->setCompany($companies);
                 } catch (\InvalidArgumentException $exception) {
                     $smsSender->setStatus($policySender::STATUS_ERR);
                 }
 
                 $smsSender->setSrcId($event->policy->id);
-                $smsSender->setCompany($event->policy->product['company']);
                 $smsSender->setSrcType('policy');
                 $smsSender->send();
         }

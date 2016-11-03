@@ -25,9 +25,6 @@ class SendMailNotificationIssuedPolicy extends Listener
     {
         app('log')->debug('Start SendMailNotificationIssuedPolicy');
 
-        // @todo Do usunięcia stąd (np. przechowywać w bazie)
-        $event->policy->product['company'] = ['M'];
-
         if (isset($event->policy->policy_holder->email) &&
             isset($event->policy->product['configuration']['mailTemplate']) &&
             ($event->policy->getSource() == 'import' && $event->policy->product['configuration']['mailOnImport']) || 
@@ -44,12 +41,21 @@ class SendMailNotificationIssuedPolicy extends Listener
                     $mailSendRequest->setBody($parser::parse($template, $event->policy));
                     // @todo Skąd pobrać załączniki
                     $mailSendRequest->setAttachments([]);
+
+                    $product = json_decode($event->policy->product);
+            
+                    $companies = [];
+                    foreach ($product->elements as $element) {
+                        array_push($companies, $element->cmp);
+                    }
+                    $companies = array_unique($companies);
+
+                    $mailSender->setCompany($companies);
                 } catch (\InvalidArgumentException $exception) {
                     $mailSender->setStatus($policySender::STATUS_ERR);
                 }
 
                 $mailSender->setSrcId($event->policy->id);
-                $mailSender->setCompany($event->policy->product['company']);
                 $mailSender->setSrcType('policy');
                 $mailSender->send();
         }
