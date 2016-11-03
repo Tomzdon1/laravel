@@ -39,8 +39,10 @@ class Policy extends Eloquent
     {
         parent::boot();
 
-        static::addGlobalScope('partner', function(Builder $builder) {
-            $builder->where('partner.code', app('auth')->user()->code);
+        static::addGlobalScope('partner', function($builder) {
+            if(app('auth')->user()) {
+                $builder->where('partner.code', app('auth')->user()->code);
+            }
         });
 
         static::created(function($policy) {
@@ -56,6 +58,18 @@ class Policy extends Eloquent
         $this->source = $source;
     }
 
+    public function getStatuses() {
+        return $this->statuses;
+    }
+
+    public function addStatus($status) {
+        if (is_array($this->getStatuses())) {
+            $this->statuses = array_merge($this->getStatuses(), [$status]);
+        } else {
+            $this->statuses = [$status];
+        }
+    }
+
     // @todo zastapic funkcje mapperem osobnym dla kazdego api
     public function fillFromImportRequest($importRequest, $importStatus, $partner = null) {
         if ($partner == null) {
@@ -66,11 +80,6 @@ class Policy extends Eloquent
         
         $this->status = $importStatus->getStatus();
         $this->errors = $importStatus->getMessages();
-        
-        // zgodnosc z api v1
-        if (method_exists($importStatus, 'getQuoteRef')) {
-            $this->quote_ref = $importStatus->getQuoteRef();
-        }
 
         // zgodnosc z api v1
         if (method_exists($importRequest, 'getProductRef')) {

@@ -27,9 +27,9 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             app('log')->info('Call everyMinute scheduler');
             
-            dispatch(new \App\Jobs\ConsumeCPQueue);
+            dispatch(new \App\Jobs\ConsumeQueue);
             
             app('log')->info('Finish everyMinute scheduler');
-        })->everyMinute();
+        })->everyMinute()->name('everyMinuteScheduler')->withoutOverlapping();
     }
 }

@@ -31,8 +31,10 @@ class Calculation extends Eloquent
     {
         parent::boot();
         
-        static::addGlobalScope('partner', function(Builder $builder) {
-            $builder->where('partner_id', app('auth')->user()->id);
+        static::addGlobalScope('partner', function($builder) {
+            if(app('auth')->user()) {
+                $builder->where('partner_id', app('auth')->user()->id);
+            }
         });
     }
 }
