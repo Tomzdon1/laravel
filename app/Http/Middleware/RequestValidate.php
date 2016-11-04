@@ -36,7 +36,11 @@ class RequestValidate
         $uri = 'file://' . $apiDefinitionPath;
         $schemaManager = new RequestSchemaManager($uri);
 
-        $responseSchema = $schemaManager->getResponseSchema($path, $httpMethod, $httpCode);
+        try {
+            $responseSchema = $schemaManager->getResponseSchema($path, $httpMethod, $httpCode);
+        } catch (\InvalidArgumentException $e) {
+            abort(Response::HTTP_NOT_FOUND);
+        }
 
         $request->attributes->add(['requestSchema' => $responseSchema]);
         $validator = new Validator();
