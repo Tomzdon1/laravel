@@ -180,7 +180,7 @@ class AppServiceProvider extends ServiceProvider
         });
         
         /**
-         *   Validate product reference.
+         *   Validate validity of the calculation.
          *
          */
         app('validator')->extend('validCalculationDueDate', function ($attribute, $value, $parameters, $validator) {
