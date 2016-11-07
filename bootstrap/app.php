@@ -100,6 +100,7 @@ $app->register(App\Providers\EsbServiceProvider::class);
 $app->register(App\Providers\PdfPrintingServiceProvider::class);
 $app->register(App\Providers\SMSSendingServiceProvider::class);
 $app->register(App\Providers\MailSendingServiceProvider::class);
+$app->register(App\Providers\ScheduleTaskLogServiceProvider::class);
 $app->register(App\Providers\FromObjectTemplateParsingServiceProvider::class);
 $app->register(App\Providers\PolicySendingServiceProvider::class);
 $app->register(App\Providers\RequestResponseLoggerServiceProvider::class);

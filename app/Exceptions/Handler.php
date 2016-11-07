@@ -29,6 +29,11 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
+        if(app()->runningInConsole()) {
+            app('ScheduleTaskLogger')->error('ERROR: ' . $e->getMessage());
+            app('ScheduleTaskLogger')->error($e);
+        }
+
         if ($e instanceof HttpException) {
             app('log')->error('exception caused by request (esb_id: '
                 .app('request')->input('request_id') . ') content: '. app('request')->getcontent());

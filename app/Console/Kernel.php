@@ -25,11 +25,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
-            app('log')->info('Call everyMinute scheduler');
-            
+            app('ScheduleTaskLogger')->info('START: Call everyMinute scheduler');
             dispatch(new \App\Jobs\ConsumeQueue);
-            
-            app('log')->info('Finish everyMinute scheduler');
-        })->everyMinute()->name('everyMinuteScheduler')->withoutOverlapping();
+            app('ScheduleTaskLogger')->info('END: Finish everyMinute scheduler');
+        })->everyMinute()->name('everyMinuteScheduler');
     }
 }
