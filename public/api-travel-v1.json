@@ -3,7 +3,7 @@
     "info": {
         "title": "Travel API",
         "description": "Interfejs do sprzedaży produktów turystycznych oferowanych przez Towarzystwo Ubezpieczeń Europa S. A.\n\nWszelkie komunikaty opisywane w tym dokumencie są przesyłane przy użyciu funkcji INVOKE opisanej w dokumencie Specyfikacja_ESB.pdf.",
-        "version": "1.4",
+        "version": "1.4.1",
         "termsOfService": "",
         "contact": {
             "name": "API Support",
@@ -560,15 +560,6 @@
                 "sub_options": []
             }
         },
-        "PERMISSION": {
-            "type": "string",
-            "enum": [
-                "ADM",
-                "DDZ",
-                "ZAW"
-            ],
-            "description": "Rodzaj uprawnienia, która wykorzustuje agent podczas kontaktu z klientem (ADM - administracja, DDZ -  doprowadzenie, ZAW - zawarcie"
-        },
         "SOLICITOR": {
             "type": "object",
             "description": "OWCA",
@@ -584,7 +575,13 @@
                 "permissions": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/PERMISSION"
+                        "type": "string",
+                        "enum": [
+                            "ADM",
+                            "DDZ",
+                            "ZAW"
+                        ],
+                        "description": "Rodzaj uprawnienia, która wykorzustuje agent podczas kontaktu z klientem (ADM - administracja, DDZ -  doprowadzenie, ZAW - zawarcie)"
                     },
                     "description": "Wykorzystane uprawnienia"
                 }

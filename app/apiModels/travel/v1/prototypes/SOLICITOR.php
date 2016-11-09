@@ -53,7 +53,7 @@ class SOLICITOR extends \App\apiModels\ApiModel implements ArrayAccess
     static $swaggerTypes = array(
         'solicitor_id' => 'string',
         'agent_id' => 'string',
-        'permissions' => 'App\apiModels\travel\v1\prototypes\PERMISSION[]'
+        'permissions' => 'string[]'
     );
   
     /** 
@@ -101,7 +101,7 @@ class SOLICITOR extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
       * $permissions Wykorzystane uprawnienia
-      * @var App\apiModels\travel\v1\prototypes\PERMISSION[]
+      * @var string[]
       */
     public $permissions;
     
@@ -163,7 +163,7 @@ class SOLICITOR extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets permissions
-     * @return App\apiModels\travel\v1\prototypes\PERMISSION[]
+     * @return string[]
      */
     public function getPermissions()
     {
@@ -172,7 +172,7 @@ class SOLICITOR extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets permissions
-     * @param App\apiModels\travel\v1\prototypes\PERMISSION[] $permissions Wykorzystane uprawnienia
+     * @param string[] $permissions Wykorzystane uprawnienia
      * @return $this
      */
     public function setPermissions($permissions)
