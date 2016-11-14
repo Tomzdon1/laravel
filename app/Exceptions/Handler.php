@@ -3,10 +3,11 @@
 namespace App\Exceptions;
 
 use Exception;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Validation\ValidationException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpFoundation\Response as Response;
 use Symfony\Component\HttpFoundation\Request as Request;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class Handler extends ExceptionHandler
 {
@@ -16,7 +17,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        // HttpException::class,
+        //
     ];
 
     /**
@@ -34,7 +35,7 @@ class Handler extends ExceptionHandler
             app('ScheduleTaskLogger')->error($e);
         }
 
-        if ($e instanceof HttpException) {
+        if ($e instanceof ValidationException) {
             app('log')->error('exception caused by request (esb_id: '
                 .app('request')->input('request_id') . ') content: '. app('request')->getcontent());
         }
@@ -55,7 +56,7 @@ class Handler extends ExceptionHandler
             return parent::render($request, $e);
         }
 
-        if ($e instanceof \Symfony\Component\HttpKernel\Exception\HttpExceptionInterface) {
+        if ($e instanceof HttpExceptionInterface) {
             return response(json_decode($e->getMessage()) ?: $e->getMessage(), $e->getStatusCode());
         } else {
             return response(null, Response::HTTP_INTERNAL_SERVER_ERROR);

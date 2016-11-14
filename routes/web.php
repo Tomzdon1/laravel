@@ -7,20 +7,15 @@ $app->get('echo', function () {
 $app->group([
     'prefix' => 'travel/v1',
     'middleware' => ['auth', 'request_validate:' . env('API_DEFINITION_TRAVEL_V1') . ',' . env('ERROR_MODEL_IMPL_TRAVEL_V1'), 'deserialize_request_object:' . env('API_PROTOTYPES_NAMESPACES_TRAVEL_V1')],
-    'namespace' => 'App\apiModels\travel\v1\Controllers'
+    'namespace' => 'travel\v1'
     ], function ($app) {
-        $app->post('get_quotes', 'QuoteController@get');
-        $app->post('calculate_policy', 'PolicyController@calculate');
-        $app->post('issue_policy', 'PolicyController@issue');
         $app->post('import_policies', 'PolicyController@import');
-        $app->post('print_policy', 'PolicyController@printPolicy');
-        $app->post('search_policies', 'PolicyController@searchPolicy');
 });
 
 $app->group([
     'prefix' => 'travel/v2',
     'middleware' => ['auth', 'request_validate:' . env('API_DEFINITION_TRAVEL_V2') . ',' . env('ERROR_MODEL_IMPL_TRAVEL_V2'), 'deserialize_request_object:' . env('API_PROTOTYPES_NAMESPACES_TRAVEL_V2')],
-    'namespace' => 'App\apiModels\travel\v2\Controllers'
+    'namespace' => 'travel\v2'
     ], function ($app) {
         $app->post('option-definitions', 'OptionDefinitionController@index');
         $app->post('quotes', 'QuoteController@index');

@@ -30,7 +30,7 @@ trait ValidatesModels
             $data[$key] = &$this->{$key};
         }
 
-        $data = static::dotObject($data);
+        $data = static::objectToArray($data);
 
         $validator = $this->getValidationFactory()->make($data, $rules, $messages, $customAttributes);
 
@@ -53,23 +53,18 @@ trait ValidatesModels
     }
 
     /**
-     * Flatten a multi-dimensional associative array of objects with dots.
+     * Convert an objects to multi-dimensional associative array.
      *
-     * @param  array   $array
-     * @param  string  $prepend
+     * @param  Object $object
      * @return array
      */
-    public static function dotObject($array, $prepend = '')
+    public static function objectToArray($object)
     {
         $results = [];
+        $array = is_object($object) ? get_object_vars($object) : $object;
 
         foreach ($array as $key => $value) {
-            if (is_object($value)) {
-                $value = get_object_vars($value);
-                $results = array_merge($results, static::dotObject($value, $prepend . $key . '.'));
-            } else {
-                $results[$prepend . $key] = $value;
-            }
+            $results[$key] = is_object($value) ? static::objectToArray($value) : $value;
         }
 
         return $results;

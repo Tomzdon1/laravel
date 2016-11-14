@@ -1,6 +1,6 @@
 <?php
 
-namespace App\apiModels\travel\v2\Controllers;
+namespace App\Http\Controllers\travel\v2;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

@@ -36,7 +36,7 @@ return [
         ],
 
         'database' => [
-            'driver' => 'database',
+            'driver' => 'mongodb',
             'table' => 'jobs',
             'queue' => 'default',
             'expire' => 60,

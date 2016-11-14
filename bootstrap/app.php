@@ -93,6 +93,8 @@ $app->configure('amqp');
 |
 */
 
+$app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
+$app->register(Jenssegers\Mongodb\MongodbQueueServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
@@ -104,7 +106,6 @@ $app->register(App\Providers\ScheduleTaskLogServiceProvider::class);
 $app->register(App\Providers\FromObjectTemplateParsingServiceProvider::class);
 $app->register(App\Providers\PolicySendingServiceProvider::class);
 $app->register(App\Providers\RequestResponseLoggerServiceProvider::class);
-$app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
 $app->register(Monarobase\CountryList\CountryListServiceProvider::class);
 $app->register(Bschmitt\Amqp\LumenServiceProvider::class);
 
@@ -122,7 +123,6 @@ $app->withEloquent();
 */
 
 $app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
-    require __DIR__.'/../app/Http/routes.php';
+    require __DIR__.'/../routes/web.php';
 });
-
 return $app;

@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        \App\Console\Commands\ConsumeQueue::class,
     ];
 
     /**
@@ -24,10 +24,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call(function () {
-            app('ScheduleTaskLogger')->info('START: Call everyMinute scheduler');
-            dispatch(new \App\Jobs\ConsumeQueue);
-            app('ScheduleTaskLogger')->info('END: Finish everyMinute scheduler');
-        })->everyMinute()->name('everyMinuteScheduler');
+        $schedule->command('queue:consume')
+                 ->everyMinute()
+                 ->withoutOverlapping()
+                 ->before(function () {
+                     app('ScheduleTaskLogger')->info('START: Call ConsumeQueue command');
+                 })
+                 ->after(function () {
+                     app('ScheduleTaskLogger')->info('END: After call ConsumeQueue command');
+                 });
     }
 }
