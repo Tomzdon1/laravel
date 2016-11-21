@@ -99,6 +99,11 @@ class Policy extends Eloquent
         if (method_exists($importRequest->getData(), 'getOptions')) {
             $this->options = $importRequest->getData()->getOptions();
         }
+
+        // zgodnosc z api v2
+        if (method_exists($importRequest->getData(), 'getAddons')) {
+            $this->addons = $importRequest->getData()->getAddons();
+        }
         
         $this->policy_holder = $importRequest->getPolicyHolder();
         $this->insured = $importRequest->getInsured();
