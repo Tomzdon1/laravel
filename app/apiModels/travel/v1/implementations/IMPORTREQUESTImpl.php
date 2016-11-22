@@ -44,7 +44,6 @@ class IMPORTREQUESTImpl extends IMPORTREQUEST
 
     public function import() {
         $importStatus = new IMPORTSTATUSImpl;
-        $importStatus->setQuoteRef(app('request')->attributes->get('requestId'));
 
         $warningsCounter = 0;
         $errosCounter = 0;

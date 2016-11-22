@@ -53,7 +53,6 @@ class IMPORTSTATUS extends \App\apiModels\ApiModel implements ArrayAccess
     static $swaggerTypes = array(
         'status' => 'string',
         'policy_ref' => 'string',
-        'quote_ref' => 'string',
         'messages' => 'object[]'
     );
   
@@ -64,7 +63,6 @@ class IMPORTSTATUS extends \App\apiModels\ApiModel implements ArrayAccess
     static $attributeMap = array(
         'status' => 'status',
         'policy_ref' => 'policy_ref',
-        'quote_ref' => 'quote_ref',
         'messages' => 'messages'
     );
   
@@ -75,7 +73,6 @@ class IMPORTSTATUS extends \App\apiModels\ApiModel implements ArrayAccess
     static $setters = array(
         'status' => 'setStatus',
         'policy_ref' => 'setPolicyRef',
-        'quote_ref' => 'setQuoteRef',
         'messages' => 'setMessages'
     );
   
@@ -86,7 +83,6 @@ class IMPORTSTATUS extends \App\apiModels\ApiModel implements ArrayAccess
     static $getters = array(
         'status' => 'getStatus',
         'policy_ref' => 'getPolicyRef',
-        'quote_ref' => 'getQuoteRef',
         'messages' => 'getMessages'
     );
   
@@ -104,12 +100,6 @@ class IMPORTSTATUS extends \App\apiModels\ApiModel implements ArrayAccess
     public $policy_ref;
     
     /**
-      * $quote_ref Identyfikator oferty
-      * @var string
-      */
-    public $quote_ref;
-    
-    /**
       * $messages 
       * @var object[]
       */
@@ -125,7 +115,6 @@ class IMPORTSTATUS extends \App\apiModels\ApiModel implements ArrayAccess
         if ($data != null) {
             $this->status = $data["status"];
             $this->policy_ref = $data["policy_ref"];
-            $this->quote_ref = $data["quote_ref"];
             $this->messages = $data["messages"];
         }
     }
@@ -172,27 +161,6 @@ class IMPORTSTATUS extends \App\apiModels\ApiModel implements ArrayAccess
     {
         
         $this->policy_ref = $policy_ref;
-        return $this;
-    }
-    
-    /**
-     * Gets quote_ref
-     * @return string
-     */
-    public function getQuoteRef()
-    {
-        return $this->quote_ref;
-    }
-  
-    /**
-     * Sets quote_ref
-     * @param string $quote_ref Identyfikator oferty
-     * @return $this
-     */
-    public function setQuoteRef($quote_ref)
-    {
-        
-        $this->quote_ref = $quote_ref;
         return $this;
     }
     
