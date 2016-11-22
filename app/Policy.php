@@ -106,7 +106,7 @@ class Policy extends Eloquent
         }
         
         $this->policy_holder = $importRequest->getPolicyHolder();
-        $this->insured = $importRequest->getInsured();
+        $this->insureds = $importRequest->getInsured();
         $this->solicitors = $importRequest->getSolicitors();
         
         // zgodnosc z api v1
@@ -124,9 +124,9 @@ class Policy extends Eloquent
 
         // zgodnosc z api v1
         if (isset($this->product_ref)) {
-            $this->product = TravelOffer::find($this->product_ref);
+            $this->offer_definition = TravelOffer::find($this->product_ref);
         } else {
-            $this->product = TravelOffer::find($this->product_id);
+            $this->offer_definition = TravelOffer::find($this->product_id);
         }
         
         $this->DateTime = \DateTime::createFromFormat('U.u', microtime(true))->format("YmdHisu");

@@ -1,6 +1,6 @@
 <?php
 /**
- * PolicyStatus
+ * Insured
  *
  * PHP version 5
  *
@@ -44,31 +44,33 @@ namespace App\apiModels\internal\v2\Model;
 use \ArrayAccess;
 
 /**
- * PolicyStatus Class Doc Comment
+ * Insured Class Doc Comment
  *
  * @category    Class */
- // @description Status polisy w systemie docelowym
+ // @description Ubezpieczony
 /**
  * @package     App\apiModels\internal\v2
  * @author      http://github.com/swagger-api/swagger-codegen
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class PolicyStatus implements ArrayAccess
+class Insured implements ArrayAccess
 {
     /**
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'PolicyStatus';
+    protected static $swaggerModelName = 'Insured';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'policy_id' => 'string',
-        'policy_status' => 'string'
+        'data' => '\App\apiModels\internal\v2\Model\PersonData',
+        'address' => '\App\apiModels\internal\v2\Model\Address',
+        'options' => '\App\apiModels\internal\v2\Model\OptionValue[]',
+        'addons' => '\App\apiModels\internal\v2\Model\OptionValue[]'
     ];
 
     public static function swaggerTypes()
@@ -81,8 +83,10 @@ class PolicyStatus implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'policy_id' => 'policy_id',
-        'policy_status' => 'policy_status'
+        'data' => 'data',
+        'address' => 'address',
+        'options' => 'options',
+        'addons' => 'addons'
     ];
 
 
@@ -91,8 +95,10 @@ class PolicyStatus implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'policy_id' => 'setPolicyId',
-        'policy_status' => 'setPolicyStatus'
+        'data' => 'setData',
+        'address' => 'setAddress',
+        'options' => 'setOptions',
+        'addons' => 'setAddons'
     ];
 
 
@@ -101,8 +107,10 @@ class PolicyStatus implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'policy_id' => 'getPolicyId',
-        'policy_status' => 'getPolicyStatus'
+        'data' => 'getData',
+        'address' => 'getAddress',
+        'options' => 'getOptions',
+        'addons' => 'getAddons'
     ];
 
     public static function attributeMap()
@@ -120,26 +128,8 @@ class PolicyStatus implements ArrayAccess
         return self::$getters;
     }
 
-    const POLICY_STATUS_TEMPORARY = 'TEMPORARY';
-    const POLICY_STATUS_FIXED = 'FIXED';
-    const POLICY_STATUS_CANCELED = 'CANCELED';
-    const POLICY_STATUS_ERR = 'ERR';
     
 
-    
-    /**
-     * Gets allowable values of the enum
-     * @return string[]
-     */
-    public function getPolicyStatusAllowableValues()
-    {
-        return [
-            self::POLICY_STATUS_TEMPORARY,
-            self::POLICY_STATUS_FIXED,
-            self::POLICY_STATUS_CANCELED,
-            self::POLICY_STATUS_ERR,
-        ];
-    }
     
 
     /**
@@ -154,8 +144,10 @@ class PolicyStatus implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['policy_id'] = isset($data['policy_id']) ? $data['policy_id'] : null;
-        $this->container['policy_status'] = isset($data['policy_status']) ? $data['policy_status'] : null;
+        $this->container['data'] = isset($data['data']) ? $data['data'] : null;
+        $this->container['address'] = isset($data['address']) ? $data['address'] : null;
+        $this->container['options'] = isset($data['options']) ? $data['options'] : null;
+        $this->container['addons'] = isset($data['addons']) ? $data['addons'] : null;
     }
 
     /**
@@ -166,17 +158,9 @@ class PolicyStatus implements ArrayAccess
     public function listInvalidProperties()
     {
         $invalid_properties = [];
-        if ($this->container['policy_id'] === null) {
-            $invalid_properties[] = "'policy_id' can't be null";
+        if ($this->container['data'] === null) {
+            $invalid_properties[] = "'data' can't be null";
         }
-        if ($this->container['policy_status'] === null) {
-            $invalid_properties[] = "'policy_status' can't be null";
-        }
-        $allowed_values = ["TEMPORARY", "FIXED", "CANCELED", "ERR"];
-        if (!in_array($this->container['policy_status'], $allowed_values)) {
-            $invalid_properties[] = "invalid value for 'policy_status', must be one of #{allowed_values}.";
-        }
-
         return $invalid_properties;
     }
 
@@ -188,14 +172,7 @@ class PolicyStatus implements ArrayAccess
      */
     public function valid()
     {
-        if ($this->container['policy_id'] === null) {
-            return false;
-        }
-        if ($this->container['policy_status'] === null) {
-            return false;
-        }
-        $allowed_values = ["TEMPORARY", "FIXED", "CANCELED", "ERR"];
-        if (!in_array($this->container['policy_status'], $allowed_values)) {
+        if ($this->container['data'] === null) {
             return false;
         }
         return true;
@@ -203,47 +180,85 @@ class PolicyStatus implements ArrayAccess
 
 
     /**
-     * Gets policy_id
-     * @return string
+     * Gets data
+     * @return \App\apiModels\internal\v2\Model\PersonData
      */
-    public function getPolicyId()
+    public function getData()
     {
-        return $this->container['policy_id'];
+        return $this->container['data'];
     }
 
     /**
-     * Sets policy_id
-     * @param string $policy_id Identyfikator polisy w systemie docelowym
+     * Sets data
+     * @param \App\apiModels\internal\v2\Model\PersonData $data
      * @return $this
      */
-    public function setPolicyId($policy_id)
+    public function setData($data)
     {
-        $this->container['policy_id'] = $policy_id;
+        $this->container['data'] = $data;
 
         return $this;
     }
 
     /**
-     * Gets policy_status
-     * @return string
+     * Gets address
+     * @return \App\apiModels\internal\v2\Model\Address
      */
-    public function getPolicyStatus()
+    public function getAddress()
     {
-        return $this->container['policy_status'];
+        return $this->container['address'];
     }
 
     /**
-     * Sets policy_status
-     * @param string $policy_status Status polisy w systemie docelowym
+     * Sets address
+     * @param \App\apiModels\internal\v2\Model\Address $address
      * @return $this
      */
-    public function setPolicyStatus($policy_status)
+    public function setAddress($address)
     {
-        $allowed_values = array('TEMPORARY', 'FIXED', 'CANCELED', 'ERR');
-        if ((!in_array($policy_status, $allowed_values))) {
-            throw new \InvalidArgumentException("Invalid value for 'policy_status', must be one of 'TEMPORARY', 'FIXED', 'CANCELED', 'ERR'");
-        }
-        $this->container['policy_status'] = $policy_status;
+        $this->container['address'] = $address;
+
+        return $this;
+    }
+
+    /**
+     * Gets options
+     * @return \App\apiModels\internal\v2\Model\OptionValue[]
+     */
+    public function getOptions()
+    {
+        return $this->container['options'];
+    }
+
+    /**
+     * Sets options
+     * @param \App\apiModels\internal\v2\Model\OptionValue[] $options Wybrane opcje dodatkowe
+     * @return $this
+     */
+    public function setOptions($options)
+    {
+        $this->container['options'] = $options;
+
+        return $this;
+    }
+
+    /**
+     * Gets addons
+     * @return \App\apiModels\internal\v2\Model\OptionValue[]
+     */
+    public function getAddons()
+    {
+        return $this->container['addons'];
+    }
+
+    /**
+     * Sets addons
+     * @param \App\apiModels\internal\v2\Model\OptionValue[] $addons Dodatkowe atrybuty
+     * @return $this
+     */
+    public function setAddons($addons)
+    {
+        $this->container['addons'] = $addons;
 
         return $this;
     }

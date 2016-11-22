@@ -26,10 +26,10 @@ class SendSMSNotificationIssuedPolicy extends Listener
         app('log')->debug('Start SendSMSNotificationIssuedPolicy');
 
         if (isset($event->policy->policy_holder->telephone) &&
-            isset($event->policy->product['configuration']['smsTemplate']) &&
-            isset($event->policy->product['configuration']['smsCampId']) &&
-            ($event->policy->getSource() == 'import' && $event->policy->product['configuration']['smsOnImport']) || 
-            ($event->policy->getSource() == 'issue' && $event->policy->product['configuration']['smsOnIssue'])) {
+            isset($event->policy->offer_definition['configuration']['smsTemplate']) &&
+            isset($event->policy->offer_definition['configuration']['smsCampId']) &&
+            ($event->policy->getSource() == 'import' && $event->policy->offer_definition['configuration']['smsOnImport']) || 
+            ($event->policy->getSource() == 'issue' && $event->policy->offer_definition['configuration']['smsOnIssue'])) {
 
                 $smsSender = app()->make('SmsSender');
 
@@ -41,19 +41,19 @@ class SendSMSNotificationIssuedPolicy extends Listener
                     $messageValueClassName = substr($smsSendRequest->swaggerTypes()['message'], 0, -2);
                     $messageValue = new $messageValueClassName;
                     $messageValue->setKey('wiad_par_z01');
-                    $template = $event->policy->product['configuration']['smsTemplate']; 
+                    $template = $event->policy->offer_definition['configuration']['smsTemplate']; 
                     $parser = app()->make('TemplateParserFromObject');
                     $messageValue->setValue($parser::parse($template, $event->policy));
                     $messageValues[] = $messageValue;
 
-                    $smsSendRequest->setCampaignId((string)$event->policy->product['configuration']['smsCampId']);
+                    $smsSendRequest->setCampaignId((string)$event->policy->offer_definition['configuration']['smsCampId']);
                     $smsSendRequest->setMessage($messageValues);
                     $smsSendRequest->setTelephone($event->policy->policy_holder->telephone);
 
-                    $product = json_decode($event->policy->product);
+                    $offer_definition = json_decode($event->policy->offer_definition);
             
                     $companies = [];
-                    foreach ($product->elements as $element) {
+                    foreach ($offer_definition->elements as $element) {
                         array_push($companies, $element->cmp);
                     }
                     $companies = array_unique($companies);

@@ -8,7 +8,7 @@ use App\Policy;
 class PolicySender extends SenderQueueAbstract {
    
     const TYPE = 'policy-issue-request';
-    const VERSION = '2.0.0';
+    const VERSION = '2.1.0';
     const QUEUE_EXCHANGE = 'cp.out.all';
     const QUEUE_ROUTING_KEY = 'cp.out.all';
 
