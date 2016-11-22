@@ -30,9 +30,9 @@ class DeserializeRequestObject
                 break;
         }
         
-        $quoteRequest = $objectSerializer->deserialize(json_decode($request->getContent(), true), $prototypesNamespace.$requestObjectClassName);
+        $deserializedRequestObject = $objectSerializer->deserialize(json_decode($request->getContent(), true), $prototypesNamespace.$requestObjectClassName);
         
-        $request->attributes->add(['deserializedRequestObject' => $quoteRequest]);
+        $request->attributes->add(['deserializedRequestObject' => $deserializedRequestObject]);
 
         return $next($request);
     }

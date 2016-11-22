@@ -17,10 +17,10 @@ class OptionDefinitionController extends Controller
      */
     public function index(Request $request)
     {
-        $quoteRequest = $request->attributes->get('deserializedRequestObject');
+        $OptionDefinitionRequest = $request->attributes->get('deserializedRequestObject');
 
         $partnerCode = app('auth')->user()->code;
-        $offer = TravelOffer::find($quoteRequest->getProductId())->where('partner', $partnerCode)->first();
+        $offer = TravelOffer::find($OptionDefinitionRequest->getProductId())->where('partner', $partnerCode)->first();
 
         if ($offer) {
             return OptionDefinitionMapper::fromModels($offer->options);
