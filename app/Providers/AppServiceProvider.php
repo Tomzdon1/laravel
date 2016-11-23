@@ -190,6 +190,18 @@ class AppServiceProvider extends ServiceProvider
             
             return $calculation ? strtotime($calculation->due_date) > strtotime($value) : false;
         });
+
+        /**
+         *   Validate calculation checksum.
+         *
+         */
+        app('validator')->extend('validCalculationChecksum', function ($attribute, $value, $parameters, $validator) {
+            $calculationId = array_get($validator->getData(), $parameters[0], null);
+
+            $calculation = App\Calculation::where('_id', $calculationId)->where('checksum', $value)->first();
+
+            return (bool) $calculation;
+        });
     }
 
     /**

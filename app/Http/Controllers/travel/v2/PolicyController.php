@@ -38,14 +38,13 @@ class PolicyController extends Controller
         $dueDate = min($calculatedDueDate, $startDate);
         $calculationPolicyResponse->setDueDate($dueDate->format(\DateTime::ATOM));
 
-        //@todo brak obslugi checksum - wyliczanie i zapisywanie
-        //$calculationPolicyResponse->setChecksum();
-        
         $calculation = Mappers\CalculationMapper::fromCalculationPolicy($calculationPolicyResponse, $calculateRequest);
         $calculation->partner_id = app('auth')->user()->id;
+        $calculation->checksum = md5($calculation);
         $calculation->save();
-        
+
         $calculationPolicyResponse->setCalculationId($calculation->id);
+        $calculationPolicyResponse->setChecksum($calculation->checksum);
         
         return $calculationPolicyResponse;
     }

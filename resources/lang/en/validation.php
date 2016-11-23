@@ -98,6 +98,7 @@ return [
     'product_ref' => 'The value of :attribute is invalid.',
     'valid_calculation_id' => 'The calculation is not exists.',
     'valid_calculation_due_date' => 'The calculation has expired.',
+    'valid_calculation_checksum' => 'The checksum is invalid.',
 
     'custom' => [
         'attribute-name' => [
