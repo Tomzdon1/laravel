@@ -6,6 +6,7 @@ use App\apiModels\travel\v1\prototypes\IMPORTREQUEST;
 use App\apiModels\travel\v1\implementations\IMPORTSTATUSImpl;
 use App\apiModels\travel\v1\implementations\POLICYImpl;
 use App\apiModels\travel\v1\traits;
+use App\apiModels\travel\v1\mappers;
 use App\TravelOffer;
 use App\Policy;
 
@@ -65,9 +66,12 @@ class IMPORTREQUESTImpl extends IMPORTREQUEST
         }
         
         $importStatus->setStatus($status);
-        
-        $requestedPolicy = new Policy;
-        $requestedPolicy->fillFromImportRequest($this, $importStatus);
+
+        $requestedPolicy = mappers\PolicyModelMapper::fromImportRequest($this);
+        $requestedPolicy->status = $importStatus->getStatus();
+        $requestedPolicy->errors = $importStatus->getMessages();
+        $requestedPolicy->partner = json_decode(app('auth')->user()->toJson());
+        $requestedPolicy->product = json_decode(TravelOffer::find($this->getProductRef())->toJson());
         $requestedPolicy->save();
         
         $importStatus->setPolicyRef($requestedPolicy->id);

@@ -76,16 +76,18 @@ class ObjectSerializer
                 return $data;
             } else if (method_exists($data, 'toJson')) {
                 return (string)$data;
-            }
-
-            $values = array();
-            foreach (array_keys($data::swaggerTypes()) as $property) {
-                $getter = $data::getters()[$property];
-                if ($data->$getter() !== null) {
-                    $values[$data::attributeMap()[$property]] = self::sanitizeForSerialization($data->$getter());
+            } else if (!method_exists($data, 'swaggerTypes')) {
+                return json_encode($data);
+            } else {
+                $values = array();
+                foreach (array_keys($data::swaggerTypes()) as $property) {
+                    $getter = $data::getters()[$property];
+                    if ($data->$getter() !== null) {
+                        $values[$data::attributeMap()[$property]] = self::sanitizeForSerialization($data->$getter());
+                    }
                 }
+                return (object)$values;
             }
-            return (object)$values;
         } else {
             return (string)$data;
         }

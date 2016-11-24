@@ -78,6 +78,8 @@ class RequestResponseLogger
                 $quotes = $responseBody;
             } elseif (is_object($responseBody) && property_exists($responseBody, 'data') && is_array($responseBody->data)) {
                 $quotes = $responseBody->data;
+            } else {
+                $quotes = [];
             }
 
             foreach ($quotes as $quote) {

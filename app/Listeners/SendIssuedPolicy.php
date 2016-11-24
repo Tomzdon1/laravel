@@ -38,10 +38,8 @@ class SendIssuedPolicy extends Listener
         try {
             $policySender->setPolicy($event->policy);
 
-            $product = json_decode($event->policy->product);
-            
             $companies = [];
-            foreach ($product->elements as $element) {
+            foreach ($event->policy->product->elements as $element) {
                 array_push($companies, $element->cmp);
             }
             $companies = array_unique($companies);

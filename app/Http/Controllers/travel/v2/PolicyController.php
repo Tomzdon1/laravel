@@ -4,7 +4,8 @@ namespace App\Http\Controllers\travel\v2;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App;
+use App\TravelOffer;
+use App\Policy;
 use Symfony\Component\HttpFoundation\Response as Response;
 use App\apiModels\travel\v2\Implementations;
 use App\apiModels\travel\v2\Mappers;
@@ -15,7 +16,7 @@ class PolicyController extends Controller
     {
         $calculateRequest = $request->attributes->get('deserializedRequestObject');
         
-        $offer = App\TravelOffer::find($calculateRequest->getProductId());
+        $offer = TravelOffer::find($calculateRequest->getProductId());
         
         // @todo uncomment below after add feauture (przeniesienie kalkulacji do uslugi kalkulacji)
         // $calculationCalaculator = app()->make('calculationCalaculator');
@@ -108,7 +109,7 @@ class PolicyController extends Controller
             
             // @todo remove below block after add feauture (przeniesienie kalkulacji do uslugi kalkulacji)
             $importRequest->setCalculateRequest($importRequest);
-            $importRequest->setOffer(App\TravelOffer::find($importRequest->getProductId()));
+            $importRequest->setOffer(TravelOffer::find($importRequest->getProductId()));
             $importRequest->setWithNettoPremium(true);
             $calculatedPremiums = $importRequest->calculatePremiums();
 
@@ -124,10 +125,12 @@ class PolicyController extends Controller
             } else {
                 $importPolicyStatusResponse->setStatus($importPolicyStatusResponse::STATUS_OK);
             }
-            
-            $requestedPolicy = new App\Policy;
-            // @todo mapper na policy per api (na pewno bez importPolicyStatus)
-            $requestedPolicy->fillFromImportRequest($importRequest, $importPolicyStatusResponse);
+
+            $requestedPolicy = Mappers\PolicyModelMapper::fromImportPolicyRequest($importRequest);
+            $requestedPolicy->status = $importPolicyStatusResponse->getStatus();
+            $requestedPolicy->errors = $importPolicyStatusResponse->getMessages();
+            $requestedPolicy->partner = json_decode(app('auth')->user()->toJson());
+            $requestedPolicy->product = json_decode(TravelOffer::find($importRequest->getProductId())->toJson());
             $requestedPolicy->save();
 
             $importPolicyStatusResponse->setPolicyId($requestedPolicy->id);
@@ -159,12 +162,5 @@ class PolicyController extends Controller
         }
 
         return (new Response($pdf->File()))->header('Content-Type', $pdf->ContentType());
-    }
-
-    public function show(Request $request, $policyId=null)
-    {
-        return Response::HTTP_NOT_IMPLEMENTED;
-
-        return App\Policy::find($policyId)->first();
     }
 }
