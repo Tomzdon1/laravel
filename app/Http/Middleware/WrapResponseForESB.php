@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Symfony\Component\HttpFoundation\Response as Response;
 
-class WrapResponse
+class WrapResponseForESB
 {
     /**
      * Handle an incoming request.

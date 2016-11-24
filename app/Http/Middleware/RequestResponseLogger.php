@@ -74,11 +74,15 @@ class RequestResponseLogger
         $responseBody = json_decode($response->getContent());
         
         if ($this->flow) {
-            if (property_exists($responseBody, 'data') && is_array($responseBody->data)) {
-                foreach ($responseBody->data as $quote) {
-                    if (property_exists($quote, 'quote_id')) {
-                        $this->flow->quoteIds = array_merge($this->flow->quoteIds ?: [], [$quote->quote_id]);
-                    }
+            if (is_array($responseBody)) {
+                $quotes = $responseBody;
+            } elseif (is_object($responseBody) && property_exists($responseBody, 'data') && is_array($responseBody->data)) {
+                $quotes = $responseBody->data;
+            }
+
+            foreach ($quotes as $quote) {
+                if (property_exists($quote, 'quote_id')) {
+                    $this->flow->quoteIds = array_merge($this->flow->quoteIds ?: [], [$quote->quote_id]);
                 }
             }
             

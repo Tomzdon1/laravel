@@ -6,6 +6,13 @@ header('Access-Control-Allow-Origin : *');
 header('Access-Control-Allow-Methods : POST, GET, OPTIONS, PUT, DELETE');
 header('Access-Control-Allow-Headers : X-Requested-With, content-type');
 }else{
+ /*
+|--------------------------------------------------------------------------
+| Custom environment filename
+|--------------------------------------------------------------------------
+*/
+$envFilename = '.env';
+
 /*
 |--------------------------------------------------------------------------
 | Create The Application

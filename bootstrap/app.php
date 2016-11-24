@@ -3,7 +3,7 @@
 require_once __DIR__.'/../vendor/autoload.php';
 
 try {
-    (new Dotenv\Dotenv(__DIR__.'/../'))->load();
+    (new Dotenv\Dotenv(__DIR__.'/../', $envFilename))->load();
 } catch (Dotenv\Exception\InvalidPathException $e) {
     //
 }
@@ -59,15 +59,14 @@ $app->singleton(
 |
 */
 
-$app->middleware([
-    // Illuminate\Cookie\Middleware\EncryptCookies::class,
-    // Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-    // Illuminate\Session\Middleware\StartSession::class,
-    // Illuminate\View\Middleware\ShareErrorsFromSession::class,
-    // Laravel\Lumen\Http\Middleware\VerifyCsrfToken::class,
-    App\Http\Middleware\WrapResponse::class,
-    App\Http\Middleware\RequestResponseLogger::class,
-]);
+$middlewares = [];
+
+if (env('APP_ESB',  false)) {
+    $middlewares[] = App\Http\Middleware\WrapResponseForESB::class;
+}
+
+$middlewares[] = App\Http\Middleware\RequestResponseLogger::class;
+$app->middleware($middlewares);
 
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
