@@ -12,4 +12,14 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+
+    # Rewrite to INDEX_FILE or index.php
+    RewriteCond  %{ENV:INDEX_FILE} ^$
+    RewriteRule .? - [S=2]
+    # IF the variable not empty, then:
+        RewriteRule ^ %{ENV:INDEX_FILE}
+        RewriteRule .? - [S=1]
+    # ELSE
+        RewriteRule ^ index.php
+    # END
 </IfModule>
