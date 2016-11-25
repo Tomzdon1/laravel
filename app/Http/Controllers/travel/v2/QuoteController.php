@@ -15,12 +15,19 @@ class QuoteController extends Controller
 
         $partnerCode = app('auth')->user()->code;
         
-        $optionsToFind = [];
-        foreach ($quoteRequest->getData()->getOptions() as $option) {
-            $optionsToFind[] = ['$elemMatch' => ["code" => $option->getCode()]];
+        $offersQuery = TravelOffer::where('partner', $partnerCode);
+
+        if (is_array($quoteRequest->getData()->getOptions())) {
+            $optionsToFind = [];
+            
+            foreach ($quoteRequest->getData()->getOptions() as $option) {
+                $optionsToFind[] = ['$elemMatch' => ["code" => $option->getCode()]];
+            }
+
+            $offersQuery = $offersQuery->where('options', 'all', $optionsToFind);
         }
 
-        $offers = TravelOffer::where('partner', $partnerCode)->where('options', 'all', $optionsToFind)->get();
+        $offers = $offersQuery->get();
 
         $quotes = [];
         $quoteNumber = 0;
