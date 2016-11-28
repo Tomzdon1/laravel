@@ -2,7 +2,9 @@
 
 namespace App\apiModels\travel\v1\traits;
 
-trait SwaggerDeserializationTrait {
+trait SwaggerDeserializationTrait
+{
+
     public static function swaggerTypes()
     {
         return self::$swaggerTypes;

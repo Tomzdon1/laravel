@@ -76,7 +76,10 @@ class RequestResponseLogger
         if ($this->flow) {
             if (is_array($responseBody)) {
                 $quotes = $responseBody;
-            } elseif (is_object($responseBody) && property_exists($responseBody, 'data') && is_array($responseBody->data)) {
+            } elseif (is_object($responseBody)
+                && property_exists($responseBody, 'data')
+                && is_array($responseBody->data)
+            ) {
                 $quotes = $responseBody->data;
             } else {
                 $quotes = [];

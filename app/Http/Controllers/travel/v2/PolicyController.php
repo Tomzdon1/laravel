@@ -85,7 +85,8 @@ class PolicyController extends Controller
         // //@todo brak obslugi checksum - wyliczanie i zapisywanie
         // //$calculationPolicyResponse->setChecksum();
         
-        // $calculation = Mappers\CalculationMapper::fromCalculationPolicy($calculationPolicyResponse, $calculateRequest);
+        // $calculation
+        //  = Mappers\CalculationMapper::fromCalculationPolicy($calculationPolicyResponse, $calculateRequest);
         // $calculation->partner_id = app('auth')->user()->id;
         // $calculation->save();
         
@@ -113,7 +114,12 @@ class PolicyController extends Controller
             $importRequest->setWithNettoPremium(true);
             $calculatedPremiums = $importRequest->calculatePremiums();
 
-            $validator = app('validator')->make(app('request')->input()[0], $importRequest::$warningValidators, [], ['calculatedAmounts' => $calculatedPremiums]);
+            $validator = app('validator')->make(
+                app('request')->input()[0],
+                $importRequest::$warningValidators,
+                [],
+                ['calculatedAmounts' => $calculatedPremiums]
+            );
 
             $importPolicyStatusResponse = new Implementations\ImportPolicyStatusImpl;
 

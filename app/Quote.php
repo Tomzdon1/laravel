@@ -1,10 +1,13 @@
-<?php namespace App;
+<?php
+
+namespace App;
 
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
-class Quote extends Eloquent 
+class Quote extends Eloquent
 {
-	 /**
+
+    /**
      * The attributes that aren't mass assignable.
      *
      * @var array
@@ -21,7 +24,7 @@ class Quote extends Eloquent
     public static $validators = [
         //
     ];
-    
+
     /**
      * The "booting" method of the model.
      *
@@ -30,9 +33,9 @@ class Quote extends Eloquent
     protected static function boot()
     {
         parent::boot();
-        
+
         static::addGlobalScope('partner', function($builder) {
-            if(app('auth')->user()) {
+            if (app('auth')->user()) {
                 $builder->where('partner_id', app('auth')->user()->id);
             }
         });

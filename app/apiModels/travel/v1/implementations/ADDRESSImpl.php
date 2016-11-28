@@ -24,7 +24,7 @@ class ADDRESSImpl extends ADDRESS
      * @var array
      */
     public static $validators = [
-        // 
+        //
     ];
     
     /**

@@ -6,9 +6,12 @@ use App\apiModels\travel\v2\Implementations;
 use App\Policy;
 
 class PolicyModelMapper
-{    
-    public static function fromImportPolicyRequest(Implementations\ImportPolicyRequestImpl $importPolicyRequest, Policy $policy = null)
-    {
+{
+
+    public static function fromImportPolicyRequest(
+        Implementations\ImportPolicyRequestImpl $importPolicyRequest,
+        Policy $policy = null
+    ) {
         if (!$policy) {
             $policy = new Policy();
         }
@@ -31,6 +34,6 @@ class PolicyModelMapper
         $policy->tariff_premium = $importPolicyRequest->getTariffPremium();
         $policy->netto_premium = $importPolicyRequest->getNettoPremium();
 
-		return $policy;
+        return $policy;
     }
 }

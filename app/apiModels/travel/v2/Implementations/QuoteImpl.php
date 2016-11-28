@@ -7,6 +7,7 @@ use App\apiModels\travel\v2\Traits;
 
 class QuoteImpl extends Quote
 {
+
     use Traits\SwaggerDeserializationTrait;
     use Traits\PremiumCalculatorTrait;
 
@@ -30,8 +31,8 @@ class QuoteImpl extends Quote
     /**
      * Override getInsureds function in AmountsCalculator trait to return preperson instead preperson
      */
-    public function getInsureds ($quoteRequest) {
-      return $quoteRequest->getPrepersons();
+    public function getInsureds($quoteRequest)
+    {
+        return $quoteRequest->getPrepersons();
     }
-
 }

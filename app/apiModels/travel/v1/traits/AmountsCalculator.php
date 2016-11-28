@@ -4,8 +4,11 @@ namespace App\apiModels\travel\v1\traits;
 
 use App\apiModels\travel\v1\implementations\AMOUNTImpl;
 
-trait AmountsCalculator {
-    public function recalculateAmounts($dbOffer, $quoteRequest, $withNettoAmount = true) {
+trait AmountsCalculator
+{
+
+    public function recalculateAmounts($dbOffer, $quoteRequest, $withNettoAmount = true)
+    {
         $amounts = $this->calculateAmounts($dbOffer, $quoteRequest, $withNettoAmount);
         $this->setAmount($amounts['tariff_amount']);
         if ($withNettoAmount) {
@@ -14,7 +17,8 @@ trait AmountsCalculator {
         $this->tariff_amount = $amounts['tariff_amount'];
     }
 
-    public function calculateAmounts($dbOffer, $quoteRequest, $withNettoAmount = true) {
+    public function calculateAmounts($dbOffer, $quoteRequest, $withNettoAmount = true)
+    {
         if ($dbOffer) {
             if ($dbOffer['configuration']['quotation']['type'] == 'formula') {
                 // Not implemented
@@ -22,9 +26,15 @@ trait AmountsCalculator {
                 abort(Response::HTTP_NOT_IMPLEMENTED);
             } elseif ($dbOffer['configuration']['quotation']['type'] == 'excel') {
                 $excelPath = env('EXCEL_DIRECTORY') . '/' . $dbOffer['configuration']['quotation']['file'];
-              
+
                 if ($excelPath) {
-                    return $this->calculateExcelAmounts($dbOffer['configuration'], $excelPath, $quoteRequest, $dbOffer['code'], $withNettoAmount);
+                    return $this->calculateExcelAmounts(
+                        $dbOffer['configuration'],
+                        $excelPath,
+                        $quoteRequest,
+                        $dbOffer['code'],
+                        $withNettoAmount
+                    );
                 }
             }
         }
@@ -39,7 +49,7 @@ trait AmountsCalculator {
 
         $tariff_amount->setValueBaseCurrency($config['quotation']['resultCurrency']);
         $tariff_amount->setValueCurrency('PLN');
-        
+
         $data = $this->cacheOrCalculateExcel($excelPath, $quoteRequest);
 
         $amountValue = 0;
@@ -55,7 +65,7 @@ trait AmountsCalculator {
         }
         $tariff_amount->setValueBase($amountValue);
         $netto_amount->setValueBase($nettoAmountValue);
-        
+
         if ($config['quotation']['resultCurrency'] != 'PLN') {
             $recalculation = $this->recalculate2pln($amountValue, $config['quotation']['resultCurrency']);
             $nettoRecalculation = $this->recalculate2pln($nettoAmountValue, $config['quotation']['resultCurrency']);
@@ -82,73 +92,76 @@ trait AmountsCalculator {
         return $amounts;
     }
 
-    public function getInsureds ($quoteRequest) {
-      return $quoteRequest->getInsured();
+    public function getInsureds($quoteRequest)
+    {
+        return $quoteRequest->getInsured();
     }
 
-    private function cacheOrCalculateExcel($excelPath, $quoteRequest){
-      $key = md5(json_encode($excelPath)).md5(json_encode($quoteRequest));
-      
-      return app('cache')->remember($key, 1, function() use ($excelPath, $quoteRequest) {
-          if ($excelPath) {
-            $excelFile = new \Tue\Calculating\calculateTravelExcel($excelPath);
-          }
+    private function cacheOrCalculateExcel($excelPath, $quoteRequest)
+    {
+        $key = md5(json_encode($excelPath)) . md5(json_encode($quoteRequest));
 
-          $options = array();
-          if (is_array($quoteRequest->getData()->getOptionValues()) || $quoteRequest->getData()->getOptionValues() instanceof Traversable) {
-              foreach ($quoteRequest->getData()->getOptionValues() as $option) {
-                  if ($option->getValue() == true) {
-                      $options[$option->getCode()] = true;
-                  }
-              }
-          }
+        return app('cache')->remember($key, 1, function () use ($excelPath, $quoteRequest) {
+            if ($excelPath) {
+                $excelFile = new \Tue\Calculating\calculateTravelExcel($excelPath);
+            }
 
-          $isFamily = false;
-          $birthDates = array();
-          $insuredsOptions = [];
+            $options = array();
+            if (is_array($quoteRequest->getData()->getOptionValues())
+                || $quoteRequest->getData()->getOptionValues() instanceof Traversable
+            ) {
+                foreach ($quoteRequest->getData()->getOptionValues() as $option) {
+                    if ($option->getValue() == true) {
+                        $options[$option->getCode()] = true;
+                    }
+                }
+            }
 
-          foreach ($this->getInsureds ($quoteRequest) as $insured) {
-              $birthDates[] = $insured->getBirthDate();
+            $isFamily = false;
+            $birthDates = array();
+            $insuredsOptions = [];
 
-              if (is_array($insured->getOptionValues()) || $insured->getOptionValues() instanceof Traversable) {
-                  foreach ($insured->getOptionValues() as $option) {
-                      if (!array_key_exists($option->getCode(), $insuredsOptions)) {
-                          $insuredsOptions[$option->getCode()] = [];
-                      }
+            foreach ($this->getInsureds($quoteRequest) as $insured) {
+                $birthDates[] = $insured->getBirthDate();
 
-                      if (in_array(strtolower($option->getValue()), [true, 'true', 't'])) {
-                          $value = 'T';
-                      } else if (in_array(strtolower($option->getValue()), [false, 'false', 'f'])) {
-                          $value = 'N';
-                      }
-                      else {
-                          $value = $option->getValue();
-                      }
+                if (is_array($insured->getOptionValues()) || $insured->getOptionValues() instanceof Traversable) {
+                    foreach ($insured->getOptionValues() as $option) {
+                        if (!array_key_exists($option->getCode(), $insuredsOptions)) {
+                            $insuredsOptions[$option->getCode()] = [];
+                        }
 
-                      $insuredsOptions[$option->getCode()][] = $value;
-                  }
-              }
-          }
+                        if (in_array(strtolower($option->getValue()), [true, 'true', 't'])) {
+                            $value = 'T';
+                        } elseif (in_array(strtolower($option->getValue()), [false, 'false', 'f'])) {
+                            $value = 'N';
+                        } else {
+                            $value = $option->getValue();
+                        }
 
-          $params = [
-            'DATA_OD' => $quoteRequest->getData()->getStartDate(),
-            'DATA_DO' => $quoteRequest->getData()->getEndDate(),
-            'DATA_URODZENIA' => $birthDates,
-            //przekazywac true/false w bibliotece Excela mapować na T/N
-            // 'CZY_RODZINA' => $isFamily ? 'T' : 'N',
-            // 'ZWYZKA_ASZ' => (isset($options['TWAWS']) && $options['TWAWS']) ? 'T' : 'N',
-            // 'ZWYZKA_ASM' => (isset($options['TWASM']) && $options['TWASM']) ? 'T' : 'N',
-            // 'ZWYZKA_ZCP' => (isset($options['TWCHP']) && $options['TWCHP']) ? 'T' : 'N',
-              // tak to moze ewentualnie wygladac przy obecnym zapisie
-              // 'ZWYZKA_ASZ'  => (bool) $options['TWAWS'],
-              // 'ZWYZKA_ASM'  => (bool) $options['TWASM'],
-              // 'ZWYZKA_ZCP'  => (bool) $options['TWCHP'],
-          ];
+                        $insuredsOptions[$option->getCode()][] = $value;
+                    }
+                }
+            }
 
-          $params = array_merge($params, $insuredsOptions);
+            $params = [
+                'DATA_OD' => $quoteRequest->getData()->getStartDate(),
+                'DATA_DO' => $quoteRequest->getData()->getEndDate(),
+                'DATA_URODZENIA' => $birthDates,
+                //przekazywac true/false w bibliotece Excela mapować na T/N
+                // 'CZY_RODZINA' => $isFamily ? 'T' : 'N',
+                // 'ZWYZKA_ASZ' => (isset($options['TWAWS']) && $options['TWAWS']) ? 'T' : 'N',
+                // 'ZWYZKA_ASM' => (isset($options['TWASM']) && $options['TWASM']) ? 'T' : 'N',
+                // 'ZWYZKA_ZCP' => (isset($options['TWCHP']) && $options['TWCHP']) ? 'T' : 'N',
+                // tak to moze ewentualnie wygladac przy obecnym zapisie
+                // 'ZWYZKA_ASZ'  => (bool) $options['TWAWS'],
+                // 'ZWYZKA_ASM'  => (bool) $options['TWASM'],
+                // 'ZWYZKA_ZCP'  => (bool) $options['TWCHP'],
+            ];
 
-          $data = $excelFile->getCalculatedValues($params);
-          return $data;
+            $params = array_merge($params, $insuredsOptions);
+
+            $data = $excelFile->getCalculatedValues($params);
+            return $data;
         });
     }
 
@@ -157,7 +170,7 @@ trait AmountsCalculator {
         $date = new \DateTime;
         $rate = 4.229;
         if ($amountCurrency == 'EUR') {
-            return ['amount'=>round(($amount * $rate), 2), 'rate'=>$rate, 'date'=> $date ];
+            return ['amount' => round(($amount * $rate), 2), 'rate' => $rate, 'date' => $date];
         }
     }
 }

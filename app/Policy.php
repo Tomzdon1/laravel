@@ -1,11 +1,14 @@
-<?php namespace App;
+<?php
+
+namespace App;
 
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 use App\Events\IssuedPolicyEvent;
 
-class Policy extends Eloquent 
+class Policy extends Eloquent
 {
-	/**
+
+    /**
      * The attributes that aren't mass assignable.
      *
      * @var array
@@ -13,7 +16,7 @@ class Policy extends Eloquent
     protected $guarded = [
         //
     ];
-    
+
     /**
      * Validators of model atributes
      *
@@ -40,7 +43,7 @@ class Policy extends Eloquent
         parent::boot();
 
         static::addGlobalScope('partner', function($builder) {
-            if(app('auth')->user()) {
+            if (app('auth')->user()) {
                 $builder->where('partner.code', app('auth')->user()->code);
             }
         });
@@ -50,19 +53,23 @@ class Policy extends Eloquent
         });
     }
 
-    public function getSource() {
+    public function getSource()
+    {
         return $this->source;
     }
 
-    public function setSource($source) {
+    public function setSource($source)
+    {
         $this->source = $source;
     }
 
-    public function getStatuses() {
+    public function getStatuses()
+    {
         return $this->statuses;
     }
 
-    public function addStatus($status) {
+    public function addStatus($status)
+    {
         if (is_array($this->getStatuses())) {
             $this->statuses = array_merge($this->getStatuses(), [$status]);
         } else {

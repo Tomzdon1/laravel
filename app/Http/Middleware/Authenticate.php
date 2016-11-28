@@ -1,15 +1,20 @@
 <?php
+
 namespace App\Http\Middleware;
+
 use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
+
 class Authenticate
 {
+
     /**
      * The authentication guard factory instance.
      *
      * @var \Illuminate\Contracts\Auth\Factory
      */
     protected $auth;
+
     /**
      * Create a new middleware instance.
      *
@@ -20,6 +25,7 @@ class Authenticate
     {
         $this->auth = $auth;
     }
+
     /**
      * Handle an incoming request.
      *

@@ -43,7 +43,8 @@ class IMPORTREQUESTImpl extends IMPORTREQUEST
         parent::__construct($data);
     }
 
-    public function import() {
+    public function import()
+    {
         $importStatus = new IMPORTSTATUSImpl;
 
         $warningsCounter = 0;
@@ -53,7 +54,12 @@ class IMPORTREQUESTImpl extends IMPORTREQUEST
         $offer = TravelOffer::find($this->getProductRef());
         $calculatedAmounts = $this->calculateAmounts($offer, $this);
 
-        $validator = app('validator')->make(app('request')->input()[0], self::$warningValidators, [], ['calculatedAmounts' => $calculatedAmounts]);
+        $validator = app('validator')->make(
+            app('request')->input()[0],
+            self::$warningValidators,
+            [],
+            ['calculatedAmounts' => $calculatedAmounts]
+        );
 
         $status = 'OK';
         $importStatus->setMessages([]);

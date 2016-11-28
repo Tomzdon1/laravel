@@ -1,16 +1,19 @@
-<?php namespace App;
+<?php
+
+namespace App;
 
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
-class Flow extends Eloquent 
+class Flow extends Eloquent
 {
-	/**
+
+    /**
      * The attributes that aren't mass assignable.
      *
      * @var array
      */
     protected $guarded = [];
-    
+
     /**
      * Validators of model atributes
      *
@@ -19,4 +22,5 @@ class Flow extends Eloquent
     public static $validators = [
         //
     ];
+
 }

@@ -10,9 +10,10 @@ use App\apiModels\internal\v2 as internal;
 
 class OptionDefinitionController extends Controller
 {
-	/**
+
+    /**
      * Option definitions index for passed product_id
-     * 
+     *
      * @return OptionDefinition[]
      */
     public function index(Request $request)

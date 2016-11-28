@@ -23,14 +23,25 @@ class DeserializeRequestObject
 
         switch ($requestSchema->type) {
             case 'array':
-                $requestObjectClassName = str_replace('_', '', substr(strstr($requestSchema->items->id, 'definitions/'), strlen('definitions/'))) .'[]';
+                $requestObjectClassName = str_replace(
+                    '_',
+                    '',
+                    substr(strstr($requestSchema->items->id, 'definitions/'), strlen('definitions/'))
+                ) .'[]';
                 break;
             case 'object':
-                $requestObjectClassName = str_replace('_', '', substr(strstr($requestSchema->id, 'definitions/'), strlen('definitions/')));
+                $requestObjectClassName = str_replace(
+                    '_',
+                    '',
+                    substr(strstr($requestSchema->id, 'definitions/'), strlen('definitions/'))
+                );
                 break;
         }
         
-        $deserializedRequestObject = $objectSerializer->deserialize(json_decode($request->getContent(), true), $prototypesNamespace.$requestObjectClassName);
+        $deserializedRequestObject = $objectSerializer->deserialize(
+            json_decode($request->getContent(), true),
+            $prototypesNamespace.$requestObjectClassName
+        );
         
         $request->attributes->add(['deserializedRequestObject' => $deserializedRequestObject]);
 

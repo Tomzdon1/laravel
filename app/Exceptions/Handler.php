@@ -11,6 +11,7 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class Handler extends ExceptionHandler
 {
+
     /**
      * A list of the exception types that should not be reported.
      *
@@ -30,14 +31,14 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
-        if(app()->runningInConsole()) {
+        if (app()->runningInConsole()) {
             app('ScheduleTaskLogger')->error('ERROR: ' . $e->getMessage());
             app('ScheduleTaskLogger')->error($e);
         }
 
         if ($e instanceof ValidationException) {
             app('log')->error('exception caused by request (esb_id: '
-                .app('request')->input('request_id') . ') content: '. app('request')->getcontent());
+                . app('request')->input('request_id') . ') content: ' . app('request')->getcontent());
         }
 
         return parent::report($e);
@@ -57,7 +58,7 @@ class Handler extends ExceptionHandler
         }
 
         if ($e instanceof HttpExceptionInterface) {
-            return response(json_decode($e->getMessage()) ?: $e->getMessage(), $e->getStatusCode());
+            return response(json_decode($e->getMessage()) ? : $e->getMessage(), $e->getStatusCode());
         } else {
             return response(null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
