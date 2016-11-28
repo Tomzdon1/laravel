@@ -22,5 +22,4 @@ class TravelOffer extends Eloquent
     public static $validators = [
         //
     ];
-
 }

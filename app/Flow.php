@@ -22,5 +22,4 @@ class Flow extends Eloquent
     public static $validators = [
         //
     ];
-
 }

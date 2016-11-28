@@ -34,7 +34,7 @@ class Quote extends Eloquent
     {
         parent::boot();
 
-        static::addGlobalScope('partner', function($builder) {
+        static::addGlobalScope('partner', function ($builder) {
             if (app('auth')->user()) {
                 $builder->where('partner_id', app('auth')->user()->id);
             }

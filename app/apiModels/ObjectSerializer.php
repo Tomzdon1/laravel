@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ObjectSerializer 
  *
@@ -73,7 +74,7 @@ class ObjectSerializer
             }
             $sanitized = $values;
         } else {
-            $sanitized = (string)$data;
+            $sanitized = (string) $data;
         }
 
         return $sanitized;
@@ -205,39 +206,37 @@ class ObjectSerializer
             app('log')->Debug("Deserializuję jako plik");
             // determine file name
             if (preg_match('/Content-Disposition: inline; filename=[\'"]?([^\'"\s]+)[\'"]?$/i', $httpHeader, $match)) {
-                $filename = Configuration::getDefaultConfiguration()->getTempFolderPath().$match[1];
+                $filename = Configuration::getDefaultConfiguration()->getTempFolderPath() . $match[1];
             } else {
                 $filename = tempnam(Configuration::getDefaultConfiguration()->getTempFolderPath(), '');
             }
             $deserialized = new \SplFileObject($filename, "w");
             $byte_written = $deserialized->fwrite($data);
             error_log("[INFO] Written $byte_written byte to $filename. Please move the file to a proper folder or delete the temp file after processing.\n", 3, Configuration::getDefaultConfiguration()->getDebugFile());
-      
         } else {
             app('log')->Debug("Deserializuję jako obiekt klasy: $class");
-            $data = (object)$data;
-            if(!isset($data->val)){
-                if(isset($data->scalar)){
+            $data = (object) $data;
+            if (!isset($data->val)) {
+                if (isset($data->scalar)) {
                     $data->val = $data->scalar;
                     unset($data->scalar);
                 }
-                if(isset($data->string)){
+                if (isset($data->string)) {
                     $data->val = $data->string;
                     unset($data->string);
                 }
             }
-            $classImplementation = str_replace(['prototypes', 'Prototypes'], ['implementations', 'Implementations'], $class).'Impl';
+            $classImplementation = str_replace(['prototypes', 'Prototypes'], ['implementations', 'Implementations'], $class) . 'Impl';
             $instance = new $classImplementation();
             foreach ($instance::$swaggerTypes as $property => $type) {
                 $propertySetter = $instance::$setters[$property];
                 if (!isset($propertySetter) || !isset($data->{$instance::$attributeMap[$property]})) {
                     continue;
                 }
-                
+
                 $propertyValue = $data->{$instance::$attributeMap[$property]};
                 if (isset($propertyValue)) {
                     $instance->$propertySetter($this->deserialize($propertyValue, $type, $httpHeader, $validate));
-                    
                 }
             }
             $deserialized = $instance;
@@ -247,7 +246,7 @@ class ObjectSerializer
             $errorClass = env('ERROR_MODEL_IMPL_TRAVEL_V1');
             $deserialized->validate($errorClass);
         }
-     
+
         return $deserialized;
     }
 }
