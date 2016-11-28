@@ -49,7 +49,10 @@ class SendIssuedPolicy extends Listener
             app('log')->error('Error when setting issued policy to send');
             app('log')->error($exception);
             $policySender->setStatus($policySender::STATUS_ERR);
-            $policySender->addErrors(['code' => 'SET_POLICY', 'text' => 'Error when setting issued policy to send: ' . $exception->getMessage()]);
+            $policySender->addErrors([
+                'code' => 'SET_POLICY',
+                'text' => 'Error when setting issued policy to send: ' . $exception->getMessage()
+            ]);
         }
         
         $policySender->send();

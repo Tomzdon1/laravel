@@ -42,13 +42,13 @@ class Policy extends Eloquent
     {
         parent::boot();
 
-        static::addGlobalScope('partner', function($builder) {
+        static::addGlobalScope('partner', function ($builder) {
             if (app('auth')->user()) {
                 $builder->where('partner.code', app('auth')->user()->code);
             }
         });
 
-        static::created(function($policy) {
+        static::created(function ($policy) {
             event(new IssuedPolicyEvent($policy));
         });
     }

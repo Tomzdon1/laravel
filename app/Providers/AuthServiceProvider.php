@@ -1,10 +1,14 @@
 <?php
+
 namespace App\Providers;
+
 use App\Partner;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+
 class AuthServiceProvider extends ServiceProvider
 {
+
     /**
      * Register any application services.
      *
@@ -14,6 +18,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         //
     }
+
     /**
      * Boot the authentication services for the application.
      *
@@ -24,9 +29,10 @@ class AuthServiceProvider extends ServiceProvider
         $this->app['auth']->viaRequest('api', function ($request) {
             if ($request->has('customer_id')) {
                 $matches = [];
-                
+
                 if (preg_match('/^([a-zA-Z])+/', $request->path(), $matches)) {
-                    return Partner::where('customerId', $request->input('customer_id'))->where('offerType.'.$matches[0], true)->first();
+                    return Partner::where('customerId', $request->input('customer_id'))
+                        ->where('offerType.' . $matches[0], true)->first();
                 }
 
                 return null;
