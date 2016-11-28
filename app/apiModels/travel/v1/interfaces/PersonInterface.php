@@ -2,7 +2,7 @@
 
 namespace App\apiModels\travel\v1\interfaces;
 
-interface PersonInterface extends PrePersonInterface
+interface PersonInterface extends PrepersonInterface
 {
     //
 }

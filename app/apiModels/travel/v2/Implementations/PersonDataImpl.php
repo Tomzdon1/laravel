@@ -3,9 +3,10 @@
 namespace App\apiModels\travel\v2\Implementations;
 
 use App\apiModels\travel\v2\Prototypes\PersonData;
+use App\apiModels\travel\v2\Interfaces\PersonInterface;
 use App\apiModels\travel\v2\Traits;
 
-class PersonDataImpl extends PersonData
+class PersonDataImpl extends PersonData implements PersonInterface
 {
     use Traits\SwaggerDeserializationTrait;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\apiModels\travel\v2\Interfaces;
+namespace App\apiModels\travel\v1\interfaces;
 
 interface PrepersonInterface
 {
