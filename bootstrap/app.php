@@ -2,6 +2,10 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 
+if (!isset($envFilename)) {
+    $envFilename = null;
+}
+
 try {
     (new Dotenv\Dotenv(__DIR__.'/../', $envFilename))->load();
 } catch (Dotenv\Exception\InvalidPathException $e) {
@@ -25,7 +29,9 @@ $app = new Laravel\Lumen\Application(
 
 // Required with Bschmitt\Amqp
 $app->withFacades();
-class_alias('Illuminate\Support\Facades\App', 'App');
+if (!class_exists('App')) {
+    class_alias('Illuminate\Support\Facades\App', 'App');
+}
 
 /*
 |--------------------------------------------------------------------------
