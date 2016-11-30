@@ -21,13 +21,6 @@ class ConsumeQueue extends Command
     protected $description = 'Consume messages from definied or env-specified queue';
 
     /**
-     * The drip e-mail service.
-     *
-     * @var DripEmailer
-     */
-    protected $drip;
-
-    /**
      * Create a new command instance.
      *
      * @return void
