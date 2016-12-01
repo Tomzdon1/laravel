@@ -41,8 +41,8 @@ class SendMailNotificationIssuedPolicy extends Listener
                 $mailSendRequest->setRecipient($event->policy->policy_holder->email);
                 $mailSendRequest->setSubject($event->policy->product->configuration->mailSubject);
                 $mailSendRequest->setBody($parser::parse($template, $event->policy));
-                // @todo Skąd pobrać załączniki
-                $mailSendRequest->setAttachments([]);
+                // @todo Pobieranie i załączanie plików z PrintOUT
+                // $mailSender->attach('example.pdf');
 
                 $companies = [];
                 foreach ($event->policy->product->elements as $element) {

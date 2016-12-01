@@ -33,6 +33,10 @@ if (!class_exists('App')) {
     class_alias('Illuminate\Support\Facades\App', 'App');
 }
 
+if (!class_exists('Storage')) {
+    class_alias('Illuminate\Support\Facades\Storage', 'Storage');
+}
+
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -86,6 +90,7 @@ $app->routeMiddleware([
 |--------------------------------------------------------------------------
 */
 $app->configure('amqp');
+$app->configure('filesystems');
 
 /*
 |--------------------------------------------------------------------------
@@ -113,6 +118,7 @@ $app->register(App\Providers\PolicySendingServiceProvider::class);
 $app->register(App\Providers\RequestResponseLoggerServiceProvider::class);
 $app->register(Monarobase\CountryList\CountryListServiceProvider::class);
 $app->register(Bschmitt\Amqp\LumenServiceProvider::class);
+$app->register(Illuminate\Filesystem\FilesystemServiceProvider::class);
 
 $app->withEloquent();
  
