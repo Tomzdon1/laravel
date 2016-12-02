@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Policy;
 use App\Events\IssuedPolicyEvent;
 use Illuminate\Support\Facades\Artisan;
 
@@ -19,13 +20,14 @@ class SendIssuedPolicy extends Listener
     /**
      * Handle the event.
      *
-     * @param  ExampleEvent  $event
+     * @param IssuedPolicyEvent $event Source event
+     *
      * @return void
      */
     public function handle(IssuedPolicyEvent $event)
     {
-        Artisan::call('policies:send', [
-            'policies' => [$event->policy->id],
-        ]);
+        $policy = Policy::find($event->policy->id);
+        $policySender = app()->make('PolicySender');
+        $policySender->setPolicy($policy)->send();
     }
 }

@@ -22,4 +22,16 @@ class TravelOffer extends Eloquent
     public static $validators = [
         //
     ];
+
+    public static function getCompaniesFromElements($product)
+    {
+        $companies = [];
+        $product = json_decode(json_encode($product));
+        
+        foreach ($product->elements as $element) {
+            array_push($companies, $element->cmp);
+        }
+
+        return array_unique($companies);
+    }
 }

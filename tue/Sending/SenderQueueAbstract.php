@@ -14,12 +14,14 @@ abstract class SenderQueueAbstract implements SenderInterface {
 
     protected static $_instances = [];
 
-    function __construct() {
+    function __construct()
+    {
         $this->envelope = new internal\Model\Envelope();
         $this->envelope->setStatus(self::STATUS_OK);
     }
 
-    public static function getInstance() {
+    public static function getInstance()
+    {
         $class = get_called_class();
         if (!isset(static::$_instances[$class])) {
             static::$_instances[$class] = new static();
@@ -42,11 +44,13 @@ abstract class SenderQueueAbstract implements SenderInterface {
         return call_user_func_array(array($this->envelope, $name), $arguments);
     }
 
-    public function addErrors($errors) {
+    public function addErrors($errors)
+    {
         $this->setErrors(array_merge($this->getErrors() ?: [], $errors));
     }
 
-    public function send() {
+    public function send()
+    {
         $this->setSendDate(new \DateTime());
         $this->setType(static::TYPE);
         $this->setVersion(static::VERSION);
