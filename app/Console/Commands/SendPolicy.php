@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Policy;
-use App\Events\IssuedPolicyEvent;
 
 class SendPolicy extends Command
 {

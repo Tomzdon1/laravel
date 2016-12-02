@@ -3,7 +3,7 @@
 namespace App;
 
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
-use App\Events\IssuedPolicyEvent;
+use App\Events\CreatedPolicyEvent;
 
 class Policy extends Eloquent
 {
@@ -48,9 +48,11 @@ class Policy extends Eloquent
             }
         });
 
-        static::created(function ($policy) {
-            event(new IssuedPolicyEvent($policy));
-        });
+        static::created(
+            function ($policy) {
+                event(new CreatedPolicyEvent($policy));
+            }
+        );
     }
 
     public function getSource()

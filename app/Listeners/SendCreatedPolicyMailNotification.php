@@ -2,9 +2,9 @@
 
 namespace App\Listeners;
 
-use App\Events\IssuedPolicyEvent;
+use App\Events\CreatedPolicyEvent;
 
-class SendMailNotificationIssuedPolicy extends Listener
+class SendCreatedPolicyMailNotification extends Listener
 {
 
     /**
@@ -23,9 +23,9 @@ class SendMailNotificationIssuedPolicy extends Listener
      * @param  ExampleEvent  $event
      * @return void
      */
-    public function handle(IssuedPolicyEvent $event)
+    public function handle(CreatedPolicyEvent $event)
     {
-        app('log')->debug('Start SendMailNotificationIssuedPolicy');
+        app('log')->debug('Start SendCreatedPolicyMailNotification');
 
         if (isset($event->policy->policy_holder->email) &&
             isset($event->policy->product->configuration->mailTemplate) &&
@@ -60,6 +60,6 @@ class SendMailNotificationIssuedPolicy extends Listener
             $mailSender->send();
         }
 
-        app('log')->debug('End SendMailNotificationIssuedPolicy');
+        app('log')->debug('End SendCreatedPolicyMailNotification');
     }
 }

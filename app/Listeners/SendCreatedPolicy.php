@@ -3,10 +3,10 @@
 namespace App\Listeners;
 
 use App\Policy;
-use App\Events\IssuedPolicyEvent;
+use App\Events\CreatedPolicyEvent;
 use Illuminate\Support\Facades\Artisan;
 
-class SendIssuedPolicy extends Listener
+class SendCreatedPolicy extends Listener
 {
     /**
      * Create the event listener.
@@ -20,11 +20,11 @@ class SendIssuedPolicy extends Listener
     /**
      * Handle the event.
      *
-     * @param IssuedPolicyEvent $event Source event
+     * @param CreatedPolicyEvent $event Source event
      *
      * @return void
      */
-    public function handle(IssuedPolicyEvent $event)
+    public function handle(CreatedPolicyEvent $event)
     {
         $policy = Policy::find($event->policy->id);
         $policySender = app()->make('PolicySender');

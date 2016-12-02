@@ -12,10 +12,10 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\IssuedPolicyEvent' => [
-            'App\Listeners\SendIssuedPolicy',
-            'App\Listeners\SendSMSNotificationIssuedPolicy',
-            'App\Listeners\SendMailNotificationIssuedPolicy',
+        'App\Events\CreatedPolicyEvent' => [
+            'App\Listeners\SendCreatedPolicy',
+            'App\Listeners\SendCreatedPolicySMSNotification',
+            'App\Listeners\SendCreatedPolicyMailNotification',
         ],
     ];
 }
