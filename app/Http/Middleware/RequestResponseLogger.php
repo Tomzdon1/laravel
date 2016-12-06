@@ -93,6 +93,7 @@ class RequestResponseLogger
             
             $path['response'] = $responseBody;
             $path['response_time'] = $this->getFormattedTime(microtime(true));
+            $path['response_status'] = $response->status();
             $paths = $this->flow->paths;
             $paths[$this->recentPathIndex] = array_merge($paths[$this->recentPathIndex], $path);
             $this->flow->paths = $paths;
