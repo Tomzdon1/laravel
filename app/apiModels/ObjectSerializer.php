@@ -174,10 +174,10 @@ class ObjectSerializer
     public function deserialize($data, $class, $httpHeader = null, $validate = true)
     {
         if (null === $data) {
-            app('log')->Debug("Deserializuję jako null");
+            !env('APP_DEBUG', false) ?: app('log')->Debug("Deserializuję jako null");
             $deserialized = null;
         } elseif (substr($class, 0, 4) === 'map[') { // for associative array e.g. map[string,int]
-            app('log')->Debug("Deserializuję jako tablicę asocjacyjną");
+            !env('APP_DEBUG', false) ?: app('log')->Debug("Deserializuję jako tablicę asocjacyjną");
             $inner = substr($class, 4, -1);
             $deserialized = array();
             if (strrpos($inner, ",") !== false) {
@@ -188,7 +188,7 @@ class ObjectSerializer
                 }
             }
         } elseif (strcasecmp(substr($class, -2), '[]') == 0) {
-            app('log')->Debug("Deserializuję jako tablicę");
+            !env('APP_DEBUG', false) ?: app('log')->Debug("Deserializuję jako tablicę");
             $subClass = substr($class, 0, -2);
             $values = array();
             foreach ($data as $key => $value) {
@@ -196,14 +196,14 @@ class ObjectSerializer
             }
             $deserialized = $values;
         } elseif ($class === '\DateTime') {
-            app('log')->Debug("Deserializuję jako DateTime");
+            !env('APP_DEBUG', false) ?: app('log')->Debug("Deserializuję jako DateTime");
             $deserialized = new \Carbon\Carbon($data);
         } elseif (in_array($class, array('void', 'bool', 'string', 'double', 'byte', 'mixed', 'integer', 'float', 'int', 'DateTime', 'number', 'boolean', 'object'))) {
-            app('log')->Debug("Deserializuję jako typ podstawowy: $class");
+            !env('APP_DEBUG', false) ?: app('log')->Debug("Deserializuję jako typ podstawowy: $class");
             settype($data, $class);
             $deserialized = $data;
         } elseif ($class === '\SplFileObject') {
-            app('log')->Debug("Deserializuję jako plik");
+            !env('APP_DEBUG', false) ?: app('log')->Debug("Deserializuję jako plik");
             // determine file name
             if (preg_match('/Content-Disposition: inline; filename=[\'"]?([^\'"\s]+)[\'"]?$/i', $httpHeader, $match)) {
                 $filename = Configuration::getDefaultConfiguration()->getTempFolderPath() . $match[1];
@@ -214,7 +214,7 @@ class ObjectSerializer
             $byte_written = $deserialized->fwrite($data);
             error_log("[INFO] Written $byte_written byte to $filename. Please move the file to a proper folder or delete the temp file after processing.\n", 3, Configuration::getDefaultConfiguration()->getDebugFile());
         } else {
-            app('log')->Debug("Deserializuję jako obiekt klasy: $class");
+            !env('APP_DEBUG', false) ?: app('log')->Debug("Deserializuję jako obiekt klasy: $class");
             $data = (object) $data;
             if (!isset($data->val)) {
                 if (isset($data->scalar)) {

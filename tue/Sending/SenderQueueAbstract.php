@@ -68,6 +68,7 @@ abstract class SenderQueueAbstract implements SenderInterface {
         // @todo dodać logowanie do mongo o wysłanej wiadomości
 
         app('Amqp')->publish(static::QUEUE_ROUTING_KEY, (string) $this->envelope, ['exchange' => static::QUEUE_EXCHANGE]);
-        app('log')->debug('Publish ' . static::TYPE . ' in version ' . static::VERSION . ' in RabbitMQ exchange: ' . static::QUEUE_EXCHANGE);
+        
+        !env('APP_DEBUG', false) ?: app('log')->debug('Publish ' . static::TYPE . ' in version ' . static::VERSION . ' in RabbitMQ exchange: ' . static::QUEUE_EXCHANGE);
     }
 }

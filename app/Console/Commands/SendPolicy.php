@@ -38,7 +38,7 @@ class SendPolicy extends Command
      */
     public function handle()
     {
-        app('log')->debug('Run SendPolicy command');
+        !env('APP_DEBUG', false) ?: app('log')->debug('Run SendPolicy command');
 
         if ($this->argument('policies')) {
             $policiesId = $this->argument('policies');
@@ -56,7 +56,7 @@ class SendPolicy extends Command
 
         $bar->finish();
 
-        app('log')->debug('End SendPolicy command');
+        !env('APP_DEBUG', false) ?: app('log')->debug('End SendPolicy command');
     }
 
     /**

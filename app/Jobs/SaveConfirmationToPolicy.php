@@ -25,7 +25,7 @@ class SaveConfirmationToPolicy extends Job
      */
     public function handle()
     {
-        app('log')->debug('Job SaveConfirmationToPolicy run');
+        !env('APP_DEBUG', false) ?: app('log')->debug('Job SaveConfirmationToPolicy run');
         
         if ($this->envelope) {
             $policy = Policy::find($this->envelope->dst_id);
@@ -33,7 +33,7 @@ class SaveConfirmationToPolicy extends Job
             if ($policy) {
                 $policy->addStatus($this->envelope);
                 $policy->save();
-                app('log')->debug("Status type {$this->envelope->type} for policy $policy->id saved");
+                !env('APP_DEBUG', false) ?: app('log')->debug("Status type {$this->envelope->type} for policy $policy->id saved");
             } else {
                 throw new \Exception('Not found policy for status: ' . json_encode($this->envelope));
             }

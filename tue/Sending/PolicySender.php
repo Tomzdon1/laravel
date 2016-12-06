@@ -35,7 +35,7 @@ class PolicySender extends SenderQueueAbstract {
     
     public function send()
     {
-        app('log')->debug('Start sendPolicy');
+        !env('APP_DEBUG', false) ?: app('log')->debug('Start sendPolicy');
 
         try {
             $this->setStatus($this->_srcPolicy->status);
@@ -70,7 +70,7 @@ class PolicySender extends SenderQueueAbstract {
 
         parent::send();
 
-        app('log')->debug('End sendPolicy');
+        !env('APP_DEBUG', false) ?: app('log')->debug('End sendPolicy');
 
         return $this;
     }

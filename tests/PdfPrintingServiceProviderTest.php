@@ -17,16 +17,10 @@ class PdfPrintingServiceProviderTest extends TestCase {
         
         /* @var $printer Tue\Printing\Printer */
         $printer = $this->app->make('PdfPrinter'); 
-        
-        
         $doc = $printer->getDocument('TESTCOM', $file);
         
-        
-        app('log')->debug('pdf->isError='.$doc->IsError());
-        app('log')->debug('pdf->isError='.$doc->IsError());
-        
-        $this->assertEquals($doc->ContentType(),Tue\Printing\FileType::PDF,"Wygenerowany plik nie jest PDF");        
-        $this->assertFalse($doc->IsError(),"Błąd podczas generowania PDF".$doc->ErrorMsg());
+        $this->assertEquals($doc->ContentType(), Tue\Printing\FileType::PDF, "Wygenerowany plik nie jest PDF");
+        $this->assertFalse($doc->IsError(), "Błąd podczas generowania PDF".$doc->ErrorMsg());
         
     }
 }

@@ -5,7 +5,7 @@ namespace Tue\ParsingTemplate;
 class TemplateParserFromObject implements TemplateParserInterface {
 
     public static function parse($template, $sourceObject) {
-        app('log')->debug('Running TemplateParserFromObject');
+        !env('APP_DEBUG', false) ?: app('log')->debug('Running TemplateParserFromObject');
         
         return preg_replace_callback(
             '|\[[^]]+\]|',

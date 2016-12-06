@@ -37,7 +37,7 @@ class ConsumeQueue extends Command
      */
     public function handle()
     {
-        app('log')->debug('Run ConsumeQueue command');
+        !env('APP_DEBUG', false) ?: app('log')->debug('Run ConsumeQueue command');
 
         $queueToConsume = env('RABBITMQ_CONSUME_QUEUE', 'cp');
 
@@ -64,6 +64,6 @@ class ConsumeQueue extends Command
             'queue_durable' => env('RABBITMQ_CONSUME_QUEUE_DURABLE', true),
         ]);
 
-        app('log')->debug('End ConsumeQueue command');
+        !env('APP_DEBUG', false) ?: app('log')->debug('End ConsumeQueue command');
     }
 }
