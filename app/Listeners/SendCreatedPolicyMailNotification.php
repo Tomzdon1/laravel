@@ -42,7 +42,7 @@ class SendCreatedPolicyMailNotification extends Listener
                 $mailSendRequest->setSubject($event->policy->product->configuration->mailSubject);
                 $mailSendRequest->setBody($parser::parse($template, $event->policy));
                 // @todo Pobieranie i załączanie plików z PrintOUT
-                // $mailSender->attach('example.pdf');
+                $mailSender->attach('example.pdf');
 
                 $companies = [];
                 foreach ($event->policy->product->elements as $element) {
