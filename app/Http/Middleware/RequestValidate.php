@@ -51,12 +51,12 @@ class RequestValidate
 
             foreach ($validator->getErrors() as $error) {
                 if (array_key_exists($error['property'], $errors)) {
-                    $e = & $errors[$error['property']];
+                    $e = $errors[$error['property']];
                 } else {
                     $e = new $errorClass();
                     $e->setProperty($error['property']);
                     $e->setErrors([]);
-                    $errors[] = & $e;
+                    $errors[] = $e;
                 }
 
                 $e->setErrors(array_merge($e->getErrors(), [$error['message']]));
