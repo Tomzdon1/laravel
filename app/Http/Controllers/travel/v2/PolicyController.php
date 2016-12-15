@@ -17,6 +17,13 @@ class PolicyController extends Controller
         $calculateRequest = $request->attributes->get('deserializedRequestObject');
         
         $offer = TravelOffer::find($calculateRequest->getProductId());
+
+        if (!$offer) {
+            $error = new Implementations\ErrorImpl();
+            $error->setDescription('Forbidden');
+            
+            return response([$error], Response::HTTP_FORBIDDEN);
+        }
         
         // @todo uncomment below after add feauture (przeniesienie kalkulacji do uslugi kalkulacji)
         // $calculationCalaculator = app()->make('calculationCalaculator');
@@ -102,6 +109,16 @@ class PolicyController extends Controller
         
         // @todo uncomment below after add feauture (przeniesienie kalkulacji do uslugi kalkulacji)
         // $policyCalaculator = app()->make('PolicyCalaculator');
+
+        foreach ($importRequests as $importRequest) {
+            $offer = TravelOffer::find($importRequest->getProductId());
+
+            if (!$offer) {
+                $error = new Implementations\ERRORImpl();
+                $error->setDescription('Forbidden');
+                return response([$error], Response::HTTP_FORBIDDEN);
+            }
+        }
 
         foreach ($importRequests as $importRequest) {
             // @todo uncomment below after add feauture (przeniesienie kalkulacji do uslugi kalkulacji)
