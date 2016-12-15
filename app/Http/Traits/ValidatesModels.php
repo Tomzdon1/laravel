@@ -37,9 +37,9 @@ trait ValidatesModels
             if (is_subclass_of($this->{$key}, 'App\apiModels\ApiModel')) {
                 $errors = $this->{$key}->validate($key)->merge($errors);
             } elseif (is_array($this->{$key})) {
-                foreach ($this->{$key} as $key => $arrayElement) {
+                foreach ($this->{$key} as $arrayKey => $arrayElement) {
                     if (is_subclass_of($arrayElement, 'App\apiModels\ApiModel')) {
-                        $errors = $arrayElement->validate($key)->merge($errors);
+                        $errors = $arrayElement->validate($key.'.'.$arrayKey)->merge($errors);
                     }
                 }
             }
