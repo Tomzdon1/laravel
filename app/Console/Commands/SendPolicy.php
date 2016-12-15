@@ -38,7 +38,7 @@ class SendPolicy extends Command
      */
     public function handle()
     {
-        !env('APP_DEBUG', false) ?: app('log')->debug('Run SendPolicy command');
+        app('log')->info('Run SendPolicy command');
 
         if ($this->argument('policies')) {
             $policiesId = $this->argument('policies');
@@ -49,6 +49,7 @@ class SendPolicy extends Command
         $bar->setFormat("%current%/%max% [%bar%] %message%\n");
 
         foreach ($policies as $policy) {
+            app('log')->info("Launch sendPolicy for $policy->_id (policy_number: $policy->policy_number)");
             $bar->setMessage("Launch sendPolicy for $policy->_id (policy_number: $policy->policy_number)");
             $bar->advance();
             $this->_send($policy);
@@ -56,7 +57,7 @@ class SendPolicy extends Command
 
         $bar->finish();
 
-        !env('APP_DEBUG', false) ?: app('log')->debug('End SendPolicy command');
+        app('log')->info('End SendPolicy command');
     }
 
     /**

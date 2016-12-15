@@ -18,6 +18,10 @@ class DeserializeRequestObject
      */
     public function handle($request, Closure $next, $prototypesNamespace)
     {
+        if (env('APP_DEBUG', false)) {
+            app('log')->debug("DeserializeRequestObject starting for path " . $request->getPathInfo());
+        }
+
         $objectSerializer = new ObjectSerializer();
         $requestSchema = $request->attributes->get('requestSchema');
 
@@ -44,6 +48,10 @@ class DeserializeRequestObject
         );
         
         $request->attributes->add(['deserializedRequestObject' => $deserializedRequestObject]);
+
+        if (env('APP_DEBUG', false)) {
+            app('log')->debug('DeserializeRequestObject success');
+        }
 
         return $next($request);
     }

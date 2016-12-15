@@ -56,8 +56,8 @@ class PolicySender extends SenderQueueAbstract {
             $this->setSrcId($this->_srcPolicy->id);
             $this->setSrcType('policy');
         } catch (\InvalidArgumentException $exception) {
-            app('log')->error('Error when setting issued policy to send');
-            app('log')->error($exception);
+            app('log')->notice('Error when setting issued policy to send');
+            app('log')->notice($exception);
             $this->setStatus(self::STATUS_ERR);
             $this->addErrors(
                 [

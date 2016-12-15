@@ -25,7 +25,7 @@ class SaveConfirmationToPolicy extends Job
      */
     public function handle()
     {
-        !env('APP_DEBUG', false) ?: app('log')->debug('Job SaveConfirmationToPolicy run');
+        app('log')->info('Run SaveConfirmationToPolicy job');
         
         if ($this->envelope) {
             $policy = Policy::find($this->envelope->dst_id);
@@ -33,13 +33,16 @@ class SaveConfirmationToPolicy extends Job
             if ($policy) {
                 $policy->addStatus($this->envelope);
                 $policy->save();
-                !env('APP_DEBUG', false) ?: app('log')->debug("Status type {$this->envelope->type} for policy $policy->id saved");
+                app('log')->info("Status type {$this->envelope->type} for policy $policy->id saved");
             } else {
+                //sprawdzic jak to sie zachowa w logach, powinien byc tu error log
                 throw new \Exception('Not found policy for status: ' . json_encode($this->envelope));
             }
         } else {
+            //sprawdzic jak to sie zachowa w logach, powinien byc tu error log
             throw new \Exception('Not valid envelope');
         }
-        
+
+        app('log')->info('End SaveConfirmationToPolicy job');
     }
 }

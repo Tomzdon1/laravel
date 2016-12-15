@@ -18,10 +18,9 @@ class RequestObjectValidate
     {
         $errors = [];
         $deserializedRequestObject = $request->attributes->get('deserializedRequestObject');
-        $path = $request->getPathInfo();
 
         if (env('APP_DEBUG', false)) {
-            app('log')->debug("RequestObjectValidate starting for path $path");
+            app('log')->debug("RequestObjectValidate starting for path " . $request->getPathInfo());
             app('log')->debug('RequestObjectValidate Request content: ' . var_export($deserializedRequestObject, true));
         }
         

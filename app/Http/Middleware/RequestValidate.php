@@ -23,7 +23,7 @@ class RequestValidate
         $path = $request->getPathInfo();
 
         if (env('APP_DEBUG', false)) {
-            app('log')->debug("RequestValidate starting for path $path");
+            app('log')->debug("RequestValidate starting for path " . $request->getPathInfo());
             app('log')->debug('RequestValidate Request content: ' . var_export($request->getContent(), true));
         }
 

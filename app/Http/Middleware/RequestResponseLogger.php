@@ -20,6 +20,10 @@ class RequestResponseLogger
      */
     public function handle($request, Closure $next)
     {
+        if (env('APP_DEBUG', false)) {
+            app('log')->debug("RequestResponseLogger starting for path " . $request->getPathInfo());
+        }
+
         $requestBody = json_decode($request->getContent());
         $quoteId = null;
         $path = [];
@@ -59,6 +63,10 @@ class RequestResponseLogger
 
         $request->attributes->add(['flow' => (string) $this->flow]);
 
+        if (env('APP_DEBUG', false)) {
+            app('log')->debug('RequestResponseLogger success');
+        }
+
         return $next($request);
     }
 
@@ -71,6 +79,10 @@ class RequestResponseLogger
      */
     public function terminate($request, $response)
     {
+        if (env('APP_DEBUG', false)) {
+            app('log')->debug("RequestResponseLogger (terminate) starting for path " . $request->getPathInfo());
+        }
+
         $responseBody = json_decode($response->getContent());
         
         if ($this->flow) {
@@ -99,6 +111,10 @@ class RequestResponseLogger
             $this->flow->paths = $paths;
             
             $this->flow->save();
+        }
+
+        if (env('APP_DEBUG', false)) {
+            app('log')->debug('RequestResponseLogger (terminate) success');
         }
     }
 

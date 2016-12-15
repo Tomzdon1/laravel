@@ -19,6 +19,10 @@ trait ValidatesModels
      */
     public function validate($prefix = '')
     {
+        if (env('APP_DEBUG', false)) {
+            app('log')->debug("ValidatesModels starting for path ". get_class($this));
+        }
+
         $data = [];
         $errors = [];
 
@@ -51,6 +55,10 @@ trait ValidatesModels
             foreach ($messages as $message) {
                 $errorsPrefixed->add($prefix.$key, $message);
             }
+        }
+
+        if (env('APP_DEBUG', false)) {
+            app('log')->debug('ValidatesModels end');
         }
 
         return $errorsPrefixed;

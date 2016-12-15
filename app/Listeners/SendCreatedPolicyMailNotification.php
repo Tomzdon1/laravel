@@ -25,7 +25,7 @@ class SendCreatedPolicyMailNotification extends Listener
      */
     public function handle(CreatedPolicyEvent $event)
     {
-        !env('APP_DEBUG', false) ?: app('log')->debug('Start SendCreatedPolicyMailNotification');
+        app('log')->info('Start SendCreatedPolicyMailNotification listener');
 
         if (isset($event->policy->policy_holder->email) &&
             isset($event->policy->product->configuration->mailTemplate) &&
@@ -60,6 +60,6 @@ class SendCreatedPolicyMailNotification extends Listener
             $mailSender->send();
         }
 
-        !env('APP_DEBUG', false) ?: app('log')->debug('End SendCreatedPolicyMailNotification');
+        app('log')->info('End SendCreatedPolicyMailNotification listener');
     }
 }

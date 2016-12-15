@@ -25,7 +25,7 @@ class SendCreatedPolicySMSNotification extends Listener
      */
     public function handle(CreatedPolicyEvent $event)
     {
-        !env('APP_DEBUG', false) ?: app('log')->debug('Start SendCreatedPolicySMSNotification');
+        app('log')->info('Start SendCreatedPolicySMSNotification listener');
 
         if (isset($event->policy->policy_holder->telephone) &&
             isset($event->policy->product->configuration->smsTemplate) &&
@@ -68,6 +68,6 @@ class SendCreatedPolicySMSNotification extends Listener
             $smsSender->send();
         }
 
-        !env('APP_DEBUG', false) ?: app('log')->debug('End SendCreatedPolicySMSNotification');
+        app('log')->info('End SendCreatedPolicySMSNotification listener');
     }
 }
