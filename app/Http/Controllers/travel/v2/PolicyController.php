@@ -115,7 +115,7 @@ class PolicyController extends Controller
             $calculatedPremiums = $importRequest->calculatePremiums();
 
             $validator = app('validator')->make(
-                app('request')->input()[0],
+                array_dot($importRequest),
                 $importRequest::$warningValidators,
                 [],
                 ['calculatedAmounts' => $calculatedPremiums]
