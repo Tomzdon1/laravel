@@ -50,12 +50,11 @@ class IMPORTREQUESTImpl extends IMPORTREQUEST
         $warningsCounter = 0;
         $errosCounter = 0;
 
-        $partnerCode = app('auth')->user()->code;
         $offer = TravelOffer::find($this->getProductRef());
         $calculatedAmounts = $this->calculateAmounts($offer, $this);
 
         $validator = app('validator')->make(
-            app('request')->input()[0],
+            array_dot($this),
             self::$warningValidators,
             [],
             ['calculatedAmounts' => $calculatedAmounts]
