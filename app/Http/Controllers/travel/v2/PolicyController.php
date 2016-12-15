@@ -47,7 +47,7 @@ class PolicyController extends Controller
         $calculationPolicyResponse->setCalculationId($calculation->id);
         $calculationPolicyResponse->setChecksum($calculation->checksum);
         
-        return $calculationPolicyResponse;
+        return json_decode($calculationPolicyResponse, true);
     }
 
     public function purchase(Request $request)
