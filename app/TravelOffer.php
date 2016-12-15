@@ -23,6 +23,22 @@ class TravelOffer extends Eloquent
         //
     ];
 
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('partner', function ($builder) {
+            if (app('auth')->user()) {
+                $builder->where('partner', app('auth')->user()->code);
+            }
+        });
+    }
+
     public static function getCompaniesFromElements($product)
     {
         $companies = [];
