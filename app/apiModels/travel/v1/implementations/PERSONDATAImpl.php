@@ -26,7 +26,7 @@ class PERSONDATAImpl extends PERSONDATA
      */
     public static $validators = [
         'birth_date.date' => 'required_if:type,private|before:today',
-        'nationality' => 'sometimes|nullable|countryCode',
+        'nationality' => 'sometimes|countryCode',
         'business_name' => 'required_if:type,sole_trader,company',
         'nip' => 'required_if:type,sole_trader,company'
     ];

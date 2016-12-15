@@ -4,10 +4,12 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Validation\Validator;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpFoundation\Response as Response;
-use Symfony\Component\HttpFoundation\Request as Request;
-use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class Handler extends ExceptionHandler
 {
@@ -18,7 +20,10 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+        // AuthorizationException::class,
+        HttpException::class,
+        // ModelNotFoundException::class,
+        ValidationException::class,
     ];
 
     /**
@@ -36,12 +41,11 @@ class Handler extends ExceptionHandler
             app('ScheduleTaskLogger')->error($e);
         }
 
-        if ($e instanceof ValidationException) {
-            app('log')->error('exception caused by request (esb_id: '
-                . app('request')->input('request_id') . ') content: ' . app('request')->getcontent());
+        if ($e instanceof ValidationException || $e instanceof HttpException) {
+            app('log')->notice($e);
+        } else {
+            return parent::report($e);
         }
-
-        return parent::report($e);
     }
 
     /**
@@ -57,7 +61,14 @@ class Handler extends ExceptionHandler
             return parent::render($request, $e);
         }
 
-        if ($e instanceof HttpExceptionInterface) {
+        if ($e instanceof ValidationException) {
+            if ($e->validator instanceof Validator) {
+                $response = $e->validator->errors();              
+            } else {
+                $response = $e->validator;
+            }
+            return response($response, Response::HTTP_UNPROCESSABLE_ENTITY);
+        } elseif ($e instanceof HttpException) {
             return response(json_decode($e->getMessage()) ? : $e->getMessage(), $e->getStatusCode());
         } else {
             return response(null, Response::HTTP_INTERNAL_SERVER_ERROR);

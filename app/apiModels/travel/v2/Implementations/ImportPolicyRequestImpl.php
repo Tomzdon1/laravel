@@ -15,7 +15,7 @@ class ImportPolicyRequestImpl extends ImportPolicyRequest
      * @var array
      */
     public static $validators = [
-        'product_ref' => 'product_ref',
+        'product_id' => 'product_ref',
         'policy_number' => 'unique:policies',
         'policy_date.date' => 'before_equal:data.start_date.date'
     ];

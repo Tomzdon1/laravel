@@ -242,11 +242,6 @@ class ObjectSerializer
             $deserialized = $instance;
         }
 
-        if ($validate && is_subclass_of($deserialized, 'App\apiModels\ApiModel')) {
-            $errorClass = env('ERROR_MODEL_IMPL_TRAVEL_V1');
-            $deserialized->validate($errorClass);
-        }
-
         return $deserialized;
     }
 }

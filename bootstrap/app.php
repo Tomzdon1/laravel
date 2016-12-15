@@ -82,6 +82,7 @@ $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
     'request_validate' => App\Http\Middleware\RequestValidate::class,
     'deserialize_request_object' => App\Http\Middleware\DeserializeRequestObject::class,
+    'request_object_validate' => App\Http\Middleware\RequestObjectValidate::class,
 ]);
 
 /*

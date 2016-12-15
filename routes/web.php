@@ -6,7 +6,7 @@ $app->get('echo', function () {
 
 $app->group([
     'prefix' => 'travel/v1',
-    'middleware' => ['auth', 'request_validate:' . env('API_DEFINITION_TRAVEL_V1') . ',' . env('ERROR_MODEL_IMPL_TRAVEL_V1'), 'deserialize_request_object:' . env('API_PROTOTYPES_NAMESPACES_TRAVEL_V1')],
+    'middleware' => ['auth', 'request_validate:' . env('API_DEFINITION_TRAVEL_V1') . ',' . env('ERROR_MODEL_IMPL_TRAVEL_V1'), 'deserialize_request_object:' . env('API_PROTOTYPES_NAMESPACES_TRAVEL_V1'), 'request_object_validate:' . env('ERROR_MODEL_IMPL_TRAVEL_V1')],
     'namespace' => 'travel\v1'
     ], function ($app) {
         $app->post('import_policies', 'PolicyController@import');
@@ -14,7 +14,7 @@ $app->group([
 
 $app->group([
     'prefix' => 'travel/v2',
-    'middleware' => ['auth', 'request_validate:' . env('API_DEFINITION_TRAVEL_V2') . ',' . env('ERROR_MODEL_IMPL_TRAVEL_V2'), 'deserialize_request_object:' . env('API_PROTOTYPES_NAMESPACES_TRAVEL_V2')],
+    'middleware' => ['auth', 'request_validate:' . env('API_DEFINITION_TRAVEL_V2') . ',' . env('ERROR_MODEL_IMPL_TRAVEL_V2'), 'deserialize_request_object:' . env('API_PROTOTYPES_NAMESPACES_TRAVEL_V2'), 'request_object_validate:' . env('ERROR_MODEL_IMPL_TRAVEL_V2')],
     'namespace' => 'travel\v2'
     ], function ($app) {
         $app->post('option-definitions', 'OptionDefinitionController@index');

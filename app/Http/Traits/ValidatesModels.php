@@ -6,50 +6,54 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\Validator;
 use Illuminate\Http\Exception\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response as Response;
+use Illuminate\Support\MessageBag;
 
 trait ValidatesModels
 {
 
     /**
-     * Validate the given model with the given rules.
+     * Validate the given model with it rules.
      *
-     * @param  array  $rules
-     * @param  array  $messages
-     * @param  array  $customAttributes
-     * @return void
+     * @param  string  $prefix
+     * @return MessageBag
      */
-    public function validate($errorClass = null, array $rules = [], array $messages = [], array $customAttributes = [])
+    public function validate($prefix = '')
     {
         $data = [];
+        $errors = [];
 
-        if (!count($rules)) {
-            $rules = static::$validators;
+        if ($prefix !== '' && substr($prefix, -1) !== '.') {
+            $prefix .= '.';
         }
-
+        
         foreach (static::$attributeMap as $key => $value) {
-            $data[$key] = &$this->{$key};
-        }
-
-        $data = static::objectToArray($data);
-
-        $validator = $this->getValidationFactory()->make($data, $rules, $messages, $customAttributes);
-
-        if ($validator->fails()) {
-            $errors = [];
-
-            if ($errorClass) {
-                foreach ($validator->errors()->getMessages() as $property => $errorsMessage) {
-                    $data = [];
-                    $data['property'] = $property;
-                    $data['errors'] = $errorsMessage;
-                    $errors[] = new $errorClass($data);
-                }
-            } else {
-                $errors = $validator->errors()->getMessages();
+            if (isset($this->{$key})) {
+                $data[$key] = $this->{$key};
             }
-
-            abort(Response::HTTP_UNPROCESSABLE_ENTITY, json_encode($errors));
+            if (is_subclass_of($this->{$key}, 'App\apiModels\ApiModel')) {
+                $errors = $this->{$key}->validate($key)->merge($errors);
+            } elseif (is_array($this->{$key})) {
+                foreach ($this->{$key} as $key => $arrayElement) {
+                    if (is_subclass_of($arrayElement, 'App\apiModels\ApiModel')) {
+                        $errors = $arrayElement->validate($key)->merge($errors);
+                    }
+                }
+            }
         }
+
+        $dataArray = static::objectToArray($data);
+        $validator = $this->getValidationFactory()->make($dataArray, static::$validators);
+        $errors = $validator->errors()->merge($errors);
+
+        $errorsPrefixed = new MessageBag();
+
+        foreach ($errors->messages() as $key => $messages) {
+            foreach ($messages as $message) {
+                $errorsPrefixed->add($prefix.$key, $message);
+            }
+        }
+
+        return $errorsPrefixed;
     }
 
     /**
@@ -61,10 +65,9 @@ trait ValidatesModels
     public static function objectToArray($object)
     {
         $results = [];
-        $array = is_object($object) ? get_object_vars($object) : $object;
 
-        foreach ($array as $key => $value) {
-            $results[$key] = is_object($value) ? static::objectToArray($value) : $value;
+        foreach ((array)$object as $key => $value) {
+            $results[$key] = !is_scalar($value) ? static::objectToArray($value) : $value;
         }
 
         return $results;

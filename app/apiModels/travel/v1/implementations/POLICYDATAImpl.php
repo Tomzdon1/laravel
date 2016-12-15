@@ -26,7 +26,7 @@ class POLICYDATAImpl extends POLICYDATA
      */
     public static $validators = [
         'end_date.date' => 'after:start_date.date',
-        'destination' => 'sometimes|nullable|destination_code',
+        'destination' => 'sometimes|destination_code',
     ];
 
     /**
