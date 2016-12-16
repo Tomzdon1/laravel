@@ -1,9 +1,9 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "Travel API",
-        "description": "Interfejs do obsługi produktów turystycznych oferowanych przez Towarzystwo Ubezpieczeń Europa S. A.\n\nW przypadku komunikacji protokołem SOAP wszelkie komunikaty opisywane w tym dokumencie są przesyłane przy użyciu funkcji INVOKE opisanej w dokumencie Specyfikacja_ESB.pdf.",
-        "version": "2.0.0",
+        "title": "Insurance API",
+        "description": "Interfejs do obsługi produktów ubezpieczeniowych oferowanych przez Towarzystwo Ubezpieczeń Europa S. A.\n\nW przypadku komunikacji protokołem SOAP wszelkie komunikaty opisywane w tym dokumencie są przesyłane przy użyciu funkcji INVOKE opisanej w dokumencie Specyfikacja_ESB.pdf.",
+        "version": "2.1.0-draft",
         "termsOfService": "",
         "contact": {
             "name": "API Support",
@@ -19,7 +19,7 @@
         "per \"application/json\""
     ],
     "paths": {
-        "/travel/v2/option-definitions": {
+        "/insurance/v2/option-definitions": {
             "post": {
                 "consumes": [
                     "application/json"
@@ -94,7 +94,7 @@
                 }
             }
         },
-        "/travel/v2/quotes": {
+        "/insurance/v2/quotes": {
             "post": {
                 "consumes": [
                     "application/json"
@@ -169,7 +169,7 @@
                 }
             }
         },
-        "/travel/v2/policies/calculate": {
+        "/insurance/v2/policies/calculate": {
             "post": {
                 "consumes": [
                     "application/json"
@@ -286,7 +286,7 @@
                 }
             }
         },
-        "/travel/v2/policies/purchase": {
+        "/insurance/v2/policies/purchase": {
             "post": {
                 "consumes": [
                     "application/json"
@@ -412,7 +412,7 @@
                 }
             }
         },
-        "/travel/v2/orders/status": {
+        "/insurance/v2/orders/status": {
             "post": {
                 "consumes": [
                     "application/json"
@@ -538,7 +538,7 @@
                 }
             }
         },
-        "/travel/v2/policies/issue": {
+        "/insurance/v2/policies/issue": {
             "post": {
                 "consumes": [
                     "application/json"
@@ -664,7 +664,7 @@
                 }
             }
         },
-        "/travel/v2/policies/import": {
+        "/insurance/v2/policies/import": {
             "post": {
                 "consumes": [
                     "application/json"
@@ -797,7 +797,7 @@
                 }
             }
         },
-        "/travel/v2/policies/print": {
+        "/insurance/v2/policies/print": {
             "post": {
                 "consumes": [
                     "application/json"

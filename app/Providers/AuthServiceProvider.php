@@ -28,14 +28,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->app['auth']->viaRequest('api', function ($request) {
             if ($request->has('customer_id')) {
-                $matches = [];
-
-                if (preg_match('/^([a-zA-Z])+/', $request->path(), $matches)) {
-                    return Partner::where('customerId', $request->input('customer_id'))
-                        ->where('offerType.' . $matches[0], true)->first();
-                }
-
-                return null;
+                return Partner::where('customerId', $request->input('customer_id'))->first();
             }
         });
     }
