@@ -65,7 +65,6 @@ class PolicyIssueRequestMapper
                 if (is_array($insured['data']['birth_date'])) {
                     $birthDate = new \Carbon\Carbon($insured['data']['birth_date']['date'], new \DateTimeZone($insured['data']['birth_date']['timezone']));
                     $insured['data']['birth_date'] = $birthDate->toDateString();
-                    $policyIssueRequest->setPolicyHolder($insured);
                 }
             }
             $policyIssueRequest->setInsured($insureds);
