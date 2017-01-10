@@ -3,7 +3,7 @@
     "info": {
         "title": "Insurance API",
         "description": "Interfejs do obsługi produktów ubezpieczeniowych oferowanych przez Towarzystwo Ubezpieczeń Europa S. A.\n\nW przypadku komunikacji protokołem SOAP wszelkie komunikaty opisywane w tym dokumencie są przesyłane przy użyciu funkcji INVOKE opisanej w dokumencie Specyfikacja_ESB.pdf.",
-        "version": "2.1.0-draft",
+        "version": "2.1.0-draft2",
         "termsOfService": "",
         "contact": {
             "name": "API Support",
@@ -1546,7 +1546,8 @@
                     "enum": [
                         "private",
                         "sole_trader",
-                        "company"
+                        "company",
+                        "foreigner"
                     ],
                     "description": "Typ osoby"
                 }

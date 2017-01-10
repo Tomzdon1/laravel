@@ -3,7 +3,7 @@
     "info": {
         "title": "Travel API",
         "description": "Interfejs do sprzedaży produktów turystycznych oferowanych przez Towarzystwo Ubezpieczeń Europa S. A.\n\nWszelkie komunikaty opisywane w tym dokumencie są przesyłane przy użyciu funkcji INVOKE opisanej w dokumencie Specyfikacja_ESB.pdf.",
-        "version": "1.4.1",
+        "version": "1.4.2-draft",
         "termsOfService": "",
         "contact": {
             "name": "API Support",
@@ -641,7 +641,8 @@
                     "enum": [
                         "private",
                         "sole_trader",
-                        "company"
+                        "company",
+                        "foreigner"
                     ],
                     "description": "Typ osoby"
                 }

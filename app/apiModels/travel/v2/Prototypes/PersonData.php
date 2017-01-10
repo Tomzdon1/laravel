@@ -401,9 +401,9 @@ class PersonData extends \App\apiModels\ApiModel implements ArrayAccess
      */
     public function setType($type)
     {
-        $allowed_values = array("private", "sole_trader", "company");
+        $allowed_values = array("private", "sole_trader", "company", "foreigner");
         if (!in_array($type, $allowed_values)) {
-            throw new \InvalidArgumentException("Invalid value for 'type', must be one of 'private', 'sole_trader', 'company'");
+            throw new \InvalidArgumentException("Invalid value for 'type', must be one of 'private', 'sole_trader', 'company', 'foreigner'");
         }
         $this->type = $type;
         return $this;
