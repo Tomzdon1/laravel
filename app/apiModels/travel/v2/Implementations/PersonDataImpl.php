@@ -15,10 +15,11 @@ class PersonDataImpl extends PersonData implements PersonInterface
      * @var array
      */
     public static $validators = [
-        'birth_date.date' => 'required_if:type,private|before:today',
-        'nationality' => 'sometimes|countryCode',
+        'birth_date.date' => 'required_if:type,private,foreigner|before:today',
         'business_name' => 'required_if:type,sole_trader,company',
-        'nip' => 'required_if:type,sole_trader,company'
+        'nip' => 'required_if:type,sole_trader,company',
+        'nationality' => 'required_if:type,foreigner|countryCode',
+        'document_no' => 'required_if:type,foreigner'
     ];
 
     /**
