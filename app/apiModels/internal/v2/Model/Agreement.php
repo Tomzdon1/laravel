@@ -1,6 +1,6 @@
 <?php
 /**
- * PolicyStatus
+ * Agreement
  *
  * PHP version 5
  *
@@ -44,31 +44,32 @@ namespace App\apiModels\internal\v2\Model;
 use \ArrayAccess;
 
 /**
- * PolicyStatus Class Doc Comment
+ * Agreement Class Doc Comment
  *
  * @category    Class */
- // @description Status polisy w systemie docelowym
+ // @description Zgoda (np. marketingowa)
 /**
  * @package     App\apiModels\internal\v2
  * @author      http://github.com/swagger-api/swagger-codegen
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class PolicyStatus implements ArrayAccess
+class Agreement implements ArrayAccess
 {
     /**
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'PolicyStatus';
+    protected static $swaggerModelName = 'Agreement';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'policy_id' => 'string',
-        'policy_status' => 'string'
+        'description' => 'string',
+        'value' => 'bool',
+        'code' => 'string'
     ];
 
     public static function swaggerTypes()
@@ -81,8 +82,9 @@ class PolicyStatus implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'policy_id' => 'policy_id',
-        'policy_status' => 'policy_status'
+        'description' => 'description',
+        'value' => 'value',
+        'code' => 'code'
     ];
 
 
@@ -91,8 +93,9 @@ class PolicyStatus implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'policy_id' => 'setPolicyId',
-        'policy_status' => 'setPolicyStatus'
+        'description' => 'setDescription',
+        'value' => 'setValue',
+        'code' => 'setCode'
     ];
 
 
@@ -101,8 +104,9 @@ class PolicyStatus implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'policy_id' => 'getPolicyId',
-        'policy_status' => 'getPolicyStatus'
+        'description' => 'getDescription',
+        'value' => 'getValue',
+        'code' => 'getCode'
     ];
 
     public static function attributeMap()
@@ -120,26 +124,8 @@ class PolicyStatus implements ArrayAccess
         return self::$getters;
     }
 
-    const POLICY_STATUS_TEMPORARY = 'TEMPORARY';
-    const POLICY_STATUS_FIXED = 'FIXED';
-    const POLICY_STATUS_CANCELED = 'CANCELED';
-    const POLICY_STATUS_ERR = 'ERR';
     
 
-    
-    /**
-     * Gets allowable values of the enum
-     * @return string[]
-     */
-    public function getPolicyStatusAllowableValues()
-    {
-        return [
-            self::POLICY_STATUS_TEMPORARY,
-            self::POLICY_STATUS_FIXED,
-            self::POLICY_STATUS_CANCELED,
-            self::POLICY_STATUS_ERR,
-        ];
-    }
     
 
     /**
@@ -154,8 +140,9 @@ class PolicyStatus implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['policy_id'] = isset($data['policy_id']) ? $data['policy_id'] : null;
-        $this->container['policy_status'] = isset($data['policy_status']) ? $data['policy_status'] : null;
+        $this->container['description'] = isset($data['description']) ? $data['description'] : null;
+        $this->container['value'] = isset($data['value']) ? $data['value'] : null;
+        $this->container['code'] = isset($data['code']) ? $data['code'] : null;
     }
 
     /**
@@ -166,15 +153,21 @@ class PolicyStatus implements ArrayAccess
     public function listInvalidProperties()
     {
         $invalid_properties = [];
-        if ($this->container['policy_id'] === null) {
-            $invalid_properties[] = "'policy_id' can't be null";
+        if ($this->container['description'] === null) {
+            $invalid_properties[] = "'description' can't be null";
         }
-        if ($this->container['policy_status'] === null) {
-            $invalid_properties[] = "'policy_status' can't be null";
+        if ((strlen($this->container['description']) < 1)) {
+            $invalid_properties[] = "invalid value for 'description', the character length must be bigger than or equal to 1.";
         }
-        $allowed_values = ["TEMPORARY", "FIXED", "CANCELED", "ERR"];
-        if (!in_array($this->container['policy_status'], $allowed_values)) {
-            $invalid_properties[] = "invalid value for 'policy_status', must be one of #{allowed_values}.";
+
+        if ($this->container['value'] === null) {
+            $invalid_properties[] = "'value' can't be null";
+        }
+        if ($this->container['code'] === null) {
+            $invalid_properties[] = "'code' can't be null";
+        }
+        if ((strlen($this->container['code']) < 1)) {
+            $invalid_properties[] = "invalid value for 'code', the character length must be bigger than or equal to 1.";
         }
 
         return $invalid_properties;
@@ -188,14 +181,19 @@ class PolicyStatus implements ArrayAccess
      */
     public function valid()
     {
-        if ($this->container['policy_id'] === null) {
+        if ($this->container['description'] === null) {
             return false;
         }
-        if ($this->container['policy_status'] === null) {
+        if (strlen($this->container['description']) < 1) {
             return false;
         }
-        $allowed_values = ["TEMPORARY", "FIXED", "CANCELED", "ERR"];
-        if (!in_array($this->container['policy_status'], $allowed_values)) {
+        if ($this->container['value'] === null) {
+            return false;
+        }
+        if ($this->container['code'] === null) {
+            return false;
+        }
+        if (strlen($this->container['code']) < 1) {
             return false;
         }
         return true;
@@ -203,47 +201,74 @@ class PolicyStatus implements ArrayAccess
 
 
     /**
-     * Gets policy_id
+     * Gets description
      * @return string
      */
-    public function getPolicyId()
+    public function getDescription()
     {
-        return $this->container['policy_id'];
+        return $this->container['description'];
     }
 
     /**
-     * Sets policy_id
-     * @param string $policy_id Identyfikator polisy w systemie docelowym
+     * Sets description
+     * @param string $description Treść zgody
      * @return $this
      */
-    public function setPolicyId($policy_id)
+    public function setDescription($description)
     {
-        $this->container['policy_id'] = $policy_id;
+
+        if ((strlen($description) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $description when calling Agreement., must be bigger than or equal to 1.');
+        }
+
+        $this->container['description'] = $description;
 
         return $this;
     }
 
     /**
-     * Gets policy_status
-     * @return string
+     * Gets value
+     * @return bool
      */
-    public function getPolicyStatus()
+    public function getValue()
     {
-        return $this->container['policy_status'];
+        return $this->container['value'];
     }
 
     /**
-     * Sets policy_status
-     * @param string $policy_status Status polisy w systemie docelowym
+     * Sets value
+     * @param bool $value Wartość zgody
      * @return $this
      */
-    public function setPolicyStatus($policy_status)
+    public function setValue($value)
     {
-        $allowed_values = array('TEMPORARY', 'FIXED', 'CANCELED', 'ERR');
-        if ((!in_array($policy_status, $allowed_values))) {
-            throw new \InvalidArgumentException("Invalid value for 'policy_status', must be one of 'TEMPORARY', 'FIXED', 'CANCELED', 'ERR'");
+        $this->container['value'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Gets code
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->container['code'];
+    }
+
+    /**
+     * Sets code
+     * @param string $code Kod zgody
+     * @return $this
+     */
+    public function setCode($code)
+    {
+
+        if ((strlen($code) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $code when calling Agreement., must be bigger than or equal to 1.');
         }
-        $this->container['policy_status'] = $policy_status;
+
+        $this->container['code'] = $code;
 
         return $this;
     }

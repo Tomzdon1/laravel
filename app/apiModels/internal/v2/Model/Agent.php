@@ -1,6 +1,6 @@
 <?php
 /**
- * PolicyStatus
+ * Agent
  *
  * PHP version 5
  *
@@ -44,31 +44,33 @@ namespace App\apiModels\internal\v2\Model;
 use \ArrayAccess;
 
 /**
- * PolicyStatus Class Doc Comment
+ * Agent Class Doc Comment
  *
  * @category    Class */
- // @description Status polisy w systemie docelowym
+ // @description Agent
 /**
  * @package     App\apiModels\internal\v2
  * @author      http://github.com/swagger-api/swagger-codegen
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class PolicyStatus implements ArrayAccess
+class Agent implements ArrayAccess
 {
     /**
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'PolicyStatus';
+    protected static $swaggerModelName = 'Agent';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'policy_id' => 'string',
-        'policy_status' => 'string'
+        'code' => 'string',
+        'role' => 'string',
+        'create_folder' => 'bool',
+        'distribution_channel' => 'string'
     ];
 
     public static function swaggerTypes()
@@ -81,8 +83,10 @@ class PolicyStatus implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'policy_id' => 'policy_id',
-        'policy_status' => 'policy_status'
+        'code' => 'code',
+        'role' => 'role',
+        'create_folder' => 'create_folder',
+        'distribution_channel' => 'distribution_channel'
     ];
 
 
@@ -91,8 +95,10 @@ class PolicyStatus implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'policy_id' => 'setPolicyId',
-        'policy_status' => 'setPolicyStatus'
+        'code' => 'setCode',
+        'role' => 'setRole',
+        'create_folder' => 'setCreateFolder',
+        'distribution_channel' => 'setDistributionChannel'
     ];
 
 
@@ -101,8 +107,10 @@ class PolicyStatus implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'policy_id' => 'getPolicyId',
-        'policy_status' => 'getPolicyStatus'
+        'code' => 'getCode',
+        'role' => 'getRole',
+        'create_folder' => 'getCreateFolder',
+        'distribution_channel' => 'getDistributionChannel'
     ];
 
     public static function attributeMap()
@@ -120,26 +128,8 @@ class PolicyStatus implements ArrayAccess
         return self::$getters;
     }
 
-    const POLICY_STATUS_TEMPORARY = 'TEMPORARY';
-    const POLICY_STATUS_FIXED = 'FIXED';
-    const POLICY_STATUS_CANCELED = 'CANCELED';
-    const POLICY_STATUS_ERR = 'ERR';
     
 
-    
-    /**
-     * Gets allowable values of the enum
-     * @return string[]
-     */
-    public function getPolicyStatusAllowableValues()
-    {
-        return [
-            self::POLICY_STATUS_TEMPORARY,
-            self::POLICY_STATUS_FIXED,
-            self::POLICY_STATUS_CANCELED,
-            self::POLICY_STATUS_ERR,
-        ];
-    }
     
 
     /**
@@ -154,8 +144,10 @@ class PolicyStatus implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['policy_id'] = isset($data['policy_id']) ? $data['policy_id'] : null;
-        $this->container['policy_status'] = isset($data['policy_status']) ? $data['policy_status'] : null;
+        $this->container['code'] = isset($data['code']) ? $data['code'] : null;
+        $this->container['role'] = isset($data['role']) ? $data['role'] : null;
+        $this->container['create_folder'] = isset($data['create_folder']) ? $data['create_folder'] : null;
+        $this->container['distribution_channel'] = isset($data['distribution_channel']) ? $data['distribution_channel'] : null;
     }
 
     /**
@@ -166,15 +158,28 @@ class PolicyStatus implements ArrayAccess
     public function listInvalidProperties()
     {
         $invalid_properties = [];
-        if ($this->container['policy_id'] === null) {
-            $invalid_properties[] = "'policy_id' can't be null";
+        if ($this->container['code'] === null) {
+            $invalid_properties[] = "'code' can't be null";
         }
-        if ($this->container['policy_status'] === null) {
-            $invalid_properties[] = "'policy_status' can't be null";
+        if ((strlen($this->container['code']) < 1)) {
+            $invalid_properties[] = "invalid value for 'code', the character length must be bigger than or equal to 1.";
         }
-        $allowed_values = ["TEMPORARY", "FIXED", "CANCELED", "ERR"];
-        if (!in_array($this->container['policy_status'], $allowed_values)) {
-            $invalid_properties[] = "invalid value for 'policy_status', must be one of #{allowed_values}.";
+
+        if ($this->container['role'] === null) {
+            $invalid_properties[] = "'role' can't be null";
+        }
+        if ((strlen($this->container['role']) < 1)) {
+            $invalid_properties[] = "invalid value for 'role', the character length must be bigger than or equal to 1.";
+        }
+
+        if ($this->container['create_folder'] === null) {
+            $invalid_properties[] = "'create_folder' can't be null";
+        }
+        if ($this->container['distribution_channel'] === null) {
+            $invalid_properties[] = "'distribution_channel' can't be null";
+        }
+        if ((strlen($this->container['distribution_channel']) < 1)) {
+            $invalid_properties[] = "invalid value for 'distribution_channel', the character length must be bigger than or equal to 1.";
         }
 
         return $invalid_properties;
@@ -188,14 +193,25 @@ class PolicyStatus implements ArrayAccess
      */
     public function valid()
     {
-        if ($this->container['policy_id'] === null) {
+        if ($this->container['code'] === null) {
             return false;
         }
-        if ($this->container['policy_status'] === null) {
+        if (strlen($this->container['code']) < 1) {
             return false;
         }
-        $allowed_values = ["TEMPORARY", "FIXED", "CANCELED", "ERR"];
-        if (!in_array($this->container['policy_status'], $allowed_values)) {
+        if ($this->container['role'] === null) {
+            return false;
+        }
+        if (strlen($this->container['role']) < 1) {
+            return false;
+        }
+        if ($this->container['create_folder'] === null) {
+            return false;
+        }
+        if ($this->container['distribution_channel'] === null) {
+            return false;
+        }
+        if (strlen($this->container['distribution_channel']) < 1) {
             return false;
         }
         return true;
@@ -203,47 +219,100 @@ class PolicyStatus implements ArrayAccess
 
 
     /**
-     * Gets policy_id
+     * Gets code
      * @return string
      */
-    public function getPolicyId()
+    public function getCode()
     {
-        return $this->container['policy_id'];
+        return $this->container['code'];
     }
 
     /**
-     * Sets policy_id
-     * @param string $policy_id Identyfikator polisy w systemie docelowym
+     * Sets code
+     * @param string $code Kod agenta (symbol jednostki statystyczne)
      * @return $this
      */
-    public function setPolicyId($policy_id)
+    public function setCode($code)
     {
-        $this->container['policy_id'] = $policy_id;
+
+        if ((strlen($code) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $code when calling Agent., must be bigger than or equal to 1.');
+        }
+
+        $this->container['code'] = $code;
 
         return $this;
     }
 
     /**
-     * Gets policy_status
+     * Gets role
      * @return string
      */
-    public function getPolicyStatus()
+    public function getRole()
     {
-        return $this->container['policy_status'];
+        return $this->container['role'];
     }
 
     /**
-     * Sets policy_status
-     * @param string $policy_status Status polisy w systemie docelowym
+     * Sets role
+     * @param string $role Rola agenta
      * @return $this
      */
-    public function setPolicyStatus($policy_status)
+    public function setRole($role)
     {
-        $allowed_values = array('TEMPORARY', 'FIXED', 'CANCELED', 'ERR');
-        if ((!in_array($policy_status, $allowed_values))) {
-            throw new \InvalidArgumentException("Invalid value for 'policy_status', must be one of 'TEMPORARY', 'FIXED', 'CANCELED', 'ERR'");
+
+        if ((strlen($role) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $role when calling Agent., must be bigger than or equal to 1.');
         }
-        $this->container['policy_status'] = $policy_status;
+
+        $this->container['role'] = $role;
+
+        return $this;
+    }
+
+    /**
+     * Gets create_folder
+     * @return bool
+     */
+    public function getCreateFolder()
+    {
+        return $this->container['create_folder'];
+    }
+
+    /**
+     * Sets create_folder
+     * @param bool $create_folder Czy dana jednostka zakłada teczkę
+     * @return $this
+     */
+    public function setCreateFolder($create_folder)
+    {
+        $this->container['create_folder'] = $create_folder;
+
+        return $this;
+    }
+
+    /**
+     * Gets distribution_channel
+     * @return string
+     */
+    public function getDistributionChannel()
+    {
+        return $this->container['distribution_channel'];
+    }
+
+    /**
+     * Sets distribution_channel
+     * @param string $distribution_channel Kanał sprzedaży
+     * @return $this
+     */
+    public function setDistributionChannel($distribution_channel)
+    {
+
+        if ((strlen($distribution_channel) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $distribution_channel when calling Agent., must be bigger than or equal to 1.');
+        }
+
+        $this->container['distribution_channel'] = $distribution_channel;
 
         return $this;
     }

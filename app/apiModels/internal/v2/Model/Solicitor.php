@@ -1,6 +1,6 @@
 <?php
 /**
- * PolicyStatus
+ * Solicitor
  *
  * PHP version 5
  *
@@ -44,31 +44,32 @@ namespace App\apiModels\internal\v2\Model;
 use \ArrayAccess;
 
 /**
- * PolicyStatus Class Doc Comment
+ * Solicitor Class Doc Comment
  *
  * @category    Class */
- // @description Status polisy w systemie docelowym
+ // @description Osoba Wykonująca Czynności Agencyjne (OWCA)
 /**
  * @package     App\apiModels\internal\v2
  * @author      http://github.com/swagger-api/swagger-codegen
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class PolicyStatus implements ArrayAccess
+class Solicitor implements ArrayAccess
 {
     /**
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'PolicyStatus';
+    protected static $swaggerModelName = 'Solicitor';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'policy_id' => 'string',
-        'policy_status' => 'string'
+        'solicitor_id' => 'string',
+        'agent_id' => 'string',
+        'permissions' => 'string[]'
     ];
 
     public static function swaggerTypes()
@@ -81,8 +82,9 @@ class PolicyStatus implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'policy_id' => 'policy_id',
-        'policy_status' => 'policy_status'
+        'solicitor_id' => 'solicitor_id',
+        'agent_id' => 'agent_id',
+        'permissions' => 'permissions'
     ];
 
 
@@ -91,8 +93,9 @@ class PolicyStatus implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'policy_id' => 'setPolicyId',
-        'policy_status' => 'setPolicyStatus'
+        'solicitor_id' => 'setSolicitorId',
+        'agent_id' => 'setAgentId',
+        'permissions' => 'setPermissions'
     ];
 
 
@@ -101,8 +104,9 @@ class PolicyStatus implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'policy_id' => 'getPolicyId',
-        'policy_status' => 'getPolicyStatus'
+        'solicitor_id' => 'getSolicitorId',
+        'agent_id' => 'getAgentId',
+        'permissions' => 'getPermissions'
     ];
 
     public static function attributeMap()
@@ -120,10 +124,9 @@ class PolicyStatus implements ArrayAccess
         return self::$getters;
     }
 
-    const POLICY_STATUS_TEMPORARY = 'TEMPORARY';
-    const POLICY_STATUS_FIXED = 'FIXED';
-    const POLICY_STATUS_CANCELED = 'CANCELED';
-    const POLICY_STATUS_ERR = 'ERR';
+    const PERMISSIONS_ADM = 'ADM';
+    const PERMISSIONS_DDZ = 'DDZ';
+    const PERMISSIONS_ZAW = 'ZAW';
     
 
     
@@ -131,13 +134,12 @@ class PolicyStatus implements ArrayAccess
      * Gets allowable values of the enum
      * @return string[]
      */
-    public function getPolicyStatusAllowableValues()
+    public function getPermissionsAllowableValues()
     {
         return [
-            self::POLICY_STATUS_TEMPORARY,
-            self::POLICY_STATUS_FIXED,
-            self::POLICY_STATUS_CANCELED,
-            self::POLICY_STATUS_ERR,
+            self::PERMISSIONS_ADM,
+            self::PERMISSIONS_DDZ,
+            self::PERMISSIONS_ZAW,
         ];
     }
     
@@ -154,8 +156,9 @@ class PolicyStatus implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['policy_id'] = isset($data['policy_id']) ? $data['policy_id'] : null;
-        $this->container['policy_status'] = isset($data['policy_status']) ? $data['policy_status'] : null;
+        $this->container['solicitor_id'] = isset($data['solicitor_id']) ? $data['solicitor_id'] : null;
+        $this->container['agent_id'] = isset($data['agent_id']) ? $data['agent_id'] : null;
+        $this->container['permissions'] = isset($data['permissions']) ? $data['permissions'] : null;
     }
 
     /**
@@ -166,17 +169,15 @@ class PolicyStatus implements ArrayAccess
     public function listInvalidProperties()
     {
         $invalid_properties = [];
-        if ($this->container['policy_id'] === null) {
-            $invalid_properties[] = "'policy_id' can't be null";
+        if ($this->container['solicitor_id'] === null) {
+            $invalid_properties[] = "'solicitor_id' can't be null";
         }
-        if ($this->container['policy_status'] === null) {
-            $invalid_properties[] = "'policy_status' can't be null";
+        if ($this->container['agent_id'] === null) {
+            $invalid_properties[] = "'agent_id' can't be null";
         }
-        $allowed_values = ["TEMPORARY", "FIXED", "CANCELED", "ERR"];
-        if (!in_array($this->container['policy_status'], $allowed_values)) {
-            $invalid_properties[] = "invalid value for 'policy_status', must be one of #{allowed_values}.";
+        if ($this->container['permissions'] === null) {
+            $invalid_properties[] = "'permissions' can't be null";
         }
-
         return $invalid_properties;
     }
 
@@ -188,14 +189,13 @@ class PolicyStatus implements ArrayAccess
      */
     public function valid()
     {
-        if ($this->container['policy_id'] === null) {
+        if ($this->container['solicitor_id'] === null) {
             return false;
         }
-        if ($this->container['policy_status'] === null) {
+        if ($this->container['agent_id'] === null) {
             return false;
         }
-        $allowed_values = ["TEMPORARY", "FIXED", "CANCELED", "ERR"];
-        if (!in_array($this->container['policy_status'], $allowed_values)) {
+        if ($this->container['permissions'] === null) {
             return false;
         }
         return true;
@@ -203,47 +203,68 @@ class PolicyStatus implements ArrayAccess
 
 
     /**
-     * Gets policy_id
+     * Gets solicitor_id
      * @return string
      */
-    public function getPolicyId()
+    public function getSolicitorId()
     {
-        return $this->container['policy_id'];
+        return $this->container['solicitor_id'];
     }
 
     /**
-     * Sets policy_id
-     * @param string $policy_id Identyfikator polisy w systemie docelowym
+     * Sets solicitor_id
+     * @param string $solicitor_id Identyfikator OWCA w rejestrze KNF
      * @return $this
      */
-    public function setPolicyId($policy_id)
+    public function setSolicitorId($solicitor_id)
     {
-        $this->container['policy_id'] = $policy_id;
+        $this->container['solicitor_id'] = $solicitor_id;
 
         return $this;
     }
 
     /**
-     * Gets policy_status
+     * Gets agent_id
      * @return string
      */
-    public function getPolicyStatus()
+    public function getAgentId()
     {
-        return $this->container['policy_status'];
+        return $this->container['agent_id'];
     }
 
     /**
-     * Sets policy_status
-     * @param string $policy_status Status polisy w systemie docelowym
+     * Sets agent_id
+     * @param string $agent_id Identyfikator agenta ubezpieczeniowego w rejestrze agentów ubezpieczeniowych (RUA)
      * @return $this
      */
-    public function setPolicyStatus($policy_status)
+    public function setAgentId($agent_id)
     {
-        $allowed_values = array('TEMPORARY', 'FIXED', 'CANCELED', 'ERR');
-        if ((!in_array($policy_status, $allowed_values))) {
-            throw new \InvalidArgumentException("Invalid value for 'policy_status', must be one of 'TEMPORARY', 'FIXED', 'CANCELED', 'ERR'");
+        $this->container['agent_id'] = $agent_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets permissions
+     * @return string[]
+     */
+    public function getPermissions()
+    {
+        return $this->container['permissions'];
+    }
+
+    /**
+     * Sets permissions
+     * @param string[] $permissions Wykorzystane uprawnienia
+     * @return $this
+     */
+    public function setPermissions($permissions)
+    {
+        $allowed_values = array('ADM', 'DDZ', 'ZAW');
+        if ((array_diff($permissions, $allowed_values))) {
+            throw new \InvalidArgumentException("Invalid value for 'permissions', must be one of 'ADM', 'DDZ', 'ZAW'");
         }
-        $this->container['policy_status'] = $policy_status;
+        $this->container['permissions'] = $permissions;
 
         return $this;
     }
