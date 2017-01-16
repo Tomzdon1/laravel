@@ -18,5 +18,8 @@ class MailSendingServiceProvider extends ServiceProvider
             return SenderFactory::getSender('mail');
         });
 
+        $this->app->singleton('PolicyMailNotificationSender', function () {
+            return SenderFactory::getSender('policy-mail-notification');
+        });
     }
 }

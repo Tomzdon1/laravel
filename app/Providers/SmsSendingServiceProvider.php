@@ -5,7 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Tue\Sending\SenderFactory;
 
-class SMSSendingServiceProvider extends ServiceProvider
+class SmsSendingServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
@@ -18,5 +18,8 @@ class SMSSendingServiceProvider extends ServiceProvider
             return SenderFactory::getSender('sms');
         });
 
+        $this->app->singleton('PolicySmsNotificationSender', function () {
+            return SenderFactory::getSender('policy-sms-notification');
+        });
     }
 }

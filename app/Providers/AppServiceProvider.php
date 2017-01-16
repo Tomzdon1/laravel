@@ -172,7 +172,7 @@ class AppServiceProvider extends ServiceProvider
         });
         
         /**
-         *   Validate calculation reference.
+         *   Validate calculation id.
          *
          */
         app('validator')->extend('validCalculationId', function ($attribute, $value, $parameters, $validator) {
@@ -198,9 +198,26 @@ class AppServiceProvider extends ServiceProvider
         app('validator')->extend('validCalculationChecksum', function ($attribute, $value, $parameters, $validator) {
             $calculationId = array_get($validator->getData(), $parameters[0], null);
 
-            $calculation = App\Calculation::where('_id', $calculationId)->where('checksum', $value)->first();
+            return (bool) App\Calculation::where('_id', $calculationId)->where('checksum', $value)->first();
+        });
 
-            return (bool) $calculation;
+        /**
+         *   Validate policy id.
+         *
+         */
+        app('validator')->extend('validPolicyId', function ($attribute, $value, $parameters, $validator) {
+            return !empty(App\Policy::find($value));
+        });
+        
+
+        /**
+         *   Validate policy checksum.
+         *
+         */
+        app('validator')->extend('validPolicyChecksum', function ($attribute, $value, $parameters, $validator) {
+            $policyId = array_get($validator->getData(), $parameters[0], null);
+
+            return (bool) App\Policy::where('_id', $policyId)->where('checksum', $value)->first();
         });
     }
 

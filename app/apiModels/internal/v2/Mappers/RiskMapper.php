@@ -21,12 +21,12 @@ class RiskMapper
             $mappedRisk = new Risk();
         }
         
-        !isset($risk['kube']) ?: $mappedRisk->setCode(strval($risk['kube']));
-        !isset($risk['kubeName']) ?: $mappedRisk->setName(strval($risk['kubeName']));
-        !isset($risk['cmp']) ?: $mappedRisk->setCompany(strval($risk['cmp']));
-        !isset($risk['value']) ?: $mappedRisk->setSumInsured(floatval($risk['value']));
-        !isset($risk['currency']) ?: $mappedRisk->setCurrency(strval($risk['currency']));
-        !isset($risk['division']) ?: $mappedRisk->setDivision(floatval($risk['division']));
+        !isset($risk->kube) ?: $mappedRisk->setCode(strval($risk->kube));
+        !isset($risk->kubeName) ?: $mappedRisk->setName(strval($risk->kubeName));
+        !isset($risk->cmp) ?: $mappedRisk->setCompany(strval($risk->cmp));
+        !isset($risk->value) ?: $mappedRisk->setSumInsured(floatval($risk->value));
+        !isset($risk->currency) ?: $mappedRisk->setCurrency(strval($risk->currency));
+        !isset($risk->division) ?: $mappedRisk->setDivision(floatval($risk->division));
 
 		return $mappedRisk;
     }

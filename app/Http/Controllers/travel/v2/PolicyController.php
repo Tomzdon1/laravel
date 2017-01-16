@@ -41,7 +41,7 @@ class PolicyController extends Controller
         $calculationPolicyResponse->setTariffPremium($calculatedPremiums['tariff_premium']);
         
         $calculatedDueDate = new \DateTime();
-        $calculatedDueDate->add(new \DateInterval($offer->configuration['calculationMaxExpirationTime']));
+        $calculatedDueDate->add(new \DateInterval($offer->configuration->calculationMaxExpirationTime));
         $startDate = $calculateRequest->getData()->getStartDate();
         $dueDate = min($calculatedDueDate, $startDate);
         $calculationPolicyResponse->setDueDate($dueDate->format(\DateTime::ATOM));

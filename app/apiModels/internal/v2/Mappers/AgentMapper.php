@@ -21,10 +21,10 @@ class AgentMapper
             $mappedAgent = new Agent();
         }
         
-        !isset($agent['jsta']) ?: $mappedAgent->setCode(strval($agent['jsta']));
-        !isset($agent['role']) ?: $mappedAgent->setRole(strval($agent['role']));
-        !isset($agent['forfolder']) ?: $mappedAgent->setCreateFolder(strtoupper($agent['forfolder']) === 'Y');
-        !isset($agent['distchanel']) ?: $mappedAgent->setDistributionChannel(strval($agent['distchanel']));
+        !isset($agent->jsta) ?: $mappedAgent->setCode(strval($agent->jsta));
+        !isset($agent->role) ?: $mappedAgent->setRole(strval($agent->role));
+        !isset($agent->forfolder) ?: $mappedAgent->setCreateFolder(strtoupper($agent->forfolder) === 'Y');
+        !isset($agent->distchanel) ?: $mappedAgent->setDistributionChannel(strval($agent->distchanel));
 
 		return $mappedAgent;
     }

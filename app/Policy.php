@@ -2,10 +2,9 @@
 
 namespace App;
 
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 use App\Events\CreatedPolicyEvent;
 
-class Policy extends Eloquent
+class Policy extends Model
 {
 
     /**
@@ -27,13 +26,6 @@ class Policy extends Eloquent
     ];
 
     /**
-     * Source of Policy
-     *
-     * @var string
-     */
-    private $source;
-
-    /**
      * The "booting" method of the model.
      *
      * @return void
@@ -53,6 +45,21 @@ class Policy extends Eloquent
                 event(new CreatedPolicyEvent($policy));
             }
         );
+    }
+
+    public function partnerModel()
+    {
+        return $this->belongsTo('App\Partner', 'partner_code', 'code');
+    }
+
+    public function getPartnerCodeAttribute()
+    {
+        return $this->partner->code;
+    }
+
+    public function travelOfferModel()
+    {
+        return $this->belongsTo('App\TravelOffer', 'product_id');
     }
 
     public function getSource()

@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
-
-class Partner extends Eloquent
+class Partner extends Model
 {
 
     /**

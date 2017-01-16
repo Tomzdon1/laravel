@@ -5,21 +5,21 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Policy;
 
-class SendPolicy extends Command
+class SendPolicySmsNotification extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'policies:send {policies*}';
+    protected $signature = 'policies:sendSmsNotification {policies*}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Send policies to external system';
+    protected $description = 'Send SMS notification for policies';
 
     /**
      * Create a new command instance.
@@ -38,7 +38,7 @@ class SendPolicy extends Command
      */
     public function handle()
     {
-        app('log')->info('Run SendPolicy command');
+        app('log')->info('Run SendPolicySmsNotification command');
 
         if ($this->argument('policies')) {
             $policiesId = $this->argument('policies');
@@ -49,27 +49,26 @@ class SendPolicy extends Command
         $bar->setFormat("%current%/%max% [%bar%] %message%\n");
 
         foreach ($policies as $policy) {
-            app('log')->info("Launch sendPolicy for $policy->_id (policy_number: $policy->policy_number)");
-            $bar->setMessage("Launch sendPolicy for $policy->_id (policy_number: $policy->policy_number)");
+            $bar->setMessage("Launch SendPolicySmsNotification for $policy->_id (policy_number: $policy->policy_number)");
             $bar->advance();
             $this->_send($policy);
         }
 
         $bar->finish();
 
-        app('log')->info('End SendPolicy command');
+        app('log')->info('End SendPolicySmsNotification command');
     }
 
     /**
-     * Send policy to external system.
+     * Send SMS notification for policy.
      *
-     * @param Policy $policy policy to send
+     * @param Policy $policy policy for which to send notification
      *
      * @return void
      */
     private function _send(Policy $policy)
     {
-        $policySender = app()->make('PolicySender');
-        $policySender->setPolicy($policy)->send();
+        $smsSender = app()->make('PolicySmsNotificationSender');
+        $smsSender->setPolicy($policy)->send();
     }
 }

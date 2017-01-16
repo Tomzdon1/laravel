@@ -15,6 +15,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         \App\Console\Commands\ConsumeQueue::class,
         \App\Console\Commands\SendPolicy::class,
+        \App\Console\Commands\SendPolicySmsNotification::class,
+        \App\Console\Commands\SendPolicyMailNotification::class,
     ];
 
     /**

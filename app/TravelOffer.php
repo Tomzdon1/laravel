@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
-
-class TravelOffer extends Eloquent
+class TravelOffer extends Model
 {
 
     /**

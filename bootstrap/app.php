@@ -111,7 +111,7 @@ $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
 $app->register(App\Providers\EsbServiceProvider::class);
 $app->register(App\Providers\PdfPrintingServiceProvider::class);
-$app->register(App\Providers\SMSSendingServiceProvider::class);
+$app->register(App\Providers\SmsSendingServiceProvider::class);
 $app->register(App\Providers\MailSendingServiceProvider::class);
 $app->register(App\Providers\ScheduleTaskLogServiceProvider::class);
 $app->register(App\Providers\FromObjectTemplateParsingServiceProvider::class);

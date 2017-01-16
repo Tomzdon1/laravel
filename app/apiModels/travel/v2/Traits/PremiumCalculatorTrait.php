@@ -53,11 +53,11 @@ trait PremiumCalculatorTrait
     public function calculatePremiums()
     {
         if ($this->offer) {
-            if ($this->offer['configuration']['quotation']['type'] == 'formula') {
+            if ($this->offer->configuration->quotation->type == 'formula') {
                 abort(Response::HTTP_NOT_IMPLEMENTED);
                 // Not implemented
                 // return $this->calculateQuotationPremiums(...);
-            } elseif ($this->offer['configuration']['quotation']['type'] == 'excel') {
+            } elseif ($this->offer->configuration->quotation->type == 'excel') {
                 return $this->calculateExcelPremiums();
             }
         } else {
@@ -73,7 +73,7 @@ trait PremiumCalculatorTrait
 
     private function cacheOrCalculateExcel()
     {
-        $excelPath = env('EXCEL_DIRECTORY') . '/' . $this->offer['configuration']['quotation']['file'];
+        $excelPath = env('EXCEL_DIRECTORY') . '/' . $this->offer->configuration->quotation->file;
         $key = md5(json_encode($excelPath)) . md5(json_encode($this->calculateRequest));
 
         $calculateRequest = $this->calculateRequest;
@@ -154,8 +154,8 @@ trait PremiumCalculatorTrait
         $premiumValueBase = $this->extractPremiumValueBaseFromExcelData($premiumExcelKey, $excelData);
 
         $premium = new PremiumImpl();
-        $premium->setValueBaseCurrency($this->offer['configuration']['quotation']['resultCurrency']);
-        $premium->setValueCurrency($this->offer['configuration']['quotation']['resultCurrency']);
+        $premium->setValueBaseCurrency($this->offer->configuration->quotation->resultCurrency);
+        $premium->setValueCurrency($this->offer->configuration->quotation->resultCurrency);
 
         if ($premium->getValueBaseCurrency() != $premium->getValueCurrency()) {
             abort(Response::HTTP_NOT_IMPLEMENTED);

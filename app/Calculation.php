@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
-
-class Calculation extends Eloquent
+class Calculation extends Model
 {
 
     /**

@@ -2,12 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Policy;
 use App\Events\CreatedPolicyEvent;
 
-class SendCreatedPolicy extends Listener
+class SendCreatedPolicySmsNotification extends Listener
 {
-    
+
     /**
      * Create the event listener.
      *
@@ -17,17 +16,16 @@ class SendCreatedPolicy extends Listener
     {
         //
     }
+
     /**
      * Handle the event.
      *
-     * @param CreatedPolicyEvent $event Source event
-     *
+     * @param  ExampleEvent  $event
      * @return void
      */
     public function handle(CreatedPolicyEvent $event)
     {
-        $policy = Policy::find($event->policy->id);
-        $policySender = app()->make('PolicySender');
-        $policySender->setPolicy($policy)->send();
+        $mailSender = app()->make('PolicySmsNotificationSender');
+        $mailSender->setPolicy($event->policy)->send();
     }
 }

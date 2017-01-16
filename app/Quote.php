@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
-
-class Quote extends Eloquent
+class Quote extends Model
 {
 
     /**

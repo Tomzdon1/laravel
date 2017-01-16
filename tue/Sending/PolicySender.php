@@ -35,7 +35,9 @@ class PolicySender extends SenderQueueAbstract {
     
     public function send()
     {
-        !env('APP_DEBUG', false) ?: app('log')->debug('Start sendPolicy');
+        app('log')->debug(
+            "Start sending policy {$this->_srcPolicy->id} using PolicySender"
+        );
 
         try {
             $this->setStatus($this->_srcPolicy->status);
@@ -56,13 +58,14 @@ class PolicySender extends SenderQueueAbstract {
             $this->setSrcId($this->_srcPolicy->id);
             $this->setSrcType('policy');
         } catch (\InvalidArgumentException $exception) {
-            app('log')->notice('Error when setting issued policy to send');
+            app('log')->notice('Error when setting policy to send');
             app('log')->notice($exception);
+
             $this->setStatus(self::STATUS_ERR);
             $this->addErrors(
                 [
                     'code' => 'SET_POLICY',
-                    'text' => 'Error when setting issued policy to send: '
+                    'text' => 'Error when setting policy to send: '
                               . $exception->getMessage()
                 ]
             );
@@ -70,7 +73,9 @@ class PolicySender extends SenderQueueAbstract {
 
         parent::send();
 
-        !env('APP_DEBUG', false) ?: app('log')->debug('End sendPolicy');
+        app('log')->debug(
+            "End sending policy {$this->_srcPolicy->id} using PolicySender"
+        );
 
         return $this;
     }

@@ -11,8 +11,6 @@ class SmsSender extends SenderQueueAbstract {
     const QUEUE_EXCHANGE = 'sms';
     const QUEUE_ROUTING_KEY = 'sms';
 
-    private $smsSendRequest;
-
     function __construct() {
         parent::__construct();
 

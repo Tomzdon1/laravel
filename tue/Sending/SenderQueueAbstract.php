@@ -44,9 +44,14 @@ abstract class SenderQueueAbstract implements SenderInterface {
         return call_user_func_array(array($this->envelope, $name), $arguments);
     }
 
-    public function addErrors($errors)
+    public function addError($error)
     {
-        $this->setErrors(array_merge($this->getErrors() ?: [], $errors));
+        if (!is_array($this->getErrors())) {
+            $this->setErrors([]);
+        }
+
+        $merged = array_merge($this->getErrors(), [$error]);
+        $this->setErrors($merged);
     }
 
     public function send()
@@ -59,13 +64,20 @@ abstract class SenderQueueAbstract implements SenderInterface {
         if (!$this->getErrors()) {
             $this->setErrors([]);
         }
-        
-        if (!$this->valid()) {
-            $this->setStatus(self::STATUS_ERR);
-            // @todo nie dodawane sa bledy walidacji koperty (i nieco slusznie, bo bledy dotycza body, ale status juz wszystkiego :-( )
-        }
 
-        // @todo dodać logowanie do mongo o wysłanej wiadomości
+        if (!$this->valid()) {
+            app('log')->notice('Valid of envelope fail', $this->listInvalidProperties());
+            
+            $this->setStatus(self::STATUS_ERR);
+            foreach ($this->listInvalidProperties() as $invalidProperty) {
+                $this->addError(
+                    [
+                        'code' => 'INVALID_PROPERTY_VALUE',
+                        'text' => $invalidProperty
+                    ]
+                );
+            }
+        }
 
         app('Amqp')->publish(static::QUEUE_ROUTING_KEY, (string) $this->envelope, ['exchange' => static::QUEUE_EXCHANGE]);
         
