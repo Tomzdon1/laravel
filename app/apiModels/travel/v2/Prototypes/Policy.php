@@ -60,6 +60,7 @@ class Policy extends \App\apiModels\ApiModel implements ArrayAccess
         'data' => 'App\apiModels\travel\v2\Prototypes\PolicyData',
         'policy_holder' => 'App\apiModels\travel\v2\Prototypes\PolicyHolder',
         'insured' => 'App\apiModels\travel\v2\Prototypes\Insured[]',
+        'possessions' => 'App\apiModels\travel\v2\Prototypes\Possession[]',
         'checksum' => 'string'
     );
   
@@ -77,6 +78,7 @@ class Policy extends \App\apiModels\ApiModel implements ArrayAccess
         'data' => 'data',
         'policy_holder' => 'policy_holder',
         'insured' => 'insured',
+        'possessions' => 'possessions',
         'checksum' => 'checksum'
     );
   
@@ -94,6 +96,7 @@ class Policy extends \App\apiModels\ApiModel implements ArrayAccess
         'data' => 'setData',
         'policy_holder' => 'setPolicyHolder',
         'insured' => 'setInsured',
+        'possessions' => 'setPossessions',
         'checksum' => 'setChecksum'
     );
   
@@ -111,6 +114,7 @@ class Policy extends \App\apiModels\ApiModel implements ArrayAccess
         'data' => 'getData',
         'policy_holder' => 'getPolicyHolder',
         'insured' => 'getInsured',
+        'possessions' => 'getPossessions',
         'checksum' => 'getChecksum'
     );
   
@@ -170,6 +174,12 @@ class Policy extends \App\apiModels\ApiModel implements ArrayAccess
     public $insured;
     
     /**
+      * $possessions Mienia
+      * @var App\apiModels\travel\v2\Prototypes\Possession[]
+      */
+    public $possessions;
+    
+    /**
       * $checksum Suma kontrolna polisy
       * @var string
       */
@@ -192,6 +202,7 @@ class Policy extends \App\apiModels\ApiModel implements ArrayAccess
             $this->data = $data["data"];
             $this->policy_holder = $data["policy_holder"];
             $this->insured = $data["insured"];
+            $this->possessions = $data["possessions"];
             $this->checksum = $data["checksum"];
         }
     }
@@ -382,6 +393,27 @@ class Policy extends \App\apiModels\ApiModel implements ArrayAccess
     {
         
         $this->insured = $insured;
+        return $this;
+    }
+    
+    /**
+     * Gets possessions
+     * @return App\apiModels\travel\v2\Prototypes\Possession[]
+     */
+    public function getPossessions()
+    {
+        return $this->possessions;
+    }
+  
+    /**
+     * Sets possessions
+     * @param App\apiModels\travel\v2\Prototypes\Possession[] $possessions Mienia
+     * @return $this
+     */
+    public function setPossessions($possessions)
+    {
+        
+        $this->possessions = $possessions;
         return $this;
     }
     

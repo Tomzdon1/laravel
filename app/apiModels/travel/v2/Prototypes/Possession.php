@@ -1,6 +1,6 @@
 <?php
 /**
- * CalculatePolicyRequest
+ * Possession
  *
  * PHP version 5
  *
@@ -35,28 +35,28 @@ namespace App\apiModels\travel\v2\Prototypes ;
 
 use \ArrayAccess;
 /**
- * CalculatePolicyRequest Class Doc Comment
+ * Possession Class Doc Comment
  *
  * @category    Class
- * @description Zestaw danych do kalkulacji polisy
+ * @description Mienie
  * @package     App\apiModels\travel\v2
  * @author      http://github.com/swagger-api/swagger-codegen
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class CalculatePolicyRequest extends \App\apiModels\ApiModel implements ArrayAccess 
+class Possession extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
       * @var string[]
       */
     static $swaggerTypes = array(
-        'quote_id' => 'string',
-        'product_id' => 'string',
-        'data' => 'App\apiModels\travel\v2\Prototypes\PolicyData',
-        'policy_holder' => 'App\apiModels\travel\v2\Prototypes\PolicyHolder',
-        'insured' => 'App\apiModels\travel\v2\Prototypes\Insured[]',
-        'possessions' => 'App\apiModels\travel\v2\Prototypes\Possession[]'
+        'name' => 'string',
+        'id' => 'string',
+        'value' => 'float',
+        'address' => 'App\apiModels\travel\v2\Prototypes\Address',
+        'type' => 'string',
+        'attributes' => 'App\apiModels\travel\v2\Prototypes\OptionValue[]'
     );
   
     /** 
@@ -64,12 +64,12 @@ class CalculatePolicyRequest extends \App\apiModels\ApiModel implements ArrayAcc
       * @var string[] 
       */
     static $attributeMap = array(
-        'quote_id' => 'quote_id',
-        'product_id' => 'product_id',
-        'data' => 'data',
-        'policy_holder' => 'policy_holder',
-        'insured' => 'insured',
-        'possessions' => 'possessions'
+        'name' => 'name',
+        'id' => 'id',
+        'value' => 'value',
+        'address' => 'address',
+        'type' => 'type',
+        'attributes' => 'attributes'
     );
   
     /**
@@ -77,12 +77,12 @@ class CalculatePolicyRequest extends \App\apiModels\ApiModel implements ArrayAcc
       * @var string[]
       */
     static $setters = array(
-        'quote_id' => 'setQuoteId',
-        'product_id' => 'setProductId',
-        'data' => 'setData',
-        'policy_holder' => 'setPolicyHolder',
-        'insured' => 'setInsured',
-        'possessions' => 'setPossessions'
+        'name' => 'setName',
+        'id' => 'setId',
+        'value' => 'setValue',
+        'address' => 'setAddress',
+        'type' => 'setType',
+        'attributes' => 'setAttributes'
     );
   
     /**
@@ -90,50 +90,50 @@ class CalculatePolicyRequest extends \App\apiModels\ApiModel implements ArrayAcc
       * @var string[]
       */
     static $getters = array(
-        'quote_id' => 'getQuoteId',
-        'product_id' => 'getProductId',
-        'data' => 'getData',
-        'policy_holder' => 'getPolicyHolder',
-        'insured' => 'getInsured',
-        'possessions' => 'getPossessions'
+        'name' => 'getName',
+        'id' => 'getId',
+        'value' => 'getValue',
+        'address' => 'getAddress',
+        'type' => 'getType',
+        'attributes' => 'getAttributes'
     );
   
     
     /**
-      * $quote_id Identyfikator oferty
+      * $name Nazwa mienia
       * @var string
       */
-    public $quote_id;
+    public $name;
     
     /**
-      * $product_id Identyfikator produktu
+      * $id Identyfikator mienia
       * @var string
       */
-    public $product_id;
+    public $id;
     
     /**
-      * $data 
-      * @var App\apiModels\travel\v2\Prototypes\PolicyData
+      * $value Wartość mienia
+      * @var float
       */
-    public $data;
+    public $value;
     
     /**
-      * $policy_holder 
-      * @var App\apiModels\travel\v2\Prototypes\PolicyHolder
+      * $address 
+      * @var App\apiModels\travel\v2\Prototypes\Address
       */
-    public $policy_holder;
+    public $address;
     
     /**
-      * $insured Dane ubezpieczonych
-      * @var App\apiModels\travel\v2\Prototypes\Insured[]
+      * $type Typ mienia
+      * @var string
       */
-    public $insured;
+    public $type;
     
     /**
-      * $possessions Mienia
-      * @var App\apiModels\travel\v2\Prototypes\Possession[]
+      * $attributes Atrybuty dodatkowe
+      * @var App\apiModels\travel\v2\Prototypes\OptionValue[]
       */
-    public $possessions;
+    public $attributes;
     
 
     /**
@@ -143,138 +143,138 @@ class CalculatePolicyRequest extends \App\apiModels\ApiModel implements ArrayAcc
     public function __construct(array $data = null)
     {
         if ($data != null) {
-            $this->quote_id = $data["quote_id"];
-            $this->product_id = $data["product_id"];
-            $this->data = $data["data"];
-            $this->policy_holder = $data["policy_holder"];
-            $this->insured = $data["insured"];
-            $this->possessions = $data["possessions"];
+            $this->name = $data["name"];
+            $this->id = $data["id"];
+            $this->value = $data["value"];
+            $this->address = $data["address"];
+            $this->type = $data["type"];
+            $this->attributes = $data["attributes"];
         }
     }
     
     /**
-     * Gets quote_id
+     * Gets name
      * @return string
      */
-    public function getQuoteId()
+    public function getName()
     {
-        return $this->quote_id;
+        return $this->name;
     }
   
     /**
-     * Sets quote_id
-     * @param string $quote_id Identyfikator oferty
+     * Sets name
+     * @param string $name Nazwa mienia
      * @return $this
      */
-    public function setQuoteId($quote_id)
+    public function setName($name)
     {
         
-        $this->quote_id = $quote_id;
+        $this->name = $name;
         return $this;
     }
     
     /**
-     * Gets product_id
+     * Gets id
      * @return string
      */
-    public function getProductId()
+    public function getId()
     {
-        return $this->product_id;
+        return $this->id;
     }
   
     /**
-     * Sets product_id
-     * @param string $product_id Identyfikator produktu
+     * Sets id
+     * @param string $id Identyfikator mienia
      * @return $this
      */
-    public function setProductId($product_id)
+    public function setId($id)
     {
         
-        $this->product_id = $product_id;
+        $this->id = $id;
         return $this;
     }
     
     /**
-     * Gets data
-     * @return App\apiModels\travel\v2\Prototypes\PolicyData
+     * Gets value
+     * @return float
      */
-    public function getData()
+    public function getValue()
     {
-        return $this->data;
+        return $this->value;
     }
   
     /**
-     * Sets data
-     * @param App\apiModels\travel\v2\Prototypes\PolicyData $data 
+     * Sets value
+     * @param float $value Wartość mienia
      * @return $this
      */
-    public function setData($data)
+    public function setValue($value)
     {
         
-        $this->data = $data;
+        $this->value = $value;
         return $this;
     }
     
     /**
-     * Gets policy_holder
-     * @return App\apiModels\travel\v2\Prototypes\PolicyHolder
+     * Gets address
+     * @return App\apiModels\travel\v2\Prototypes\Address
      */
-    public function getPolicyHolder()
+    public function getAddress()
     {
-        return $this->policy_holder;
+        return $this->address;
     }
   
     /**
-     * Sets policy_holder
-     * @param App\apiModels\travel\v2\Prototypes\PolicyHolder $policy_holder 
+     * Sets address
+     * @param App\apiModels\travel\v2\Prototypes\Address $address 
      * @return $this
      */
-    public function setPolicyHolder($policy_holder)
+    public function setAddress($address)
     {
         
-        $this->policy_holder = $policy_holder;
+        $this->address = $address;
         return $this;
     }
     
     /**
-     * Gets insured
-     * @return App\apiModels\travel\v2\Prototypes\Insured[]
+     * Gets type
+     * @return string
      */
-    public function getInsured()
+    public function getType()
     {
-        return $this->insured;
+        return $this->type;
     }
   
     /**
-     * Sets insured
-     * @param App\apiModels\travel\v2\Prototypes\Insured[] $insured Dane ubezpieczonych
+     * Sets type
+     * @param string $type Typ mienia
      * @return $this
      */
-    public function setInsured($insured)
+    public function setType($type)
     {
         
-        $this->insured = $insured;
+        $this->type = $type;
         return $this;
     }
     
     /**
-     * Gets possessions
-     * @return App\apiModels\travel\v2\Prototypes\Possession[]
+     * Gets attributes
+     * @return App\apiModels\travel\v2\Prototypes\OptionValue[]
      */
-    public function getPossessions()
+    public function getAttributes()
     {
-        return $this->possessions;
+        return $this->attributes;
     }
   
     /**
-     * Sets possessions
-     * @param App\apiModels\travel\v2\Prototypes\Possession[] $possessions Mienia
+     * Sets attributes
+     * @param App\apiModels\travel\v2\Prototypes\OptionValue[] $attributes Atrybuty dodatkowe
      * @return $this
      */
-    public function setPossessions($possessions)
+    public function setAttributes($attributes)
     {
         
-        $this->possessions = $possessions;
+        $this->attributes = $attributes;
         return $this;
     }
     

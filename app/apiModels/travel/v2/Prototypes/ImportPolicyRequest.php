@@ -58,6 +58,7 @@ class ImportPolicyRequest extends \App\apiModels\ApiModel implements ArrayAccess
         'policy_number' => 'string',
         'policy_holder' => 'App\apiModels\travel\v2\Prototypes\PolicyHolder',
         'insured' => 'App\apiModels\travel\v2\Prototypes\Insured[]',
+        'possessions' => 'App\apiModels\travel\v2\Prototypes\Possession[]',
         'premium' => 'App\apiModels\travel\v2\Prototypes\Premium',
         'tariff_premium' => 'App\apiModels\travel\v2\Prototypes\Premium',
         'netto_premium' => 'App\apiModels\travel\v2\Prototypes\Premium',
@@ -76,6 +77,7 @@ class ImportPolicyRequest extends \App\apiModels\ApiModel implements ArrayAccess
         'policy_number' => 'policy_number',
         'policy_holder' => 'policy_holder',
         'insured' => 'insured',
+        'possessions' => 'possessions',
         'premium' => 'premium',
         'tariff_premium' => 'tariff_premium',
         'netto_premium' => 'netto_premium',
@@ -94,6 +96,7 @@ class ImportPolicyRequest extends \App\apiModels\ApiModel implements ArrayAccess
         'policy_number' => 'setPolicyNumber',
         'policy_holder' => 'setPolicyHolder',
         'insured' => 'setInsured',
+        'possessions' => 'setPossessions',
         'premium' => 'setPremium',
         'tariff_premium' => 'setTariffPremium',
         'netto_premium' => 'setNettoPremium',
@@ -112,6 +115,7 @@ class ImportPolicyRequest extends \App\apiModels\ApiModel implements ArrayAccess
         'policy_number' => 'getPolicyNumber',
         'policy_holder' => 'getPolicyHolder',
         'insured' => 'getInsured',
+        'possessions' => 'getPossessions',
         'premium' => 'getPremium',
         'tariff_premium' => 'getTariffPremium',
         'netto_premium' => 'getNettoPremium',
@@ -162,6 +166,12 @@ class ImportPolicyRequest extends \App\apiModels\ApiModel implements ArrayAccess
     public $insured;
     
     /**
+      * $possessions Mienia
+      * @var App\apiModels\travel\v2\Prototypes\Possession[]
+      */
+    public $possessions;
+    
+    /**
       * $premium Składka pobrana/należna
       * @var App\apiModels\travel\v2\Prototypes\Premium
       */
@@ -200,6 +210,7 @@ class ImportPolicyRequest extends \App\apiModels\ApiModel implements ArrayAccess
             $this->policy_number = $data["policy_number"];
             $this->policy_holder = $data["policy_holder"];
             $this->insured = $data["insured"];
+            $this->possessions = $data["possessions"];
             $this->premium = $data["premium"];
             $this->tariff_premium = $data["tariff_premium"];
             $this->netto_premium = $data["netto_premium"];
@@ -351,6 +362,27 @@ class ImportPolicyRequest extends \App\apiModels\ApiModel implements ArrayAccess
     {
         
         $this->insured = $insured;
+        return $this;
+    }
+    
+    /**
+     * Gets possessions
+     * @return App\apiModels\travel\v2\Prototypes\Possession[]
+     */
+    public function getPossessions()
+    {
+        return $this->possessions;
+    }
+  
+    /**
+     * Sets possessions
+     * @param App\apiModels\travel\v2\Prototypes\Possession[] $possessions Mienia
+     * @return $this
+     */
+    public function setPossessions($possessions)
+    {
+        
+        $this->possessions = $possessions;
         return $this;
     }
     
