@@ -43,6 +43,24 @@ class AppServiceProvider extends ServiceProvider
             return str_replace(':date', $parameters[0], $message);
         });
 
+        /**
+         *   Validate date should be after or equal another date but compare only date without time
+         *
+         */
+        app('validator')->extend('beforeEqualDate', function ($attribute, $value, $parameters, $validator) {
+            $date = $parameters[0];
+
+            if (!strtotime($date)) {
+                $date = array_get($validator->getData(), $parameters[0], null);
+            }
+
+            return strtotime('midnight', strtotime($value)) <= strtotime('midnight', strtotime($date));
+        });
+        
+        app('validator')->replacer('beforeEqualDate', function ($message, $attribute, $rule, $parameters) {
+            return str_replace(':date', $parameters[0], $message);
+        });
+
         app('validator')->extend('countryCode', function ($attribute, $value, $parameters) {
             return (new \Monarobase\CountryList\CountryList())->has($value);
         });
