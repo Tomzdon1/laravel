@@ -42,7 +42,7 @@ class PolicySender extends SenderQueueAbstract {
         try {
             $this->setStatus($this->_srcPolicy->status);
             if (count($this->_srcPolicy->errors)) {
-                $this->addErrors(
+                $this->addError(
                     [
                         'code' => 'POLICY_ERRORS', 
                         'text' => json_encode($this->_srcPolicy->errors)
@@ -62,7 +62,7 @@ class PolicySender extends SenderQueueAbstract {
             app('log')->notice($exception);
 
             $this->setStatus(self::STATUS_ERR);
-            $this->addErrors(
+            $this->addError(
                 [
                     'code' => 'SET_POLICY',
                     'text' => 'Error when setting policy to send: '
