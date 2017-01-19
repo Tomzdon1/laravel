@@ -1,4 +1,2 @@
 /vendor
-.env
-.env_fake
-.env_esb
+/.env*
