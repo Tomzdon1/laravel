@@ -20,19 +20,19 @@ trait AmountsCalculator
     public function calculateAmounts($dbOffer, $quoteRequest, $withNettoAmount = true)
     {
         if ($dbOffer) {
-            if ($dbOffer['configuration']['quotation']['type'] == 'formula') {
+            if ($dbOffer->configuration->quotation->type == 'formula') {
                 // Not implemented
-                // return $this->calculateQuotationAmounts($dbOffer['configuration']);
+                // return $this->calculateQuotationAmounts($dbOffer->configuration);
                 abort(Response::HTTP_NOT_IMPLEMENTED);
-            } elseif ($dbOffer['configuration']['quotation']['type'] == 'excel') {
-                $excelPath = env('EXCEL_DIRECTORY') . '/' . $dbOffer['configuration']['quotation']['file'];
+            } elseif ($dbOffer->configuration->quotation->type == 'excel') {
+                $excelPath = env('EXCEL_DIRECTORY') . '/' . $dbOffer->configuration->quotation->file;
 
                 if ($excelPath) {
                     return $this->calculateExcelAmounts(
-                        $dbOffer['configuration'],
+                        $dbOffer->configuration,
                         $excelPath,
                         $quoteRequest,
-                        $dbOffer['code'],
+                        $dbOffer->code,
                         $withNettoAmount
                     );
                 }
@@ -47,7 +47,7 @@ trait AmountsCalculator
         // $tariff_amount = new self::$swaggerTypes['tariff_amount']();
         // $netto_amount = new self::$swaggerTypes['netto_amount']();
 
-        $tariff_amount->setValueBaseCurrency($config['quotation']['resultCurrency']);
+        $tariff_amount->setValueBaseCurrency($config->quotation->resultCurrency);
         $tariff_amount->setValueCurrency('PLN');
 
         $data = $this->cacheOrCalculateExcel($excelPath, $quoteRequest);
@@ -66,9 +66,9 @@ trait AmountsCalculator
         $tariff_amount->setValueBase($amountValue);
         $netto_amount->setValueBase($nettoAmountValue);
 
-        if ($config['quotation']['resultCurrency'] != 'PLN') {
-            $recalculation = $this->recalculate2pln($amountValue, $config['quotation']['resultCurrency']);
-            $nettoRecalculation = $this->recalculate2pln($nettoAmountValue, $config['quotation']['resultCurrency']);
+        if ($config->quotation->resultCurrency != 'PLN') {
+            $recalculation = $this->recalculate2pln($amountValue, $config->quotation->resultCurrency);
+            $nettoRecalculation = $this->recalculate2pln($nettoAmountValue, $config->quotation->resultCurrency);
             $AmountPLN = $recalculation['amount'];
             $nettoAmountPLN = $nettoRecalculation['amount'];
             $tariff_amount->setCurrencyRate($recalculation['rate']);
