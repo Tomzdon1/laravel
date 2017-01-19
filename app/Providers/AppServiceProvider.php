@@ -188,7 +188,7 @@ class AppServiceProvider extends ServiceProvider
 
             $calculation = App\Calculation::find($calculationId);
             
-            return $calculation ? strtotime($calculation->due_date) > strtotime($value) : false;
+            return $calculation ? strtotime($calculation->due_date) >= strtotime($value) : false;
         });
 
         /**
