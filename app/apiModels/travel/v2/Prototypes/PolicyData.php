@@ -56,6 +56,8 @@ class PolicyData extends \App\apiModels\ApiModel implements ArrayAccess
         'end_date' => '\DateTime',
         'abroad' => 'bool',
         'destination' => 'string',
+        'sum_insured' => 'App\apiModels\travel\v2\Prototypes\SumInsured',
+        'configured_risks' => 'App\apiModels\travel\v2\Prototypes\Risk[]',
         'options' => 'App\apiModels\travel\v2\Prototypes\OptionValue[]',
         'addons' => 'App\apiModels\travel\v2\Prototypes\OptionValue[]'
     );
@@ -70,6 +72,8 @@ class PolicyData extends \App\apiModels\ApiModel implements ArrayAccess
         'end_date' => 'end_date',
         'abroad' => 'abroad',
         'destination' => 'destination',
+        'sum_insured' => 'sum_insured',
+        'configured_risks' => 'configured_risks',
         'options' => 'options',
         'addons' => 'addons'
     );
@@ -84,6 +88,8 @@ class PolicyData extends \App\apiModels\ApiModel implements ArrayAccess
         'end_date' => 'setEndDate',
         'abroad' => 'setAbroad',
         'destination' => 'setDestination',
+        'sum_insured' => 'setSumInsured',
+        'configured_risks' => 'setConfiguredRisks',
         'options' => 'setOptions',
         'addons' => 'setAddons'
     );
@@ -98,6 +104,8 @@ class PolicyData extends \App\apiModels\ApiModel implements ArrayAccess
         'end_date' => 'getEndDate',
         'abroad' => 'getAbroad',
         'destination' => 'getDestination',
+        'sum_insured' => 'getSumInsured',
+        'configured_risks' => 'getConfiguredRisks',
         'options' => 'getOptions',
         'addons' => 'getAddons'
     );
@@ -110,13 +118,13 @@ class PolicyData extends \App\apiModels\ApiModel implements ArrayAccess
     public $promo_code;
     
     /**
-      * $start_date Data rozpoczęcia ochrony
+      * $start_date Data rozpoczęcia okresów odpowiedzialności ryzyk
       * @var \DateTime
       */
     public $start_date;
     
     /**
-      * $end_date Data zakończenia ochrony
+      * $end_date Data zakończenia okresów odpowiedzialności ryzyk
       * @var \DateTime
       */
     public $end_date;
@@ -132,6 +140,18 @@ class PolicyData extends \App\apiModels\ApiModel implements ArrayAccess
       * @var string
       */
     public $destination;
+    
+    /**
+      * $sum_insured Suma ubezpieczenia
+      * @var App\apiModels\travel\v2\Prototypes\SumInsured
+      */
+    public $sum_insured;
+    
+    /**
+      * $configured_risks Skonfigurowane ryzyka
+      * @var App\apiModels\travel\v2\Prototypes\Risk[]
+      */
+    public $configured_risks;
     
     /**
       * $options Wybrane opcje dodatkowe
@@ -158,6 +178,8 @@ class PolicyData extends \App\apiModels\ApiModel implements ArrayAccess
             $this->end_date = $data["end_date"];
             $this->abroad = $data["abroad"];
             $this->destination = $data["destination"];
+            $this->sum_insured = $data["sum_insured"];
+            $this->configured_risks = $data["configured_risks"];
             $this->options = $data["options"];
             $this->addons = $data["addons"];
         }
@@ -195,7 +217,7 @@ class PolicyData extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets start_date
-     * @param \DateTime $start_date Data rozpoczęcia ochrony
+     * @param \DateTime $start_date Data rozpoczęcia okresów odpowiedzialności ryzyk
      * @return $this
      */
     public function setStartDate($start_date)
@@ -216,7 +238,7 @@ class PolicyData extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets end_date
-     * @param \DateTime $end_date Data zakończenia ochrony
+     * @param \DateTime $end_date Data zakończenia okresów odpowiedzialności ryzyk
      * @return $this
      */
     public function setEndDate($end_date)
@@ -265,6 +287,48 @@ class PolicyData extends \App\apiModels\ApiModel implements ArrayAccess
     {
         
         $this->destination = $destination;
+        return $this;
+    }
+    
+    /**
+     * Gets sum_insured
+     * @return App\apiModels\travel\v2\Prototypes\SumInsured
+     */
+    public function getSumInsured()
+    {
+        return $this->sum_insured;
+    }
+  
+    /**
+     * Sets sum_insured
+     * @param App\apiModels\travel\v2\Prototypes\SumInsured $sum_insured Suma ubezpieczenia
+     * @return $this
+     */
+    public function setSumInsured($sum_insured)
+    {
+        
+        $this->sum_insured = $sum_insured;
+        return $this;
+    }
+    
+    /**
+     * Gets configured_risks
+     * @return App\apiModels\travel\v2\Prototypes\Risk[]
+     */
+    public function getConfiguredRisks()
+    {
+        return $this->configured_risks;
+    }
+  
+    /**
+     * Sets configured_risks
+     * @param App\apiModels\travel\v2\Prototypes\Risk[] $configured_risks Skonfigurowane ryzyka
+     * @return $this
+     */
+    public function setConfiguredRisks($configured_risks)
+    {
+        
+        $this->configured_risks = $configured_risks;
         return $this;
     }
     
