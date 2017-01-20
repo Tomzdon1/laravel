@@ -11,9 +11,9 @@ trait PremiumCalculatorTrait
     protected $calculateRequest;
     protected $withNettoPremium = false;
 
-    public function getInsureds($calculateRequest)
+    public function getInsuredes($calculateRequest)
     {
-        return $calculateRequest->getInsured();
+        return $calculateRequest->getInsureds();
     }
 
     public function setOffer($offer)
@@ -97,7 +97,7 @@ trait PremiumCalculatorTrait
             $birthDates = array();
             $insuredsOptions = [];
 
-            foreach ($this->getInsureds($calculateRequest) as $insured) {
+            foreach ($this->getInsuredes($calculateRequest) as $insured) {
                 $birthDates[] = $insured->getBirthDate();
 
                 if (is_array($insured->getOptions()) || $insured->getOptions() instanceof Traversable) {
