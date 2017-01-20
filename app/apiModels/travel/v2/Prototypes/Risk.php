@@ -1,6 +1,6 @@
 <?php
 /**
- * CalculatePolicyRequest
+ * Risk
  *
  * PHP version 5
  *
@@ -35,27 +35,26 @@ namespace App\apiModels\travel\v2\Prototypes ;
 
 use \ArrayAccess;
 /**
- * CalculatePolicyRequest Class Doc Comment
+ * Risk Class Doc Comment
  *
  * @category    Class
- * @description Zestaw danych do kalkulacji polisy
+ * @description Ryzyko
  * @package     App\apiModels\travel\v2
  * @author      http://github.com/swagger-api/swagger-codegen
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class CalculatePolicyRequest extends \App\apiModels\ApiModel implements ArrayAccess 
+class Risk extends \App\apiModels\ApiModel implements ArrayAccess 
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
       * @var string[]
       */
     static $swaggerTypes = array(
-        'quote_id' => 'string',
-        'product_id' => 'string',
-        'data' => 'App\apiModels\travel\v2\Prototypes\PolicyData',
-        'policy_holder' => 'App\apiModels\travel\v2\Prototypes\PolicyHolder',
-        'insureds' => 'App\apiModels\travel\v2\Prototypes\Insured[]',
+        'code' => 'string',
+        'sum_insured' => 'App\apiModels\travel\v2\Prototypes\SumInsured',
+        'start_date' => '\DateTime',
+        'end_date' => '\DateTime',
         'possessions' => 'App\apiModels\travel\v2\Prototypes\Possession[]'
     );
   
@@ -64,11 +63,10 @@ class CalculatePolicyRequest extends \App\apiModels\ApiModel implements ArrayAcc
       * @var string[] 
       */
     static $attributeMap = array(
-        'quote_id' => 'quote_id',
-        'product_id' => 'product_id',
-        'data' => 'data',
-        'policy_holder' => 'policy_holder',
-        'insureds' => 'insureds',
+        'code' => 'code',
+        'sum_insured' => 'sum_insured',
+        'start_date' => 'start_date',
+        'end_date' => 'end_date',
         'possessions' => 'possessions'
     );
   
@@ -77,11 +75,10 @@ class CalculatePolicyRequest extends \App\apiModels\ApiModel implements ArrayAcc
       * @var string[]
       */
     static $setters = array(
-        'quote_id' => 'setQuoteId',
-        'product_id' => 'setProductId',
-        'data' => 'setData',
-        'policy_holder' => 'setPolicyHolder',
-        'insureds' => 'setInsureds',
+        'code' => 'setCode',
+        'sum_insured' => 'setSumInsured',
+        'start_date' => 'setStartDate',
+        'end_date' => 'setEndDate',
         'possessions' => 'setPossessions'
     );
   
@@ -90,44 +87,37 @@ class CalculatePolicyRequest extends \App\apiModels\ApiModel implements ArrayAcc
       * @var string[]
       */
     static $getters = array(
-        'quote_id' => 'getQuoteId',
-        'product_id' => 'getProductId',
-        'data' => 'getData',
-        'policy_holder' => 'getPolicyHolder',
-        'insureds' => 'getInsureds',
+        'code' => 'getCode',
+        'sum_insured' => 'getSumInsured',
+        'start_date' => 'getStartDate',
+        'end_date' => 'getEndDate',
         'possessions' => 'getPossessions'
     );
   
     
     /**
-      * $quote_id Identyfikator oferty
+      * $code Kod ryzyka
       * @var string
       */
-    public $quote_id;
+    public $code;
     
     /**
-      * $product_id Identyfikator produktu
-      * @var string
+      * $sum_insured Suma ubezpieczenia
+      * @var App\apiModels\travel\v2\Prototypes\SumInsured
       */
-    public $product_id;
+    public $sum_insured;
     
     /**
-      * $data 
-      * @var App\apiModels\travel\v2\Prototypes\PolicyData
+      * $start_date Data rozpoczęcia okresu odpowiedzialności
+      * @var \DateTime
       */
-    public $data;
+    public $start_date;
     
     /**
-      * $policy_holder 
-      * @var App\apiModels\travel\v2\Prototypes\PolicyHolder
+      * $end_date Data zakończenia okresu odpowiedzialności
+      * @var \DateTime
       */
-    public $policy_holder;
-    
-    /**
-      * $insureds Dane ubezpieczonych
-      * @var App\apiModels\travel\v2\Prototypes\Insured[]
-      */
-    public $insureds;
+    public $end_date;
     
     /**
       * $possessions Mienia
@@ -143,117 +133,95 @@ class CalculatePolicyRequest extends \App\apiModels\ApiModel implements ArrayAcc
     public function __construct(array $data = null)
     {
         if ($data != null) {
-            $this->quote_id = $data["quote_id"];
-            $this->product_id = $data["product_id"];
-            $this->data = $data["data"];
-            $this->policy_holder = $data["policy_holder"];
-            $this->insureds = $data["insureds"];
+            $this->code = $data["code"];
+            $this->sum_insured = $data["sum_insured"];
+            $this->start_date = $data["start_date"];
+            $this->end_date = $data["end_date"];
             $this->possessions = $data["possessions"];
         }
     }
     
     /**
-     * Gets quote_id
+     * Gets code
      * @return string
      */
-    public function getQuoteId()
+    public function getCode()
     {
-        return $this->quote_id;
+        return $this->code;
     }
   
     /**
-     * Sets quote_id
-     * @param string $quote_id Identyfikator oferty
+     * Sets code
+     * @param string $code Kod ryzyka
      * @return $this
      */
-    public function setQuoteId($quote_id)
+    public function setCode($code)
     {
         
-        $this->quote_id = $quote_id;
+        $this->code = $code;
         return $this;
     }
     
     /**
-     * Gets product_id
-     * @return string
+     * Gets sum_insured
+     * @return App\apiModels\travel\v2\Prototypes\SumInsured
      */
-    public function getProductId()
+    public function getSumInsured()
     {
-        return $this->product_id;
+        return $this->sum_insured;
     }
   
     /**
-     * Sets product_id
-     * @param string $product_id Identyfikator produktu
+     * Sets sum_insured
+     * @param App\apiModels\travel\v2\Prototypes\SumInsured $sum_insured Suma ubezpieczenia
      * @return $this
      */
-    public function setProductId($product_id)
+    public function setSumInsured($sum_insured)
     {
         
-        $this->product_id = $product_id;
+        $this->sum_insured = $sum_insured;
         return $this;
     }
     
     /**
-     * Gets data
-     * @return App\apiModels\travel\v2\Prototypes\PolicyData
+     * Gets start_date
+     * @return \DateTime
      */
-    public function getData()
+    public function getStartDate()
     {
-        return $this->data;
+        return $this->start_date;
     }
   
     /**
-     * Sets data
-     * @param App\apiModels\travel\v2\Prototypes\PolicyData $data 
+     * Sets start_date
+     * @param \DateTime $start_date Data rozpoczęcia okresu odpowiedzialności
      * @return $this
      */
-    public function setData($data)
+    public function setStartDate($start_date)
     {
         
-        $this->data = $data;
+        $this->start_date = $start_date;
         return $this;
     }
     
     /**
-     * Gets policy_holder
-     * @return App\apiModels\travel\v2\Prototypes\PolicyHolder
+     * Gets end_date
+     * @return \DateTime
      */
-    public function getPolicyHolder()
+    public function getEndDate()
     {
-        return $this->policy_holder;
+        return $this->end_date;
     }
   
     /**
-     * Sets policy_holder
-     * @param App\apiModels\travel\v2\Prototypes\PolicyHolder $policy_holder 
+     * Sets end_date
+     * @param \DateTime $end_date Data zakończenia okresu odpowiedzialności
      * @return $this
      */
-    public function setPolicyHolder($policy_holder)
+    public function setEndDate($end_date)
     {
         
-        $this->policy_holder = $policy_holder;
-        return $this;
-    }
-    
-    /**
-     * Gets insureds
-     * @return App\apiModels\travel\v2\Prototypes\Insured[]
-     */
-    public function getInsureds()
-    {
-        return $this->insureds;
-    }
-  
-    /**
-     * Sets insureds
-     * @param App\apiModels\travel\v2\Prototypes\Insured[] $insureds Dane ubezpieczonych
-     * @return $this
-     */
-    public function setInsureds($insureds)
-    {
-        
-        $this->insureds = $insureds;
+        $this->end_date = $end_date;
         return $this;
     }
     
