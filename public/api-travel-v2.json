@@ -2,8 +2,8 @@
     "swagger": "2.0",
     "info": {
         "title": "Insurance API",
-        "description": "Interfejs do obsługi produktów ubezpieczeniowych oferowanych przez Towarzystwo Ubezpieczeń Europa S. A.\n\nW przypadku komunikacji protokołem SOAP wszelkie komunikaty opisywane w tym dokumencie są przesyłane przy użyciu funkcji INVOKE opisanej w dokumencie Specyfikacja_ESB.pdf.",
-        "version": "2.1.0-draft2",
+        "description": "Interfejs do obsługi produktów ubezpieczeniowych oferowanych przez Towarzystwo Ubezpieczeń Europa S. A.",
+        "version": "2.1.1",
         "termsOfService": "",
         "contact": {
             "name": "API Support",
@@ -42,15 +42,8 @@
                     {
                         "name": "customer_id",
                         "in": "query",
-                        "description": "Identyfikator klienta otrzymany od ubezpieczyciela (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
+                        "description": "Identyfikator klienta otrzymany od ubezpieczyciela",
                         "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "request_id",
-                        "in": "query",
-                        "description": "Identyfikator żądania (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
-                        "required": false,
                         "type": "string"
                     }
                 ],
@@ -117,15 +110,8 @@
                     {
                         "name": "customer_id",
                         "in": "query",
-                        "description": "Identyfikator klienta otrzymany od ubezpieczyciela (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
+                        "description": "Identyfikator klienta otrzymany od ubezpieczyciela",
                         "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "request_id",
-                        "in": "query",
-                        "description": "Identyfikator żądania (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
-                        "required": false,
                         "type": "string"
                     }
                 ],
@@ -192,15 +178,8 @@
                     {
                         "name": "customer_id",
                         "in": "query",
-                        "description": "Identyfikator klienta otrzymany od ubezpieczyciela (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
+                        "description": "Identyfikator klienta otrzymany od ubezpieczyciela",
                         "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "request_id",
-                        "in": "query",
-                        "description": "Identyfikator żądania (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
-                        "required": false,
                         "type": "string"
                     }
                 ],
@@ -309,15 +288,8 @@
                     {
                         "name": "customer_id",
                         "in": "query",
-                        "description": "Identyfikator klienta otrzymany od ubezpieczyciela (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
+                        "description": "Identyfikator klienta otrzymany od ubezpieczyciela",
                         "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "request_id",
-                        "in": "query",
-                        "description": "Identyfikator żądania (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
-                        "required": false,
                         "type": "string"
                     }
                 ],
@@ -435,15 +407,8 @@
                     {
                         "name": "customer_id",
                         "in": "query",
-                        "description": "Identyfikator klienta otrzymany od ubezpieczyciela (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
+                        "description": "Identyfikator klienta otrzymany od ubezpieczyciela",
                         "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "request_id",
-                        "in": "query",
-                        "description": "Identyfikator żądania (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
-                        "required": false,
                         "type": "string"
                     }
                 ],
@@ -561,15 +526,8 @@
                     {
                         "name": "customer_id",
                         "in": "query",
-                        "description": "Identyfikator klienta otrzymany od ubezpieczyciela (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
+                        "description": "Identyfikator klienta otrzymany od ubezpieczyciela",
                         "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "request_id",
-                        "in": "query",
-                        "description": "Identyfikator żądania (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
-                        "required": false,
                         "type": "string"
                     }
                 ],
@@ -691,15 +649,8 @@
                     {
                         "name": "customer_id",
                         "in": "query",
-                        "description": "Identyfikator klienta otrzymany od ubezpieczyciela (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
+                        "description": "Identyfikator klienta otrzymany od ubezpieczyciela",
                         "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "request_id",
-                        "in": "query",
-                        "description": "Identyfikator żądania (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
-                        "required": false,
                         "type": "string"
                     }
                 ],
@@ -820,15 +771,8 @@
                     {
                         "name": "customer_id",
                         "in": "query",
-                        "description": "Identyfikator klienta otrzymany od ubezpieczyciela (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
+                        "description": "Identyfikator klienta otrzymany od ubezpieczyciela",
                         "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "request_id",
-                        "in": "query",
-                        "description": "Identyfikator żądania (parametr uzupełniany automatycznie przy połączeniu przez ESB)",
-                        "required": false,
                         "type": "string"
                     }
                 ],
@@ -1014,27 +958,35 @@
                 "policy_holder": {
                     "$ref": "#/definitions/PolicyHolder"
                 },
-                "insured": {
+                "insureds": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/Insured"
                     },
                     "minItems": 1,
                     "description": "Dane ubezpieczonych"
+                },
+                "possessions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Possession"
+                    },
+                    "minItems": 1,
+                    "description": "Mienia"
                 }
             },
             "required": [
                 "product_id",
                 "data",
                 "policy_holder",
-                "insured"
+                "insureds"
             ],
             "example": {
                 "quote_id": "55ac435aabb4760c03fc3568",
                 "product_id": "98a7c8c7a97cc9abc8af7bbc",
                 "data": {},
                 "policy_holder": {},
-                "insured": []
+                "insureds": []
             }
         },
         "CalculationPolicy": {
@@ -1156,13 +1108,21 @@
                 "policy_holder": {
                     "$ref": "#/definitions/PolicyHolder"
                 },
-                "insured": {
+                "insureds": {
                     "type": "array",
                     "description": "Dane ubezpieczonych",
                     "items": {
                         "$ref": "#/definitions/Insured"
                     },
                     "minItems": 1
+                },
+                "possessions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Possession"
+                    },
+                    "minItems": 1,
+                    "description": "Mienia"
                 },
                 "premium": {
                     "$ref": "#/definitions/Premium",
@@ -1192,7 +1152,7 @@
                 "policy_date",
                 "policy_number",
                 "policy_holder",
-                "insured",
+                "insureds",
                 "premium",
                 "tariff_premium",
                 "netto_premium",
@@ -1205,7 +1165,7 @@
                 "policy_date": "2017-01-01T12:00:10+01:00",
                 "policy_number": "TWIND0000001234",
                 "policy_holder": {},
-                "insured": [],
+                "insureds": [],
                 "premium": {},
                 "tariff_premium": {},
                 "netto_premium": {},
@@ -1602,13 +1562,21 @@
                 "policy_holder": {
                     "$ref": "#/definitions/PolicyHolder"
                 },
-                "insured": {
+                "insureds": {
                     "type": "array",
                     "description": "Dane ubezpieczonych",
                     "items": {
                         "$ref": "#/definitions/Insured"
                     },
                     "minItems": 1
+                },
+                "possessions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Possession"
+                    },
+                    "minItems": 1,
+                    "description": "Mienia"
                 },
                 "checksum": {
                     "type": "string",
@@ -1635,7 +1603,7 @@
                 "netto_premium": {},
                 "data": {},
                 "policy_holder": {},
-                "insured": [],
+                "insureds": [],
                 "chekcsum": "6a645004f620c691731b5a292c25d37f"
             }
         },
@@ -1651,12 +1619,12 @@
                 "start_date": {
                     "type": "string",
                     "format": "date-time",
-                    "description": "Data rozpoczęcia ochrony"
+                    "description": "Data rozpoczęcia okresów odpowiedzialności ryzyk"
                 },
                 "end_date": {
                     "type": "string",
                     "format": "date-time",
-                    "description": "Data zakończenia ochrony"
+                    "description": "Data zakończenia okresów odpowiedzialności ryzyk"
                 },
                 "abroad": {
                     "type": "boolean",
@@ -1666,6 +1634,18 @@
                     "type": "string",
                     "pattern": "^[A-Z]{2}$",
                     "description": "Cel podróży (kod kraju określony w ISO 3166-1 alpha-2 lub EU - Unia Europejska lub WR - świat)"
+                },
+                "sum_insured": {
+                    "$ref": "#/definitions/SumInsured",
+                    "description": "Suma ubezpieczenia"
+                },
+                "configured_risks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Risk"
+                    },
+                    "minItems": 1,
+                    "description": "Skonfigurowane ryzyka"
                 },
                 "options": {
                     "type": "array",
@@ -1750,6 +1730,52 @@
                 "agreements": [],
                 "options": [],
                 "addons": []
+            }
+        },
+        "Possession": {
+            "type": "object",
+            "description": "Mienie",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Nazwa mienia",
+                    "minLength": 1
+                },
+                "id": {
+                    "type": "string",
+                    "description": "Identyfikator mienia",
+                    "minLength": 1
+                },
+                "value": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Wartość mienia"
+                },
+                "address": {
+                    "$ref": "#/definitions/Address"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "Typ mienia"
+                },
+                "attributes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/OptionValue"
+                    },
+                    "description": "Atrybuty dodatkowe"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "example": {
+                "name": "Obuwie sportowe",
+                "id": "ABC/1234",
+                "value": "500",
+                "address": {},
+                "type": "sport_equipment",
+                "attributes": []
             }
         },
         "Premium": {
@@ -2013,6 +2039,48 @@
                 "prepersons": []
             }
         },
+        "Risk": {
+            "type": "object",
+            "description": "Ryzyko",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "description": "Kod ryzyka",
+                    "minLength": 1
+                },
+                "sum_insured": {
+                    "$ref": "#/definitions/SumInsured",
+                    "description": "Suma ubezpieczenia"
+                },
+                "start_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Data rozpoczęcia okresu odpowiedzialności"
+                },
+                "end_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Data zakończenia okresu odpowiedzialności"
+                },
+                "possessions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Possession"
+                    },
+                    "minItems": 1,
+                    "description": "Mienia"
+                }
+            },
+            "required": [
+                "code"
+            ],
+            "example": {
+                "code": "KORY",
+                "sum_insured": "500",
+                "start_date": "2017-01-02T00:00:00+01:00",
+                "end_date": "2017-01-03T00:00:00+01:00"
+            }
+        },
         "Solicitor": {
             "type": "object",
             "description": "Osoba Wykonująca Czynności Agencyjne (OWCA)",
@@ -2050,6 +2118,30 @@
                 "permissions": [
                     "ADM"
                 ]
+            }
+        },
+        "SumInsured": {
+            "type": "object",
+            "description": "Suma ubezpieczenia",
+            "properties": {
+                "value": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Wysokość sumy ubezpieczenia"
+                },
+                "currency": {
+                    "type": "string",
+                    "pattern": "^[A-Z]{3}$",
+                    "description": "Waluta (kod waluty zgodny z ISO 4217)"
+                }
+            },
+            "required": [
+                "value",
+                "currency"
+            ],
+            "example": {
+                "value": 29,
+                "currency": "EUR"
             }
         },
         "ValidationError": {
