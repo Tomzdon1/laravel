@@ -17,7 +17,8 @@ class CalculationMapper
         !$calculatePolicyRequest->getProductId() ? : $calculation->product_id = $calculatePolicyRequest->getProductId();
         $calculation->data = $calculatePolicyRequest->getData();
         $calculation->policy_holder = $calculatePolicyRequest->getPolicyHolder();
-        $calculation->insured = $calculatePolicyRequest->getInsureds();
+        $calculation->insureds = $calculatePolicyRequest->getInsureds();
+        $calculation->possessions = $calculatePolicyRequest->getPossessions();
         $calculation->premium = $calculationPolicy->getPremium();
         $calculation->tariff_premium = $calculationPolicy->getTariffPremium();
         $calculation->due_date = $calculationPolicy->getDueDate();

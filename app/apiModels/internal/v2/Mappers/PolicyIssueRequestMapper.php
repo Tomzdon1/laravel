@@ -32,7 +32,7 @@ class PolicyIssueRequestMapper
         !isset($policy->options) ?: $policyIssueRequest->setOptions(OptionValueMapper::fromObjects($policy->options));
         !isset($policy->addons) ?: $policyIssueRequest->setAddons(OptionValueMapper::fromObjects($policy->addons));
         !isset($policy->policy_holder) ?: $policyIssueRequest->setPolicyHolder(PolicyHolderMapper::fromObject($policy->policy_holder));
-        !isset($policy->insured) ?: $policyIssueRequest->setInsureds(InsuredMapper::fromObjects($policy->insured));
+        !isset($policy->insureds) ?: $policyIssueRequest->setInsureds(InsuredMapper::fromObjects($policy->insureds));
         !isset($policy->solicitors) ?: $policyIssueRequest->setSolicitors(SolicitorMapper::fromObjects($policy->solicitors));
         !isset($policy->premium) ?: $policyIssueRequest->setPremium(PremiumMapper::fromObject($policy->premium));
         !isset($policy->tariff_premium) ?: $policyIssueRequest->setTariffPremium(PremiumMapper::fromObject($policy->tariff_premium));

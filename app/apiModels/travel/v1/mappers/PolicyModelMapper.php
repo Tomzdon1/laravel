@@ -27,7 +27,7 @@ class PolicyModelMapper
         $policy->destination = $importPolicyRequest->getData()->getDestination();
         $policy->options = $importPolicyRequest->getData()->getOptionValues();
         $policy->policy_holder = $importPolicyRequest->getPolicyHolder();
-        $policy->insured = $importPolicyRequest->getInsured();
+        $policy->insureds = $importPolicyRequest->getInsured();
         $policy->solicitors = $importPolicyRequest->getSolicitors();
         $policy->premium = $importPolicyRequest->getAmount();
         $policy->tariff_premium = $importPolicyRequest->getTariffAmount();
