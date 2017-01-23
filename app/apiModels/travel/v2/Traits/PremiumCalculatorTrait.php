@@ -86,21 +86,42 @@ trait PremiumCalculatorTrait
             if ($excelPath) {
                 $excelFile = new \Tue\Calculating\calculateTravelExcel($excelPath);
             }
+            
+            $calculationParameters = $this->getCalculationParameters($calculateRequest);
+            dd($calculationParameters);
+            $data = $excelFile->getCalculatedValues($calculationParameters);
+            return $data;
+        });
+    }
 
-            $options = array();
-            if (is_array($calculateRequest->getData()->getOptions())
-                || $calculateRequest->getData()->getOptions() instanceof Traversable
-            ) {
-                foreach ($calculateRequest->getData()->getOptions() as $option) {
-                    if ($option->getValue() == true) {
-                        $options[$option->getCode()] = true;
-                    }
+    protected function getCalculationParameters($calculateRequest) {
+        $staticParameters = [];
+        $policyOptions = [];
+        $birthDates = [];
+        $insuredsOptions = [];
+        $configuredRisks = [];
+
+        $staticParameters = [
+            //@ todo
+            // powinno być dynamiczne mapowanie
+            'DATA_OD' => $calculateRequest->getData()->getStartDate(),
+            'DATA_DO' => $calculateRequest->getData()->getEndDate(),
+            'DATA_URODZENIA' => $birthDates,
+        ];
+
+        if (is_array($calculateRequest->getData()->getOptions())
+            || $calculateRequest->getData()->getOptions() instanceof Traversable
+        ) {
+            foreach ($calculateRequest->getData()->getOptions() as $option) {
+                if ($option->getValue() == true) {
+                    $policyOptions[$option->getCode()] = true;
                 }
             }
+        }
 
-            $birthDates = array();
-            $insuredsOptions = [];
-
+        if (is_array($this->getRequestedInsureds($calculateRequest))
+            || $this->getRequestedInsureds($calculateRequest) instanceof Traversable
+        ) {
             foreach ($this->getRequestedInsureds($calculateRequest) as $insured) {
                 $birthDates[] = $insured->getBirthDate();
 
@@ -122,20 +143,40 @@ trait PremiumCalculatorTrait
                     }
                 }
             }
+        }
 
-            $params = [
-                //@ todo
-                // powinno być dynamiczne mapowanie
-                'DATA_OD' => $calculateRequest->getData()->getStartDate(),
-                'DATA_DO' => $calculateRequest->getData()->getEndDate(),
-                'DATA_URODZENIA' => $birthDates,
-            ];
+        $configuredRisks = $this->mapRecursivelyArrayToParameters($calculateRequest->getData()->getConfiguredRisks(), 'risk');
 
-            $params = array_merge($params, $insuredsOptions);
+        return array_merge($staticParameters, $policyOptions, $insuredsOptions, $configuredRisks);
+    }
 
-            $data = $excelFile->getCalculatedValues($params);
-            return $data;
-        });
+    protected function mapRecursivelyArrayToParameters($array, $prefix) {
+        $parameters = [];
+
+        if (is_array($array)
+            || $array instanceof Traversable
+        ) {
+            foreach ($array as $elem) {
+                $keyMethodName = '';
+
+                foreach ($elem::$getters as $attribute => $getter) {
+                    if ($keyMethodName == '') {
+                        $keyMethodName = $getter;
+                    }
+
+                    $attrValue = $elem->{$getter}();
+                    $key = $prefix . '_' . $elem->{$keyMethodName}() . '_' . $attribute;
+                    $mappedArray = $this->mapRecursivelyArrayToParameters($attrValue, $key);
+                    $parameters = array_merge($parameters, $mappedArray);
+                }
+
+                $keyMethodName = '';
+            }
+        } else {
+            return [$prefix => $array];
+        }
+
+        return $parameters;
     }
 
     protected function createPremiumsFromExcelData($excelData)
