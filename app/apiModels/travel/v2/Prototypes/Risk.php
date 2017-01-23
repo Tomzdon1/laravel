@@ -52,7 +52,7 @@ class Risk extends \App\apiModels\ApiModel implements ArrayAccess
       */
     static $swaggerTypes = array(
         'code' => 'string',
-        'sum_insured' => 'float',
+        'sum_insured' => 'App\apiModels\travel\v2\Prototypes\SumInsured',
         'start_date' => '\DateTime',
         'end_date' => '\DateTime',
         'possessions' => 'App\apiModels\travel\v2\Prototypes\Possession[]'
@@ -103,7 +103,7 @@ class Risk extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
       * $sum_insured Suma ubezpieczenia
-      * @var float
+      * @var App\apiModels\travel\v2\Prototypes\SumInsured
       */
     public $sum_insured;
     
@@ -164,7 +164,7 @@ class Risk extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets sum_insured
-     * @return float
+     * @return App\apiModels\travel\v2\Prototypes\SumInsured
      */
     public function getSumInsured()
     {
@@ -173,7 +173,7 @@ class Risk extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets sum_insured
-     * @param float $sum_insured Suma ubezpieczenia
+     * @param App\apiModels\travel\v2\Prototypes\SumInsured $sum_insured Suma ubezpieczenia
      * @return $this
      */
     public function setSumInsured($sum_insured)

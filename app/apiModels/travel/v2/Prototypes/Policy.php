@@ -59,7 +59,7 @@ class Policy extends \App\apiModels\ApiModel implements ArrayAccess
         'netto_premium' => 'App\apiModels\travel\v2\Prototypes\Premium',
         'data' => 'App\apiModels\travel\v2\Prototypes\PolicyData',
         'policy_holder' => 'App\apiModels\travel\v2\Prototypes\PolicyHolder',
-        'insured' => 'App\apiModels\travel\v2\Prototypes\Insured[]',
+        'insureds' => 'App\apiModels\travel\v2\Prototypes\Insured[]',
         'possessions' => 'App\apiModels\travel\v2\Prototypes\Possession[]',
         'checksum' => 'string'
     );
@@ -77,7 +77,7 @@ class Policy extends \App\apiModels\ApiModel implements ArrayAccess
         'netto_premium' => 'netto_premium',
         'data' => 'data',
         'policy_holder' => 'policy_holder',
-        'insured' => 'insured',
+        'insureds' => 'insureds',
         'possessions' => 'possessions',
         'checksum' => 'checksum'
     );
@@ -95,7 +95,7 @@ class Policy extends \App\apiModels\ApiModel implements ArrayAccess
         'netto_premium' => 'setNettoPremium',
         'data' => 'setData',
         'policy_holder' => 'setPolicyHolder',
-        'insured' => 'setInsured',
+        'insureds' => 'setInsureds',
         'possessions' => 'setPossessions',
         'checksum' => 'setChecksum'
     );
@@ -113,7 +113,7 @@ class Policy extends \App\apiModels\ApiModel implements ArrayAccess
         'netto_premium' => 'getNettoPremium',
         'data' => 'getData',
         'policy_holder' => 'getPolicyHolder',
-        'insured' => 'getInsured',
+        'insureds' => 'getInsureds',
         'possessions' => 'getPossessions',
         'checksum' => 'getChecksum'
     );
@@ -168,10 +168,16 @@ class Policy extends \App\apiModels\ApiModel implements ArrayAccess
     public $policy_holder;
     
     /**
-      * $insured Dane ubezpieczonych
+      * $insureds Dane ubezpieczonych
       * @var App\apiModels\travel\v2\Prototypes\Insured[]
       */
-    public $insured;
+    public $insureds;
+    
+    /**
+      * $possessions Mienia
+      * @var App\apiModels\travel\v2\Prototypes\Possession[]
+      */
+    public $possessions;
     
     /**
       * $possessions Mienia
@@ -201,7 +207,7 @@ class Policy extends \App\apiModels\ApiModel implements ArrayAccess
             $this->netto_premium = $data["netto_premium"];
             $this->data = $data["data"];
             $this->policy_holder = $data["policy_holder"];
-            $this->insured = $data["insured"];
+            $this->insureds = $data["insureds"];
             $this->possessions = $data["possessions"];
             $this->checksum = $data["checksum"];
         }
@@ -376,23 +382,23 @@ class Policy extends \App\apiModels\ApiModel implements ArrayAccess
     }
     
     /**
-     * Gets insured
+     * Gets insureds
      * @return App\apiModels\travel\v2\Prototypes\Insured[]
      */
-    public function getInsured()
+    public function getInsureds()
     {
-        return $this->insured;
+        return $this->insureds;
     }
   
     /**
-     * Sets insured
-     * @param App\apiModels\travel\v2\Prototypes\Insured[] $insured Dane ubezpieczonych
+     * Sets insureds
+     * @param App\apiModels\travel\v2\Prototypes\Insured[] $insureds Dane ubezpieczonych
      * @return $this
      */
-    public function setInsured($insured)
+    public function setInsureds($insureds)
     {
         
-        $this->insured = $insured;
+        $this->insureds = $insureds;
         return $this;
     }
     

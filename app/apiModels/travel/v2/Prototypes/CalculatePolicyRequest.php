@@ -55,7 +55,7 @@ class CalculatePolicyRequest extends \App\apiModels\ApiModel implements ArrayAcc
         'product_id' => 'string',
         'data' => 'App\apiModels\travel\v2\Prototypes\PolicyData',
         'policy_holder' => 'App\apiModels\travel\v2\Prototypes\PolicyHolder',
-        'insured' => 'App\apiModels\travel\v2\Prototypes\Insured[]',
+        'insureds' => 'App\apiModels\travel\v2\Prototypes\Insured[]',
         'possessions' => 'App\apiModels\travel\v2\Prototypes\Possession[]'
     );
   
@@ -68,7 +68,7 @@ class CalculatePolicyRequest extends \App\apiModels\ApiModel implements ArrayAcc
         'product_id' => 'product_id',
         'data' => 'data',
         'policy_holder' => 'policy_holder',
-        'insured' => 'insured',
+        'insureds' => 'insureds',
         'possessions' => 'possessions'
     );
   
@@ -81,7 +81,7 @@ class CalculatePolicyRequest extends \App\apiModels\ApiModel implements ArrayAcc
         'product_id' => 'setProductId',
         'data' => 'setData',
         'policy_holder' => 'setPolicyHolder',
-        'insured' => 'setInsured',
+        'insureds' => 'setInsureds',
         'possessions' => 'setPossessions'
     );
   
@@ -94,7 +94,7 @@ class CalculatePolicyRequest extends \App\apiModels\ApiModel implements ArrayAcc
         'product_id' => 'getProductId',
         'data' => 'getData',
         'policy_holder' => 'getPolicyHolder',
-        'insured' => 'getInsured',
+        'insureds' => 'getInsureds',
         'possessions' => 'getPossessions'
     );
   
@@ -124,17 +124,16 @@ class CalculatePolicyRequest extends \App\apiModels\ApiModel implements ArrayAcc
     public $policy_holder;
     
     /**
-      * $insured Dane ubezpieczonych
+      * $insureds Dane ubezpieczonych
       * @var App\apiModels\travel\v2\Prototypes\Insured[]
       */
-    public $insured;
+    public $insureds;
     
     /**
       * $possessions Mienia
       * @var App\apiModels\travel\v2\Prototypes\Possession[]
       */
     public $possessions;
-    
 
     /**
      * Constructor
@@ -147,7 +146,7 @@ class CalculatePolicyRequest extends \App\apiModels\ApiModel implements ArrayAcc
             $this->product_id = $data["product_id"];
             $this->data = $data["data"];
             $this->policy_holder = $data["policy_holder"];
-            $this->insured = $data["insured"];
+            $this->insureds = $data["insureds"];
             $this->possessions = $data["possessions"];
         }
     }
@@ -237,23 +236,23 @@ class CalculatePolicyRequest extends \App\apiModels\ApiModel implements ArrayAcc
     }
     
     /**
-     * Gets insured
+     * Gets insureds
      * @return App\apiModels\travel\v2\Prototypes\Insured[]
      */
-    public function getInsured()
+    public function getInsureds()
     {
-        return $this->insured;
+        return $this->insureds;
     }
   
     /**
-     * Sets insured
-     * @param App\apiModels\travel\v2\Prototypes\Insured[] $insured Dane ubezpieczonych
+     * Sets insureds
+     * @param App\apiModels\travel\v2\Prototypes\Insured[] $insureds Dane ubezpieczonych
      * @return $this
      */
-    public function setInsured($insured)
+    public function setInsureds($insureds)
     {
         
-        $this->insured = $insured;
+        $this->insureds = $insureds;
         return $this;
     }
     

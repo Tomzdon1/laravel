@@ -27,12 +27,4 @@ class QuoteImpl extends Quote
     {
         parent::__construct($data);
     }
-
-    /**
-     * Override getInsureds function in AmountsCalculator trait to return preperson instead preperson
-     */
-    public function getInsureds($quoteRequest)
-    {
-        return $quoteRequest->getPrepersons();
-    }
 }

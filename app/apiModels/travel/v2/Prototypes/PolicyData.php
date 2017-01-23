@@ -56,7 +56,7 @@ class PolicyData extends \App\apiModels\ApiModel implements ArrayAccess
         'end_date' => '\DateTime',
         'abroad' => 'bool',
         'destination' => 'string',
-        'sum_insured' => 'float',
+        'sum_insured' => 'App\apiModels\travel\v2\Prototypes\SumInsured',
         'configured_risks' => 'App\apiModels\travel\v2\Prototypes\Risk[]',
         'options' => 'App\apiModels\travel\v2\Prototypes\OptionValue[]',
         'addons' => 'App\apiModels\travel\v2\Prototypes\OptionValue[]'
@@ -143,7 +143,7 @@ class PolicyData extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
       * $sum_insured Suma ubezpieczenia
-      * @var float
+      * @var App\apiModels\travel\v2\Prototypes\SumInsured
       */
     public $sum_insured;
     
@@ -292,7 +292,7 @@ class PolicyData extends \App\apiModels\ApiModel implements ArrayAccess
     
     /**
      * Gets sum_insured
-     * @return float
+     * @return App\apiModels\travel\v2\Prototypes\SumInsured
      */
     public function getSumInsured()
     {
@@ -301,7 +301,7 @@ class PolicyData extends \App\apiModels\ApiModel implements ArrayAccess
   
     /**
      * Sets sum_insured
-     * @param float $sum_insured Suma ubezpieczenia
+     * @param App\apiModels\travel\v2\Prototypes\SumInsured $sum_insured Suma ubezpieczenia
      * @return $this
      */
     public function setSumInsured($sum_insured)

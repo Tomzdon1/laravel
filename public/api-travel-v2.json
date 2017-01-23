@@ -3,7 +3,7 @@
     "info": {
         "title": "Insurance API",
         "description": "Interfejs do obsługi produktów ubezpieczeniowych oferowanych przez Towarzystwo Ubezpieczeń Europa S. A.",
-        "version": "2.1.0",
+        "version": "2.1.1",
         "termsOfService": "",
         "contact": {
             "name": "API Support",
@@ -958,7 +958,7 @@
                 "policy_holder": {
                     "$ref": "#/definitions/PolicyHolder"
                 },
-                "insured": {
+                "insureds": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/Insured"
@@ -979,14 +979,14 @@
                 "product_id",
                 "data",
                 "policy_holder",
-                "insured"
+                "insureds"
             ],
             "example": {
                 "quote_id": "55ac435aabb4760c03fc3568",
                 "product_id": "98a7c8c7a97cc9abc8af7bbc",
                 "data": {},
                 "policy_holder": {},
-                "insured": []
+                "insureds": []
             }
         },
         "CalculationPolicy": {
@@ -1108,7 +1108,7 @@
                 "policy_holder": {
                     "$ref": "#/definitions/PolicyHolder"
                 },
-                "insured": {
+                "insureds": {
                     "type": "array",
                     "description": "Dane ubezpieczonych",
                     "items": {
@@ -1152,7 +1152,7 @@
                 "policy_date",
                 "policy_number",
                 "policy_holder",
-                "insured",
+                "insureds",
                 "premium",
                 "tariff_premium",
                 "netto_premium",
@@ -1165,7 +1165,7 @@
                 "policy_date": "2017-01-01T12:00:10+01:00",
                 "policy_number": "TWIND0000001234",
                 "policy_holder": {},
-                "insured": [],
+                "insureds": [],
                 "premium": {},
                 "tariff_premium": {},
                 "netto_premium": {},
@@ -1562,7 +1562,7 @@
                 "policy_holder": {
                     "$ref": "#/definitions/PolicyHolder"
                 },
-                "insured": {
+                "insureds": {
                     "type": "array",
                     "description": "Dane ubezpieczonych",
                     "items": {
@@ -1603,7 +1603,7 @@
                 "netto_premium": {},
                 "data": {},
                 "policy_holder": {},
-                "insured": [],
+                "insureds": [],
                 "chekcsum": "6a645004f620c691731b5a292c25d37f"
             }
         },
@@ -1636,8 +1636,7 @@
                     "description": "Cel podróży (kod kraju określony w ISO 3166-1 alpha-2 lub EU - Unia Europejska lub WR - świat)"
                 },
                 "sum_insured": {
-                    "type": "number",
-                    "format": "float",
+                    "$ref": "#/definitions/SumInsured",
                     "description": "Suma ubezpieczenia"
                 },
                 "configured_risks": {
@@ -2050,8 +2049,7 @@
                     "minLength": 1
                 },
                 "sum_insured": {
-                    "type": "number",
-                    "format": "float",
+                    "$ref": "#/definitions/SumInsured",
                     "description": "Suma ubezpieczenia"
                 },
                 "start_date": {
