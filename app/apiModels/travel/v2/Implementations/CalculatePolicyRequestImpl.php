@@ -16,7 +16,8 @@ class CalculatePolicyRequestImpl extends CalculatePolicyRequest
      * @var array
      */
     public static $validators = [
-        //
+        'data.start_date.date' => 'afterEqual:now',
+        'data.configured_risks.*.start_date.date' => 'afterEqual:now'
     ];
 
     /**

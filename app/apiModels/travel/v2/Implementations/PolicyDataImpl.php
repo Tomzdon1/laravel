@@ -15,7 +15,7 @@ class PolicyDataImpl extends PolicyData
      */
     public static $validators = [
         'end_date.date' => 'after:start_date.date',
-        'destination' => 'sometimes|destination_code',
+        'destination' => 'sometimes|destination_code'
     ];
 
     /**

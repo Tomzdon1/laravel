@@ -2,10 +2,10 @@
 
 namespace App\apiModels\travel\v2\Implementations;
 
-use App\apiModels\travel\v2\Prototypes\QuotesRequest;
+use App\apiModels\travel\v2\Prototypes\Risk;
 use App\apiModels\travel\v2\Traits;
 
-class QuotesRequestImpl extends QuotesRequest
+class RiskImpl extends Risk
 {
     use Traits\SwaggerDeserializationTrait;
 
@@ -14,8 +14,7 @@ class QuotesRequestImpl extends QuotesRequest
      * @var array
      */
     public static $validators = [
-        'data.start_date.date' => 'afterEqual:now',
-        'data.configured_risks.*.start_date.date' => 'afterEqual:now'
+        'end_date.date' => 'after:start_date.date',
     ];
 
     /**

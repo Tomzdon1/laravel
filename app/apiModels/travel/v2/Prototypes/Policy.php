@@ -180,6 +180,12 @@ class Policy extends \App\apiModels\ApiModel implements ArrayAccess
     public $possessions;
     
     /**
+      * $possessions Mienia
+      * @var App\apiModels\travel\v2\Prototypes\Possession[]
+      */
+    public $possessions;
+    
+    /**
       * $checksum Suma kontrolna polisy
       * @var string
       */

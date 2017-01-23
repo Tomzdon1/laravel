@@ -134,7 +134,6 @@ class CalculatePolicyRequest extends \App\apiModels\ApiModel implements ArrayAcc
       * @var App\apiModels\travel\v2\Prototypes\Possession[]
       */
     public $possessions;
-    
 
     /**
      * Constructor

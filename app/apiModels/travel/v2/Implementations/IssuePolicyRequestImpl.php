@@ -15,7 +15,8 @@ class IssuePolicyRequestImpl extends IssuePolicyRequest
      */
     public static $validators = [
         'calculation_id' => 'valid_calculation_id',
-        'policy_date.date' => 'bail|before_equal:now|valid_calculation_due_date:calculation_id',
+        'policy_date.date' => 'valid_calculation_due_date:calculation_id',
+        'payment_date.date' => 'beforeEqualDate:policy_date.date',
         'checksum' => 'valid_calculation_checksum:calculation_id'
     ];
 

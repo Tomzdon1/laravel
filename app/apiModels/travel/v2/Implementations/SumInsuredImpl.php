@@ -2,10 +2,10 @@
 
 namespace App\apiModels\travel\v2\Implementations;
 
-use App\apiModels\travel\v2\Prototypes\QuotesRequest;
+use App\apiModels\travel\v2\Prototypes\SumInsured;
 use App\apiModels\travel\v2\Traits;
 
-class QuotesRequestImpl extends QuotesRequest
+class SumInsuredImpl extends SumInsured
 {
     use Traits\SwaggerDeserializationTrait;
 
@@ -14,8 +14,7 @@ class QuotesRequestImpl extends QuotesRequest
      * @var array
      */
     public static $validators = [
-        'data.start_date.date' => 'afterEqual:now',
-        'data.configured_risks.*.start_date.date' => 'afterEqual:now'
+        //
     ];
 
     /**
