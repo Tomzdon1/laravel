@@ -88,7 +88,6 @@ trait PremiumCalculatorTrait
             }
             
             $calculationParameters = $this->getCalculationParameters($calculateRequest);
-            dd($calculationParameters);
             $data = $excelFile->getCalculatedValues($calculationParameters);
             return $data;
         });
@@ -100,14 +99,6 @@ trait PremiumCalculatorTrait
         $birthDates = [];
         $insuredsOptions = [];
         $configuredRisks = [];
-
-        $staticParameters = [
-            //@ todo
-            // powinno być dynamiczne mapowanie
-            'DATA_OD' => $calculateRequest->getData()->getStartDate(),
-            'DATA_DO' => $calculateRequest->getData()->getEndDate(),
-            'DATA_URODZENIA' => $birthDates,
-        ];
 
         if (is_array($calculateRequest->getData()->getOptions())
             || $calculateRequest->getData()->getOptions() instanceof Traversable
@@ -144,6 +135,14 @@ trait PremiumCalculatorTrait
                 }
             }
         }
+
+        $staticParameters = [
+            //@ todo
+            // powinno być dynamiczne mapowanie
+            'DATA_OD' => $calculateRequest->getData()->getStartDate(),
+            'DATA_DO' => $calculateRequest->getData()->getEndDate(),
+            'DATA_URODZENIA' => $birthDates,
+        ];
 
         $configuredRisks = $this->mapRecursivelyArrayToParameters($calculateRequest->getData()->getConfiguredRisks(), 'risk');
 
