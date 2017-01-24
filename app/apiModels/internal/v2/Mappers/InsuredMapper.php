@@ -23,8 +23,8 @@ class InsuredMapper
         
         !isset($insured->data) ?: $mappedInsured->setData(PersonDataMapper::fromObject($insured->data));
         !isset($insured->address) ?: $mappedInsured->setAddress(AddressMapper::fromObject($insured->address));
-        !isset($insured->options) ?: $mappedInsured->setOptions(OptionValueMapper::fromObjects($insuredpolicy->options));
-        !isset($insured->addons) ?: $mappedInsured->setAddons(OptionValueMapper::fromObjects($insuredpolicy->addons));
+        !isset($insured->options) ?: $mappedInsured->setOptions(OptionValueMapper::fromObjects($insured->options));
+        !isset($insured->addons) ?: $mappedInsured->setAddons(OptionValueMapper::fromObjects($insured->addons));
 
 		return $mappedInsured;
     }
