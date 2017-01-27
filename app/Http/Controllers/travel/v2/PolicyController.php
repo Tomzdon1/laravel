@@ -184,13 +184,13 @@ class PolicyController extends Controller
 
         $printing = app()->make('PdfPolicyPrinter');
 
-        $pdf = $printing->getDocumentFromPolicy($template_name, $policy);
+        $file = $printing->getDocumentFromPolicy($template_name, $policy);
         
-        if ($pdf->IsError()) {
-            app('log')->error($pdf->ErrorMsg());
+        if ($file->IsError()) {
+            app('log')->error($file->ErrorMsg());
             abort(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return response($pdf->File())->header('Content-Type', $pdf->ContentType());
+        return response($file->File())->header('Content-Type', $file->ContentType());
     }
 }
