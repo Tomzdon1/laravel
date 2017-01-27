@@ -2,6 +2,7 @@
 
 namespace Tue\Printing;
 
+use Tue\Printing\Mappers\PolicyMapperPrint;
 use App\Policy;
 
 class pdfPolicyPrinter extends pdfPrinter {
@@ -25,7 +26,7 @@ class pdfPolicyPrinter extends pdfPrinter {
      */
     public function getDocumentFromPolicy($template_name, Policy $policy)
     {
-        $array = PolicyIssueRequestMapper::fromModel($policy);
+        $array = PolicyMapperPrint::fromModel($policy);
         return $this->getDocumentFromArray($template_name, $array);
     }
 }

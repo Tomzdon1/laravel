@@ -110,6 +110,7 @@ $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
 $app->register(App\Providers\EsbServiceProvider::class);
+$app->register(App\Providers\PartnerDataProvider::class);
 $app->register(App\Providers\PdfPrintingServiceProvider::class);
 $app->register(App\Providers\SmsSendingServiceProvider::class);
 $app->register(App\Providers\MailSendingServiceProvider::class);
