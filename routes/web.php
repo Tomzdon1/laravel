@@ -23,6 +23,6 @@ $app->group([
         $app->post('policies/purchase', 'PolicyController@purchase');
         $app->post('policies/issue', 'PolicyController@issue');
         $app->post('policies/import', 'PolicyController@import');
-        $app->post('policies/print', 'PolicyController@print');
+        $app->post('policies/print', 'PolicyController@printPolicy');
         $app->post('orders/status', 'OrderStatusController@show');
 });
