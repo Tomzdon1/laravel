@@ -182,9 +182,9 @@ class PolicyController extends Controller
             abort(Response::HTTP_METHOD_NOT_ALLOWED);
         }
 
-        $printing = app()->make('PdfPrinter');
+        $printing = app()->make('PdfPolicyPrinter');
 
-        $pdf = $printing->getDocumentFromJSON($template_name, $policy);
+        $pdf = $printing->getDocumentFromPolicy($template_name, $policy);
         
         if ($pdf->IsError()) {
             app('log')->error($pdf->ErrorMsg());

@@ -18,5 +18,9 @@ class PdfPrintingServiceProvider extends ServiceProvider
             return PrinterFactory::getPdfPrinter(env("PRINTOUT_WSDL"));
         });
 
+        $this->app->singleton('PdfPolicyPrinter', function () {
+            return PrinterFactory::getPdfPolicyPrinter(env("PRINTOUT_WSDL"));
+        });
+
     }
 }

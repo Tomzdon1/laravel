@@ -22,6 +22,9 @@ class PrinterFactory {
      */
     public  static function getPdfPrinter($wsdl_url){
         return pdfPrinter::getInstance($wsdl_url);     
-        
+    }
+    
+    public  static function getPdfPolicyPrinter($wsdl_url){
+        return pdfPolicyPrinter::getInstance($wsdl_url);     
     }
 }
