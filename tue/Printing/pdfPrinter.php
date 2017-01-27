@@ -72,7 +72,7 @@ class pdfPrinter implements Printer {
      * @throws \Tue\Printing\SoapFault
      */
     public function getDocumentFromJSON($template_name, $json) {
-        return $this->getDocumentFromArray($template_name, json_decode($json));
+        return $this->getDocumentFromArray($template_name, json_decode($json, true));
     }
 
     /**
