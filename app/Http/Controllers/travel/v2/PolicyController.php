@@ -4,6 +4,7 @@ namespace App\Http\Controllers\travel\v2;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\travel\v2;
 use App\TravelOffer;
 use App\Policy;
 use Symfony\Component\HttpFoundation\Response as Response;
@@ -170,27 +171,26 @@ class PolicyController extends Controller
         return $importStatuses;
     }
 
-    public function printPolicy(Request $request, $policyId)
+    public function printPolicy(Request $request)
     {
-        return Response::HTTP_NOT_IMPLEMENTED;
-        
-        $policy = App\Policy::find($policyId)->first();
+        $printPolicyRequest = $request->attributes->get('deserializedRequestObject');
+        $policy = Policy::find($printPolicyRequest->getPolicyId());
 
         try {
-            $template_name = $request->user()->apis['travel']['printTemplateSettings']['name'];
+            $template_name = $request->user()->apis->travel->printTemplateSettings->name;
         } catch (\Exception $e) {
             abort(Response::HTTP_METHOD_NOT_ALLOWED);
         }
 
         $printing = app()->make('PdfPrinter');
 
-        $pdf = $printing->getDocumentFromArray($template_name, $policy);
-
+        $pdf = $printing->getDocumentFromJSON($template_name, $policy);
+        
         if ($pdf->IsError()) {
             app('log')->error($pdf->ErrorMsg());
             abort(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return (new Response($pdf->File()))->header('Content-Type', $pdf->ContentType());
+        return response($pdf->File())->header('Content-Type', $pdf->ContentType());
     }
 }
