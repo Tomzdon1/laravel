@@ -12,8 +12,8 @@ class PolicyPossesionMapperPrint
     public static function possessions(array $possessions, $prefix = '')
     {
     	$flattenPossessions = [];
-        foreach ($possessions as $possession) {
-        	$flattenPossessions[] = array_merge(self::possession($possession, $prefix), $flattenPossessions);
+        foreach ($possessions as $key=>$possession) {
+        	$flattenPossessions[$key] =self::possession($possession, $prefix);
         }
         return $flattenPossessions;
     }
@@ -22,11 +22,11 @@ class PolicyPossesionMapperPrint
     {   
         $flattenPossession = [];
         
-        self::set($flattenPossession, 'name', $possession->name);
-        self::set($flattenPossession, 'id', $possession->id);
-        self::set($flattenPossession, 'value', $possession->value);
-        self::set($flattenPossession, 'type', $possession->type);
-        self::set($flattenPossession, 'attributes', $possession->attributes);
+        self::set($flattenPossession, $prefix.'name', $possession->name);
+        self::set($flattenPossession, $prefix.'id', $possession->id);
+        self::set($flattenPossession, $prefix.'value', $possession->value);
+        self::set($flattenPossession, $prefix.'type', $possession->type);
+        self::set($flattenPossession, $prefix.'attributes', $possession->attributes);
         
 		return $flattenPossession;
     }

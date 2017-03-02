@@ -18,9 +18,9 @@ class PolicyHolderMapperPrint
         !isset($policyHolder->address) ?:$flattenPolicyHolder = array_merge(PolicyAddressMapperPrint::policyAddress($policyHolder->address, 'policy_holder_'), $flattenPolicyHolder);
         self::set($flattenPolicyHolder, $prefix . 'email', $policyHolder->email);
         self::set($flattenPolicyHolder, $prefix . 'telephone', $policyHolder->telephone);
-        !isset($policyHolder->agreements) ?:$flattenPolicyHolder = array_merge(PolicyAgreementsMapperPrint::agreements($policyHolder->agreements, 'policy_holder_'), $flattenPolicyHolder);
-        !isset($policyHolder->options) ?: $flattenPolicyHolder = array_merge(PolicyOptionsMapperPrint::options($policyHolder->options, 'policy_holder_'), $flattenPolicyHolder);
-        !isset($policyHolder->addons) ?: $flattenPolicyHolder = array_merge(PolicyAddonsMapperPrint::addons( $policyHolder->addons, 'policy_holder_'), $flattenPolicyHolder);
+        !isset($policyHolder->agreements) ?: $flattenPolicyHolder['agreements'] = PolicyAgreementsMapperPrint::agreements($policyHolder->agreements, 'policy_holder_');
+        !isset($policyHolder->options) ?: $flattenPolicyHolder['options'] = PolicyOptionsMapperPrint::options($policyHolder->options, 'policy_holder_');
+        !isset($policyHolder->addons) ?: $flattenPolicyHolder['addons'] = PolicyAddonsMapperPrint::addons( $policyHolder->addons, 'policy_holder_');
 
         return $flattenPolicyHolder;
     }

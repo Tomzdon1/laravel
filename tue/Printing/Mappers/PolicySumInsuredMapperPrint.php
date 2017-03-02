@@ -10,12 +10,12 @@ class PolicySumInsuredMapperPrint
 
     use ArraySetter;
 
-    public static function sumInsured(stdClass $sumInsured)
+    public static function sumInsured(stdClass $sumInsured, $prefix = '')
     {
     	$flattenSumInsureds = [];
 
-        self::set($flattenSumInsureds, 'value', $sumInsured->value);
-        self::set($flattenSumInsureds, 'currency', $sumInsured->currency);
+        self::set($flattenSumInsureds, $prefix.'value', $sumInsured->value);
+        self::set($flattenSumInsureds, $prefix.'currency', $sumInsured->currency);
 
         return $flattenSumInsureds;
     }

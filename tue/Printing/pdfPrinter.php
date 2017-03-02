@@ -25,6 +25,7 @@ class pdfPrinter implements Printer {
      * @param \SoapClient $printout
      */
     function __construct($wsdl_url) {
+        // nie commitowac zakomentowanej lini, to musi byc odkomentowane
         $this->printout = new \SoapClient($wsdl_url);
     }
 
@@ -99,7 +100,7 @@ class pdfPrinter implements Printer {
         $xml->loadXML('<?xml version="1.0" encoding="UTF-8"?><Requests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Requests.xsd"><Request><listOfData><Data/></listOfData></Request></Requests>');
         $dataFields = $xml->importNode($this->arrayToXMLDataFields($array), true);
         $xml->getElementsByTagName('Data')->item(0)->appendChild($dataFields);
-
+        // app('log')->info($xml->saveXML());
         return $xml->saveXML();
     }
 
@@ -149,7 +150,6 @@ class pdfPrinter implements Printer {
                 $root->appendChild($child);
             }
         }
-
         return $xml->documentElement;
     }
 

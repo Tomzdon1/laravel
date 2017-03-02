@@ -45,20 +45,20 @@ class PolicyMapperPrint
         self::set($policyPrintRequest, 'abroad', $abroad);
         self::set($policyPrintRequest, 'destination', $destination);
         
-        !isset($policy->options) ?: $policyPrintRequest = array_merge($policyPrintRequest, PolicyOptionsMapperPrint::options($policy->options));
-        !isset($policy->addons) ?: $policyPrintRequest = array_merge($policyPrintRequest, PolicyAddonsMapperPrint::addons($policy->addons));
-        !isset($policy->sum_insured) ?: $policyPrintRequest = array_merge($policyPrintRequest, PolicySumInsuredMapperPrint::sumInsured($policy->sum_insured));
-        !isset($policy->configured_risks) ?: $policyPrintRequest = array_merge($policyPrintRequest, PolicyConfiguredRiskMapperPrint::configuredRisks($policy->configured_risks, 'configured_risks'));
-        !isset($policy->policy_holder) ?: $policyPrintRequest = array_merge($policyPrintRequest, PolicyHolderMapperPrint::policyHolder($policy->policy_holder, 'policy_holder_'));
-        !isset($policy->insured) ?: $policyPrintRequest = array_merge($policyPrintRequest, PolicyInsuredMapperPrint::insureds($policy->insured));
-        !isset($policy->solicitors) ?: $policyPrintRequest = array_merge($policyPrintRequest, PolicySolicitorsMapperPrint::solicitors($policy->solicitors, 'solicitors'));
-        !isset($policy->premium) ?: $policyPrintRequest = array_merge($policyPrintRequest, PolicyPremiumMapperPrint::policyPremium($policy->premium, 'premium_'));
-        !isset($policy->tariff_premium) ?: $policyPrintRequest = array_merge($policyPrintRequest, PolicyPremiumMapperPrint::policyPremium($policy->tariff_premium, 'tariff_premium_'));
-        !isset($policy->netto_premium) ?: $policyPrintRequest = array_merge($policyPrintRequest, PolicyPremiumMapperPrint::policyPremium($policy->netto_premium, 'netto_premium_'));
-        !isset($policy->possession) ?: $policyPrintRequest = array_merge($policyPrintRequest, PolicyPossesionMapperPrint::possessions($policy->possession, 'possesion_'));
-        !isset($policy->product) ?: $policyPrintRequest = array_merge($policyPrintRequest, PolicyProductMapperPrint::policyProduct($policy->product, 'product_'));
-        !isset($policy->partner) ?: $policyPrintRequest = array_merge($policyPrintRequest, PolicyPartnerMapperPrint::policyParnter($policy->partner, 'partner_'));
-
+        // !isset($policy->addons) ?: $policyPrintRequest['addons'] = PolicyAddonsMapperPrint::addons($policy->addons);
+        // !isset($policy->sum_insured) ?: $policyPrintRequest = array_merge($policyPrintRequest, PolicySumInsuredMapperPrint::sumInsured($policy->sum_insured, 'Sum_Insureds_'));
+        // !isset($policy->policy_holder) ?: $policyPrintRequest = array_merge($policyPrintRequest, PolicyHolderMapperPrint::policyHolder($policy->policy_holder, 'policy_holder_'));
+        !isset($policy->insureds) ?: $policyPrintRequest['insured'] =  PolicyInsuredMapperPrint::insureds($policy->insureds);
+        // !isset($policy->configured_risks) ?: $policyPrintRequest['configured_risks'] = PolicyConfiguredRiskMapperPrint::configuredRisks($policy->configured_risks, 'configured_risks_');
+        // !isset($policy->solicitors) ?: $policyPrintRequest = array_merge($policyPrintRequest, PolicySolicitorsMapperPrint::solicitors($policy->solicitors, 'solicitors'));
+        // !isset($policy->premium) ?: $policyPrintRequest = array_merge($policyPrintRequest, PolicyPremiumMapperPrint::policyPremium($policy->premium, 'premium_'));
+        // !isset($policy->tariff_premium) ?: $policyPrintRequest = array_merge($policyPrintRequest, PolicyPremiumMapperPrint::policyPremium($policy->tariff_premium, 'tariff_premium_'));
+        // !isset($policy->netto_premium) ?: $policyPrintRequest = array_merge($policyPrintRequest, PolicyPremiumMapperPrint::policyPremium($policy->netto_premium, 'netto_premium_'));
+        // !isset($policy->possession) ?: $policyPrintRequest = array_merge($policyPrintRequest, PolicyPossesionMapperPrint::possessions($policy->possession, 'possesion_'));
+        // !isset($policy->product) ?: $policyPrintRequest = array_merge($policyPrintRequest, PolicyProductMapperPrint::policyProduct($policy->product, 'product_'));
+        // !isset($policy->partner) ?: $policyPrintRequest = array_merge($policyPrintRequest, PolicyPartnerMapperPrint::policyParnter($policy->partner, 'partner_'));
+        !isset($policy->options) ?: $policyPrintRequest['options'] =  PolicyOptionsMapperPrint::options($policy->options);
+        
         return $policyPrintRequest;
     }
 }

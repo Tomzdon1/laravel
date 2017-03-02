@@ -48,9 +48,9 @@ class CRMConnector implements Connector {
             throw $e;
         }
         if ($result != false) {
-            return json_decode($result)->partners->partner;
+            app('log')->info($result);
+            return new PartnerData($result); 
         } else {
-            dd(curl_error($this->connector));
             throw new Exception('Error when getting partner data.');
         }
     }

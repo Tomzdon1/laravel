@@ -13,7 +13,7 @@ class PolicyConfiguredRiskMapperPrint
     {
     	$flattenConfiguredRisks = [];
         foreach ($configuredRisks as $configuredRisk) {
-        	$flattenConfiguredRisks[] = array_merge(self::configuredRisk($configuredRisk, $prefix), $flattenConfiguredRisks);
+        	$flattenConfiguredRisks[] = self::configuredRisk($configuredRisk, $prefix);
         }
         return $flattenConfiguredRisks;
     }
@@ -22,12 +22,12 @@ class PolicyConfiguredRiskMapperPrint
     {   
         $flattenConfiguredRisk = [];
         
-        self::set($flattenConfiguredRisk, 'code', $configuredRisk->code);
-        self::set($flattenConfiguredRisk, 'sum_insured', $configuredRisk->sum_insured);
-        self::set($flattenConfiguredRisk, 'start_date', $configuredRisk->start_date);
-        self::set($flattenConfiguredRisk, 'end_date', $configuredRisk->end_date);
-        self::set($flattenConfiguredRisk, 'end_date', $configuredRisk->end_date);
-        !isset($configuredRisk->possession) ?: $flattenConfiguredRisk = array_merge($policyPrinflattenConfiguredRisktRequest, PolicyPossesionMapperPrint::possessions($configuredRisk->possession));
+        self::set($flattenConfiguredRisk, $prefix.'code', $configuredRisk->code);
+        self::set($flattenConfiguredRisk, $prefix.'sum_insured', $configuredRisk->sum_insured);
+        self::set($flattenConfiguredRisk, $prefix.'start_date', $configuredRisk->start_date);
+        self::set($flattenConfiguredRisk, $prefix.'end_date', $configuredRisk->end_date);
+        self::set($flattenConfiguredRisk, $prefix.'end_date', $configuredRisk->end_date);
+        !isset($configuredRisk->possessions) ?: $flattenConfiguredRisk['possession'] = PolicyPossesionMapperPrint::possessions($configuredRisk->possessions, 'possession_');
         
 		return $flattenConfiguredRisk;
     }

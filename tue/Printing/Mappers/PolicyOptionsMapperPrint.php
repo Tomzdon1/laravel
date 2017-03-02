@@ -12,8 +12,8 @@ class PolicyOptionsMapperPrint
     public static function options(array $options, $prefix = '')
     {
     	$flattenOptions = [];
-        foreach ($options as $option) {
-        	$flattenOptions[] = array_merge(self::option($option, $prefix), $flattenOptions);
+        foreach ($options as $key=>$option) {
+        	$flattenOptions[] = self::option($option, $prefix);
         }
         return $flattenOptions;
     }

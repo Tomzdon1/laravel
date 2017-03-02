@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\CreatedPolicyEvent;
+use App\Policy;
 
 class SendCreatedPolicyMailNotification extends Listener
 {
@@ -25,7 +26,8 @@ class SendCreatedPolicyMailNotification extends Listener
      */
     public function handle(CreatedPolicyEvent $event)
     {
+        $policy = Policy::find($event->policy->id);
         $mailSender = app()->make('PolicyMailNotificationSender');
-        $mailSender->setPolicy($event->policy)->send();
+        $mailSender->setPolicy($policy)->send();
     }
 }

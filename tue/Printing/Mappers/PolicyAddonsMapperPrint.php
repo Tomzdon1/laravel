@@ -12,8 +12,8 @@ class PolicyAddonsMapperPrint
     public static function addons(array $addons, $prefix = '')
     {
     	$flattenAddons = [];
-        foreach ($addons as $addon) {
-        	$flattenAddons[] = array_merge(self::addon($addon, $prefix), $flattenAddons);
+        foreach ($addons as $key=>$addon) {
+        	$flattenAddons[$key] = self::addon($addon, $prefix);
         }
         return $flattenAddons;
     }

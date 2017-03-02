@@ -24,8 +24,8 @@ class PolicyInsuredMapperPrint
         
         !isset($insured->data) ?: $flattenInsured = array_merge(PolicyDataMapperPrint::policyData($insured->data, 'insured_'), $flattenInsured);
         !isset($insured->address) ?: $flattenInsured = array_merge(PolicyAddressMapperPrint::policyAddress($insured->address, 'insured_'), $flattenInsured);
-        !isset($insured->options) ?: $flattenInsured = array_merge(PolicyOptionsMapperPrint::options($insured->options, 'insured_'), $flattenInsured);
-        !isset($insured->addons) ?: $flattenInsured = array_merge(PolicyAddonsMapperPrint::addons($insured->addons, 'insured_'), $flattenInsured);
+        !isset($insured->options) ?: $flattenInsured['options'] = PolicyOptionsMapperPrint::options($insured->options, 'insured_');
+        !isset($insured->addons) ?: $flattenInsured['addons'] = PolicyAddonsMapperPrint::addons($insured->addons, 'insured_');
         
 		return $flattenInsured;
     }

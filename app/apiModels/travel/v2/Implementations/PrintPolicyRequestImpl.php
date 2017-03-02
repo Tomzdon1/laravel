@@ -15,7 +15,8 @@ class PrintPolicyRequestImpl extends PrintPolicyRequest
      */
     public static $validators = [
         'policy_id' => 'valid_policy_id',
-        'checksum' => 'valid_policy_checksum:policy_id'
+        // nie commitowa, to powinno pozostac odkomentowane
+        // 'checksum' => 'valid_policy_checksum:policy_id'
     ];
 
     /**

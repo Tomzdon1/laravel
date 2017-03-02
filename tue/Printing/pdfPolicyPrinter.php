@@ -27,6 +27,8 @@ class pdfPolicyPrinter extends pdfPrinter {
     public function getDocumentFromPolicy($template_name, Policy $policy)
     {
         $array = PolicyMapperPrint::fromModel($policy);
+        // nie commitowac dd
+        // dd($array);
         return $this->getDocumentFromArray($template_name, $array);
     }
 }

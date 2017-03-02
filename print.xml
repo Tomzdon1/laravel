@@ -1,0 +1,159 @@
+<Requests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Requests.xsd">
+	<Request>
+		<listOfData>
+			<Data>
+				<DataFields>
+					<Field type="string" name="ID" value="58870aa7286f542068003aaa" />
+					<Field type="string" name="PROMO" value="null" />
+					<Field type="string" name="SOURCE" value="import" />
+					<Field type="string" name="PRODUCT_ID" value="56fbb481632a0224107b23c6" />
+					<Field type="string" name="POLICY_DATE" value="2017-11-22 23:00:00" />
+					<Field type="string" name="POLICY_NUMBER" value="EUROPA/v2/369" />
+					<Field type="string" name="START_DATE" value="2017-11-22 23:00:00" />
+					<Field type="string" name="END_DATE" value="2017-12-25 23:00:00" />
+					<Field type="string" name="ABROAD" value="1" />
+					<Field type="string" name="DESTINATION" value="PL" />
+					<Container name="OPTIONS" subtemplate="OPTIONS" type="template">
+						<DataFields>
+							<Field type="string" name="VALUE" value="policy_holder_option1_value" />
+							<Field type="string" name="CODE" value="policy_holder_option1_code" />
+						</DataFields>
+					</Container>
+					<Container name="ADDONS" subtemplate="ADDONS" type="template">
+						<DataFields>
+							<Field type="string" name="VALUE" value="addons1_value" />
+							<Field type="string" name="CODE" value="addon1_code" />
+						</DataFields>
+						<DataFields>
+							<Field type="string" name="VALUE" value="addon2_value" />
+							<Field type="string" name="CODE" value="addon2_code" />
+						</DataFields>
+					</Container>
+					<Field type="string" name="SUM_INSUREDS_VALUE" value="1000" />
+					<Field type="string" name="SUM_INSUREDS_CURRENCY" value="PLN" />
+					<Container name="CONFIGURED_RISKS" subtemplate="CONFIGURED_RISKS" type="template">
+						<DataFields>
+							<Field type="string" name="CONFIGURED_RISKS_CODE" value="KORY" />
+							<Field type="string" name="CONFIGURED_RISKS_SUM_INSURED" value="null" />
+							<Field type="string" name="CONFIGURED_RISKS_START_DATE" value="2017-11-23 23:00:00" />
+							<Field type="string" name="CONFIGURED_RISKS_END_DATE" value="2017-11-24 23:00:00" />
+							<Container name="CONFIGURED_RISKS_POSSESSION" subtemplate="CONFIGURED_RISKS_POSSESSION" type="template">
+								<DataFields>
+									<Field type="string" name="POSSESSION_NAME" value="TEST" />
+									<Field type="string" name="POSSESSION_ID" value="null" />
+									<Field type="string" name="POSSESSION_VALUE" value="null" />
+									<Field type="string" name="POSSESSION_TYPE" value="null" />
+									<Field type="string" name="POSSESSION_ATTRIBUTES" value="null" />
+								</DataFields>
+							</Container>
+						</DataFields>
+					</Container>
+					<Field type="string" name="POLICY_HOLDER_COUNTRY" value="PL" />
+					<Field type="string" name="POLICY_HOLDER_POST_CODE" value="20-501" />
+					<Field type="string" name="POLICY_HOLDER_CITY" value="Lublin" />
+					<Field type="string" name="POLICY_HOLDER_STREET" value="Nadbystrzycka" />
+					<Field type="string" name="POLICY_HOLDER_HOUSE_NO" value="56" />
+					<Field type="string" name="POLICY_HOLDER_FLAT_NO" value="null" />
+					<Field type="string" name="POLICY_HOLDER_FIRST_NAME" value="Marek" />
+					<Field type="string" name="POLICY_HOLDER_LAST_NAME" value="Nowakowski" />
+					<Field type="string" name="POLICY_HOLDER_BIRTH_DATE" value="null" />
+					<Field type="string" name="POLICY_HOLDER_PESEL" value="null" />
+					<Field type="string" name="POLICY_HOLDER_NATIONALITY" value="PL" />
+					<Field type="string" name="POLICY_HOLDER_DOCUMENT_NO" value="null" />
+					<Field type="string" name="POLICY_HOLDER_BUSSINESS_NAME" value="null" />
+					<Field type="string" name="POLICY_HOLDER_SHORT_BUSSINESS_NAME" value="null" />
+					<Field type="string" name="POLICY_HOLDER_NIP" value="7523423212" />
+					<Field type="string" name="POLICY_HOLDER_TYPE" value="company" />
+					<Field type="string" name="POLICY_HOLDER_EMAIL" value="tomasz.duda@tueuropa.pl" />
+					<Field type="string" name="POLICY_HOLDER_TELEPHONE" value="+48789123123" />
+					<Container name="AGREEMENTS" subtemplate="AGREEMENTS" type="template">
+						<DataFields>
+							<Field type="string" name="POLICY_HOLDER_DESCRIPTION" value="Oświadczam,iżprzedzawarciemumowyubezpieczeniowejzapoznałemsięzOgólnymiWarunkamiUbezpieczenia,napodstawiektórychzostałemobjętyochronąubezpieczeniowąprzezTUEuropaS.A." />
+							<Field type="string" name="POLICY_HOLDER_VALUE" value="1" />
+							<Field type="string" name="POLICY_HOLDER_CODE" value="zgodam" />
+						</DataFields>
+					</Container>
+					<Container name="INSURED" subtemplate="INSURED" type="template">
+						<DataFields>
+							<Field type="string" name="INSURED_FIRST_NAME" value="Tomasz" />
+							<Field type="string" name="INSURED_LAST_NAME" value="Kowalski" />
+							<Field type="string" name="INSURED_BIRTH_DATE" value="2011-12-11 23:00:00" />
+							<Field type="string" name="INSURED_PESEL" value="07321216750" />
+							<Field type="string" name="INSURED_NATIONALITY" value="PL" />
+							<Field type="string" name="INSURED_DOCUMENT_NO" value="null" />
+							<Field type="string" name="INSURED_BUSSINESS_NAME" value="null" />
+							<Field type="string" name="INSURED_SHORT_BUSSINESS_NAME" value="null" />
+							<Field type="string" name="INSURED_NIP" value="null" />
+							<Field type="string" name="INSURED_TYPE" value="private" />
+							<Container name="INSURED_OPTIONS" subtemplate="INSURED_OPTIONS" type="template">
+								<DataFields>
+									<Field type="string" name="VALUE" value="option1_value" />
+									<Field type="string" name="CODE" value="option1_code" />
+								</DataFields>
+								<DataFields>
+									<Field type="string" name="VALUE" value="T" />
+									<Field type="string" name="CODE" value="PRACA" />
+								</DataFields>
+							</Container>
+						</DataFields>
+						<DataFields>
+							<Field type="string" name="INSURED_COUNTRY" value="DE" />
+							<Field type="string" name="INSURED_POST_CODE" value="60345" />
+							<Field type="string" name="INSURED_CITY" value="Rosbach" />
+							<Field type="string" name="INSURED_STREET" value="Schulstrasse" />
+							<Field type="string" name="INSURED_HOUSE_NO" value="1" />
+							<Field type="string" name="INSURED_FLAT_NO" value="null" />
+							<Field type="string" name="INSURED_FIRST_NAME" value="Adrian" />
+							<Field type="string" name="INSURED_LAST_NAME" value="Tomaszewski" />
+							<Field type="string" name="INSURED_BIRTH_DATE" value="null" />
+							<Field type="string" name="INSURED_PESEL" value="null" />
+							<Field type="string" name="INSURED_NATIONALITY" value="PL" />
+							<Field type="string" name="INSURED_DOCUMENT_NO" value="null" />
+							<Field type="string" name="INSURED_BUSSINESS_NAME" value="null" />
+							<Field type="string" name="INSURED_SHORT_BUSSINESS_NAME" value="null" />
+							<Field type="string" name="INSURED_NIP" value="7176548981" />
+							<Field type="string" name="INSURED_TYPE" value="company" />
+						</DataFields>
+					</Container>
+					<Container name="0" subtemplate="0" type="template">
+						<DataFields>
+							<Field type="string" name="SOLICITOR_ID" value="null" />
+							<Field type="string" name="AGENT_ID" value="null" />
+						</DataFields>
+					</Container>
+					<Field type="string" name="PREMIUM_VALUE_BASE" value="256.23" />
+					<Field type="string" name="PREMIUM_VALUE_BASE_CURRENCY" value="PLN" />
+					<Field type="string" name="PREMIUM_VALUE" value="256.23" />
+					<Field type="string" name="PREMIUM_VALUE_CURRENCY" value="PLN" />
+					<Field type="string" name="PREMIUM_CURRENCY_DATE" value="null" />
+					<Field type="string" name="PREMIUM_DATE_RATE" value="2016-02-08 09:49:47" />
+					<Field type="string" name="TARIFF_PREMIUM_VALUE_BASE" value="20" />
+					<Field type="string" name="TARIFF_PREMIUM_VALUE_BASE_CURRENCY" value="PLN" />
+					<Field type="string" name="TARIFF_PREMIUM_VALUE" value="20" />
+					<Field type="string" name="TARIFF_PREMIUM_VALUE_CURRENCY" value="PLN" />
+					<Field type="string" name="TARIFF_PREMIUM_CURRENCY_DATE" value="null" />
+					<Field type="string" name="TARIFF_PREMIUM_DATE_RATE" value="2016-02-08 09:49:47" />
+					<Field type="string" name="NETTO_PREMIUM_VALUE_BASE" value="13.4" />
+					<Field type="string" name="NETTO_PREMIUM_VALUE_BASE_CURRENCY" value="PLN" />
+					<Field type="string" name="NETTO_PREMIUM_VALUE" value="13.4" />
+					<Field type="string" name="NETTO_PREMIUM_VALUE_CURRENCY" value="PLN" />
+					<Field type="string" name="NETTO_PREMIUM_CURRENCY_DATE" value="null" />
+					<Field type="string" name="NETTO_PREMIUM_DATE_RATE" value="2016-02-08 09:49:47" />
+					<Field type="string" name="PRODUCT_NAME" value="TRAVEL W BANKOMATACH TRAVEL Standard" />
+					<Field type="string" name="PRODUCT_CODE" value="PCTT001" />
+					<Field type="string" name="PARTNER_CODE" value="K90000332" />
+					<Field type="string" name="PARTNER_NAME" value="Benefit Solution Sp. z o.o. Bankomaty" />
+					<Field type="string" name="PARTNER_FULL_NAME" value="4UFINANSE SP. Z O. O." />
+					<Field type="string" name="PARTNER_DESCRIPTION" value="ul. Piotrowska 55, 90-413 Łódź, Sąd Rejonowy dla Łodzi - Śródmieścia w Łodzi, KRS 0000379858, REGON 101049465 i NIP 725 204 10 54, kapitał zakładowy zarejestrowany 100 000 zł" />
+					<Field type="string" name="PARTNER_NIP" value="725-204-10-54" />
+					<Field type="string" name="PARTNER_STREET" value="Piotrowska" />
+					<Field type="string" name="PARTNER_HOUSE_NO" value="55" />
+					<Field type="string" name="PARTNER_FLAT_NO" value="" />
+					<Field type="string" name="PARTNER_POST_CODE" value="90-413" />
+					<Field type="string" name="PARTNER_CITY" value="Łódź" />
+					<Field type="string" name="PARTNER_COUNTRY" value="PL" />
+				</DataFields>
+			</Data>
+		</listOfData>
+	</Request>
+</Requests>

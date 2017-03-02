@@ -18,13 +18,13 @@ class PolicyMailNotificationSender extends MailSender {
     protected function attachPolicyDocument()
     {
         $template_name = $this->_srcPolicy->partner->apis->travel->printTemplateSettings->name;
-        $printing = app()->make('PdfPrinter');
-        $pdf = $printing->getDocumentFromJson($template_name, $this->_srcPolicy);
-        
-        if ($pdf->IsError()) {
-            app('log')->error($pdf->ErrorMsg());
+        $printing = app()->make('PdfPolicyPrinter');
+        $file = $printing->getDocumentFromPolicy($template_name, $this->_srcPolicy);
+
+        if ($file->IsError()) {
+            app('log')->error($file->ErrorMsg());
         } else {
-            $this->attachData($pdf->File(), $pdf->ContentType());
+            $this->attachData($file->File(), 'TESTSTS.pdf', ['mime' => $file->ContentType()]);
         }
     }
    
